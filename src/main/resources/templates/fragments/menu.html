@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
+<div th:fragment="menu">
+<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand"  href="http://Deltasi.it">
+        <img th:src="@{css/images/goverment.png}" style="height: 4em; display: inline-block;vertical-align: middle; max-width: 100%;" /></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">
+                    <i class="fa fa-home"></i>
+                    Home
+                </a>
+            </li>
+            <sec:authorize="isAuthenticated()">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/logout}">
+                    <i class="fa fa-sign-out-alt"></i>
+                    Logout
+                    </a>
+                </li>
+            </sec:authorize>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/interrogazioni/list}">
+                <i class="fa fa-plus-square"></i>
+                Interrogazioni
+                </a>
+            </li>
+            <sec:authorize access="hasRole('USER','ADMIN')">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/affluenze/list}">
+                    <i class="fa fa-bars"></i>
+                    Affluenze
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/voti/list}">
+                    <i class="fa fa-address-card"></i>
+                    Voti
+                    </a>
+                </li>
+            </sec:authorize>
+            <sec:authorize access="hasRole('ADMIN')">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/ricalcoli/riepilogo}">
+                    <i class="fa fa-bars"></i>
+                    Ricalcoli
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/controlli/list}">
+                    <i class="fa fa-address-card"></i>
+                    Controlli
+                    </a>
+                </li>
+            </sec:authorize>
+        </ul>
+        <ul class="navbar-nav ">
+            <sec:authorize access="hasRole('ADMIN')">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/users/manage}">
+                    <i class="fa fa-users"></i>
+                    Utenti
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/users/register}">
+                    <i class="fa fa-user-plus"></i>
+                    Registrazione
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/abilitazioni/abil}">
+                    <i class="fa fa-clone"></i>
+                    Abilitazioni procedure
+                    </a>
+                </li>
+            </sec:authorize>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/manuali/docs}">
+                <i class="fa fa-university"></i>
+                Manuali utente
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+</div>
+</html>

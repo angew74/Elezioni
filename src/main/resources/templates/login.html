@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="apple-touch-icon" sizes="57x57" th:href="@{/css/images/favicon/apple-icon-57x57.png}"  />
+<link rel="apple-touch-icon" sizes="60x60" th:href="@{css/images/favicon/apple-icon-60x60.png}"  />
+<link rel="apple-touch-icon" sizes="72x72" th:href="@{css/images/favicon/apple-icon-72x72.png}"  />
+<link rel="apple-touch-icon" sizes="76x76" th:href="@{css/images/favicon/apple-icon-76x76.png}"  />
+<link rel="apple-touch-icon" sizes="114x114" th:href="@{css/images/favicon/apple-icon-114x114.png}"  />
+<link rel="apple-touch-icon" sizes="120x120" th:href="@{css/images/favicon/apple-icon-120x120.png}"  />
+<link rel="apple-touch-icon" sizes="144x144" th:href="@{css/images/favicon/apple-icon-144x144.png}"  />
+<link rel="apple-touch-icon" sizes="152x152" th:href="@{css/images/favicon/apple-icon-152x152.png}" />
+<link rel="apple-touch-icon" sizes="180x180" th:href="@{css/images/favicon/apple-icon-180x180.png}"  />
+<link rel="icon" type="image/png" sizes="192x192"  th:href="@{css/images/favicon/android-icon-192x192.png}"  />
+<link rel="icon" type="image/png" sizes="32x32" th:href="@{css/images/favicon/favicon-32x32.png}" />
+<link rel="icon" type="image/png" sizes="96x96" th:href="@{css/images/favicon/favicon-96x96.png}"  />
+<link rel="icon" type="image/png" sizes="16x16" th:href="@{css/images/favicon/favicon-16x16.png}"  />
+<link rel="manifest" th:href="@{css/images/favicon/manifest.json}" />
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="../css/images/favicon/ms-icon-144x144.png"  />
+<meta name="theme-color" content="#ffffff">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.1.1/css/bootstrap.min.css}">
+    <script type="text/javascript" th:src="@{webjars/jquery/3.2.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{js/users/login.js}"></script>
+    <script type="text/javascript" th:src="@{webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
+    <link th:href="@{css/users/login.css}" type="text/css" rel="stylesheet" />
+    <title>Autenticazione</title>
+</head>
+<body>
+<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand"  href="http://Deltasi.it"><img th:src="@{css/images/goverment.png}" style="height: 4em; display: inline-block;vertical-align: middle; max-width: 100%;" /></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">
+                    <i class="fa fa-home"></i>
+                    Home
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<form action="dologin" method="post">
+    <div class='box'>
+        <div class='box-form'>
+            <div class='box-login-tab'></div>
+            <div class='box-login-title'>
+                <div class='i i-login'></div><h2>LOGIN</h2>
+            </div>
+            <div class='box-login'>
+                <div class='fieldset-body' id='login_form'>
+                    <button onclick="openLoginInfo();" class='b b-form i i-more' title='Mais Informações'></button>
+                    <p class='field'>
+                        <label for='user'>USERNAME</label>
+                        <input type='text' id='user' name='username' title='Username' />
+                        <span id='valida1' class='i i-warning'></span>
+                    </p>
+                    <p class='field'>
+                        <label for='pass'>PASSWORD</label>
+                        <input type='password' id='pass' name='password' title='Password' />
+                        <span id='valida2' class='i i-close'></span>
+                    </p>
+
+                    <label class='checkbox'>
+                        <input type='checkbox' value='TRUE' title='Mantieni la sessione in memoria' /> Mantieni la sessione
+                    </label>
+
+                    <input type='submit' id='do_login' value='Accedi' title='Accedi' />
+                </div>
+            </div>
+        </div>
+        <div class='box-info'>
+            <p><button onclick="closeLoginInfo();" class='b b-info i i-left' title='Back to Sign In'></button><h3>Bisogno di aiuto?</h3>
+            </p>
+            <div class='line-wh'></div>
+            <button onclick="" class='b-support' title='Forgot Password?'> Password Dimenticata?</button>
+            <button onclick="" class='b-support' title='Contact Support'> Contatta supporto</button>
+            <div class='line-wh'></div>
+            <!-- <button onclick="" class='b-cta' title='Sign up now!'> C ACCOUNT</button>-->
+        </div>
+    </div>
+</form>
+</body>
+</html>
+
+
+
+
