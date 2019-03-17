@@ -2,34 +2,34 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="header-css-js">
 <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-<link rel="stylesheet" th:href="@{webjars/bootstrap/4.1.1/css/bootstrap.min.css}" />
-<script type="text/javascript" th:src="@{webjars/jquery/3.2.1/jquery.min.js}"></script>
-<script type="text/javascript" th:src="@{webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
-<link rel="apple-touch-icon" sizes="57x57" th:href="@{/css/images/favicon/apple-icon-57x57.png}"  />
-<link rel="apple-touch-icon" sizes="60x60" th:href="@{css/images/favicon/apple-icon-60x60.png}"  />
-<link rel="apple-touch-icon" sizes="72x72" th:href="@{css/images/favicon/apple-icon-72x72.png}"  />
-<link rel="apple-touch-icon" sizes="76x76" th:href="@{css/images/favicon/apple-icon-76x76.png}"  />
-<link rel="apple-touch-icon" sizes="114x114" th:href="@{css/images/favicon/apple-icon-114x114.png}"  />
-<link rel="apple-touch-icon" sizes="120x120" th:href="@{css/images/favicon/apple-icon-120x120.png}"  />
-<link rel="apple-touch-icon" sizes="144x144" th:href="@{css/images/favicon/apple-icon-144x144.png}"  />
-<link rel="apple-touch-icon" sizes="152x152" th:href="@{css/images/favicon/apple-icon-152x152.png}" />
-<link rel="apple-touch-icon" sizes="180x180" th:href="@{css/images/favicon/apple-icon-180x180.png}"  />
-<link rel="icon" type="image/png" sizes="192x192"  th:href="@{css/images/favicon/android-icon-192x192.png}"  />
-<link rel="icon" type="image/png" sizes="32x32" th:href="@{css/images/favicon/favicon-32x32.png}" />
-<link rel="icon" type="image/png" sizes="96x96" th:href="@{css/images/favicon/favicon-96x96.png}"  />
-<link rel="icon" type="image/png" sizes="16x16" th:href="@{css/images/favicon/favicon-16x16.png}"  />
-<link rel="manifest" th:href="@{css/images/favicon/manifest.json}" />
-<script type="text/javascript" th:src="@{js/moment.js}"></script>
-<script type="text/javascript" th:src="@{js/moment.locale.it.js}"> </script>
-<script type="text/javascript" th:src="@{js/tempusdominus-bootstrap-4.min.js}"></script>
-<script type="text/javascript" th:src="@{js/parsley.min.js}"></script>
-<script type="text/javascript" th:src="@{js/parsley.it.js}"></script>
-<script type="text/javascript" th:src="@{js/parsley.it.extra.js}"></script>
-<link th:href="@{css/common/tempusdominus-bootstrap-4.min.css}" type="text/css" rel="stylesheet" />
-<link rel="manifest" th:href="@{css/images/favicon/manifest.json}" />
+<link rel="stylesheet" th:href="@{~/webjars/bootstrap/4.1.1/css/bootstrap.min.css}" />
+<script type="text/javascript" th:src="@{~/webjars/jquery/3.2.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{~/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
+<link rel="apple-touch-icon" sizes="57x57" th:href="@{~/css/images/favicon/apple-icon-57x57.png}"  />
+<link rel="apple-touch-icon" sizes="60x60" th:href="@{~/css/images/favicon/apple-icon-60x60.png}"  />
+<link rel="apple-touch-icon" sizes="72x72" th:href="@{~/css/images/favicon/apple-icon-72x72.png}"  />
+<link rel="apple-touch-icon" sizes="76x76" th:href="@{~/css/images/favicon/apple-icon-76x76.png}"  />
+<link rel="apple-touch-icon" sizes="114x114" th:href="@{~/css/images/favicon/apple-icon-114x114.png}"  />
+<link rel="apple-touch-icon" sizes="120x120" th:href="@{~/css/images/favicon/apple-icon-120x120.png}"  />
+<link rel="apple-touch-icon" sizes="144x144" th:href="@{~/css/images/favicon/apple-icon-144x144.png}"  />
+<link rel="apple-touch-icon" sizes="152x152" th:href="@{~/css/images/favicon/apple-icon-152x152.png}" />
+<link rel="apple-touch-icon" sizes="180x180" th:href="@{~/css/images/favicon/apple-icon-180x180.png}"  />
+<link rel="icon" type="image/png" sizes="192x192"  th:href="@{~/css/images/favicon/android-icon-192x192.png}"  />
+<link rel="icon" type="image/png" sizes="32x32" th:href="@{~/css/images/favicon/favicon-32x32.png}" />
+<link rel="icon" type="image/png" sizes="96x96" th:href="@{~/css/images/favicon/favicon-96x96.png}"  />
+<link rel="icon" type="image/png" sizes="16x16" th:href="@{~/css/images/favicon/favicon-16x16.png}"  />
+<link rel="manifest" th:href="@{~/css/images/favicon/manifest.json}" />
+<script type="text/javascript" th:src="@{~/js/moment.js}"></script>
+<script type="text/javascript" th:src="@{~/js/moment.locale.it.js}"> </script>
+<script type="text/javascript" th:src="@{~/js/tempusdominus-bootstrap-4.min.js}"></script>
+<script type="text/javascript" th:src="@{~/js/parsley.min.js}"></script>
+<script type="text/javascript" th:src="@{~/js/parsley.it.js}"></script>
+<script type="text/javascript" th:src="@{~/js/parsley.it.extra.js}"></script>
+<link th:href="@{~/css/common/tempusdominus-bootstrap-4.min.css}" type="text/css" rel="stylesheet" />
+<link rel="manifest" th:href="@{~/css/images/favicon/manifest.json}" />
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="msapplication-TileImage" content="css/images/favicon/ms-icon-144x144.png" />
-<title>${titlepage}</title>
+<title th:text="${titlepage}"></title>
 </div>
 </html>
 

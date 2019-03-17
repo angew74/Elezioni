@@ -14,7 +14,7 @@ import com.deltasi.elezioni.model.configuration.TipoElezione;
  */
 public interface IElegenService {
     
-    public Elegen findElegenById(Integer id);
+    public Elegen findById(Integer id);
     public void add(Elegen elegen);
     public void delete(Integer id);
     public Elegen findByIdTipoElezione(Integer idtipoelezione);

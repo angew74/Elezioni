@@ -59,6 +59,7 @@ public class UsersController {
         try {
             list = userservice.getAllUtenti();
             modelAndView.addObject("Users", list);
+            modelAndView.addObject("userscount",list.size());
         } catch (Exception ex) {
             String error = ex.getMessage();
             ModelAndView errormodelAndView = new ModelAndView("common/error");

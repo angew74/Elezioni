@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.deltasi.elezioni.PDeltaUrlAuthenticationSuccessHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,14 +31,20 @@ public class LoginController {
     private AuthenticationManager authManager;
 
     @RequestMapping(value = "/dologin", method = RequestMethod.POST)
-    public void dologin(@RequestParam("username") final String username, @RequestParam("password") final String password, final HttpServletRequest request) {
+    public String dologin(@RequestParam("username") final String username, @RequestParam("password") final String password,Model model, final HttpServletRequest request) {
         UsernamePasswordAuthenticationToken authReq =
                 new UsernamePasswordAuthenticationToken(username, password);
         Authentication auth = authManager.authenticate(authReq);
+        boolean isauth = auth.isAuthenticated();
         SecurityContext sc = SecurityContextHolder.getContext();
         sc.setAuthentication(auth);
         HttpSession session = request.getSession(true);
         session.setAttribute("SPRING_SECURITY_CONTEXT", sc);
+        model.addAttribute("titlepage", "Homepage");
+        String loggedInUserName = auth.getName();
+        model.addAttribute("user", loggedInUserName);
+        return  "/home";
+
     }
 
 
@@ -50,7 +57,8 @@ public class LoginController {
     @GetMapping(value = "/home")
     public String index(Model model, Principal principal) {
         model.addAttribute("titlepage", "Homepage");
-        model.addAttribute("message", "You are logged in as " + principal.getName());
+        String loggedInUserName = principal.getName();
+        model.addAttribute("user", loggedInUserName);
         return "home";
     }
 

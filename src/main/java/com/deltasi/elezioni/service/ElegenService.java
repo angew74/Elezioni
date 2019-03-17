@@ -31,7 +31,7 @@ public class ElegenService implements IElegenService {
     private ElegenDAO elegenDAO;
     
     @Override
-    public Elegen findElegenById(Integer id) {
+    public Elegen findById(Integer id) {
 
         return elegenDAO.findById(id);
     }

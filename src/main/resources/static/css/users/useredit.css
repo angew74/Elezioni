@@ -1,0 +1,20 @@
+
+#userEditModal{
+    background:#54272F;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.trigger-btn {
+    display: inline-block;
+    margin: 100px auto;
+}
+
+.bigicon {
+    font-size: 35px;
+    color: #54272F;
+}
+
+.avatar
+{
+    color: #54272F;
+}

@@ -1,0 +1,24 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
+<link th:href="@{~/css/common/modalerror.css}" type="text/css" rel="stylesheet" />
+<!-- Modal HTML -->
+<div th:fragment="error">
+<div id="errorModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="icon-box">
+                    <i class="fas fa-times"></i>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body text-center">
+                <h4>Attenzione!</h4>
+                <p id="errorDisplay"></p>
+                <button class="btn btn-success" data-dismiss="modal">Riprova ancora</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</html>
