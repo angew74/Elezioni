@@ -1,29 +1,36 @@
 package com.deltasi.elezioni.model.json;
 
+import com.deltasi.elezioni.model.configuration.Iscritti;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Map;
 
 public class SezioneJson {
 
-    private String sezione;
-    private String cabina;
+    @JsonProperty("sezione")
+    private Integer sezione;
+    @JsonProperty("cabina")
+    private Integer cabina;
+    @JsonProperty("tipo")
     private String tipo;
     private boolean validated;
     private Map<String, String> errorMessages;
 
+    private Iscritti iscritti;
 
-    public String getSezione() {
+    public Integer getSezione() {
         return sezione;
     }
 
-    public void setSezione(String sezione) {
+    public void setSezione(Integer sezione) {
         this.sezione = sezione;
     }
 
-    public String getCabina() {
+    public Integer getCabina() {
         return cabina;
     }
 
-    public void setCabina(String cabina) {
+    public void setCabina(Integer cabina) {
         this.cabina = cabina;
     }
 
@@ -49,5 +56,13 @@ public class SezioneJson {
 
     public void setErrorMessages(Map<String, String> errorMessages) {
         this.errorMessages = errorMessages;
+    }
+
+    public Iscritti getIscritti() {
+        return iscritti;
+    }
+
+    public void setIscritti(Iscritti iscritti) {
+        this.iscritti = iscritti;
     }
 }

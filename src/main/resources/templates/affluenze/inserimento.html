@@ -10,7 +10,7 @@
 </head>
 <body>
 <div th:replace="fragments/menu :: menu"/>
-<form name="rsezioneForm" data-parsley-validate>
+<form name="rsezioneForm" data-parsley-validate modelAttribute="sezione">
     <div class="container h-100">
         <div class="d-flex justify-content-center">
             <div class="card mt-5 col-md-4 animated bounceInDown myForm">
@@ -25,7 +25,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text br-15"><i class="fas fa-keyboard"></i></span>
                             </div>
-                            <input type="text"
+                            <input type="number"
                                    data-parsley-errors-container="#errorSezione"
                                    required
                                    placeholder="Numero Sezione" name="sezione" class="form-control"/>
@@ -40,7 +40,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text br-15"><i class="fas fa-keyboard"></i></span>
                             </div>
-                            <input type="text" placeholder="Numero Cabina"
+                            <input type="number" placeholder="Numero Cabina"
                                    data-parsley-errors-container="#errorCabina"
                                    required
                                    name="cabina" class="form-control"/>
@@ -66,5 +66,7 @@
     </div>
 </form>
 <div th:replace="common/sezione :: sezione"/>
+<div th:replace="fragments/modalerror :: error"/>
+<div th:replace="fragments/modalsuccess :: success"/>
 </body>
 </html>

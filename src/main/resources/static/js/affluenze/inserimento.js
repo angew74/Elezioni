@@ -22,7 +22,9 @@ jQuery(document).ready(function ($) {
             var errorDisplay = '#errorDisplay';
             var successcontainer = '#successModal';
             var mdisplay = "#messagesuccess";
-            e.preventDefault();
+            var form = $('form[name=rsezioneForm]').serialize();
+         //   var dati = JSON.stringify(form);
+          //   var dati = $('form[name=rsezioneForm]').serialize();
             //Remove all errors
             $('input').next().remove();
             $.ajax({
@@ -30,14 +32,15 @@ jQuery(document).ready(function ($) {
                 type: "POST",
                 contentType: "application/json",
                 dataType: 'json',
-                data: $('form[name=rsezioneForm]').serialize()
+                data: form
             }).done(function (data) {
                 try {
                     if (data !== null && data.id !== null) {
 
                     }
                 } catch (err) {
-
+                    $(errorDisplay).text("errore di connessione dettagli " + err);
+                    $(errorcontainer).modal('show');
                 }
             })
                 .fail(function (e) {
