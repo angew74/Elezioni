@@ -54,22 +54,6 @@ public class LoginController {
         return "login";
     }
 
-    @GetMapping(value = "/home")
-    public String index(Model model, Principal principal) {
-        model.addAttribute("titlepage", "Homepage");
-        String loggedInUserName = principal.getName();
-        model.addAttribute("user", loggedInUserName);
-        return "home";
-    }
-
-
-    @GetMapping("/admin")
-    public String admin(Model model, Principal principal) {
-        String loggedInUserName = principal.getName();
-        model.addAttribute("user", loggedInUserName);
-        model.addAttribute("titlepage", "Amministrazione Home");
-        return "admin";
-    }
 
 
 
