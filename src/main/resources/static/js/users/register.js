@@ -8,7 +8,7 @@ $(function() {
         //Remove all errors
         $('input').next().remove();
         $.post({
-            url: '/PresenzeDelta/users/add',
+            url: '/users/add',
             data: $('form[name=userForm]').serialize(),
             success : function(res) {
                 try {

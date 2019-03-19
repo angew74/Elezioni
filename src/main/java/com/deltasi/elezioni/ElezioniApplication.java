@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableConfigurationProperties
 @EnableTransactionManagement
 @EntityScan(basePackages = {"com.deltasi.elezioni.model"})  // scan JPA entities
-@ComponentScan(basePackages = {"com.deltasi.elezioni.service", "com.deltasi.elezioni.controllers", "com.deltasi.elezioni.repository","com.deltasi.elezioni.contracts",
+@ComponentScan(basePackages = {"com.deltasi.elezioni.service","com.deltasi.elezioni.model.json", "com.deltasi.elezioni.controllers", "com.deltasi.elezioni.repository","com.deltasi.elezioni.contracts",
 "com.deltasi.elezioni"})
 public class ElezioniApplication {
 
