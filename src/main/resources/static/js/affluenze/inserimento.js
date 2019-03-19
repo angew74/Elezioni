@@ -36,6 +36,7 @@ jQuery(document).ready(function ($) {
                         if (res.validated) {
                             //Set response
                             $("#cabina").text(res.iscritti.cabina);
+                            $("#numerosezione").text(res.iscritti.numerosezione);
                             $("#municipio").text(res.iscritti.municipio);
                             $("#numerosezione").text(res.iscritti.numerosezione);
                             $("#iscrittifemmine").text(res.iscritti.iscrittifemmine);
@@ -43,7 +44,7 @@ jQuery(document).ready(function ($) {
                             $("#iscrittitotali").text(res.iscritti.iscrittitotali);
                             $("#tipoelezione").text(res.iscritti.tipoelezione.descrizione);
                             $("#tiposezione").text(res.iscritti.tiposezione.descrizione);
-                            $("#iscritticard").show();
+                            $("#information").show();
                         } else {
                             //Set error messages
                             $.each(res.errorMessages, function (key, value) {

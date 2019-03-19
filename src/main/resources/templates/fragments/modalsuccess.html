@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
+<link th:href="@{~/css/common/modalsuccess.css}" type="text/css" rel="stylesheet" />
+<!-- Modal HTML -->
+<div th:fragment="success">
+<div id="successModal" class="modal fade">
+    <div class="modal-dialog modal-confirm modal-success">
+        <div class="modal-content modal-success">
+            <div class="modal-header modal-success">
+                <div class="icon-box">
+                    <i class="material-icons">&#xE876;</i>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body text-center">
+                <h4>Compliementi!!</h4>
+                <p id="messagesuccess"></p>
+                <button class="btn btn-success" data-dismiss="modal"><i class="material-icons">&#xE5C8;</i></button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

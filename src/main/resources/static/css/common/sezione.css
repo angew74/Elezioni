@@ -1,0 +1,22 @@
+@import "menu.css";
+@import "../font-awesome/all.css";
+
+/* padded section */
+.pad-section {
+    padding: 50px 0;
+}
+.pad-section img {
+    width: 100%;
+}
+/* vertical-centered text */
+.text-vcenter {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+.text-vcenter h1 {
+    font-size: 4.5em;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+}
