@@ -2,96 +2,55 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
 <head>
-<div th:replace="fragments/head :: header-css-js"/>
-<link th:href="@{~/css/common/sezione.css}" type="text/css" rel="stylesheet"/>
+    <div th:replace="fragments/head :: header-css-js"/>
 </head>
 <body>
 <!-- Modal HTML -->
 <div th:fragment="sezione">
-    <!-- fourth section - Information -->
-    <div id="information" class="pad-section" style="margin-top:30px">
-        <div class="container">
+    <div class="container" id="sezionediv" style="display: none">
+        <div class="well well-sm quick-contact">
             <div class="row">
-                <div class="col-sm-4">
-                    <div class="card w-50">
-                        <div class="card-header h-25">
-                            <h5 class="card-title">Numero Sezione</h5>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h1 id="sezione" class="title-contact">
+                            </h1>
                         </div>
-                        <p id="numerosezione" class="card-text">
-                        </p>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="card w-50">
-                        <div class="card-header h-25">
-                            <h5 class="card-title">Cabina</h5>
+                        <div class="col-md-4 contact-email">
+                            <h2 style="font-size:1.6rem" id="cabina">
+                            </h2>
+                            <h3 style="font-size:1.6rem" id="municipio">
+                            </h3>
+                            <h4 style="font-size:1.6rem" id="tipoelezione">
+                            </h4>
                         </div>
-                            <p id="cabina" class="card-text">
-                            </p>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="card w-50">
-                        <div class="card-header h-25" style="font-size: smaller">
-                            <h5 class="card-title">municipio</h5>
+                        <div class="col-md-4">
+                            <div class="row contact row-first">
+                                <div class="col-md-6">
+                                    <a id="iscrittifemmine" href="#" style="font-size:1.0rem"><i
+                                            class="fa fa-skype"></i></a>
+                                </div>
+                                <div class="col-md-6">
+                                    <a style="font-size:1.0rem" href="#" id="iscrittimaschi"><i
+                                            class="fa fa-google-plus"></i></a>
+                                </div>
+                            </div>
+                            <div class="row contact">
+                                <div class="col-md-6">
+                                    <a href="#" id="iscrittitotali" style="font-size:1.0rem"><i
+                                            class="fa fa-linkedin"></i></a>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="#" id="tiposezione" style="font-size:0.8rem"><i class="fa fa-twitter"></i></a>
+                                </div>
+                            </div>
                         </div>
-                        <p id="municipio" class="card-text">
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="card warning">
-                        <div class="card-header h-25">
-                            <h5 class="card-title">Iscritti Maschi</h5>
-                        </div>
-                        <p id="iscrittimaschi" class="card-text">
-                        </p>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="card warning">
-                        <div class="card-header h-25">
-                            <h5 class="card-title">Iscritti Femmine</h5>
-                        </div>
-                        <p id="iscrittifemmine" class="card-text">
-                        </p>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="card warning">
-                        <div class="card-header h-25">
-                            <h5 class="card-title">Iscritti Totali</h5>
-                        </div>
-                        <p id="iscrittitotali" class="card-text">
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="card warning">
-                        <div class="card-header h-25">
-                            <h5 class="card-title">Tipo sezione</h5>
-                        </div>
-                        <p id="tiposezione" class="card-text">
-                        </p>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="card warning">
-                        <div class="card-header h-25">
-                            <h5 class="card-title">Elezione</h5>
-                        </div>
-                        <p id="tipoelezione" class="card-text">
-                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- /fourth section -->
+    <input type="hidden" id="numerosezione"/>
 </div>
 </body>
 </html>

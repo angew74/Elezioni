@@ -165,7 +165,6 @@ public class UsersController {
                         .collect(
                                 Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage)
                         );
-
                 response.setValidated(false);
                 response.setErrorMessages(errors);
                 return response;
