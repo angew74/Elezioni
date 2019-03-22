@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: elezioni
+-- Host: localhost    Database: elezioni
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `iscritti`;
 CREATE TABLE `iscritti` (
   `idiscritti` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `idtipoelezione` int(10) unsigned NOT NULL,
-  `numerosezione` int(10) NOT NULL,
+  `numerosezione` int(10) unsigned NOT NULL,
   `idtiposezione` int(10) unsigned DEFAULT NULL,
   `municipio` int(10) unsigned NOT NULL,
   `collegiocamera` int(10) unsigned NOT NULL,
@@ -69,4 +69,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-17 18:22:51
+-- Dump completed on 2019-03-22 19:31:52

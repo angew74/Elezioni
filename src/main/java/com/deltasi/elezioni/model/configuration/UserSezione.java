@@ -24,4 +24,10 @@ public class UserSezione {
     @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
     private Sezione sezione;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idtipoelezione", referencedColumnName = "id")
+    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+    private TipoElezione tipoelezione;
+
+
 }

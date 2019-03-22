@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: elezioni
+-- Host: localhost    Database: elezioni
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -43,7 +43,7 @@ CREATE TABLE `spring_session` (
 
 LOCK TABLES `spring_session` WRITE;
 /*!40000 ALTER TABLE `spring_session` DISABLE KEYS */;
-INSERT INTO `spring_session` VALUES ('76143a2d-3a1c-4a13-8dcb-eeccff323b36','b20a88ad-4d90-417c-9b12-051433946b00',1552843180792,1552843190899,1800,1552844990899,'admin');
+INSERT INTO `spring_session` VALUES ('208b9447-d626-4558-9935-fd63fd2b75f9','13863b51-e659-40d8-8cf6-5b851c3b2f11',1553182383619,1553182396729,1800,1553184196729,'admin');
 /*!40000 ALTER TABLE `spring_session` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-17 18:22:50
+-- Dump completed on 2019-03-22 19:31:51
