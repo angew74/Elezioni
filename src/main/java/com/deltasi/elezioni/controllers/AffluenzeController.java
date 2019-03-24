@@ -139,6 +139,7 @@ public class AffluenzeController {
                         affluenza.setUtenteoperazione(SecurityContextHolder.getContext().getAuthentication().getName());
                         affluenza.setApertura1(1);
                         affluenzaService.add(affluenza);
+                        sezioneJson.setTipo(tipo);
                         sezioneJson.setValidated(true);
                         break;
                     case "CO":
@@ -150,6 +151,7 @@ public class AffluenzeController {
                         affluenza.setIscritti(iscritti);
                         affluenza.setCostituzione1(1);
                         affluenzaService.add(affluenza);
+                        sezioneJson.setTipo(tipo);
                         sezioneJson.setValidated(true);
                         break;
                 }
@@ -171,7 +173,8 @@ public class AffluenzeController {
 
 
     @PostMapping(value = "/anda")
-    public SezioneJson registraAffluenza(@ModelAttribute("sezione") @Valid AffluenzaJson affluenzaJson,
+    @ResponseBody
+    public SezioneJson registraAffluenza(@ModelAttribute("affluenzaJson") @Valid AffluenzaJson affluenzaJson,
                                          BindingResult result, ModelMap mode) {
         SezioneJson response = new SezioneJson();
         Map<String, String> errors = null;
@@ -187,6 +190,41 @@ public class AffluenzeController {
                 response.setErrorMessages(errors);
             }
             Affluenza affluenza = affluenzaService.findByNumerosezioneAndTipoelezioneId(affluenzaJson.getNumerosezione(),tipoelezioneid);
+            response.setTipo(affluenzaJson.getTipo());
+            switch (affluenzaJson.getTipo())
+            {
+                case "1A":
+                    affluenza.setAffluenza1(1);
+                    affluenza.setVotantifemmine1(affluenzaJson.getVotantifemmine());
+                    affluenza.setVotantimaschi1(affluenzaJson.getVotantimaschi());
+                    affluenza.setVotantitotali1(affluenzaJson.getVotantitotali());
+                    affluenzaService.add(affluenza);
+                    response.setValidated(true);
+                    break;
+                case "2A":
+                    affluenza.setAffluenza2(1);
+                    affluenza.setVotantifemmine2(affluenzaJson.getVotantifemmine());
+                    affluenza.setVotantimaschi2(affluenzaJson.getVotantimaschi());
+                    affluenza.setVotantitotali2(affluenzaJson.getVotantitotali());
+                    affluenzaService.add(affluenza);
+                    response.setValidated(true);
+                    break;
+                case "3A":
+                    affluenza.setAffluenza3(1);
+                    affluenza.setVotantifemmine3(affluenzaJson.getVotantifemmine());
+                    affluenza.setVotantimaschi3(affluenzaJson.getVotantimaschi());
+                    affluenza.setVotantitotali3(affluenzaJson.getVotantitotali());
+                    affluenzaService.add(affluenza);
+                    response.setValidated(true);
+                    break;
+                  default:
+                      errors = new HashMap<String, String>();
+                      errors.put("Errore grave", "Parametri non validi");
+                      response.setValidated(false);
+                      response.setErrorMessages(errors);
+                    break;
+
+            }
 
         } catch (Exception ex) {
             errors = new HashMap<String, String>();

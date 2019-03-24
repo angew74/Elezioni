@@ -33,14 +33,14 @@ public class BusinessRules {
         String message = "";
         FaseElezione fase = abilitazioniService.findByCodiceAndTipoelezioneId(codiceFase, idtipoelezione);
         if (fase.getAbilitata().equals(0)) {
-            return "Funzionalità non consentita";
+            return "Funzionalità non abilitata";
         }
         Affluenza affluenza = affluenzaService.findByNumerosezione(sezione);
-        if (affluenza == null) {
-            return message;
-        }
         switch (codiceFase) {
             case "AP":
+                if (affluenza == null) {
+                    return "Sezione non costitutita";
+                }
                 if (affluenza.getApertura1() != null && affluenza.getApertura1().equals(1)) {
                     return "Affluenza già inserita usare rettifica";
                 }
@@ -49,14 +49,19 @@ public class BusinessRules {
                 }
                 break;
             case "CO":
-                if (affluenza.getCostituzione1() != null && affluenza.getCostituzione1().equals(1)) {
-                    return "Costituzione già inserita usare rettitifa";
+                if(affluenza == null)
+                {return  message;}
+                if (affluenza != null) {
+                    return "Costituzione già inserita usare rettitifica";
                 }
                 if (affluenza.getApertura1() != null && affluenza.getApertura1().equals(1)) {
                     return "Apertura inserita";
                 }
                 break;
             case "1A":
+                if (affluenza == null) {
+                    return "Sezione non costitutita";
+                }
                 if (affluenza.getAffluenza1() != null && affluenza.getAffluenza1().equals(1)) {
                     return "1 Affluenza già registrata";
                 }
@@ -65,6 +70,9 @@ public class BusinessRules {
                 }
                 break;
             case "2A":
+                if (affluenza == null) {
+                    return "Sezione non costitutita";
+                }
                 if (affluenza.getAffluenza2() != null && affluenza.getAffluenza2().equals(1)) {
                     return "2 Affluenza già registrata";
                 }
@@ -73,6 +81,9 @@ public class BusinessRules {
                 }
                 break;
             case "3C":
+                if (affluenza == null) {
+                    return "Sezione non costitutita";
+                }
                 if (affluenza.getAffluenza3() != null && affluenza.getAffluenza3().equals(1)) {
                     return "Chiusura già registrata";
                 }
@@ -97,7 +108,7 @@ public class BusinessRules {
 
     public String getTitoloByFase(String codice, String tipo) {
         String titolo = "Inserimento";
-        switch (tipo) {
+        switch (codice) {
             case "2A":
                 switch (tipo) {
                     case "I":

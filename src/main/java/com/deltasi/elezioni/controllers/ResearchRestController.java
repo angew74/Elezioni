@@ -3,6 +3,7 @@ package com.deltasi.elezioni.controllers;
 import com.deltasi.elezioni.PDeltaUrlAuthenticationSuccessHandler;
 import com.deltasi.elezioni.contracts.IAffluenzaService;
 import com.deltasi.elezioni.contracts.IIscrittiService;
+import com.deltasi.elezioni.helpers.BusinessRules;
 import com.deltasi.elezioni.model.configuration.Iscritti;
 import com.deltasi.elezioni.model.json.AffluenzaJson;
 import com.deltasi.elezioni.model.json.SezioneJson;
@@ -39,11 +40,16 @@ public class ResearchRestController {
     @Autowired
     IAffluenzaService affluenzService;
 
+    @Autowired
+    BusinessRules businessRules;
+
+
     @PostMapping(value = "/search/sezione", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public SezioneJson researchSezione(@RequestBody @ModelAttribute("SezioneJson") SezioneJson sezione, BindingResult result) {
         Iscritti iscritti = new Iscritti();
         Map<String, String> errors = null;
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         if (result.hasErrors()) {
             errors = result.getFieldErrors().stream()
                     .collect(
@@ -59,13 +65,17 @@ public class ResearchRestController {
                 errors = new HashMap<String, String>();
                 errors.put("Errore grave", "Sezione non può essere zero");
                 sezione.setErrorMessages(errors);
-            } else {
-                if (sezione.getCabina() == 0 || sezione.getCabina() == null) {
-                    sezione.setValidated(false);
-                    errors = new HashMap<String, String>();
-                    errors.put("Errore grave", "Cabina non può essere zero");
-                    sezione.setErrorMessages(errors);
-                }
+                return sezione;
+            }
+            if (sezione.getCabina() == 0 || sezione.getCabina() == null) {
+                sezione.setValidated(false);
+                errors = new HashMap<String, String>();
+                errors.put("Errore grave", "Cabina non può essere zero");
+                sezione.setErrorMessages(errors);
+                return sezione;
+            }
+            String msg = businessRules.IsInsertable(sezione.getSezione(), sezione.getTipo(), tipoelezioneid);
+            if (msg.equals("")) {
                 iscritti = iscrittiService.findIscrittiBySezione(sezione.getSezione());
                 if (iscritti.getCabina().equals(sezione.getCabina())) {
                     sezione.setIscritti(iscritti);
@@ -75,7 +85,14 @@ public class ResearchRestController {
                     errors = new HashMap<String, String>();
                     errors.put("Errore grave", "Sezione cabina non congruenti");
                     sezione.setErrorMessages(errors);
+                    return sezione;
                 }
+            } else {
+                sezione.setValidated(false);
+                errors = new HashMap<String, String>();
+                errors.put("Errore grave", msg);
+                sezione.setErrorMessages(errors);
+                return sezione;
             }
         } catch (Exception ex) {
             errors = new HashMap<String, String>();
@@ -107,9 +124,11 @@ public class ResearchRestController {
         }
         json.setNumerosezione(sezione.getSezione());
         json.setTipo(sezione.getTipo());
-        json.setIscrittimaschi(afp.getIscritti().getIscrittimaschi());
-        json.setIscrittifemmine(afp.getIscritti().getIscrittifemmine());
-        json.setIscrittitotali(afp.getIscritti().getIscrittitotali());
+        if(!(sezione.getTipo().equals("CO"))) {
+            json.setIscrittimaschi(afp.getIscritti().getIscrittimaschi());
+            json.setIscrittifemmine(afp.getIscritti().getIscrittifemmine());
+            json.setIscrittitotali(afp.getIscritti().getIscrittitotali());
+        }
         json.setValidated(true);
         return json;
     }

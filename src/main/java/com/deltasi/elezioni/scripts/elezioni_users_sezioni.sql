@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: localhost    Database: elezioni
+-- Host: 127.0.0.1    Database: elezioni
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -33,7 +33,7 @@ CREATE TABLE `users_sezioni` (
   KEY `fk_users_sezione_tipoelezione_idx` (`idtipoelezione`),
   CONSTRAINT `fk_users_sezione_tipoelezione` FOREIGN KEY (`idtipoelezione`) REFERENCES `tipoelezione` (`id`),
   CONSTRAINT `fk_users_sezioni_sezioni` FOREIGN KEY (`sezioneid`) REFERENCES `sezioni` (`id`),
-  CONSTRAINT `fk_users_sezioni_users` FOREIGN KEY (`userid`) REFERENCES `users` (`user_id`)
+  CONSTRAINT `fk_users_sezioni_users` FOREIGN KEY (`userid`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -55,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-22 19:31:49
+-- Dump completed on 2019-03-24 19:44:48

@@ -34,6 +34,8 @@ jQuery(document).ready(function ($) {
                         if (res.tipo === "AP") {
                             $("#apertura").show();
                         }
+                        $("#tipoinput").val(res.tipo);
+                        $("#numerosezioneinput").val(res.numerosezione)
                        var iscrittitotali = res.iscrittitotali +5;
                         var iscrittimaschi = res.iscrittimaschi +5;
                        var iscrittifemmine =  res.iscrittifemmine +5;
@@ -225,7 +227,11 @@ jQuery(document).ready(function ($) {
         if ($("#votantiTotali").parsley().validate() !== true) {
             isValid = false;
         }
-
+        var sum = parseInt($('#votantiMaschi').val()) + parseInt($('#votantiFemmine').val());
+        if (sum !== $("#votantiTotali"))
+        {
+            isValid = false;
+        }
         if (isValid && isValidSelect) {
             postAffluenza();
         }

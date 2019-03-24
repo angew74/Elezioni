@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: localhost    Database: elezioni
+-- Host: 127.0.0.1    Database: elezioni
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -31,7 +31,7 @@ CREATE TABLE `users_extended` (
   `userid` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_users_usersextended_idx` (`userid`),
-  CONSTRAINT `fk_users_usersextended` FOREIGN KEY (`userid`) REFERENCES `users` (`user_id`)
+  CONSTRAINT `fk_users_usersextended` FOREIGN KEY (`userid`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-22 19:31:52
+-- Dump completed on 2019-03-24 19:44:50
