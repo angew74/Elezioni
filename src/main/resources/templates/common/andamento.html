@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/head :: header-css-js"/>
+</head>
+<body>
+<div th:fragment="andamento">
+    <div class="card" style="border:none">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${titlepage}">
+            </h5>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="well well-sm">
+                        <form class="form-horizontal" th:object="${Andamento}" name="insertAffluenza"
+                              data-parsley-validate action="/affluenze/anda" method="post">
+                            <fieldset>
+                                <div class="form-group row">
+                                    <span class="col-md-1 col-md-offset-2 text-center"></span>
+                                    <div class="col-md-8">
+                                        <div class="input-group">
+                                            <input  name="sezione" type="hidden"
+                                                   id="numerosezioneinput" />
+                                            <input  name="tipo" type="hidden"
+                                                    id="tipoinput" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <span class="col-md-1 col-md-offset-2 text-center"></span>
+                                    <div class="col-md-8">
+                                        <div class="input-group">
+                                            <input name="votantimaschi" th:field="*{votantimaschi}" class="form-control"
+                                                   id="votantiMaschi" placeholder="Votanti Maschi"
+                                                   type="number"
+                                                   min="0"
+                                                   data-parsley-required
+                                                   data-parsley-type="number"
+                                                   data-validation="required"
+                                                   data-parsley-errors-container="#errorvotantiMaschi"/>
+                                            <div class="input-group-append">
+                                                <div class="input-group-text"><i class="fas fa-mars fa-1x"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <span class="col-md-1 col-md-offset-2 text-center"></span>
+                                    <div class="col-md-8">
+                                        <div id="errorvotantiMaschi" class="errorBlock"></div>
+                                    </div>
+                                </div>
+
+                                <!-- votanti maschi precedenti da visualizzare solo per seconda e terza affluenza -->
+                                <div style="display: none" class="form-group row" id="divVotantiMaschiaffp">
+                                    <span class="col-md-1 col-md-offset-2 text-center"></span>
+                                    <div class="col-md-8">
+                                        <div class="input-group">
+                                            <input class="form-control" id="votantiMaschiaffp"
+                                                   th:field="*{votantimaschiaffp}"
+                                                   name="votantimaschiaffp"
+                                                   type="number"
+                                                   readonly
+                                            />
+                                            <div class="input-group-append">
+                                                <div class="input-group-text"><i class="fas fa-mars fa-1x"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- fine votanti maschi precedenti -->
+
+
+
+                                <div class="form-group row">
+                                    <span class="col-md-1 col-md-offset-2 text-center"></span>
+                                    <div class="col-md-8">
+                                        <div class="input-group">
+                                            <input name="votantiFemmine" placeholder="Votanti Femmine"
+                                                   id="votantiFemmine"
+                                                   data-parsley-errors-container="#errorvotantiFemmine"
+                                                   data-parsley-required
+                                                   type="number"
+                                                   min="0"
+                                                   data-parsley-type="number"
+                                                   data-validation="required"
+                                                   th:field="*{votantifemmine}"
+                                                   class="form-control"/>
+                                            <div class="input-group-append">
+                                                <div class="input-group-text"><i class="fas fa-venus fa-1x"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <span class="col-md-1 col-md-offset-2 text-center"></span>
+                                    <div class="col-md-8">
+                                        <div id="errorvotantiFemmine" class="errorBlock"></div>
+                                    </div>
+                                </div>
+
+                                <!-- votanti femmine precedenti da visualizzare solo per seconda e terza affluenza -->
+                                <div style="display: none" class="form-group row" id="divVotantiFemmineaffp">
+                                    <span class="col-md-1 col-md-offset-2 text-center"></span>
+                                    <div class="col-md-8">
+                                        <div class="input-group">
+                                            <input class="form-control" id="votantiFemmineaffp"
+                                                   th:field="*{votantifemmineaffp}"
+                                                   name="votantifemmineaffp"
+                                                   type="number"
+                                                   readonly
+                                            />
+                                            <div class="input-group-append">
+                                                <div class="input-group-text"><i class="fas fa-venus fa-1x"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- fine votanti femmine precedenti -->
+
+                                <div class="form-group row">
+                                    <span class="col-md-1 col-md-offset-2 text-center"></span>
+                                    <div class="col-md-8">
+                                        <div class="input-group">
+                                            <input class="form-control" id="votantiTotali"
+                                                   th:field="*{votantitotali}"
+                                                   data-parsley-required
+                                                   min="0"
+                                                   name="votantiTotali" data-validation="required"
+                                                   placeholder="Votanti Totali"
+                                                   type="number"
+                                                   data-parsley-type="number"
+                                                   data-parsley-errors-container="#errorVotantiTotali"
+                                            />
+                                            <div class="input-group-append">
+                                                <div class="input-group-text"><i class="fas fa-poll fa-1x"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <span class="col-md-1 col-md-offset-2 text-center"></span>
+                                    <div class="col-md-8">
+                                        <div id="errorVotantiTotali" class="errorBlock"></div>
+                                    </div>
+                                </div>
+
+                                <!-- votanti totali precedenti da visualizzare solo per seconda e terza affluenza -->
+                                <div style="display: none" class="form-group row" id="divVotantiTotaliaffp">
+                                    <span class="col-md-1 col-md-offset-2 text-center"></span>
+                                    <div class="col-md-8">
+                                        <div class="input-group">
+                                            <input class="form-control" id="votantiTotaliaffp"
+                                                   th:field="*{votantitotaliaffp}"
+                                                   name="votantitotaliaffp"
+                                                   type="number"
+                                                   readonly
+                                            />
+                                            <div class="input-group-append">
+                                                <div class="input-group-text"><i class="fas fa-poll fa-1x"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- fine votanti precedenti -->
+
+                                <div class="form-group">
+                                    <div class="col-md-8">
+                                        <button id="btnSalvaAffluenza" data-parsley-validate
+                                                class="btn btn-dark btn-sm float-right submit_btn">
+                                            <i class="fas fa-arrow-alt-circle-right" style="margin-right:5px"></i>Salva
+                                        </button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

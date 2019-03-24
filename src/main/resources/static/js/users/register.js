@@ -6,7 +6,7 @@ $(function() {
         var mdisplay = "#messagesuccess";
         e.preventDefault();
         //Remove all errors
-        $('input').next().remove();
+       // $('input').next().remove();
         $.post({
             url: '/users/add',
             data: $('form[name=userForm]').serialize(),

@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 
 
 @Entity
-@Table(name = "users")
+@Table(name = "Users_Extended")
 public class UserExtended {
 
 
@@ -42,7 +42,7 @@ public class UserExtended {
 
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "userid", referencedColumnName = "user_id")
+    @JoinColumn(name = "userid", referencedColumnName = "id")
     @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
     private User user;
 

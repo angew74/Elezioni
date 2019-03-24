@@ -13,7 +13,7 @@ function update(id) {
     }
    //  e.preventDefault();
     //Remove all errors
-    $('input').next().remove();
+   //  $('input').next().remove();
     $.post({
         url: '/abilitazioni/update',
         data: {id: id, abilitazione: valueabil},

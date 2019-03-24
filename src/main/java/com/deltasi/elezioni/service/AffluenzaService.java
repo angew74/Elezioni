@@ -124,4 +124,10 @@ public class AffluenzaService implements IAffluenzaService {
         return  affluenzaDAO.findByAffluenza5(a);
     }
 
+    @Override
+    public  Affluenza findByNumerosezioneAndTipoelezioneId(Integer sezione, Integer tipoElezioneId)
+    {
+       return affluenzaDAO.findByNumerosezioneAndTipoelezioneId(sezione,tipoElezioneId);
+    }
+
 }

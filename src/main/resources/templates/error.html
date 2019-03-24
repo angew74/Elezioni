@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
 <head>
     <div th:replace="fragments/head :: header-css-js"/>
-    <link th:href="@{css/common/error.css}" type="text/css" rel="stylesheet" />
+    <link th:href="@{~/css/common/error.css}" type="text/css" rel="stylesheet" />
 </head>
 <body>
 <div th:replace="fragments/menu :: menu"/>
@@ -18,10 +18,17 @@
             <!---- for body container ---->
             <div class="jumbotron">
                 <h1 class="display-1"><i class="fa  fa-spin fa-cog fa-3x"></i></h1>
-                <h1 class="display-3">Attenzione</h1>
-                <p class="lower-case">Non sei autorizzato ad accedere alla pagina richiesta</p>
-                <h3 class="text-info">Errore di autorizzazione</h3>
-                <p class="lower-case">Contattare l'amministratore di sistema qualora si pensi di poter accedere alla risorsa specificata</p>
+                <h1 class="display-3">ERRORE</h1>
+                <th:if test="${not empty errCode}">
+                    <p class="lower-case" th:text="${errCode}"></p>
+                </th:if>
+                <th:if test="${not empty errMsg}">
+                    <p class="lower-case" th:text="${errMsg}"></p>
+                </th:if>
+                <th:if test="${empty errCode}">
+                    <h3 class="text-info text-center">Errore applicativo generico</h3>
+                </th:if>
+                <p class="lower-case">Contattare l'amministratore di sistema per segnalare il problema</p>
             </div>
             <!-------mother container middle class------------------->
         </div>

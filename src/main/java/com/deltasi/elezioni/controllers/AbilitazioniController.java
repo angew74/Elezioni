@@ -31,9 +31,9 @@ public class AbilitazioniController {
 
     @GetMapping(value = "/map")
     @Secured("ROLE_ADMIN")
-    public ModelAndView list(Model model, Principal principal) {
+    public ModelAndView map(Model model, Principal principal) {
         ModelAndView modelAndView = new ModelAndView("abilitazioni/map");
-        modelAndView.addObject("titlepage", "Gestione Abilitazioni");
+        modelAndView.addObject("titlepage", "Gestione Abilitazioni fasi");
         List<FaseElezione> list = new ArrayList<FaseElezione>();
          try {
             list = abilitazioniService.getAll();
@@ -48,6 +48,27 @@ public class AbilitazioniController {
         }
         return modelAndView;
     }
+
+    @GetMapping(value = "/list")
+    @Secured("ROLE_ADMIN")
+    public ModelAndView list(Model model, Principal principal) {
+        ModelAndView modelAndView = new ModelAndView("abilitazioni/list");
+        modelAndView.addObject("titlepage", "Gestione Generale");
+        List<FaseElezione> list = new ArrayList<FaseElezione>();
+        try {
+            list = abilitazioniService.getAll();
+            modelAndView.addObject("Fasi", list);
+            modelAndView.addObject("fasicount",list.size());
+        } catch (Exception ex) {
+            String error = ex.getMessage();
+            ModelAndView errormodelAndView = new ModelAndView("common/error");
+            modelAndView.addObject("titlepage", "Pagina Errore");
+            modelAndView.addObject("Error", error);
+            return errormodelAndView;
+        }
+        return modelAndView;
+    }
+
 
     @PostMapping(value = "/update", produces = {MediaType.APPLICATION_JSON_VALUE})
     @Secured("ROLE_ADMIN")

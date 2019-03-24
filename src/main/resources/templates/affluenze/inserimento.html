@@ -31,6 +31,8 @@
                             <input type="number"
                                    data-parsley-errors-container="#errorSezione"
                                    required
+                                   data-parsley-type="number"
+                                   id="numeroSezione"
                                    placeholder="Numero Sezione" name="sezione" class="form-control"/>
                         </div>
                         <div class="form-group row">
@@ -46,6 +48,8 @@
                             <input type="number" placeholder="Numero Cabina"
                                    data-parsley-errors-container="#errorCabina"
                                    required
+                                    id="numeroCabina"
+                                   data-parsley-type="number"
                                    name="cabina" class="form-control"/>
                         </div>
                         <div class="form-group row">
@@ -61,7 +65,7 @@
                     <button type="button" id="submitSearch"
                             data-parsley-validate
                             class="btn btn-success btn-sm float-right submit_btn">
-                        <i class="fas fa-arrow-alt-circle-right"></i>Cerca
+                        <i class="fas fa-arrow-alt-circle-right" style="margin-right:5px"></i>Cerca
                     </button>
                 </div>
             </div>
@@ -90,6 +94,9 @@
             </button>
         </div>
     </div>
+</div>
+<div class="container" id="1affluenza" style="display: none;border: 1px #6d353a solid;">
+   <div th:replace="common/andamento :: andamento"/>
 </div>
 </body>
 </html>

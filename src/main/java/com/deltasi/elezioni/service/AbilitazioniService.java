@@ -46,4 +46,10 @@ public class AbilitazioniService implements IAbilitazioniService {
     {
         faseElezioneDAO.save(fase);
     }
+
+    @Override
+    public FaseElezione findByCodiceAndTipoelezioneId(String codice, Integer tipoElezioneId)
+    {
+        return  faseElezioneDAO.findByCodiceAndTipoelezioneId(codice,tipoElezioneId);
+    }
 }

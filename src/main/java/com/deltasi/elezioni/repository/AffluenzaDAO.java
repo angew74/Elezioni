@@ -11,6 +11,7 @@ import java.util.List;
 public interface AffluenzaDAO extends JpaRepository<Affluenza, Long> {
 
     Affluenza findById(Integer id);
+    Affluenza findByNumerosezioneAndTipoelezioneId(Integer sezione, Integer tipoElezioneId);
     Affluenza findByNumerosezione(Integer num);
     List<Affluenza> findByPlessoId(Integer idplesso);
     List<Affluenza> findByPlessoMunicipio(Integer municipio);

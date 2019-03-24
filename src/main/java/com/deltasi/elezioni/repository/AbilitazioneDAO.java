@@ -14,6 +14,7 @@ public interface AbilitazioneDAO  extends JpaRepository<FaseElezione, Long> {
 
     public FaseElezione findById(Integer id);
     public FaseElezione findByCodice(String codice);
+    public FaseElezione findByCodiceAndTipoelezioneId(String codice, Integer tipoElezioneId);
     public List<FaseElezione> findAllBy();
     public List<FaseElezione> findByAbilitata(Integer abil);
 }

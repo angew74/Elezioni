@@ -15,7 +15,7 @@ public class UserSezione {
     private Integer id;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "userid", referencedColumnName = "user_id")
+    @JoinColumn(name = "userid", referencedColumnName = "id")
     @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
     private User user;
 

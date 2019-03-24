@@ -6,9 +6,10 @@ import java.util.List;
 
 public interface IAbilitazioniService {
 
-    public FaseElezione findFaseElezioneById(Integer id);
-    public FaseElezione findFaseElezioneByCodice(String codice);
-    public List<FaseElezione> findFaseElezioneByAbiltazione(Integer abil);
-    public List<FaseElezione> getAll();
-    public void Save(FaseElezione fase);
+    FaseElezione findFaseElezioneById(Integer id);
+    FaseElezione findFaseElezioneByCodice(String codice);
+    List<FaseElezione> findFaseElezioneByAbiltazione(Integer abil);
+    List<FaseElezione> getAll();
+    void Save(FaseElezione fase);
+    FaseElezione findByCodiceAndTipoelezioneId(String codice, Integer tipoElezioneId);
 }

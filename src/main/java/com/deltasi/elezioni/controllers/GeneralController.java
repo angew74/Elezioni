@@ -32,7 +32,7 @@ public class GeneralController {
 
         @RequestMapping(value = "/error", method = RequestMethod.GET)
     public String loginError(ModelMap model) {
-        model.addAttribute("error", "true");
+            model.addAttribute("titlepage", "Errore applicativo");
         return "error";
 
     }
