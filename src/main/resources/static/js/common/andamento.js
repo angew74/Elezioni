@@ -20,7 +20,7 @@ jQuery(document).ready(function ($) {
         var sezione = $("#numerosezione").val();
         //  $('input').next().remove();
         $.get({
-            url: '/affluenze/registra/' + tipo + '/' + sezione,
+            url: '/affluenze/apra/' + tipo + '/' + sezione,
             success: function (res) {
                 try {
                     if (res.validated) {
@@ -29,9 +29,17 @@ jQuery(document).ready(function ($) {
                             $("#costituzione").hide();
                             $(mdisplay).text("Costituzione inserita correttamente");
                         }
+                        if (res.tipo === "RCO") {
+                            $("#costituzione").hide();
+                            $(mdisplay).text("Costituzione annullata correttamente");
+                        }
                         if (res.tipo === "AP") {
                             $("#apertura").hide();
                             $(mdisplay).text("Apertura inserita correttamente");
+                        }
+                        if (res.tipo === "RAP") {
+                            $("#apertura").hide();
+                            $(mdisplay).text("Apertura rettificata correttamente");
                         }
                         $(successcontainer).modal('show');
                     } else {
@@ -107,6 +115,18 @@ jQuery(document).ready(function ($) {
                 try {
                     if (res.validated) {
                         //Set response
+                        if (res.tipo === "1A") {
+                            $("#costituzione").hide();
+                            $(mdisplay).text("1 Affluenza inserita correttamente");
+                        }
+                        if (res.tipo === "2A") {
+                            $("#apertura").hide();
+                            $(mdisplay).text("2 Affluenza inserita correttamente");
+                        }
+                        if (res.tipo === "3A") {
+                            $("#apertura").hide();
+                            $(mdisplay).text("Chiusura inserita correttamente");
+                        }
                         if (res.tipo === "R1A") {
                             $("#costituzione").hide();
                             $(mdisplay).text("1 Affluenza rettificata");

@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: elezioni
+-- Host: localhost    Database: elezioni
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `affluenze_storico`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `affluenze_storico` (
   `id` int(10) unsigned NOT NULL,
-  `idtipoelezione` int(10) unsigned DEFAULT NULL,
+  `idtipoelezione` int(10) unsigned NOT NULL,
   `numerosezione` int(10) unsigned NOT NULL,
   `idplesso` int(10) unsigned DEFAULT NULL,
   `idiscritti` int(10) unsigned NOT NULL,
@@ -53,13 +53,10 @@ CREATE TABLE `affluenze_storico` (
   `votantitotali3` int(10) unsigned DEFAULT NULL,
   `votantitotali4` int(10) unsigned DEFAULT NULL,
   `votantitotali5` int(10) unsigned DEFAULT NULL,
-  `dataoperazioneold` datetime DEFAULT NULL,
-  `utenteoperazioneold` varchar(45) DEFAULT NULL,
-  `dataoperazione` datetime DEFAULT NULL,
-  `utenteoperazione` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`),
-  UNIQUE KEY `numerosezione_UNIQUE` (`numerosezione`),
+  `dataoperazioneold` datetime NOT NULL,
+  `utenteoperazioneold` varchar(45) NOT NULL,
+  `dataoperazione` datetime NOT NULL,
+  `utenteoperazione` varchar(45) NOT NULL,
   KEY `fk_affluenze_storico_iscritti_idx` (`idiscritti`),
   KEY `fk_affluenze_storico_tipo_elezione_idx` (`idtipoelezione`),
   KEY `fk_affluenze_storico_plessi_idx` (`idplesso`),
@@ -75,7 +72,7 @@ CREATE TABLE `affluenze_storico` (
 
 LOCK TABLES `affluenze_storico` WRITE;
 /*!40000 ALTER TABLE `affluenze_storico` DISABLE KEYS */;
-INSERT INTO `affluenze_storico` VALUES (1,1,1,NULL,1,1,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2019-03-23 20:20:26','admin','2019-03-23 20:20:26','admin'),(3,1,2,NULL,2,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2019-03-24 19:39:52','admin','2019-03-24 19:40:46','admin');
+INSERT INTO `affluenze_storico` VALUES (1,1,1,NULL,1,1,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2019-03-23 20:20:26','admin','2019-03-23 20:20:26','admin'),(3,1,2,NULL,2,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2019-03-24 19:39:52','admin','2019-03-24 19:40:46','admin'),(3,1,2,NULL,2,1,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2019-03-24 19:40:46','admin','2019-03-24 19:40:46','admin'),(4,1,3,NULL,3,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2019-03-25 14:49:49','admin','2019-03-25 14:51:38','admin'),(4,1,3,NULL,3,1,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2019-03-25 14:51:38','admin','2019-03-25 14:51:38','admin'),(1,1,1,NULL,1,1,NULL,1,NULL,NULL,1,NULL,NULL,NULL,NULL,100,NULL,NULL,NULL,NULL,100,NULL,NULL,NULL,NULL,200,NULL,NULL,NULL,NULL,'2019-03-23 20:20:26','admin','2019-03-23 20:20:26','admin');
 /*!40000 ALTER TABLE `affluenze_storico` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -88,4 +85,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-24 19:44:50
+-- Dump completed on 2019-03-26 17:00:47

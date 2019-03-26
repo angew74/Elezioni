@@ -19,7 +19,7 @@
                     <i class="fas fa-plus-circle"></i>Inserimento</a>
                 </li>
                 <li>
-                    <a th:if="${#lists.contains(fasi, 'RCO')}" href="/affluenze/modifica/RCO">
+                    <a th:if="${#lists.contains(fasi, 'CO')}" href="/affluenze/modifica/CO">
                         <i class="fas fa-minus-circle"></i>Annullamento</a></li>
             </ul>
         </li>
@@ -28,7 +28,7 @@
             <ul>
                 <li><a th:if="${#lists.contains(fasi, 'AP')}"  href="/affluenze/inserimento/AP">
                     <i class="fas fa-plus-circle"></i>Inserimento</a></li>
-                <li><a th:if="${#lists.contains(fasi, 'RAP')}"  href="/affluenze/modifica/RAP">
+                <li><a th:if="${#lists.contains(fasi, 'AP')}"  href="/affluenze/modifica/AP">
                     <i class="fas fa-minus-circle"></i>Annullamento</a></li>
             </ul>
         </li>
@@ -36,27 +36,27 @@
             <h3><a href="#"><i class="far fa-thumbs-up"></i>Affluenze</a></h3>
             <ul>
                 <li class="active"><a href="#">1 Affluenza</a>
-                <ul>
-                    <li><a th:if="${#lists.contains(fasi, '1A')}"  href="/affluenze/inserimento/1A">
-                        <i class="fas fa-plus-circle"></i>Inserimento</a></li>
-                    <li><a th:if="${#lists.contains(fasi, 'R1A')}"  href="/affluenze/modifica/R1A">
-                        <i class="fas fa-edit"></i>Rettifica</a></li>
-                    <li><a th:if="${#lists.contains(fasi, 'R1A')}"  href="/affluenze/annullamento/R1A">
-                        <i class="fas fa-minus-circle"></i>Annullamento</a></li>
-                </ul>
+                    <ul>
+                        <li><a th:if="${#lists.contains(fasi, '1A')}"  href="/affluenze/inserimento/1A">
+                            <i class="fas fa-plus-circle"></i>Inserimento</a></li>
+                        <li><a th:if="${#lists.contains(fasi, '1A')}"  href="/affluenze/modifica/1A">
+                            <i class="fas fa-edit"></i>Rettifica</a></li>
+                        <li><a th:if="${#lists.contains(fasi, '1A')}"  href="/affluenze/annullamento/1A">
+                            <i class="fas fa-minus-circle"></i>Annullamento</a></li>
+                    </ul>
                 </li>
                 <li class="active"><a href="#">2 Affluenza </a>
-                <ul>
-                    <li><a th:if="${#lists.contains(fasi, '2A')}" href="/affluenze/inserimento/2A">
-                        <i class="fas fa-plus-circle"></i>Inserimento</a>
-                    </li>
-                    <li><a th:if="${#lists.contains(fasi, 'R2A')}" href="/affluenze/modifica/R2A">
-                        <i class="fas fa-edit"></i>Rettifica</a>
-                    </li>
-                    <li><a th:if="${#lists.contains(fasi, 'R2A')}" href="/affluenze/annullamento/R2A">
-                        <i class="fas fa-minus-circle"></i>Annullamento</a>
-                    </li>
-                </ul>
+                    <ul>
+                        <li><a th:if="${#lists.contains(fasi, '2A')}" href="/affluenze/inserimento/2A">
+                            <i class="fas fa-plus-circle"></i>Inserimento</a>
+                        </li>
+                        <li><a th:if="${#lists.contains(fasi, '2A')}" href="/affluenze/modifica/2A">
+                            <i class="fas fa-edit"></i>Rettifica</a>
+                        </li>
+                        <li><a th:if="${#lists.contains(fasi, '2A')}" href="/affluenze/annullamento/2A">
+                            <i class="fas fa-minus-circle"></i>Annullamento</a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </li>
@@ -66,11 +66,11 @@
                 <li><a th:if="${#lists.contains(fasi, '3C')}" href="/affluenze/inserimento/3C">
                     <i class="fas fa-plus-circle">
                     </i>Inserimento</a></li>
-                <li><a th:if="${#lists.contains(fasi, 'R3C')}"  href="/affluenze/modifica/R3C">
+                <li><a th:if="${#lists.contains(fasi, '3C')}"  href="/affluenze/modifica/3C">
                     <i class="fas fa-edit">
-                </i>Rettifica</a>
+                    </i>Rettifica</a>
                 </li>
-                <li><a th:if="${#lists.contains(fasi, 'R3C')}" href="/affluenze/annullamento/R3C">
+                <li><a th:if="${#lists.contains(fasi, '3C')}" href="/affluenze/annullamento/3C">
                     <i class="fas fa-minus-circle"></i>Annullamento</a></li>
             </ul>
         </li>

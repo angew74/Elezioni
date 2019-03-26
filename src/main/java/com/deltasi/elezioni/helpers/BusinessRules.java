@@ -48,14 +48,39 @@ public class BusinessRules {
                     return "Manca Costituzione";
                 }
                 break;
-            case "CO":
-                if(affluenza == null)
+            case "RAP":
+                if (affluenza == null) {
+                    return "Sezione non costitutita";
+                }
+                if (affluenza.getApertura1() != null && affluenza.getApertura1().equals(0)) {
+                    return "Apertura non inserita usare funzione inserimento";
+                }
+                if (affluenza.getAffluenza1() != null && affluenza.getAffluenza1().equals(1)) {
+                    return "Affluenza già inserita impossibile annullare";
+                }
+                if ((affluenza.getCostituzione1() == null) || (affluenza.getCostituzione1().equals(0))) {
+                    return "Manca Costituzione";
+                }
+                if(affluenza.getApertura1().equals(0))
                 {return  message;}
+                break;
+            case "CO":
+                if (affluenza == null) {
+                    return message;
+                }
                 if (affluenza != null) {
                     return "Costituzione già inserita usare rettitifica";
                 }
                 if (affluenza.getApertura1() != null && affluenza.getApertura1().equals(1)) {
                     return "Apertura inserita";
+                }
+                break;
+            case "RCO":
+                if (affluenza == null) {
+                    return "Costituzione non effettuata usare inserimento";
+                }
+                if (affluenza.getApertura1() != null && affluenza.getApertura1().equals(1)) {
+                    return "Apertura già inserita impossibile annullare costituzione";
                 }
                 break;
             case "1A":
@@ -64,6 +89,20 @@ public class BusinessRules {
                 }
                 if (affluenza.getAffluenza1() != null && affluenza.getAffluenza1().equals(1)) {
                     return "1 Affluenza già registrata";
+                }
+                if ((affluenza.getApertura1() == null) || (affluenza.getApertura1().equals(0))) {
+                    return "Manca Apertura";
+                }
+                break;
+            case "R1A":
+                if (affluenza == null) {
+                    return "Sezione non costitutita";
+                }
+                if (affluenza.getAffluenza1() != null && affluenza.getAffluenza1().equals(0)) {
+                    return "1 Affluenza non registrata usare inserimento";
+                }
+                if (affluenza.getAffluenza2() != null && affluenza.getAffluenza2().equals(1)) {
+                    return "2 Affluenza inserita impossibile annullare";
                 }
                 if ((affluenza.getApertura1() == null) || (affluenza.getApertura1().equals(0))) {
                     return "Manca Apertura";
@@ -80,6 +119,20 @@ public class BusinessRules {
                     return "Manca 1 Affluenza";
                 }
                 break;
+            case "R2A":
+                if (affluenza == null) {
+                    return "Sezione non costitutita";
+                }
+                if (affluenza.getAffluenza2() == null || affluenza.getAffluenza2().equals(0)) {
+                    return "2 Affluenza non registrata usare inserimento";
+                }
+                if ((affluenza.getAffluenza1() == null) || (affluenza.getAffluenza1().equals(0))) {
+                    return "Manca 1 Affluenza";
+                }
+                if (affluenza.getAffluenza3() != null && affluenza.getAffluenza3().equals(1)) {
+                    return "3 Affluenza inserita impossibile annullare";
+                }
+                break;
             case "3C":
                 if (affluenza == null) {
                     return "Sezione non costitutita";
@@ -89,6 +142,17 @@ public class BusinessRules {
                 }
                 if ((affluenza.getAffluenza2() == null) || (affluenza.getAffluenza2().equals(0))) {
                     return "Manca 2 Affluenza";
+                }
+                break;
+            case "R3C":
+                if (affluenza == null) {
+                    return "Sezione non costitutita";
+                }
+                if (affluenza.getAffluenza3() == null || affluenza.getAffluenza3().equals(0)) {
+                    return "Chiusura non registrata usare inserimento";
+                }
+                if ((affluenza.getAffluenza3() == null) || (affluenza.getAffluenza3().equals(0))) {
+                    return "Manca 3 Affluenza";
                 }
                 break;
         }
@@ -114,6 +178,9 @@ public class BusinessRules {
                     case "I":
                         titolo = "Inserimento 2 Affluenza Seggio";
                         break;
+                }
+            case "R2A":
+                switch (tipo) {
                     case "M":
                         titolo = "Modifica 2 Affluenza Seggio";
                         break;
@@ -127,6 +194,9 @@ public class BusinessRules {
                     case "I":
                         titolo = "Inserimento 1 Affluenza Seggio";
                         break;
+                }
+            case "R1A":
+                switch (tipo) {
                     case "A":
                         titolo = "Annullamento 1 Affluenza Seggio";
                         break;
@@ -140,6 +210,9 @@ public class BusinessRules {
                     case "I":
                         titolo = "Inserimento Apertura Seggio";
                         break;
+                }
+            case "RAP":
+                switch (tipo) {
                     case "A":
                         titolo = "Annullamento Apertura Seggio";
                         break;
@@ -150,6 +223,9 @@ public class BusinessRules {
                     case "I":
                         titolo = "Inserimento Costituzione Seggio";
                         break;
+                }
+            case "RCO":
+                switch (tipo) {
                     case "A":
                         titolo = "Annullamento Costituzione Seggio";
                         break;
@@ -160,6 +236,9 @@ public class BusinessRules {
                     case "I":
                         titolo = "Inserimento Chiusura Seggio";
                         break;
+                }
+            case "R3C":
+                switch (tipo) {
                     case "M":
                         titolo = "Modifica Chiusura Seggio";
                         break;

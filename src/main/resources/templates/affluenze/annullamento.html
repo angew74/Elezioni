@@ -1,10 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <div th:replace="fragments/head :: header-css-js"/>
+    <link th:href="@{~/css/affluenze/annullamento.css}" type="text/css" rel="stylesheet"/>
+    <link th:href="@{~/css/common/parsley.css}" type="text/css" rel="stylesheet"/>
+    <script th:src="@{~/js/affluenze/annullamento.js}" type="text/javascript">
+    </script>
 </head>
 <body>
+<div th:replace="fragments/menu :: menu"/>
+<div th:replace="common/ricercasezione" ::ricercasezione />
+<div th:replace="common/sezione :: sezione"/>
+<div th:replace="fragments/modalerror :: error"/>
+<div th:replace="fragments/modalsuccess :: success"/>
+<div class="container" id="costituzione" style="display: none;border: 1px #6d353a solid;">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <button class='btn btn-lg' id="buttonCostituzione" style='background-color:transparent;'>
+                <div style='text-align:center;'><i class="fas fa-check-circle"></i></div>
+                Conferma Costituzione
+            </button>
+        </div>
+    </div>
+</div>
+<div class="container" id="apertura" style="display: none;border: 1px #6d353a solid;">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <button class='btn btn-lg' id="buttonApertura" style='background-color:transparent;'>
+                <div style='text-align:center;'><i class="fas fa-check-circle"></i></div>
+                Conferma Apertura
+            </button>
+        </div>
+    </div>
+</div>
+<div class="container" id="1affluenza" style="display: none;border: 1px #6d353a solid;">
+    <div th:replace="common/andamento :: andamento"/>
+</div>
 
 </body>
 </html>

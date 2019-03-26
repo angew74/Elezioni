@@ -95,7 +95,8 @@ public class AffluenzeController {
             String titolo = businessRules.getTitoloByFase(tipo, "M");
             modelAndView.addObject("titlepage", titolo);
             modelAndView.addObject("tipo", tipo);
-
+            AffluenzaJson json = new AffluenzaJson();
+            modelAndView.addObject("Andamento", json);
         } else {
             modelAndView = new ModelAndView("common/unauthorized");
             modelAndView.addObject("errMsg", "Fase non abilitata");
@@ -111,6 +112,8 @@ public class AffluenzeController {
             String titolo = businessRules.getTitoloByFase(tipo, "A");
             modelAndView.addObject("titlepage", titolo);
             modelAndView.addObject("tipo", tipo);
+            AffluenzaJson json = new AffluenzaJson();
+            modelAndView.addObject("Andamento", json);
         } else {
             modelAndView = new ModelAndView("common/unauthorized");
             modelAndView.addObject("errMsg", "Fase non abilitata");
@@ -119,7 +122,7 @@ public class AffluenzeController {
     }
 
 
-    @GetMapping(value = "/registra/{tipo}/{sezione}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value = "/apra/{tipo}/{sezione}", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public SezioneJson registra(@PathVariable String tipo, @PathVariable Integer sezione, Principal principal) {
         SezioneJson sezioneJson = new SezioneJson();
@@ -134,6 +137,7 @@ public class AffluenzeController {
                 tipoElezione = tipoElezioneService.findTipoElezioneById(tipoelezioneid);
                 switch (tipo) {
                     case "AP":
+                    case "RAP":
                         affluenza = affluenzaService.findByNumerosezioneAndTipoelezioneId(sezione, tipoelezioneid);
                         affluenza.setDataoperazione(oggi);
                         affluenza.setUtenteoperazione(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -150,6 +154,15 @@ public class AffluenzeController {
                         Iscritti iscritti = iscrittiService.findIscrittiBySezione(sezione);
                         affluenza.setIscritti(iscritti);
                         affluenza.setCostituzione1(1);
+                        affluenzaService.add(affluenza);
+                        sezioneJson.setTipo(tipo);
+                        sezioneJson.setValidated(true);
+                        break;
+                    case "RCO":
+                        affluenza = affluenzaService.findByNumerosezioneAndTipoelezioneId(sezione, tipoelezioneid);
+                        affluenza.setDataoperazione(oggi);
+                        affluenza.setUtenteoperazione(SecurityContextHolder.getContext().getAuthentication().getName());
+                        affluenza.setCostituzione1(0);
                         affluenzaService.add(affluenza);
                         sezioneJson.setTipo(tipo);
                         sezioneJson.setValidated(true);
@@ -194,6 +207,7 @@ public class AffluenzeController {
             switch (affluenzaJson.getTipo())
             {
                 case "1A":
+                case "R1A":
                     affluenza.setAffluenza1(1);
                     affluenza.setVotantifemmine1(affluenzaJson.getVotantifemmine());
                     affluenza.setVotantimaschi1(affluenzaJson.getVotantimaschi());
@@ -202,6 +216,7 @@ public class AffluenzeController {
                     response.setValidated(true);
                     break;
                 case "2A":
+                case "R2A":
                     affluenza.setAffluenza2(1);
                     affluenza.setVotantifemmine2(affluenzaJson.getVotantifemmine());
                     affluenza.setVotantimaschi2(affluenzaJson.getVotantimaschi());
@@ -210,6 +225,7 @@ public class AffluenzeController {
                     response.setValidated(true);
                     break;
                 case "3A":
+                case "R3A":
                     affluenza.setAffluenza3(1);
                     affluenza.setVotantifemmine3(affluenzaJson.getVotantifemmine());
                     affluenza.setVotantimaschi3(affluenzaJson.getVotantimaschi());

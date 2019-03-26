@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: elezioni
+-- Host: localhost    Database: elezioni
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `fase_elezione`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `fase_elezione` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `codice` varchar(2) DEFAULT NULL,
+  `codice` varchar(3) DEFAULT NULL,
   `descrizione` varchar(45) DEFAULT NULL,
   `abilitata` int(1) DEFAULT '0',
   `idtipoelezione` int(10) unsigned DEFAULT '0',
@@ -33,7 +33,7 @@ CREATE TABLE `fase_elezione` (
   UNIQUE KEY `codice_UNIQUE` (`codice`),
   KEY `fk_fase_elezione_tipo_elezione_idx` (`idtipoelezione`),
   CONSTRAINT `fk_fase_elezione_tipo_elezione` FOREIGN KEY (`idtipoelezione`) REFERENCES `tipoelezione` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `fase_elezione` (
 
 LOCK TABLES `fase_elezione` WRITE;
 /*!40000 ALTER TABLE `fase_elezione` DISABLE KEYS */;
-INSERT INTO `fase_elezione` VALUES (27,'CO','Costituzione',1,1),(30,'1A','1 Affluenza',1,1),(31,'2A','2 Affluenza',0,1),(32,'3C','Chiusura',0,1),(33,'3A','3 Affluenza',0,1),(34,'4C','Chiusura 4 Affluenza',0,1),(35,'VL','Voti Lista',0,1),(36,'VP','Voti Presidente',0,1),(37,'VS','Voti Sindaco',0,1),(38,'VU','Voti Uninominalie',0,1),(39,'PC','Preferenze Comunali',0,1),(40,'PR','Preferenze Regionali',0,1),(41,'AP','Apertura',1,1);
+INSERT INTO `fase_elezione` VALUES (27,'CO','Costituzione',1,1),(30,'1A','1 Affluenza',1,1),(31,'2A','2 Affluenza',0,1),(32,'3C','Chiusura',0,1),(33,'3A','3 Affluenza',0,1),(34,'4C','Chiusura 4 Affluenza',0,1),(35,'VL','Voti Lista',0,1),(36,'VP','Voti Presidente',0,1),(37,'VS','Voti Sindaco',0,1),(38,'VU','Voti Uninominalie',0,1),(39,'PC','Preferenze Comunali',0,1),(40,'PR','Preferenze Regionali',0,1),(41,'AP','Apertura',1,1),(42,'RCO','Rettifica Costituzione',1,1),(43,'RAP','Rettiifica Apertura',1,1),(44,'R1A','Rettifica 1 Affluenza',1,1),(45,'R2A','Rettifica 2 Affluenza',0,1),(46,'R3C','Rettifica Chiusura',0,1),(47,'RVL','Rettifica Voti Lista',0,1),(48,'RPE','Rettifica Preferenze Europee',0,1),(49,'PE','Preferenze Europee',0,1);
 /*!40000 ALTER TABLE `fase_elezione` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-24 19:44:47
+-- Dump completed on 2019-03-26 17:00:45

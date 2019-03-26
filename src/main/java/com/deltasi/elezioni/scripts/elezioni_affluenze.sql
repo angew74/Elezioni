@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: elezioni
+-- Host: localhost    Database: elezioni
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -64,7 +64,7 @@ CREATE TABLE `affluenze` (
   CONSTRAINT `fk_affluenze_iscritti` FOREIGN KEY (`idiscritti`) REFERENCES `iscritti` (`idiscritti`),
   CONSTRAINT `fk_affluenze_plessi` FOREIGN KEY (`idplesso`) REFERENCES `plessi` (`id`),
   CONSTRAINT `fk_affluenze_tipo_elezione` FOREIGN KEY (`idtipoelezione`) REFERENCES `tipoelezione` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +73,7 @@ CREATE TABLE `affluenze` (
 
 LOCK TABLES `affluenze` WRITE;
 /*!40000 ALTER TABLE `affluenze` DISABLE KEYS */;
-INSERT INTO `affluenze` VALUES (1,1,1,NULL,1,1,NULL,1,NULL,NULL,1,NULL,NULL,NULL,NULL,100,NULL,NULL,NULL,NULL,100,NULL,NULL,NULL,NULL,200,NULL,NULL,NULL,NULL,'2019-03-23 20:20:26','admin'),(3,1,2,NULL,2,1,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2019-03-24 19:40:46','admin');
+INSERT INTO `affluenze` VALUES (1,1,1,NULL,1,1,NULL,1,NULL,NULL,1,NULL,NULL,NULL,NULL,103,NULL,NULL,NULL,NULL,103,NULL,NULL,NULL,NULL,206,NULL,NULL,NULL,NULL,'2019-03-23 20:20:26','admin'),(3,1,2,NULL,2,1,NULL,1,NULL,NULL,1,NULL,NULL,NULL,NULL,100,NULL,NULL,NULL,NULL,100,NULL,NULL,NULL,NULL,200,NULL,NULL,NULL,NULL,'2019-03-24 19:40:46','admin'),(4,1,3,NULL,3,1,NULL,1,NULL,NULL,1,NULL,NULL,NULL,NULL,40,NULL,NULL,NULL,NULL,40,NULL,NULL,NULL,NULL,80,NULL,NULL,NULL,NULL,'2019-03-25 14:51:38','admin');
 /*!40000 ALTER TABLE `affluenze` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -172,4 +172,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-24 19:44:49
+-- Dump completed on 2019-03-26 17:00:47

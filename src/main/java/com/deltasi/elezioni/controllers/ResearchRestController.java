@@ -110,21 +110,39 @@ public class ResearchRestController {
         AffluenzaJson json = new AffluenzaJson();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         Affluenza afp = affluenzService.findByNumerosezioneAndTipoelezioneId(sezione.getSezione(), tipoelezioneid);
-        if (sezione.getTipo() == "2A" || sezione.getTipo() == "3A") {
-            if (sezione.getTipo() == "2A") {
+        if (sezione.getTipo().equals("2A") || sezione.getTipo().equals("3A") || sezione.getTipo().equals("R2A") || sezione.getTipo().equals("R3A")) {
+            if (sezione.getTipo().equals("2A") || sezione.getTipo().equals("R2A")) {
                 json.setVotantifemmineaffp(afp.getVotantifemmine1());
                 json.setVotantimaschiaffp(afp.getVotantimaschi1());
                 json.setVotantitotaliaffp(afp.getVotantitotali1());
+                if(sezione.getTipo().equals("R2A"))
+                {
+                    json.setVotantifemmine(afp.getVotantifemmine2());
+                    json.setVotantimaschi(afp.getVotantimaschi2());
+                    json.setVotantitotali(afp.getVotantitotali2());
+                }
             }
-            if (sezione.getTipo() == "3A") {
+            if (sezione.getTipo().equals("3A") || sezione.getTipo().equals("R3A")) {
                 json.setVotantifemmineaffp(afp.getVotantifemmine2());
                 json.setVotantimaschiaffp(afp.getVotantimaschi2());
                 json.setVotantitotaliaffp(afp.getVotantitotali2());
+                if(sezione.getTipo() == "R3A")
+                {
+                    json.setVotantifemmine(afp.getVotantifemmine3());
+                    json.setVotantimaschi(afp.getVotantimaschi3());
+                    json.setVotantitotali(afp.getVotantitotali3());
+                }
             }
+        }
+        if(sezione.getTipo().equals("R1A"))
+        {
+            json.setVotantifemmine(afp.getVotantifemmine1());
+            json.setVotantimaschi(afp.getVotantimaschi1());
+            json.setVotantitotali(afp.getVotantitotali1());
         }
         json.setNumerosezione(sezione.getSezione());
         json.setTipo(sezione.getTipo());
-        if(!(sezione.getTipo().equals("CO"))) {
+        if(!(sezione.getTipo().equals("CO") && sezione.getTipo().equals("RCO"))) {
             json.setIscrittimaschi(afp.getIscritti().getIscrittimaschi());
             json.setIscrittifemmine(afp.getIscritti().getIscrittifemmine());
             json.setIscrittitotali(afp.getIscritti().getIscrittitotali());
