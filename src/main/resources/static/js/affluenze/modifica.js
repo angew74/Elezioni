@@ -1,3 +1,5 @@
+
+/*
 jQuery(document).ready(function ($) {
     var buttonApertura = '#buttonApertura';
     var buttonCostituzione = '#buttonCostituzione';
@@ -53,6 +55,7 @@ jQuery(document).ready(function ($) {
         });
     }
 })
+
 
 
 jQuery(document).ready(function ($) {
@@ -139,3 +142,5 @@ jQuery(document).ready(function ($) {
         });
     }
 })
+
+*/

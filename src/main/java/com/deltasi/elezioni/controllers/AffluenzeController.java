@@ -9,6 +9,7 @@ import com.deltasi.elezioni.model.configuration.TipoElezione;
 import com.deltasi.elezioni.model.json.AffluenzaJson;
 import com.deltasi.elezioni.model.json.SezioneJson;
 import com.deltasi.elezioni.model.risultati.Affluenza;
+import com.sun.javaws.exceptions.BadVersionResponseException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -137,7 +138,6 @@ public class AffluenzeController {
                 tipoElezione = tipoElezioneService.findTipoElezioneById(tipoelezioneid);
                 switch (tipo) {
                     case "AP":
-                    case "RAP":
                         affluenza = affluenzaService.findByNumerosezioneAndTipoelezioneId(sezione, tipoelezioneid);
                         affluenza.setDataoperazione(oggi);
                         affluenza.setUtenteoperazione(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -151,9 +151,50 @@ public class AffluenzeController {
                         affluenza.setDataoperazione(oggi);
                         affluenza.setUtenteoperazione(SecurityContextHolder.getContext().getAuthentication().getName());
                         affluenza.setTipoelezione(tipoElezione);
-                        Iscritti iscritti = iscrittiService.findIscrittiBySezione(sezione);
+                        Iscritti iscritti = iscrittiService.findByNumerosezioneAndTipoelezioneId(sezione, tipoelezioneid);
                         affluenza.setIscritti(iscritti);
                         affluenza.setCostituzione1(1);
+                        affluenzaService.add(affluenza);
+                        sezioneJson.setTipo(tipo);
+                        sezioneJson.setValidated(true);
+                        break;
+                }
+            } else {
+                errors = new HashMap<String, String>();
+                errors.put("Errore applicativo", msg);
+                sezioneJson.setValidated(false);
+                sezioneJson.setErrorMessages(errors);
+            }
+        } catch (Exception ex) {
+            errors = new HashMap<String, String>();
+            errors.put("Errore grave", ex.getMessage());
+            logger.error(ex.getMessage());
+            sezioneJson.setValidated(false);
+            sezioneJson.setErrorMessages(errors);
+        }
+        return sezioneJson;
+    }
+
+
+    @GetMapping(value = "/rapra/{tipo}/{sezione}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public SezioneJson annulla(@PathVariable String tipo, @PathVariable Integer sezione, Principal principal) {
+        SezioneJson sezioneJson = new SezioneJson();
+        Affluenza affluenza = new Affluenza();
+        TipoElezione tipoElezione = new TipoElezione();
+        Map<String, String> errors = null;
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        try {
+            String msg = businessRules.IsInsertable(sezione, tipo, tipoelezioneid);
+            if (msg.equals("")) {
+                LocalDateTime oggi = LocalDateTime.now();
+                tipoElezione = tipoElezioneService.findTipoElezioneById(tipoelezioneid);
+                switch (tipo) {
+                    case "RAP":
+                        affluenza = affluenzaService.findByNumerosezioneAndTipoelezioneId(sezione, tipoelezioneid);
+                        affluenza.setDataoperazione(oggi);
+                        affluenza.setUtenteoperazione(SecurityContextHolder.getContext().getAuthentication().getName());
+                        affluenza.setApertura1(0);
                         affluenzaService.add(affluenza);
                         sezioneJson.setTipo(tipo);
                         sezioneJson.setValidated(true);
@@ -184,7 +225,6 @@ public class AffluenzeController {
         return sezioneJson;
     }
 
-
     @PostMapping(value = "/anda")
     @ResponseBody
     public SezioneJson registraAffluenza(@ModelAttribute("affluenzaJson") @Valid AffluenzaJson affluenzaJson,
@@ -202,10 +242,9 @@ public class AffluenzeController {
                 response.setValidated(false);
                 response.setErrorMessages(errors);
             }
-            Affluenza affluenza = affluenzaService.findByNumerosezioneAndTipoelezioneId(affluenzaJson.getNumerosezione(),tipoelezioneid);
+            Affluenza affluenza = affluenzaService.findByNumerosezioneAndTipoelezioneId(affluenzaJson.getNumerosezione(), tipoelezioneid);
             response.setTipo(affluenzaJson.getTipo());
-            switch (affluenzaJson.getTipo())
-            {
+            switch (affluenzaJson.getTipo()) {
                 case "1A":
                 case "R1A":
                     affluenza.setAffluenza1(1);
@@ -233,15 +272,66 @@ public class AffluenzeController {
                     affluenzaService.add(affluenza);
                     response.setValidated(true);
                     break;
-                  default:
-                      errors = new HashMap<String, String>();
-                      errors.put("Errore grave", "Parametri non validi");
-                      response.setValidated(false);
-                      response.setErrorMessages(errors);
+                default:
+                    errors = new HashMap<String, String>();
+                    errors.put("Errore grave", "Parametri non validi");
+                    response.setValidated(false);
+                    response.setErrorMessages(errors);
                     break;
 
             }
 
+        } catch (Exception ex) {
+            errors = new HashMap<String, String>();
+            errors.put("Errore grave", ex.getMessage());
+            logger.error(ex.getMessage());
+            response.setValidated(false);
+            response.setErrorMessages(errors);
+        }
+        return response;
+    }
+
+    @GetMapping(value = "/randa/{tipo}/{sezione}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public SezioneJson annullaAffluenza(@PathVariable String tipo, @PathVariable Integer sezione, Principal principal) {
+        SezioneJson response = new SezioneJson();
+        Map<String, String> errors = null;
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        try {
+            String msg = businessRules.IsInsertable(sezione, tipo, tipoelezioneid);
+            if (msg.equals("")) {
+                LocalDateTime oggi = LocalDateTime.now();
+                TipoElezione tipoElezione = tipoElezioneService.findTipoElezioneById(tipoelezioneid);
+                Affluenza affluenza = affluenzaService.findByNumerosezioneAndTipoelezioneId(sezione, tipoelezioneid);
+                response.setTipo(response.getTipo());
+                switch (tipo) {
+                    case "R1A":
+                        affluenza.setAffluenza1(0);
+                        affluenza.setVotantifemmine1(0);
+                        affluenza.setVotantimaschi1(0);
+                        affluenza.setVotantitotali1(0);
+                        affluenzaService.add(affluenza);
+                        response.setValidated(true);
+                        break;
+                    case "R2A":
+                        affluenza.setAffluenza2(0);
+                        affluenza.setVotantifemmine2(0);
+                        affluenza.setVotantimaschi2(0);
+                        affluenza.setVotantitotali2(0);
+                        break;
+                    case "R3A":
+                        affluenza.setAffluenza3(0);
+                        affluenza.setVotantifemmine3(0);
+                        affluenza.setVotantimaschi3(0);
+                        affluenza.setVotantitotali3(0);
+                        break;
+                }
+            } else {
+                errors = new HashMap<String, String>();
+                errors.put("Errore applicativo", msg);
+                response.setValidated(false);
+                response.setErrorMessages(errors);
+            }
         } catch (Exception ex) {
             errors = new HashMap<String, String>();
             errors.put("Errore grave", ex.getMessage());

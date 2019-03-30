@@ -16,6 +16,7 @@
 <div th:replace="common/sezione :: sezione"/>
 <div th:replace="fragments/modalerror :: error"/>
 <div th:replace="fragments/modalsuccess :: success"/>
+<input type="hidden"  id="tipopagina" value="I" />
 <div class="container" id="costituzione" style="display: none;border: 1px #6d353a solid;">
     <div class="row">
         <div class="col-md-12 text-center">
@@ -36,7 +37,7 @@
         </div>
     </div>
 </div>
-<div class="container" id="1affluenza" style="display: none;border: 1px #6d353a solid;">
+<div class="container" id="affluenza" style="display: none;border: 1px #6d353a solid;">
     <div th:replace="common/andamento :: andamento"/>
 </div>
 </body>

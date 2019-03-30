@@ -76,7 +76,7 @@ public class ResearchRestController {
             }
             String msg = businessRules.IsInsertable(sezione.getSezione(), sezione.getTipo(), tipoelezioneid);
             if (msg.equals("")) {
-                iscritti = iscrittiService.findIscrittiBySezione(sezione.getSezione());
+                iscritti = iscrittiService.findByNumerosezioneAndTipoelezioneId(sezione.getSezione(),tipoelezioneid);
                 if (iscritti.getCabina().equals(sezione.getCabina())) {
                     sezione.setIscritti(iscritti);
                     sezione.setValidated(true);
@@ -111,10 +111,12 @@ public class ResearchRestController {
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         Affluenza afp = affluenzService.findByNumerosezioneAndTipoelezioneId(sezione.getSezione(), tipoelezioneid);
         if (sezione.getTipo().equals("2A") || sezione.getTipo().equals("3A") || sezione.getTipo().equals("R2A") || sezione.getTipo().equals("R3A")) {
+            /* imposto votanti 1 affluenza */
             if (sezione.getTipo().equals("2A") || sezione.getTipo().equals("R2A")) {
                 json.setVotantifemmineaffp(afp.getVotantifemmine1());
                 json.setVotantimaschiaffp(afp.getVotantimaschi1());
                 json.setVotantitotaliaffp(afp.getVotantitotali1());
+                /* imposto votanti per rettifica*/
                 if(sezione.getTipo().equals("R2A"))
                 {
                     json.setVotantifemmine(afp.getVotantifemmine2());
@@ -122,11 +124,13 @@ public class ResearchRestController {
                     json.setVotantitotali(afp.getVotantitotali2());
                 }
             }
+            /* imposto votanti 2 affluenza */
             if (sezione.getTipo().equals("3A") || sezione.getTipo().equals("R3A")) {
                 json.setVotantifemmineaffp(afp.getVotantifemmine2());
                 json.setVotantimaschiaffp(afp.getVotantimaschi2());
                 json.setVotantitotaliaffp(afp.getVotantitotali2());
-                if(sezione.getTipo() == "R3A")
+                /* imposto votanti per rettifica */
+                if(sezione.getTipo().equals("R3A"))
                 {
                     json.setVotantifemmine(afp.getVotantifemmine3());
                     json.setVotantimaschi(afp.getVotantimaschi3());
@@ -134,6 +138,7 @@ public class ResearchRestController {
                 }
             }
         }
+        /* imposto votanti per rettifica */
         if(sezione.getTipo().equals("R1A"))
         {
             json.setVotantifemmine(afp.getVotantifemmine1());
@@ -142,10 +147,17 @@ public class ResearchRestController {
         }
         json.setNumerosezione(sezione.getSezione());
         json.setTipo(sezione.getTipo());
-        if(!(sezione.getTipo().equals("CO") && sezione.getTipo().equals("RCO"))) {
+        /* imposto iscritti per confronti */
+        if(!(sezione.getTipo().equals("CO"))) {
             json.setIscrittimaschi(afp.getIscritti().getIscrittimaschi());
             json.setIscrittifemmine(afp.getIscritti().getIscrittifemmine());
             json.setIscrittitotali(afp.getIscritti().getIscrittitotali());
+        }
+        else {
+           Iscritti iscritti = iscrittiService.findByNumerosezioneAndTipoelezioneId(sezione.getSezione(),tipoelezioneid);
+            json.setIscrittimaschi(iscritti.getIscrittimaschi());
+            json.setIscrittifemmine(iscritti.getIscrittifemmine());
+            json.setIscrittitotali(iscritti.getIscrittitotali());
         }
         json.setValidated(true);
         return json;

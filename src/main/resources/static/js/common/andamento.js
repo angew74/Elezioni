@@ -1,11 +1,21 @@
 jQuery(document).ready(function ($) {
     var buttonApertura = '#buttonApertura';
     var buttonCostituzione = '#buttonCostituzione';
+    var buttonAnnullaApertura = '#buttonAnnullaApertura';
+    var buttonAnnullaCostituzione = '#buttonAnnullaCostituzione';
     $(buttonCostituzione).click(function (event) {
         event.preventDefault();
         postButtons();
     })
+    $(buttonAnnullaCostituzione).click(function (event) {
+        event.preventDefault();
+        postButtons();
+    })
     $(buttonApertura).click(function (event) {
+        event.preventDefault();
+        postButtons();
+    })
+    $(buttonAnnullaApertura).click(function (event) {
         event.preventDefault();
         postButtons();
     })
@@ -18,9 +28,14 @@ jQuery(document).ready(function ($) {
         var tipo = $("#tipo").val();
         $("#tipoinput").val(tipo);
         var sezione = $("#numerosezione").val();
+        var urlt= '/affluenze/apra/' + tipo + '/' + sezione
+        if(tipo === "RCO" || tipo === "RAP")
+        {
+            urlt = '/affluenze/rapra/' + tipo + '/' + sezione;
+        }
         //  $('input').next().remove();
         $.get({
-            url: '/affluenze/apra/' + tipo + '/' + sezione,
+            url: urlt,
             success: function (res) {
                 try {
                     if (res.validated) {
@@ -30,7 +45,7 @@ jQuery(document).ready(function ($) {
                             $(mdisplay).text("Costituzione inserita correttamente");
                         }
                         if (res.tipo === "RCO") {
-                            $("#costituzione").hide();
+                            $("#annullacostituzione").hide();
                             $(mdisplay).text("Costituzione annullata correttamente");
                         }
                         if (res.tipo === "AP") {
@@ -38,8 +53,8 @@ jQuery(document).ready(function ($) {
                             $(mdisplay).text("Apertura inserita correttamente");
                         }
                         if (res.tipo === "RAP") {
-                            $("#apertura").hide();
-                            $(mdisplay).text("Apertura rettificata correttamente");
+                            $("#annullaapertura").hide();
+                            $(mdisplay).text("Apertura annullata correttamente");
                         }
                         $(successcontainer).modal('show');
                     } else {
@@ -62,6 +77,72 @@ jQuery(document).ready(function ($) {
     }
 })
 
+
+jQuery(document).ready(function ($) {
+    var buttonAffluenza = '#btnAnnullaAffluenza';
+    $(buttonAffluenza).click(function (event) {
+        event.preventDefault();
+        postDeleteAffluenza();
+    })
+
+
+    function postDeleteAffluenza() {
+        var errorcontainer = '#errorModal';
+        var errorDisplay = '#errorDisplay';
+        var successcontainer = '#successModal';
+        var mdisplay = "#messagesuccess";
+        var tipo = $("#tipo").val();
+        var sezione = $("#numerosezione").val();
+        $.get({
+            url: '/affluenze/randa/'  + tipo + '/' + sezione,
+            success: function (res) {
+                try {
+                    if (res.validated) {
+                        //Set response
+                        if (res.tipo === "1A") {
+                            $("#costituzione").hide();
+                            $(mdisplay).text("1 Affluenza inserita correttamente");
+                        }
+                        if (res.tipo === "2A") {
+                            $("#apertura").hide();
+                            $(mdisplay).text("2 Affluenza inserita correttamente");
+                        }
+                        if (res.tipo === "3A") {
+                            $("#apertura").hide();
+                            $(mdisplay).text("Chiusura inserita correttamente");
+                        }
+                        if (res.tipo === "R1A") {
+                            $("#costituzione").hide();
+                            $(mdisplay).text("1 Affluenza rettificata");
+                        }
+                        if (res.tipo === "R2A") {
+                            $("#apertura").hide();
+                            $(mdisplay).text("2 Affluenza rettificata");
+                        }
+                        if (res.tipo === "R3A") {
+                            $("#apertura").hide();
+                            $(mdisplay).text("Chiusura rettificata");
+                        }
+                        $(successcontainer).modal('show');
+                    } else {
+                        //Set error messages
+                        $.each(res.errorMessages, function (key, value) {
+                            $(errorDisplay).text(value);
+                            $(errorcontainer).modal('show');
+                        });
+                    }
+                } catch (err) {
+                    $(errorDisplay).text(err);
+                    $(errorcontainer).modal('show');
+                }
+            },
+            error: function () {
+                $(errorDisplay).text("errore di connessione");
+                $(errorcontainer).modal('show');
+            }
+        });
+    }
+})
 
 jQuery(document).ready(function ($) {
     var buttonAffluenza = '#btnSalvaAffluenza';
@@ -159,3 +240,7 @@ jQuery(document).ready(function ($) {
         });
     }
 })
+
+
+
+

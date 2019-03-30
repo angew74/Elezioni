@@ -7,21 +7,29 @@ package com.deltasi.elezioni.contracts;
 
 import com.deltasi.elezioni.model.configuration.Iscritti;
 import com.deltasi.elezioni.model.configuration.TipoElezione;
+
 import java.util.List;
 import java.util.Optional;
 
 /**
- *
  * @author AdminDSI
  */
 public interface IIscrittiService {
-    
-    public Optional<Iscritti> findIscrittiById(Integer id);
-    public List<Iscritti> findIscrittiByMun(Integer mun);
-    public Iscritti findIscrittiBySezione(Integer sezione);
-    public void add(Iscritti matrice);
-    public void delete(Integer id);
-    public List<Iscritti> findByIdTipoElezione(Integer idtipoelezione);
-    public List<Iscritti> findByTipoElezione(TipoElezione tipoelezione);
-    
+
+    Optional<Iscritti> findIscrittiById(Integer id);
+
+    List<Iscritti> findIscrittiByMun(Integer mun);
+
+     List<Iscritti> findIscrittiBySezione(Integer sezione);
+
+    void add(Iscritti matrice);
+
+    void delete(Integer id);
+
+    List<Iscritti> findByIdTipoElezione(Integer idtipoelezione);
+
+    List<Iscritti> findByTipoElezione(TipoElezione tipoelezione);
+
+    Iscritti findByNumerosezioneAndTipoelezioneId(Integer numerosezione, Integer tipoElezioneId);
+
 }

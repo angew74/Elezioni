@@ -22,69 +22,86 @@ jQuery(document).ready(function ($) {
     function ajaxPrepopulate() {
         var errorcontainer = '#errorModal';
         var errorDisplay = '#errorDisplay';
+        var tipoPagina = $("#tipopagina").val();
         $.post({
             url: '/search/affluenza',
             data: $('form[name=rsezioneForm]').serialize(),
             success: function (res) {
                 try {
                     if (res.validated) {
-                        if (res.tipo === "CO" || res.tipo === "RCO") {
+                        if (res.tipo === "CO") {
                             $("#costituzione").show();
                         }
-                        if (res.tipo === "AP" || res.tipo === "RAP") {
+                        if (res.tipo === "RCO") {
+                            $("#annullacostituzione").show();
+                        }
+                        if (res.tipo === "AP") {
                             $("#apertura").show();
+                        }
+                        if (res.tipo === "RAP") {
+                            $("#annullaapertura").show();
                         }
                         $("#tipoinput").val(res.tipo);
                         $("#numerosezioneinput").val(res.numerosezione)
-                        var iscrittitotali = res.iscrittitotali +5;
-                        var iscrittimaschi = res.iscrittimaschi +5;
-                        var iscrittifemmine =  res.iscrittifemmine +5;
-                        if (res.tipo === "1A" || res.tipo === "R1A") {
-                            $("#1affluenza").show();
+                        var iscrittitotali = res.iscrittitotali + 5;
+                        var iscrittimaschi = res.iscrittimaschi + 5;
+                        var iscrittifemmine = res.iscrittifemmine + 5;
+                        if ((res.tipo === "1A" || res.tipo === "R1A") && tipoPagina != "A") {
+                            $("#affluenza").show();
                             $("#votantiTotali").attr({
-                                "max" : iscrittitotali ,        // substitute your own
-                                "min" : 0         // values (or variables) here
+                                "max": iscrittitotali,        // substitute your own
+                                "min": 0         // values (or variables) here
                             });
                             $("#votantiMaschi").attr({
-                                "max" : iscrittimaschi ,        // substitute your own
-                                "min" : 0          // values (or variables) here
+                                "max": iscrittimaschi,        // substitute your own
+                                "min": 0          // values (or variables) here
                             });
                             $("#votantiFemmine").attr({
-                                "max" : iscrittifemmine,        // substitute your own
-                                "min" : 0         // values (or variables) here
+                                "max": iscrittifemmine,        // substitute your own
+                                "min": 0         // values (or variables) here
                             });
-                            if(res.tipo === "R1A")
-                            {
+                            if (res.tipo === "R1A" && tipoPagina != "A") {
                                 $("#votantiFemmine").val(res.votantifemmine);
                                 $("#votantiMaschi").val(res.votantimaschi);
                                 $("#votantiTotali").val(res.votantitotali);
                             }
                         }
-                        if (res.tipo === "2A" || res.tipo === "3A" || res.tipo === "R2A" || res.tipo === "R3A") {
+                        if ((res.tipo === "2A" || res.tipo === "3A" || res.tipo === "R2A" || res.tipo === "R3A") && tipoPagina != "A") {
                             $("#votantiMaschiaffp").val(res.votantimaschiaffp);
                             $("#votantiFemmineaffp").val(res.votantifemmineaffp);
                             $("#votantiTotaliaffp").val(res.votantitotaliaffp);
                             $("#votantiTotali").attr({
-                                "max" :iscrittitotali ,        // substitute your own
-                                "min" : res.votantitotaliaffp          // values (or variables) here
+                                "max": iscrittitotali,        // substitute your own
+                                "min": res.votantitotaliaffp          // values (or variables) here
                             });
                             $("#votantiMaschi").attr({
-                                "max" : iscrittimaschi,        // substitute your own
-                                "min" : res.votantimaschiaffp          // values (or variables) here
+                                "max": iscrittimaschi,        // substitute your own
+                                "min": res.votantimaschiaffp          // values (or variables) here
                             });
                             $("#votantiFemmine").attr({
-                                "max" :iscrittifemmine,        // substitute your own
-                                "min" : res.votantifemmineaffp          // values (or variables) here
+                                "max": iscrittifemmine,        // substitute your own
+                                "min": res.votantifemmineaffp          // values (or variables) here
                             });
                             $("#divVotantiFemmineaffp").show();
                             $("#divVotantiMaschiaffp").show();
                             $("#divVotantiTotaliaffp").show();
                         }
                         if (res.tipo === "2A" || res.tipo === "R2A") {
-                            $("#2affluenza").show();
+                            if (tipoPagina != "A") {
+                                $("#affluenza").show();
+                            } else {
+                                $("#annullaffluenza").show();
+                            }
                         }
                         if (res.tipo === "3A" || res.tipo === "R3A") {
-                            $("#3affluenza").show();
+                            if (tipoPagina != "A") {
+                                $("#affluenza").show();
+                            } else {
+                                $("#annullaffluenza").show();
+                            }
+                        }
+                        if ((res.tipo === "1A" || res.tipo === "R1A") && tipoPagina === "A") {
+                            $("#annullaffluenza").show();
                         }
                     }
                 } catch (err) {
@@ -105,7 +122,7 @@ jQuery(document).ready(function ($) {
         var errorDisplay = '#errorDisplay';
         var successcontainer = '#successModal';
         var mdisplay = "#messagesuccess";
-     //    var form = $('form[name=rsezioneForm]').serialize();
+        //    var form = $('form[name=rsezioneForm]').serialize();
         //   var dati = JSON.stringify(form);
         //   var dati = $('form[name=rsezioneForm]').serialize();
         //Remove all errors

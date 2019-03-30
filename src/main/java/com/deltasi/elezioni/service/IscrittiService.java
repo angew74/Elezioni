@@ -11,6 +11,7 @@ import com.deltasi.elezioni.model.configuration.Iscritti;
 import com.deltasi.elezioni.model.configuration.TipoElezione;
 import java.util.List;
 import java.util.Optional;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -43,9 +44,15 @@ public class IscrittiService implements IIscrittiService {
     }
 
     @Override
-    public Iscritti findIscrittiBySezione(Integer sezione) {
+    public List<Iscritti> findIscrittiBySezione(Integer sezione) {
 
         return iscrittiDAO.findByNumerosezione(sezione);
+    }
+
+    @Override
+    public Iscritti findByNumerosezioneAndTipoelezioneId(Integer sezione, Integer tipoElezioneId) {
+
+        return iscrittiDAO.findByNumerosezioneAndTipoelezioneId(sezione,tipoElezioneId);
     }
 
     @Override
