@@ -26,21 +26,21 @@ public class TipoElezioneService implements ITipoElezioneService {
      private static final Logger logger = LogManager.getLogger(TipoElezioneService.class);
     
     @Autowired
-    private TipoElezioneDAO tipoElezineDAO;
+    private TipoElezioneDAO tipoElezioneDAO;
     
     @Override
     public TipoElezione findTipoElezioneById(Integer id) {
-      return tipoElezineDAO.findById(id);
+      return tipoElezioneDAO.findById(id);
               }
 
     @Override
     public TipoElezione findElezioneByDescrizione(String descrizione) {
-       return tipoElezineDAO.findByDescrizione(descrizione);
+       return tipoElezioneDAO.findByDescrizione(descrizione);
     }
 
     @Override
     public List<TipoElezione> getAll() {
-      return tipoElezineDAO.findAll();
+      return tipoElezioneDAO.findAll();
     }
     
 }

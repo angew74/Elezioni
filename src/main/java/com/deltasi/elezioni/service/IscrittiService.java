@@ -9,17 +9,18 @@ import com.deltasi.elezioni.contracts.IIscrittiService;
 import com.deltasi.elezioni.repository.IscrittiDAO;
 import com.deltasi.elezioni.model.configuration.Iscritti;
 import com.deltasi.elezioni.model.configuration.TipoElezione;
+
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.transaction.Transactional;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- *
  * @author AdminDSI
  */
 @Service
@@ -27,32 +28,29 @@ import org.springframework.stereotype.Service;
 public class IscrittiService implements IIscrittiService {
 
     private static final Logger logger = LogManager.getLogger(IscrittiService.class);
-    
+
     @Autowired
     private IscrittiDAO iscrittiDAO;
-    
+
     @Override
-    public Optional<Iscritti> findIscrittiById(Integer id)
-    {
-         return iscrittiDAO.findById(id);
+    public Optional<Iscritti> findIscrittiById(Integer id) {
+        return iscrittiDAO.findById(id);
     }
 
     @Override
     public List<Iscritti> findIscrittiByMun(Integer mun) {
-      return
-              iscrittiDAO.findByMunicipio(mun);
+        return
+                iscrittiDAO.findByMunicipio(mun);
     }
 
     @Override
-    public List<Iscritti> findIscrittiBySezione(Integer sezione) {
-
-        return iscrittiDAO.findByNumerosezione(sezione);
+    public Iscritti findBySezioneId(Integer idsezione) {
+        return iscrittiDAO.findBySezioneId(idsezione);
     }
 
     @Override
-    public Iscritti findByNumerosezioneAndTipoelezioneId(Integer sezione, Integer tipoElezioneId) {
-
-        return iscrittiDAO.findByNumerosezioneAndTipoelezioneId(sezione,tipoElezioneId);
+    public Iscritti findByTipoelezioneIdAndSezioneNumerosezione(Integer tipoElezioneId, Integer numerosezione) {
+        return iscrittiDAO.findByTipoelezioneIdAndSezioneNumerosezione(tipoElezioneId, numerosezione);
     }
 
     @Override
@@ -67,12 +65,12 @@ public class IscrittiService implements IIscrittiService {
 
     @Override
     public List<Iscritti> findByIdTipoElezione(Integer idtipoelezione) {
-          return iscrittiDAO.findByTipoelezioneId(idtipoelezione);
+        return iscrittiDAO.findByTipoelezioneId(idtipoelezione);
     }
 
     @Override
     public List<Iscritti> findByTipoElezione(TipoElezione tipoelezione) {
-       return iscrittiDAO.findByTipoelezione(tipoelezione);
+        return iscrittiDAO.findByTipoelezione(tipoelezione);
     }
-    
+
 }

@@ -107,7 +107,7 @@ jQuery(document).ready(function ($) {
                             $("#apertura").hide();
                             $(mdisplay).text("2 Affluenza inserita correttamente");
                         }
-                        if (res.tipo === "3A") {
+                        if (res.tipo === "3C") {
                             $("#apertura").hide();
                             $(mdisplay).text("Chiusura inserita correttamente");
                         }
@@ -119,7 +119,7 @@ jQuery(document).ready(function ($) {
                             $("#apertura").hide();
                             $(mdisplay).text("2 Affluenza rettificata");
                         }
-                        if (res.tipo === "R3A") {
+                        if (res.tipo === "R3C") {
                             $("#apertura").hide();
                             $(mdisplay).text("Chiusura rettificata");
                         }

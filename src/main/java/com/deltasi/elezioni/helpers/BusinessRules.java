@@ -3,9 +3,11 @@ package com.deltasi.elezioni.helpers;
 import com.deltasi.elezioni.contracts.IAbilitazioniService;
 import com.deltasi.elezioni.contracts.IAffluenzaService;
 import com.deltasi.elezioni.contracts.ITipoElezioneService;
+import com.deltasi.elezioni.contracts.IVotiService;
 import com.deltasi.elezioni.model.configuration.FaseElezione;
 import com.deltasi.elezioni.model.configuration.TipoElezione;
 import com.deltasi.elezioni.model.risultati.Affluenza;
+import com.deltasi.elezioni.model.risultati.Voti;
 import com.sun.org.apache.bcel.internal.generic.BREAKPOINT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Component;
 import sun.security.util.ManifestEntryVerifier;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.util.List;
 
 @Component
 public class BusinessRules {
@@ -25,6 +28,9 @@ public class BusinessRules {
     ITipoElezioneService tipoElezioneService;
 
     @Autowired
+    IVotiService votiService;
+
+    @Autowired
     IAbilitazioniService abilitazioniService;
 
 
@@ -35,7 +41,7 @@ public class BusinessRules {
         if (fase.getAbilitata().equals(0)) {
             return "Funzionalità non abilitata";
         }
-        Affluenza affluenza = affluenzaService.findByNumerosezione(sezione);
+        Affluenza affluenza = affluenzaService.findBySezioneNumerosezioneAndTipoelezioneId(sezione,idtipoelezione);
         switch (codiceFase) {
             case "AP":
                 if (affluenza == null) {
@@ -69,7 +75,9 @@ public class BusinessRules {
                     return message;
                 }
                 if (affluenza != null) {
-                    return "Costituzione già inserita usare rettitifica";
+                    if(affluenza.getCostituzione1().equals(1)) {
+                        return "Costituzione già inserita usare rettitifica";
+                    }
                 }
                 if (affluenza.getApertura1() != null && affluenza.getApertura1().equals(1)) {
                     return "Apertura inserita";
@@ -151,9 +159,31 @@ public class BusinessRules {
                 if (affluenza.getAffluenza3() == null || affluenza.getAffluenza3().equals(0)) {
                     return "Chiusura non registrata usare inserimento";
                 }
-                if ((affluenza.getAffluenza3() == null) || (affluenza.getAffluenza3().equals(0))) {
-                    return "Manca 3 Affluenza";
+                break;
+            case "VL":
+                List<Voti> lvoti = votiService.findBySezioneNumerosezioneAndSezioneTipoelezioneId(sezione,idtipoelezione);
+                if (affluenza == null) {
+                    return "Sezione non costitutita";
                 }
+                if (affluenza.getAffluenza3() == null && affluenza.getAffluenza3().equals(0)) {
+                    return "Chiusura non registrata";
+                }
+                if (lvoti != null && lvoti.size() > 0) {
+                    return "Scrutinio già registrato usare rettifica";
+                }
+                break;
+            case "RVL":
+                List<Voti> lvotir = votiService.findBySezioneNumerosezioneAndSezioneTipoelezioneId(sezione,idtipoelezione);
+                if (affluenza == null) {
+                    return "Sezione non costitutita";
+                }
+                if (affluenza.getAffluenza3() == null && affluenza.getAffluenza3().equals(0)) {
+                    return "Chiusura non registrata";
+                }
+                if ((lvotir == null) || (lvotir.size() == 0)) {
+                    return "Scrutinio non registrato usare inserimento";
+                }
+                // todo aggiungere controllo preferenze
                 break;
         }
         return message;
@@ -227,6 +257,7 @@ public class BusinessRules {
             case "RCO":
                 switch (tipo) {
                     case "A":
+                    case "M":
                         titolo = "Annullamento Costituzione Seggio";
                         break;
                 }
@@ -237,6 +268,12 @@ public class BusinessRules {
                         titolo = "Inserimento Chiusura Seggio";
                         break;
                 }
+            case "VL":
+                switch (tipo) {
+                    case "I":
+                        titolo = "Inserimento Voti Lista";
+                        break;
+                }
             case "R3C":
                 switch (tipo) {
                     case "M":
@@ -244,6 +281,16 @@ public class BusinessRules {
                         break;
                     case "A":
                         titolo = "Annullamento Chiusura Seggio";
+                        break;
+                }
+                break;
+            case "RVL":
+                switch (tipo) {
+                    case "M":
+                        titolo = "Rettifica Voti Lista";
+                        break;
+                    case "A":
+                        titolo = "Annullamento Voti Lista";
                         break;
                 }
                 break;

@@ -18,13 +18,13 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface IscrittiDAO extends JpaRepository<Iscritti, Integer> {
-    public Iscritti findById(long id);
-    public List<Iscritti> findByMunicipio(Integer mun);
-    public List<Iscritti> findByNumerosezione(Integer numerosezione);
-    public Iscritti findByNumerosezioneAndTipoelezioneId(Integer numerosezione, Integer tipoElezioneId);
-    public void deleteById(Integer id);
-    public List<Iscritti> findByTipoelezioneId(Integer idtipoelezione);
-    public List<Iscritti> findByTipoelezione(TipoElezione tipoElezione);
+    Iscritti findById(long id);
+    List<Iscritti> findByMunicipio(Integer mun);
+    Iscritti findBySezioneId(Integer idsezione);
+    Iscritti findByTipoelezioneIdAndSezioneNumerosezione(Integer tipoElezioneId,Integer numerosezione);
+    void deleteById(Integer id);
+    List<Iscritti> findByTipoelezioneId(Integer idtipoelezione);
+    List<Iscritti> findByTipoelezione(TipoElezione tipoElezione);
 
 
 }

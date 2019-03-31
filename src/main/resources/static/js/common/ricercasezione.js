@@ -66,7 +66,7 @@ jQuery(document).ready(function ($) {
                                 $("#votantiTotali").val(res.votantitotali);
                             }
                         }
-                        if ((res.tipo === "2A" || res.tipo === "3A" || res.tipo === "R2A" || res.tipo === "R3A") && tipoPagina != "A") {
+                        if ((res.tipo === "2A" || res.tipo === "3C" || res.tipo === "R2A" || res.tipo === "R3C") && tipoPagina != "A") {
                             $("#votantiMaschiaffp").val(res.votantimaschiaffp);
                             $("#votantiFemmineaffp").val(res.votantifemmineaffp);
                             $("#votantiTotaliaffp").val(res.votantitotaliaffp);
@@ -93,7 +93,7 @@ jQuery(document).ready(function ($) {
                                 $("#annullaffluenza").show();
                             }
                         }
-                        if (res.tipo === "3A" || res.tipo === "R3A") {
+                        if (res.tipo === "3C" || res.tipo === "R3C") {
                             if (tipoPagina != "A") {
                                 $("#affluenza").show();
                             } else {
@@ -116,6 +116,37 @@ jQuery(document).ready(function ($) {
         });
     }
 
+    function ajaxPrepopulateVoti() {
+        var errorcontainer = '#errorModal';
+        var errorDisplay = '#errorDisplay';
+        var tipoPagina = $("#tipopagina").val();
+        $.post({
+            url: '/search/voti',
+            data: $('form[name=rsezioneForm]').serialize(),
+            success: function (res) {
+                try {
+                    if (res.validated) {
+                        $("#numerosezioneinput").val(res.numerosezione)
+                        var iscrittitotali = res.iscritti + 5;
+                        var votanti = res.votanti;
+                        $("#Votanti").text(votanti);
+                        $("#Iscritti").text(res.iscritti);
+                        var url = "/voti/scrutinio/" + res.tipo+ "/" + res.numerosezione;
+                        $("#scrutiniodiv").load(url);
+                        $("#scrutinio").show();
+                    }
+                } catch (e) {
+                    $(errorDisplay).text(e);
+                    $(errorcontainer).modal('show');
+                }
+
+            },
+            error: function () {
+                $(errorDisplay).text("errore di connessione");
+                $(errorcontainer).modal('show');
+            }
+        })
+    }
 
     function ajaxPost() {
         var errorcontainer = '#errorModal';
@@ -136,17 +167,21 @@ jQuery(document).ready(function ($) {
                         //Set response
                         $("#cabina").text("Cabina: " + res.iscritti.cabina);
                         //  var text = "Cabina:  "+ res.iscritti.cabina + " Municipio: " + res.iscritti.municipio;
-                        $("#sezione").text("Sezione " + res.iscritti.numerosezione);
-                        $("#numerosezioneinput").val(res.iscritti.numerosezione);
-                        $("#numerosezione").val(res.iscritti.numerosezione);
+                        $("#sezione").text("Sezione " + res.iscritti.sezione.numerosezione);
+                        $("#numerosezioneinput").val(res.iscritti.sezione.numerosezione);
+                        $("#numerosezione").val(res.iscritti.sezione.numerosezione);
                         $("#municipio").text("Municipio " + res.iscritti.municipio);
                         $("#iscrittifemmine").text("Iscritti femmine: " + res.iscritti.iscrittifemmine);
                         $("#iscrittimaschi").text(" Iscritti maschi: " + res.iscritti.iscrittimaschi);
                         $("#iscrittitotali").text("Iscrtti totali: " + res.iscritti.iscrittitotali);
                         $("#tipoelezione").text(res.iscritti.tipoelezione.descrizione);
-                        $("#tiposezione").text(" Tipo sezione: " + res.iscritti.tiposezione.descrizione);
+                        $("#tiposezione").text(" Tipo sezione: " + res.iscritti.sezione.tiposezione.descrizione);
                         $("#sezionediv").show();
-                        ajaxPrepopulate();
+                        if (res.tipo !== "VRL" && res.tipo !== "VL") {
+                            ajaxPrepopulate();
+                        } else {
+                            ajaxPrepopulateVoti();
+                        }
                     } else {
                         //Set error messages
                         $.each(res.errorMessages, function (key, value) {

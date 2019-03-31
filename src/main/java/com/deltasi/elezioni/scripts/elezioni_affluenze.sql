@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: localhost    Database: elezioni
+-- Host: 127.0.0.1    Database: elezioni
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `affluenze`;
 CREATE TABLE `affluenze` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `idtipoelezione` int(10) unsigned DEFAULT NULL,
-  `numerosezione` int(10) unsigned NOT NULL,
+  `idsezione` int(10) unsigned NOT NULL,
   `idplesso` int(10) unsigned DEFAULT NULL,
   `idiscritti` int(10) unsigned NOT NULL,
   `costituzione1` int(1) unsigned DEFAULT '0',
@@ -57,14 +57,13 @@ CREATE TABLE `affluenze` (
   `utenteoperazione` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
-  UNIQUE KEY `numerosezione_UNIQUE` (`numerosezione`),
   KEY `fk_affluenze_iscritti_idx` (`idiscritti`),
   KEY `fk_affluenze_tipo_elezione_idx` (`idtipoelezione`),
   KEY `fk_affluenze_plessi_idx` (`idplesso`),
   CONSTRAINT `fk_affluenze_iscritti` FOREIGN KEY (`idiscritti`) REFERENCES `iscritti` (`idiscritti`),
   CONSTRAINT `fk_affluenze_plessi` FOREIGN KEY (`idplesso`) REFERENCES `plessi` (`id`),
   CONSTRAINT `fk_affluenze_tipo_elezione` FOREIGN KEY (`idtipoelezione`) REFERENCES `tipoelezione` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +72,7 @@ CREATE TABLE `affluenze` (
 
 LOCK TABLES `affluenze` WRITE;
 /*!40000 ALTER TABLE `affluenze` DISABLE KEYS */;
-INSERT INTO `affluenze` VALUES (1,1,1,NULL,1,1,NULL,1,NULL,NULL,1,NULL,NULL,NULL,NULL,105,NULL,NULL,NULL,NULL,105,NULL,NULL,NULL,NULL,210,NULL,NULL,NULL,NULL,'2019-03-23 20:20:26','admin'),(3,1,2,NULL,2,1,NULL,1,NULL,NULL,1,NULL,NULL,NULL,NULL,100,NULL,NULL,NULL,NULL,100,NULL,NULL,NULL,NULL,200,NULL,NULL,NULL,NULL,'2019-03-24 19:40:46','admin'),(4,1,3,NULL,3,1,NULL,1,NULL,NULL,1,NULL,NULL,NULL,NULL,40,NULL,NULL,NULL,NULL,40,NULL,NULL,NULL,NULL,80,NULL,NULL,NULL,NULL,'2019-03-25 14:51:38','admin'),(5,1,5,NULL,5,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2019-03-29 11:30:33','admin'),(6,1,6,NULL,6,1,NULL,1,NULL,NULL,1,NULL,NULL,NULL,NULL,50,NULL,NULL,NULL,NULL,55,NULL,NULL,NULL,NULL,105,NULL,NULL,NULL,NULL,'2019-03-29 12:35:58','admin');
+INSERT INTO `affluenze` VALUES (1,1,526,NULL,1,1,NULL,1,NULL,NULL,1,NULL,NULL,NULL,NULL,105,NULL,NULL,NULL,NULL,105,NULL,NULL,NULL,NULL,210,NULL,NULL,NULL,NULL,'2019-03-23 20:20:26','admin'),(3,1,527,NULL,2,1,NULL,1,NULL,NULL,1,NULL,NULL,NULL,NULL,100,NULL,NULL,NULL,NULL,100,NULL,NULL,NULL,NULL,200,NULL,NULL,NULL,NULL,'2019-03-24 19:40:46','admin'),(4,1,528,NULL,3,1,NULL,1,NULL,NULL,1,NULL,NULL,NULL,NULL,40,NULL,NULL,NULL,NULL,40,NULL,NULL,NULL,NULL,80,NULL,NULL,NULL,NULL,'2019-03-25 14:51:38','admin'),(5,1,530,NULL,5,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2019-03-29 11:30:33','admin'),(6,1,531,NULL,6,1,NULL,1,NULL,NULL,1,NULL,NULL,NULL,NULL,50,NULL,NULL,NULL,NULL,55,NULL,NULL,NULL,NULL,105,NULL,NULL,NULL,NULL,'2019-03-29 12:35:58','admin'),(7,1,532,NULL,7,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2019-03-30 17:05:13','admin'),(9,1,533,NULL,8,1,NULL,1,NULL,NULL,1,1,1,NULL,NULL,15,45,200,NULL,NULL,36,50,200,NULL,NULL,51,95,400,NULL,NULL,'2019-03-30 17:10:23','admin');
 /*!40000 ALTER TABLE `affluenze` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -89,7 +88,7 @@ DELIMITER ;;
   INSERT INTO affluenze_storico (
   `id`,
 `idtipoelezione`,
-`numerosezione`,
+`idsezione`,
 `idplesso`,
 `idiscritti`,
 `costituzione1`,
@@ -123,7 +122,7 @@ DELIMITER ;;
 `utenteoperazione`)
 	  VALUES(OLD.id,
       OLD.idtipoelezione,
-OLD.numerosezione,
+OLD.idsezione,
 OLD.idplesso,
 OLD.idiscritti,
 OLD.costituzione1,
@@ -172,4 +171,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-30 12:06:07
+-- Dump completed on 2019-03-31 17:40:58

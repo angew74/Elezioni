@@ -50,8 +50,8 @@ public class AffluenzaService implements IAffluenzaService {
     }
 
     @Override
-    public Affluenza findByNumerosezione(Integer num) {
-        return  affluenzaDAO.findByNumerosezione(num);
+    public Affluenza findBySezioneId(Integer sezioneid) {
+        return  affluenzaDAO.findBySezioneId(sezioneid);
     }
 
     @Override
@@ -125,9 +125,9 @@ public class AffluenzaService implements IAffluenzaService {
     }
 
     @Override
-    public  Affluenza findByNumerosezioneAndTipoelezioneId(Integer sezione, Integer tipoElezioneId)
+    public  Affluenza findBySezioneNumerosezioneAndTipoelezioneId(Integer sezione, Integer tipoElezioneId)
     {
-       return affluenzaDAO.findByNumerosezioneAndTipoelezioneId(sezione,tipoElezioneId);
+       return affluenzaDAO.findBySezioneNumerosezioneAndSezioneTipoelezioneId(sezione,tipoElezioneId);
     }
 
 }

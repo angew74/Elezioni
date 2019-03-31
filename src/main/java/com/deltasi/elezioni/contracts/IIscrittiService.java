@@ -20,7 +20,9 @@ public interface IIscrittiService {
 
     List<Iscritti> findIscrittiByMun(Integer mun);
 
-     List<Iscritti> findIscrittiBySezione(Integer sezione);
+    Iscritti findBySezioneId(Integer idsezione);
+
+    Iscritti findByTipoelezioneIdAndSezioneNumerosezione(Integer tipoElezioneId, Integer numerosezione);
 
     void add(Iscritti matrice);
 
@@ -29,7 +31,5 @@ public interface IIscrittiService {
     List<Iscritti> findByIdTipoElezione(Integer idtipoelezione);
 
     List<Iscritti> findByTipoElezione(TipoElezione tipoelezione);
-
-    Iscritti findByNumerosezioneAndTipoelezioneId(Integer numerosezione, Integer tipoElezioneId);
 
 }

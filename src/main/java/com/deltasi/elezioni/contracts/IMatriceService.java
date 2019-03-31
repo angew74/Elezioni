@@ -13,7 +13,7 @@ import com.deltasi.elezioni.model.configuration.TipoElezione;
  * @author AdminDSI
  */
 public interface IMatriceService {
-     public Matrice findMatriceById(Integer id);
+    public Matrice findMatriceById(Integer id);
     public Matrice findMatriceByMun(Integer mun);
     public void add(Matrice matrice);
     public void delete(Integer id);

@@ -4,6 +4,7 @@ package com.deltasi.elezioni.model.risultati;
 
 import com.deltasi.elezioni.model.configuration.Iscritti;
 import com.deltasi.elezioni.model.configuration.Plesso;
+import com.deltasi.elezioni.model.configuration.Sezione;
 import com.deltasi.elezioni.model.configuration.TipoElezione;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -23,7 +24,10 @@ public class AffluenzaStorico {
     @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
     private TipoElezione tipoelezione;
 
-    private Integer numerosezione;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idsezione", referencedColumnName = "id")
+    @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+    private Sezione sezione;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idplesso", referencedColumnName = "id")
@@ -138,14 +142,6 @@ public class AffluenzaStorico {
 
     public void setTipoelezione(TipoElezione tipoelezione) {
         this.tipoelezione = tipoelezione;
-    }
-
-    public Integer getNumerosezione() {
-        return numerosezione;
-    }
-
-    public void setNumerosezione(Integer numerosezione) {
-        this.numerosezione = numerosezione;
     }
 
     public Plesso getPlesso() {
@@ -395,6 +391,14 @@ public class AffluenzaStorico {
 
     public void setUtenteoperazioneold(String utenteoperazioneold) {
         this.utenteoperazioneold = utenteoperazioneold;
+    }
+
+    public Sezione getSezione() {
+        return sezione;
+    }
+
+    public void setSezione(Sezione sezione) {
+        this.sezione = sezione;
     }
 }
 

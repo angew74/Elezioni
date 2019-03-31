@@ -3,8 +3,8 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
 <head>
     <div th:replace="fragments/head :: header-css-js"/>
-    <link th:href="@{~/css/affluenze/list.css}" type="text/css" rel="stylesheet" />
-    <script th:src="@{~/js/affluenze/list.js}" type="text/javascript">
+    <link th:href="@{~/css/voti/list.css}" type="text/css" rel="stylesheet" />
+    <script th:src="@{~/js/voti/list.js}" type="text/javascript">
     </script>
 </head>
 <body>
@@ -12,66 +12,31 @@
 <div id="accordian">
     <ul>
         <li>
-            <h3><a href="#">
-                <i class="fas fa-check-double"></i>Costituzione</a></h3>
+            <h3><a href="#"><i class="far fa-thumbs-up"></i>Voti</a></h3>
             <ul>
-                <li><a th:if="${#lists.contains(fasi, 'CO')}" href="/affluenze/inserimento/CO">
-                    <i class="fas fa-plus-circle"></i>Inserimento</a>
-                </li>
-                <li>
-                    <a th:if="${#lists.contains(fasi, 'CO')}" href="/affluenze/modifica/CO">
-                        <i class="fas fa-minus-circle"></i>Annullamento</a></li>
-            </ul>
-        </li>
-        <li>
-            <h3><a href="#"><i class="fab fa-buysellads"></i>Apertura</a></h3>
-            <ul>
-                <li><a th:if="${#lists.contains(fasi, 'AP')}"  href="/affluenze/inserimento/AP">
-                    <i class="fas fa-plus-circle"></i>Inserimento</a></li>
-                <li><a th:if="${#lists.contains(fasi, 'AP')}"  href="/affluenze/modifica/AP">
-                    <i class="fas fa-minus-circle"></i>Annullamento</a></li>
-            </ul>
-        </li>
-        <li>
-            <h3><a href="#"><i class="far fa-thumbs-up"></i>Affluenze</a></h3>
-            <ul>
-                <li class="active"><a href="#">1 Affluenza</a>
+                <li class="active"><a href="#">Liste</a>
                     <ul>
-                        <li><a th:if="${#lists.contains(fasi, '1A')}"  href="/affluenze/inserimento/1A">
+                        <li><a th:if="${#lists.contains(fasi, 'VL')}"  href="/voti/inserimento/VL">
                             <i class="fas fa-plus-circle"></i>Inserimento</a></li>
-                        <li><a th:if="${#lists.contains(fasi, '1A')}"  href="/affluenze/modifica/1A">
+                        <li><a th:if="${#lists.contains(fasi, 'RVL')}"  href="/voti/modifica/RVL">
                             <i class="fas fa-edit"></i>Rettifica</a></li>
-                        <li><a th:if="${#lists.contains(fasi, '1A')}"  href="/affluenze/annullamento/1A">
+                        <li><a th:if="${#lists.contains(fasi, 'RVL')}"  href="/voti/annullamento/RVL">
                             <i class="fas fa-minus-circle"></i>Annullamento</a></li>
                     </ul>
                 </li>
-                <li class="active"><a href="#">2 Affluenza </a>
+                <li class="active"><a href="#">Preferenze</a>
                     <ul>
-                        <li><a th:if="${#lists.contains(fasi, '2A')}" href="/affluenze/inserimento/2A">
+                        <li><a th:if="${#lists.contains(fasi, 'PE')}" href="/preferenze/inserimento/PE">
                             <i class="fas fa-plus-circle"></i>Inserimento</a>
                         </li>
-                        <li><a th:if="${#lists.contains(fasi, '2A')}" href="/affluenze/modifica/2A">
+                        <li><a th:if="${#lists.contains(fasi, 'RPE')}" href="/preferenze/modifica/RPE">
                             <i class="fas fa-edit"></i>Rettifica</a>
                         </li>
-                        <li><a th:if="${#lists.contains(fasi, '2A')}" href="/affluenze/annullamento/2A">
+                        <li><a th:if="${#lists.contains(fasi, 'RPE')}" href="/preferenze/annullamento/RPE">
                             <i class="fas fa-minus-circle"></i>Annullamento</a>
                         </li>
                     </ul>
                 </li>
-            </ul>
-        </li>
-        <li>
-            <h3><a href="#"><i class="fas fa-person-booth"></i>Chiusura</a></h3>
-            <ul>
-                <li><a th:if="${#lists.contains(fasi, '3C')}" href="/affluenze/inserimento/3C">
-                    <i class="fas fa-plus-circle">
-                    </i>Inserimento</a></li>
-                <li><a th:if="${#lists.contains(fasi, '3C')}"  href="/affluenze/modifica/3C">
-                    <i class="fas fa-edit">
-                    </i>Rettifica</a>
-                </li>
-                <li><a th:if="${#lists.contains(fasi, '3C')}" href="/affluenze/annullamento/3C">
-                    <i class="fas fa-minus-circle"></i>Annullamento</a></li>
             </ul>
         </li>
     </ul>

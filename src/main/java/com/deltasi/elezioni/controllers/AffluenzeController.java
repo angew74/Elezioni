@@ -59,6 +59,9 @@ public class AffluenzeController {
     IAbilitazioniService abilitazioniService;
 
     @Autowired
+    ISezioneService sezioneService;
+
+    @Autowired
     BusinessRules businessRules;
 
     @GetMapping(value = "/list")
@@ -123,22 +126,22 @@ public class AffluenzeController {
     }
 
 
-    @GetMapping(value = "/apra/{tipo}/{sezione}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value = "/apra/{tipo}/{sezioneRichiesta}", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public SezioneJson registra(@PathVariable String tipo, @PathVariable Integer sezione, Principal principal) {
+    public SezioneJson registra(@PathVariable String tipo, @PathVariable Integer sezioneRichiesta, Principal principal) {
         SezioneJson sezioneJson = new SezioneJson();
         Affluenza affluenza = new Affluenza();
         TipoElezione tipoElezione = new TipoElezione();
         Map<String, String> errors = null;
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         try {
-            String msg = businessRules.IsInsertable(sezione, tipo, tipoelezioneid);
+            String msg = businessRules.IsInsertable(sezioneRichiesta, tipo, tipoelezioneid);
             if (msg.equals("")) {
                 LocalDateTime oggi = LocalDateTime.now();
                 tipoElezione = tipoElezioneService.findTipoElezioneById(tipoelezioneid);
+                affluenza = affluenzaService.findBySezioneNumerosezioneAndTipoelezioneId(sezioneRichiesta, tipoelezioneid);
                 switch (tipo) {
                     case "AP":
-                        affluenza = affluenzaService.findByNumerosezioneAndTipoelezioneId(sezione, tipoelezioneid);
                         affluenza.setDataoperazione(oggi);
                         affluenza.setUtenteoperazione(SecurityContextHolder.getContext().getAuthentication().getName());
                         affluenza.setApertura1(1);
@@ -147,12 +150,16 @@ public class AffluenzeController {
                         sezioneJson.setValidated(true);
                         break;
                     case "CO":
-                        affluenza.setNumerosezione(sezione);
+                        if(affluenza == null) {
+                            affluenza = new Affluenza();
+                            Sezione sezione = sezioneService.findByNumerosezioneAndTipoelezioneId(sezioneRichiesta, tipoelezioneid);
+                            affluenza.setSezione(sezione);
+                            Iscritti iscritti = iscrittiService.findByTipoelezioneIdAndSezioneNumerosezione(tipoelezioneid,sezioneRichiesta);
+                            affluenza.setIscritti(iscritti);
+                        }
                         affluenza.setDataoperazione(oggi);
                         affluenza.setUtenteoperazione(SecurityContextHolder.getContext().getAuthentication().getName());
                         affluenza.setTipoelezione(tipoElezione);
-                        Iscritti iscritti = iscrittiService.findByNumerosezioneAndTipoelezioneId(sezione, tipoelezioneid);
-                        affluenza.setIscritti(iscritti);
                         affluenza.setCostituzione1(1);
                         affluenzaService.add(affluenza);
                         sezioneJson.setTipo(tipo);
@@ -191,7 +198,7 @@ public class AffluenzeController {
                 tipoElezione = tipoElezioneService.findTipoElezioneById(tipoelezioneid);
                 switch (tipo) {
                     case "RAP":
-                        affluenza = affluenzaService.findByNumerosezioneAndTipoelezioneId(sezione, tipoelezioneid);
+                        affluenza = affluenzaService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, tipoelezioneid);
                         affluenza.setDataoperazione(oggi);
                         affluenza.setUtenteoperazione(SecurityContextHolder.getContext().getAuthentication().getName());
                         affluenza.setApertura1(0);
@@ -200,7 +207,7 @@ public class AffluenzeController {
                         sezioneJson.setValidated(true);
                         break;
                     case "RCO":
-                        affluenza = affluenzaService.findByNumerosezioneAndTipoelezioneId(sezione, tipoelezioneid);
+                        affluenza = affluenzaService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, tipoelezioneid);
                         affluenza.setDataoperazione(oggi);
                         affluenza.setUtenteoperazione(SecurityContextHolder.getContext().getAuthentication().getName());
                         affluenza.setCostituzione1(0);
@@ -242,7 +249,7 @@ public class AffluenzeController {
                 response.setValidated(false);
                 response.setErrorMessages(errors);
             }
-            Affluenza affluenza = affluenzaService.findByNumerosezioneAndTipoelezioneId(affluenzaJson.getNumerosezione(), tipoelezioneid);
+            Affluenza affluenza = affluenzaService.findBySezioneNumerosezioneAndTipoelezioneId(affluenzaJson.getNumerosezione(), tipoelezioneid);
             response.setTipo(affluenzaJson.getTipo());
             switch (affluenzaJson.getTipo()) {
                 case "1A":
@@ -263,8 +270,8 @@ public class AffluenzeController {
                     affluenzaService.add(affluenza);
                     response.setValidated(true);
                     break;
-                case "3A":
-                case "R3A":
+                case "3C":
+                case "R3C":
                     affluenza.setAffluenza3(1);
                     affluenza.setVotantifemmine3(affluenzaJson.getVotantifemmine());
                     affluenza.setVotantimaschi3(affluenzaJson.getVotantimaschi());
@@ -302,7 +309,7 @@ public class AffluenzeController {
             if (msg.equals("")) {
                 LocalDateTime oggi = LocalDateTime.now();
                 TipoElezione tipoElezione = tipoElezioneService.findTipoElezioneById(tipoelezioneid);
-                Affluenza affluenza = affluenzaService.findByNumerosezioneAndTipoelezioneId(sezione, tipoelezioneid);
+                Affluenza affluenza = affluenzaService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, tipoelezioneid);
                 response.setTipo(response.getTipo());
                 switch (tipo) {
                     case "R1A":

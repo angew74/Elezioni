@@ -33,9 +33,11 @@ public class Iscritti implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-    
-   @Column(name = "numerosezione") 
-   private Integer numerosezione;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idsezione", referencedColumnName = "id")
+    @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+    private Sezione sezione;
     
    @Column(name = "municipio")
    private Integer municipio;
@@ -114,19 +116,6 @@ public class Iscritti implements Serializable {
         return "com.deltasi.model.configuration.Iscritti[ id=" + getId() + " ]";
     }
 
-    /**
-     * @return the numerosezione
-     */
-    public Integer getNumerosezione() {
-        return numerosezione;
-    }
-
-    /**
-     * @param numerosezione the numerosezione to set
-     */
-    public void setNumerosezione(Integer numerosezione) {
-        this.numerosezione = numerosezione;
-    }
 
     /**
      * @return the municipio
@@ -351,5 +340,12 @@ public class Iscritti implements Serializable {
     public void setTiposezione(TipoSezione tiposezione) {
         this.tiposezione = tiposezione;
     }
-    
+
+    public Sezione getSezione() {
+        return sezione;
+    }
+
+    public void setSezione(Sezione sezione) {
+        this.sezione = sezione;
+    }
 }

@@ -12,10 +12,10 @@ public interface IAffluenzaService {
     public void add(Affluenza affluenza);
     public void update(Affluenza affluenza);
     public void delete(Long id);
-    Affluenza findByNumerosezioneAndTipoelezioneId(Integer sezione, Integer tipoElezioneId);
+    Affluenza findBySezioneNumerosezioneAndTipoelezioneId(Integer sezione, Integer tipoElezioneId);
     Affluenza findById(Integer id);
     List<Affluenza> findByPlessoMunicipio(Integer municipio);
-    Affluenza findByNumerosezione(Integer num);
+    Affluenza findBySezioneId(Integer sezioneid);
     List<Affluenza> findByPlessoId(Integer idplesso);
     List<Affluenza> findByPlesso(Plesso plesso);
     List<Affluenza> findByTipoelezione(TipoElezione tipoElezione);

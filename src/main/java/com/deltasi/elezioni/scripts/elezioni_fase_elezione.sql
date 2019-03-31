@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: localhost    Database: elezioni
+-- Host: 127.0.0.1    Database: elezioni
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -42,7 +42,7 @@ CREATE TABLE `fase_elezione` (
 
 LOCK TABLES `fase_elezione` WRITE;
 /*!40000 ALTER TABLE `fase_elezione` DISABLE KEYS */;
-INSERT INTO `fase_elezione` VALUES (27,'CO','Costituzione',1,1),(30,'1A','1 Affluenza',1,1),(31,'2A','2 Affluenza',0,1),(32,'3C','Chiusura',0,1),(33,'3A','3 Affluenza',0,1),(34,'4C','Chiusura 4 Affluenza',0,1),(35,'VL','Voti Lista',0,1),(36,'VP','Voti Presidente',0,1),(37,'VS','Voti Sindaco',0,1),(38,'VU','Voti Uninominalie',0,1),(39,'PC','Preferenze Comunali',0,1),(40,'PR','Preferenze Regionali',0,1),(41,'AP','Apertura',1,1),(42,'RCO','Rettifica Costituzione',1,1),(43,'RAP','Rettiifica Apertura',1,1),(44,'R1A','Rettifica 1 Affluenza',1,1),(45,'R2A','Rettifica 2 Affluenza',0,1),(46,'R3C','Rettifica Chiusura',0,1),(47,'RVL','Rettifica Voti Lista',0,1),(48,'RPE','Rettifica Preferenze Europee',0,1),(49,'PE','Preferenze Europee',0,1);
+INSERT INTO `fase_elezione` VALUES (27,'CO','Costituzione',1,1),(30,'1A','1 Affluenza',1,1),(31,'2A','2 Affluenza',1,1),(32,'3C','Chiusura',1,1),(33,'3A','3 Affluenza',0,1),(34,'4C','Chiusura 4 Affluenza',0,1),(35,'VL','Voti Lista',1,1),(36,'VP','Voti Presidente',0,1),(37,'VS','Voti Sindaco',0,1),(38,'VU','Voti Uninominalie',0,1),(39,'PC','Preferenze Comunali',0,1),(40,'PR','Preferenze Regionali',0,1),(41,'AP','Apertura',1,1),(42,'RCO','Rettifica Costituzione',1,1),(43,'RAP','Rettiifica Apertura',1,1),(44,'R1A','Rettifica 1 Affluenza',1,1),(45,'R2A','Rettifica 2 Affluenza',0,1),(46,'R3C','Rettifica Chiusura',0,1),(47,'RVL','Rettifica Voti Lista',1,1),(48,'RPE','Rettifica Preferenze Europee',0,1),(49,'PE','Preferenze Europee',0,1);
 /*!40000 ALTER TABLE `fase_elezione` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-30 12:06:05
+-- Dump completed on 2019-03-31 17:40:55
