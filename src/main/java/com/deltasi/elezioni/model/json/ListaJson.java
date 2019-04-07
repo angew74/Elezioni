@@ -1,8 +1,11 @@
 package com.deltasi.elezioni.model.json;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public class ListaJson {
+public class ListaJson implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private Integer id;
     private String denominazione;

@@ -1,9 +1,24 @@
 package com.deltasi.elezioni.model.json;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class VotiJson {
+
+    public VotiJson()
+    {
+        this.liste = new ArrayList<>();
+    }
+
+    public VotiJson(List<ListaJson> l)
+    {
+        this.liste =l;
+    }
+
+    public void addLista(ListaJson json) {
+        this.liste.add(json);
+    }
 
     private Integer id;
     private Integer numerosezione;

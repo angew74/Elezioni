@@ -81,7 +81,6 @@ public class VotiController {
         ModelAndView modelAndView = new ModelAndView("voti/scrutinio");
         VotiJson json = new VotiJson();
         List<ListaJson> listevuote = new ArrayList<ListaJson>();
-        ListaJson listainserimento = new ListaJson();
         String titolo = businessRules.getTitoloByFase(tipo, "I");
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         if (tipo.equals("RVL")) {
@@ -111,9 +110,10 @@ public class VotiController {
                 listevuote.add(h);
             }
         }
-        modelAndView.addObject("ListaInserimento", listainserimento);
+
+      //  modelAndView.addObject("ListeInserimento", new VotiJson());
         modelAndView.addObject("Liste", json);
-        modelAndView.addObject("ListeVuote", listevuote);
+        modelAndView.addObject("ListeVuote",new VotiJson(listevuote));
         modelAndView.addObject("titlepage", titolo);
         return modelAndView;
     }
@@ -174,9 +174,10 @@ public class VotiController {
     }
 
 
-    @PostMapping(value = "/lreg")
+   // @PostMapping(value = "/lreg" ,consumes = da)
+    @RequestMapping(value = "/lreg", method = RequestMethod.POST)
     @ResponseBody
-    public ListaJson registraScrutinio(@ModelAttribute("listaJson") @Valid ListaJson listaJson,
+    public @ModelAttribute("votiJson") ListaJson registraScrutinio(@ModelAttribute(value = "votiJson") VotiJson votiJson,
                                        BindingResult result, ModelMap mode) {
         ListaJson response = new ListaJson();
         Map<String, String> errors = null;
@@ -191,18 +192,21 @@ public class VotiController {
                 response.setValidated(false);
                 response.setErrorMessages(errors);
             }
-            switch (listaJson.getTipo()) {
-                case "VL":
-                    break;
-                case "RVL":
-                    response.setValidated(true);
-                    break;
-                default:
-                    errors = new HashMap<String, String>();
-                    errors.put("Errore grave", "Parametri non validi");
-                    response.setValidated(false);
-                    response.setErrorMessages(errors);
-                    break;
+            for (ListaJson l: votiJson.getListe()
+                 ) {
+                switch (l.getTipo()) {
+                    case "VL":
+                        break;
+                    case "RVL":
+                        response.setValidated(true);
+                        break;
+                    default:
+                        errors = new HashMap<String, String>();
+                        errors.put("Errore grave", "Parametri non validi");
+                        response.setValidated(false);
+                        response.setErrorMessages(errors);
+                        break;
+                }
 
             }
 

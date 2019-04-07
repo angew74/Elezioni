@@ -13,58 +13,65 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="well well-sm">
-                        <form class="form-horizontal" th:object="${ListaInserimento}" name="insertScrutinio"
-                              data-parsley-validate action="/voti/lreg" method="post">
                             <fieldset>
                                 <div th:if="${not #lists.isEmpty(Liste.liste)}">
+                                    <form class="form-horizontal" th:object="${Liste}" name="insertScrutinio"
+                                          data-parsley-validate action="/voti/lreg" method="post">
                                     <div th:each="lista,iterStat:${Liste.liste}" class="form-group row">
                                         <input name="numerosezione" type="hidden"
-                                               th:field="*{numerosezione}"
                                                th:value="${lista.numerosezione}"
                                                id="numerosezioneinput"/>
                                         <input name="id" type="hidden"
-                                               th:field="*{id}"
                                                th:value="${lista.id}"
                                                th:id="'id' + ${lista.id}"
                                                />
                                         <input name="idlista" type="hidden"
-                                               th:field="*{idlista}"
                                                th:value="${lista.idlista}"
                                                th:id="'idlista' + ${lista.idlista}"
                                             />
                                         <label for="staticVotiLista" class="col-sm-2 col-form-label"  th:text="${lista.denominazione}"></label>
                                         <div class="col-sm-10">
                                             <input type="text" readonly class="form-control-plaintext" id="staticVotiLista"
-                                                   th:value="${lista.voti}" th:field="*{voti}">
+                                                   name="voti"
+                                                   th:value="${lista.voti}">
                                         </div>
                                     </div>
+                                    </form>
                                 </div>
                                 <div th:if="${#lists.isEmpty(Liste.liste)}">
-                                    <div th:each="lista,iterStat:${ListeVuote}" class="form-group row">
+                                    <form class="form-horizontal" modelAttribute="ListeVuote" name="insertScrutinio"
+                                          data-parsley-validate action="/voti/lreg" method="post">
+                                    <div th:each="lista,itemStat:${ListeVuote.liste}" class="form-group row">
                                         <div class="col-sm-10">
                                             <div class="input-group">
-                                                <input name="numerosezione" type="hidden"
-                                                       th:field="*{numerosezione}"
-                                                       th:value="${lista.numerosezione}"
-                                                       id="numerosezioneblank"/>
-                                                <input name="tipo" type="hidden"
-                                                       th:field="*{tipo}"
-                                                       th:value="${lista.tipo}"
-                                                       id="tipoblank"/>
-                                                <input name="idlista" type="hidden"
-                                                       th:id="'idlistablank' + ${lista.idlista}"
-                                                       th:field="*{idlista}"
-                                                       th:value="${lista.idlista}"
+                                                <input name="liste.numerosezione" type="number"
+                                                       th:value="${lista.getNumerosezione()}"
+                                                       style="display:none;"
+                                                       data-parsley-required
+                                                       required
+                                                       id="numerosezione"/>
+                                                <input name="liste.tipo" type="text"
+                                                       data-parsley-required
+                                                       required
+                                                       th:value="${lista.getTipo()}"
+                                                       style="display:none;"
+                                                       id="tipo"/>
+                                                <input name="liste.idlista" type="number"
+                                                       id="idlista"
+                                                       required
+                                                       data-parsley-required
+                                                       style="display:none;"
+                                                       th:value="${lista.getIdlista()}"
                                                      />
                                                 <label class="col-sm-3  col-form-label"
                                                        th:text="${lista.denominazione}"></label>
-                                                <input name="voti"
-                                                       th:field="*{voti}"
+                                                <input name="liste.voti"
                                                        class="form-control voti"
-                                                       th:id="'voti' + ${lista.idlista}"
+                                                       id="voti"
                                                        placeholder="Voti lista"
                                                        type="number"
                                                        min="0"
+                                                       value="0"
                                                        data-parsley-required
                                                        data-parsley-type="number"
                                                        data-validation="required"
@@ -72,6 +79,12 @@
                                             </div>
                                         </div>
                                     </div>
+                                    </form>
+                                </div>
+                                <div class="form-group">
+                                <div class="col-sm-10">
+                                    <div id="errorcontrol" style="display: none" class="errorBlock"></div>
+                                </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-8">

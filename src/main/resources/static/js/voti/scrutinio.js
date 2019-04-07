@@ -13,10 +13,10 @@ jQuery(document).ready(function ($) {
             if ($(this).parsley().validate() !== true)
                 isValidSelect = false;
         });
-        if ($("#tipoblank").parsley().validate() !== true) {
+        if ($("#tipo").parsley().validate() !== true) {
             isValid = false;
         }
-        if ($("#numerosezioneblank").parsley().validate() !== true) {
+        if ($("#numerosezione").parsley().validate() !== true) {
             isValid = false;
         }
         if ($("#Votanti").parsley().validate() !== true) {
@@ -25,28 +25,30 @@ jQuery(document).ready(function ($) {
         if ($("#Iscritti").parsley().validate() !== true) {
             isValid = false;
         }
-        var votanti = parseInt($('#Votanti').val());
-        var iscritti = parseInt($('#Iscritti').val());
+        var votanti = parseInt($('#Votanti').text());
+        var iscritti = parseInt($('#Iscritti').text());
         var sum = 0;
-        $('.voti').each(function()
-        {
-            sum += parseFloat($(this).text());
-        });
-        if (sum !== votanti)
-        {
-            $("#errorVotanti").text("Somma scrutinio diversa da votanti " + sum + " <> " + $("#Votanti").val());
+        var group = $('input[name="liste.voti"]');
+        if (group.length > 1) {
+            group.each(function () {
+                sum += parseFloat($(this)[0].value);
+            });
+        }
+        if (sum !== votanti) {
+            $("#errorcontrol").append("Somma scrutinio diversa da votanti " + sum + " <> " + $("#Votanti").val());
             isValid = false;
+            $("#errorcontrol").show();
+        } else {
+            $("#errorcontrol").text("");
+            $("#errorcontrol").hide();
         }
-        else {
-            $("#errorVotanti").text("");
-        }
-        if(sum > iscritti)
-        {
-            $("#errorIscritti").text("Voti scrutinio maggiore iscritti " + sum + " > " + $("#Iscritti").val());
+        if (sum > iscritti) {
+            $("#errorcontrol").append("Voti scrutinio maggiore iscritti " + sum + " > " + $("#Iscritti").val());
             isValid = false;
-        }
-        else {
-            $("#errorIscritti").text("");
+            $("#errorcontrol").show();
+        } else {
+            $("#errorcontrol").text("");
+            $("#errorcontrol").hide();
         }
 
         if (isValid && isValidSelect) {
@@ -60,36 +62,32 @@ jQuery(document).ready(function ($) {
         var errorDisplay = '#errorDisplay';
         var successcontainer = '#successModal';
         var mdisplay = "#messagesuccess";
+        debugger;
+        var formData = $('form[name=insertScrutinio]').serialize();
         $.post({
-            url: '/voti/lreg',
-            data: $('form[name=insertScrutinio]').serialize(),
-            success: function (res) {
+             url: '/voti/lreg',
+            //url : '/dati/lreg',
+           // type: "POST",
+            data:formData,
+            // dataType: 'json',
+          //  success: function (data)
+          //  {
+                
+           // },
+           // fail: function (data) {
+
+           // }
+           success: function (res) {
                 try {
                     if (res.validated) {
                         //Set response
-                        if (res.tipo === "1A") {
-                            $("#costituzione").hide();
-                            $(mdisplay).text("1 Affluenza inserita correttamente");
+                        if (res.tipo === "VL") {
+                            $("#scrutiniodiv").hide();
+                            $(mdisplay).text("Scrutinio inserito correttamente");
                         }
-                        if (res.tipo === "2A") {
-                            $("#apertura").hide();
-                            $(mdisplay).text("2 Affluenza inserita correttamente");
-                        }
-                        if (res.tipo === "3A") {
-                            $("#apertura").hide();
-                            $(mdisplay).text("Chiusura inserita correttamente");
-                        }
-                        if (res.tipo === "R1A") {
-                            $("#costituzione").hide();
-                            $(mdisplay).text("1 Affluenza rettificata");
-                        }
-                        if (res.tipo === "R2A") {
-                            $("#apertura").hide();
-                            $(mdisplay).text("2 Affluenza rettificata");
-                        }
-                        if (res.tipo === "R3A") {
-                            $("#apertura").hide();
-                            $(mdisplay).text("Chiusura rettificata");
+                        if (res.tipo === "RVL") {
+                            $("#scrutiniodiv").hide();
+                            $(mdisplay).text("Rettifica Scrutinio inserita correttamente");
                         }
                         $(successcontainer).modal('show');
                     } else {
