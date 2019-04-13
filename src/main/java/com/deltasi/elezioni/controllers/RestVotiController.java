@@ -1,6 +1,8 @@
 package com.deltasi.elezioni.controllers;
 
 import com.deltasi.elezioni.model.json.ListaJson;
+import com.deltasi.elezioni.model.json.ListaSemplice;
+import com.deltasi.elezioni.model.json.ListeWrapper;
 import com.deltasi.elezioni.model.json.VotiJson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,14 +28,14 @@ public class RestVotiController {
     @Autowired
     private Environment env;
 
-    @PostMapping(value = "/lreg", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ListaJson registraScrutinio(@ModelAttribute(value = "ListeVuote") VotiJson ListeVuote
+    @PostMapping(value = "/lreg", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ListaJson registraScrutinio(String liste
                                        ) {
         ListaJson response = new ListaJson();
         Map<String, String> errors = null;
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         try {
-            for (ListaJson l: ListeVuote.getListe()
+          /*  for (ListaSemplice l: liste.getListe()
             ) {
                 switch (l.getTipo()) {
                     case "VL":
@@ -49,7 +51,7 @@ public class RestVotiController {
                         break;
                 }
 
-            }
+            }*/
 
         } catch (Exception ex) {
             errors = new HashMap<String, String>();

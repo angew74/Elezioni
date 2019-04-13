@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface IVotiService {
 
+    void SaveAll(List<Voti> list);
     Voti findById(Integer id);
     List<Voti> findAllBy();
     List<Voti> findBySezioneNumerosezioneAndSezioneTipoelezioneId(Integer numerosezione, Integer tipoelezioneid);

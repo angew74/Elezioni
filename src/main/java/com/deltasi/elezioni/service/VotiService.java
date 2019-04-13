@@ -28,13 +28,19 @@ public class VotiService implements IVotiService {
     }
 
     @Override
+    public void SaveAll(List<Voti> list)
+    {
+        votiDAO.saveAll(list);
+    }
+    @Override
     public List<Voti> findAllBy() {
         return votiDAO.findAllBy();
     }
 
     @Override
     public List<Voti> findBySezioneNumerosezioneAndSezioneTipoelezioneId(Integer numerosezione, Integer tipoelezioneid) {
-        return votiDAO.findBySezioneNumerosezioneAndSezioneTipoelezioneId(numerosezione,tipoelezioneid);
+        List<Voti> l = votiDAO.findBySezioneNumerosezioneAndSezioneTipoelezioneId(numerosezione,tipoelezioneid);
+        return l;
     }
 
     @Override

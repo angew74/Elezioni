@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 @Table(name = "voti_lista")
 public class Voti {
 
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

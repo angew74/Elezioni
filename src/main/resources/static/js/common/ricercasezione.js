@@ -134,6 +134,7 @@ jQuery(document).ready(function ($) {
                         var url = "/voti/scrutinio/" + res.tipo+ "/" + res.numerosezione;
                         $("#scrutiniodiv").load(url);
                         $("#scrutinio").show();
+                        $("#scrutiniodiv").show();
                     }
                 } catch (e) {
                     $(errorDisplay).text(e);
@@ -177,7 +178,7 @@ jQuery(document).ready(function ($) {
                         $("#tipoelezione").text(res.iscritti.tipoelezione.descrizione);
                         $("#tiposezione").text(" Tipo sezione: " + res.iscritti.sezione.tiposezione.descrizione);
                         $("#sezionediv").show();
-                        if (res.tipo !== "VRL" && res.tipo !== "VL") {
+                        if (res.tipo !== "RVL" && res.tipo !== "VL") {
                             ajaxPrepopulate();
                         } else {
                             ajaxPrepopulateVoti();

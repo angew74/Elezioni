@@ -41,7 +41,7 @@ public class BusinessRules {
         if (fase.getAbilitata().equals(0)) {
             return "Funzionalità non abilitata";
         }
-        Affluenza affluenza = affluenzaService.findBySezioneNumerosezioneAndTipoelezioneId(sezione,idtipoelezione);
+        Affluenza affluenza = affluenzaService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, idtipoelezione);
         switch (codiceFase) {
             case "AP":
                 if (affluenza == null) {
@@ -67,15 +67,16 @@ public class BusinessRules {
                 if ((affluenza.getCostituzione1() == null) || (affluenza.getCostituzione1().equals(0))) {
                     return "Manca Costituzione";
                 }
-                if(affluenza.getApertura1().equals(0))
-                {return  message;}
+                if (affluenza.getApertura1().equals(0)) {
+                    return message;
+                }
                 break;
             case "CO":
                 if (affluenza == null) {
                     return message;
                 }
                 if (affluenza != null) {
-                    if(affluenza.getCostituzione1().equals(1)) {
+                    if (affluenza.getCostituzione1().equals(1)) {
                         return "Costituzione già inserita usare rettitifica";
                     }
                 }
@@ -161,7 +162,7 @@ public class BusinessRules {
                 }
                 break;
             case "VL":
-                List<Voti> lvoti = votiService.findBySezioneNumerosezioneAndSezioneTipoelezioneId(sezione,idtipoelezione);
+                List<Voti> lvoti = votiService.findBySezioneNumerosezioneAndSezioneTipoelezioneId(sezione, idtipoelezione);
                 if (affluenza == null) {
                     return "Sezione non costitutita";
                 }
@@ -173,11 +174,11 @@ public class BusinessRules {
                 }
                 break;
             case "RVL":
-                List<Voti> lvotir = votiService.findBySezioneNumerosezioneAndSezioneTipoelezioneId(sezione,idtipoelezione);
+                List<Voti> lvotir = votiService.findBySezioneNumerosezioneAndSezioneTipoelezioneId(sezione, idtipoelezione);
                 if (affluenza == null) {
                     return "Sezione non costitutita";
                 }
-                if (affluenza.getAffluenza3() == null && affluenza.getAffluenza3().equals(0)) {
+                if (affluenza.getAffluenza3() == null || affluenza.getAffluenza3().equals(0)) {
                     return "Chiusura non registrata";
                 }
                 if ((lvotir == null) || (lvotir.size() == 0)) {
@@ -285,15 +286,19 @@ public class BusinessRules {
                 }
                 break;
             case "RVL":
-                switch (tipo) {
-                    case "M":
-                        titolo = "Rettifica Voti Lista";
-                        break;
-                    case "A":
-                        titolo = "Annullamento Voti Lista";
-                        break;
-                }
+                titolo = "Rettifica Voti Lista";
                 break;
+
+            case "AVL":
+                titolo = "Annullamento Voti Lista";
+                break;
+            case "RIC":
+                titolo = "Ricalcolo Voti Lista";
+                break;
+            case "RIL":
+                titolo = "Ricalcolo Affluenze";
+                break;
+
         }
         return titolo;
     }

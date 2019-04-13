@@ -29,11 +29,28 @@ jQuery(document).ready(function ($) {
         var iscritti = parseInt($('#Iscritti').text());
         var sum = 0;
         var group = $('input[name="liste.voti"]');
-        if (group.length > 1) {
-            group.each(function () {
-                sum += parseFloat($(this)[0].value);
-            });
-        }
+        var count = $('#count').text();
+        var fields = $( ":input" ).serializeArray();
+        jQuery.each( fields, function( i, field ) {
+            if(field.name.indexOf('voti') !== -1)
+            {
+                sum += parseFloat(field.value);
+            }
+        });
+       // if (group.length > 1) {
+         //   group.each(function () {
+           //     sum += parseFloat($(this)[0].value);
+           // });
+       // }
+      /*  $(":input").each(function(){
+            var key = $(this).attr('name');
+            var val = $(this).val();
+            if(key.contains("voti"))
+            {
+                sum += parseFloat(val);
+            }
+        });
+        */
         if (sum !== votanti) {
             $("#errorcontrol").append("Somma scrutinio diversa da votanti " + sum + " <> " + $("#Votanti").val());
             isValid = false;
@@ -56,6 +73,14 @@ jQuery(document).ready(function ($) {
         }
     })
 
+    function jQFormSerializeArrToJson(formSerializeArr){
+        var jsonObj = {};
+        jQuery.map( formSerializeArr, function( n, i ) {
+            jsonObj[n.name] = n.value;
+        });
+
+        return jsonObj;
+    }
 
     function postScrutinio() {
         var errorcontainer = '#errorModal';
@@ -63,20 +88,11 @@ jQuery(document).ready(function ($) {
         var successcontainer = '#successModal';
         var mdisplay = "#messagesuccess";
         debugger;
-        var formData = $('form[name=insertScrutinio]').serialize();
+       // var formData = $("#insertScrutinio").serialize();
+       var formData= $('form[name=insertScrutinio]').serialize();
         $.post({
              url: '/voti/lreg',
-            //url : '/dati/lreg',
-           // type: "POST",
-            data:formData,
-            // dataType: 'json',
-          //  success: function (data)
-          //  {
-                
-           // },
-           // fail: function (data) {
-
-           // }
+            data: formData,
            success: function (res) {
                 try {
                     if (res.validated) {
@@ -93,7 +109,13 @@ jQuery(document).ready(function ($) {
                     } else {
                         //Set error messages
                         $.each(res.errorMessages, function (key, value) {
-                            $(errorDisplay).text(value);
+                            if(value === null)
+                            {
+                                $(errorDisplay).text("errore applicativo grave");
+                            }
+                            else {
+                                $(errorDisplay).text(value);
+                            }
                             $(errorcontainer).modal('show');
                         });
                     }

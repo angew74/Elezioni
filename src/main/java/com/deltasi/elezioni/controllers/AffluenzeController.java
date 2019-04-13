@@ -250,6 +250,10 @@ public class AffluenzeController {
                 response.setErrorMessages(errors);
             }
             Affluenza affluenza = affluenzaService.findBySezioneNumerosezioneAndTipoelezioneId(affluenzaJson.getNumerosezione(), tipoelezioneid);
+            LocalDateTime oggi = LocalDateTime.now();
+            String user = SecurityContextHolder.getContext().getAuthentication().getName();
+            affluenza.setUtenteoperazione(user);
+            affluenza.setDataoperazione(oggi);
             response.setTipo(affluenzaJson.getTipo());
             switch (affluenzaJson.getTipo()) {
                 case "1A":

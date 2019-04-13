@@ -9,9 +9,9 @@ import java.util.List;
 public interface IAffluenzaService {
 
 
-    public void add(Affluenza affluenza);
-    public void update(Affluenza affluenza);
-    public void delete(Long id);
+    void add(Affluenza affluenza);
+    void update(Affluenza affluenza);
+    void delete(Long id);
     Affluenza findBySezioneNumerosezioneAndTipoelezioneId(Integer sezione, Integer tipoElezioneId);
     Affluenza findById(Integer id);
     List<Affluenza> findByPlessoMunicipio(Integer municipio);
