@@ -29,6 +29,7 @@ jQuery(document).ready(function ($) {
                 .done(function (data) {
                     try {
                         if (data !== null) {
+                            jQuery.parseJSON(data);
                         } else {
                             //Set error messages
                             $.each(data.errorMessages, function (key, value) {

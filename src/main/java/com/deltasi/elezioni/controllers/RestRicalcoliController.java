@@ -5,6 +5,7 @@ import com.deltasi.elezioni.model.json.ListaJson;
 import com.deltasi.elezioni.model.json.ListaSemplice;
 import com.deltasi.elezioni.model.json.ListeWrapper;
 import com.deltasi.elezioni.model.json.VotiJson;
+import com.deltasi.elezioni.model.ricalcoli.RicalcoloAffluenza;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -41,23 +44,21 @@ public class RestRicalcoliController {
 
     @GetMapping(value = "/ricalcola/{aggregazione}/{tipoRicalcolo}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Secured("ROLE_ADMIN")
-    public ListaJson ricalcola(@PathVariable("aggregazione") String aggregazione,@PathVariable("tipoRicalcolo") String tipoRicalcolo
+    public List<RicalcoloAffluenza> ricalcola(@PathVariable("aggregazione") String aggregazione, @PathVariable("tipoRicalcolo") String tipoRicalcolo
                                        ) {
-        ListaJson response = new ListaJson();
         Map<String, String> errors = null;
+        List<RicalcoloAffluenza> l = new ArrayList<RicalcoloAffluenza>();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         try {
-            draft.Affluenza(aggregazione,tipoRicalcolo);
+           l= draft.Affluenza(aggregazione,tipoRicalcolo);
 
         } catch(AccessDeniedException e) {
             logger.warn("Unauthorized", e);
         } catch (Exception ex) {
-            errors = new HashMap<String, String>();
-            errors.put("Errore grave", ex.getMessage());
             logger.error(ex.getMessage());
-            response.setValidated(false);
-            response.setErrorMessages(errors);
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Risorsa non trovata", ex);
         }
-        return response;
+        return l;
     }
 }

@@ -43,7 +43,7 @@ public class SezioneService implements ISezioneService {
     }
 
     @Override
-    public List<Integer> countAllByTipoelezioneIdAndMunicipioAndTipoelezioneIdIn(int tipoElezioneId, int municipio, int tipoElezioneId1) {
+    public List<Long> countAllByTipoelezioneIdAndMunicipioAndTipoelezioneIdIn(int tipoElezioneId, int municipio, int tipoElezioneId1) {
         return sezioneDAO.countAllByTipoelezioneIdAndMunicipioAndTipoelezioneIdIn(tipoElezioneId, municipio, tipoElezioneId1);
     }
 }

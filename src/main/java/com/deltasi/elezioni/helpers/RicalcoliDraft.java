@@ -39,14 +39,15 @@ public class RicalcoliDraft {
                 {
                     case "MUN":
                         complete = affluenzaService.countAffluenza1ByMunicipio(tipoelezioneid);
-                        for(int m=1;m<16;m++) {
+                        for(int m=0;m<complete.size();m++) {
                             // List<Integer> list = affluenzaService.countByAffluenza1AndSezione_MunicipioAndTipoelezioneIdAndTipoelezioneIdIn(1, m, tipoelezioneid, tipoelezioneid);
-                            List<Integer> sezionimun = sezioniService.countAllByTipoelezioneIdAndMunicipioAndTipoelezioneIdIn(tipoelezioneid,m,tipoelezioneid);
-                            int k=  m-1;
-                            complete.get(k).setTotalesezioni(sezionimun.get(k));
+                            int municipio = complete.get(m).getMunicipio();
+                            List<Long> sezionimun = sezioniService.countAllByTipoelezioneIdAndMunicipioAndTipoelezioneIdIn(tipoelezioneid,municipio,tipoelezioneid);
+                            Long totale = sezionimun.get(0);
+                            complete.get(m).setTotalesezioni(Integer.parseInt(totale.toString()));
                            // complete.get(k).setNumerosezioni(list.get(k));
-                            complete.get(k).setDataoperazione(oggi);
-                            complete.get(k).setUtenteoperazione(user);
+                            complete.get(m).setDataoperazione(oggi);
+                            complete.get(m).setUtenteoperazione(user);
                         }
                         break;
                     case "COM":

@@ -69,13 +69,15 @@ public interface AffluenzaDAO extends JpaRepository<Affluenza, Long> {
     List<Integer> countByCostituzione2AndTipoelezioneIdAndTipoelezioneIdIn(int a, int tipoElezione, int tipoElezione1);
     /* count per tipologia e plesso */
     @Modifying
-    @Query("select a.votantitotali1 as affluenzatotale, a.votantimaschi1 as affluenzamaschi, a.votantifemmine1 as affluenzafemmine, count(*) as numerosezioni " +
+    @Query("select new RicalcoloAffluenza(a.votantitotali1 as affluenzatotale, a.votantimaschi1 as affluenzamaschi, a.votantifemmine1 as affluenzafemmine," +
+            " count(*) as numerosezioni) " +
             " from Affluenza a where a.affluenza1=1 and a.tipoelezione.id=?1 group by a.affluenza1")
     List<RicalcoloAffluenza> countAffluenza1(int tipoelezioneid);
 
     @Modifying
-    @Query("select a.votantitotali1 as affluenzatotale, a.votantimaschi1 as affluenzamaschi, a.votantifemmine1 as affluenzafemmine, s.municipio as municipio, count(*) " +
-            "as numerosezioni" +
+    @Query("select new RicalcoloAffluenza(a.votantitotali1 as affluenzatotale, a.votantimaschi1 as affluenzamaschi, a.votantifemmine1 as affluenzafemmine, " +
+            "s.municipio as municipio, count(*) " +
+            "as numerosezioni) " +
             " from Affluenza a inner join Sezione s on a.sezione.id=s.id" +
             " where a.affluenza1=1 and a.tipoelezione.id=?1 " +
             " group by s.municipio")

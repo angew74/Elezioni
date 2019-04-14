@@ -13,6 +13,26 @@ import java.time.LocalDateTime;
 @Table(name = "ricalcoli_affluenza")
 public class RicalcoloAffluenza {
 
+    public RicalcoloAffluenza(int affluenzaTotale, int affluenzaMaschi, int affluenzaFemmine, long numeroSezioni)
+    {
+        this.affluenzatotale=affluenzaTotale;
+        this.affluenzamaschi=affluenzaMaschi;
+        this.affluenzafemmine=affluenzaFemmine;
+        this.numerosezioni=(int)numeroSezioni;
+
+    }
+
+    public RicalcoloAffluenza(int affluenzaTotale, int affluenzaMaschi, int affluenzaFemmine, int numeroSezioni,long Municipio)
+    {
+        this.affluenzatotale=affluenzaTotale;
+        this.affluenzamaschi=affluenzaMaschi;
+        this.affluenzafemmine=affluenzaFemmine;
+        this.numerosezioni=numeroSezioni;
+        this.municipio=(int)Municipio;
+
+    }
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
