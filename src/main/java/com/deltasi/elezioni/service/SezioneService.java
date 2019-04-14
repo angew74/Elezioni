@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.plugin2.os.windows.SECURITY_ATTRIBUTES;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -34,5 +35,15 @@ public class SezioneService implements ISezioneService {
     @Override
     public List<Sezione> findAllBy() {
         return  findAllBy();
+    }
+
+    @Override
+    public List<Integer> countAllByTipoelezioneIdAndTipoelezioneIdIn(int tipoElezione, int tipoElezione1) {
+        return sezioneDAO.countAllByTipoelezioneIdAndTipoelezioneIdIn(tipoElezione,tipoElezione1);
+    }
+
+    @Override
+    public List<Integer> countAllByTipoelezioneIdAndMunicipioAndTipoelezioneIdIn(int tipoElezioneId, int municipio, int tipoElezioneId1) {
+        return sezioneDAO.countAllByTipoelezioneIdAndMunicipioAndTipoelezioneIdIn(tipoElezioneId, municipio, tipoElezioneId1);
     }
 }

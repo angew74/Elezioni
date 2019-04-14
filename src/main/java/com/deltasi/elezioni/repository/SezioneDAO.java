@@ -12,6 +12,8 @@ public interface SezioneDAO extends JpaRepository<Sezione, Long> {
     Sezione findById(Integer id);
     Sezione findByNumerosezioneAndTipoelezioneId(Integer numeroSezione, Integer tipoElezioneId);
     List<Sezione> findAllBy();
+    List<Integer> countAllByTipoelezioneIdAndTipoelezioneIdIn(int tipoElezione, int tipoElezione1);
+    List<Integer> countAllByTipoelezioneIdAndMunicipioAndTipoelezioneIdIn(int tipoElezioneId, int municipio,int tipoElezione1);
 
 
 }

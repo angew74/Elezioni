@@ -1,8 +1,12 @@
 package com.deltasi.elezioni.controllers;
 
 import com.deltasi.elezioni.contracts.IAbilitazioniService;
+import com.deltasi.elezioni.contracts.IAggregazioneService;
+import com.deltasi.elezioni.contracts.ITipoRicalcoloService;
 import com.deltasi.elezioni.helpers.BusinessRules;
+import com.deltasi.elezioni.model.configuration.Aggregazione;
 import com.deltasi.elezioni.model.configuration.FaseElezione;
+import com.deltasi.elezioni.model.configuration.TipoRicalcolo;
 import com.deltasi.elezioni.model.json.AffluenzaJson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,6 +38,12 @@ public class RicalcoliController {
     @Autowired
     IAbilitazioniService abilitazioniService;
 
+    @Autowired
+    IAggregazioneService aggregazioneService;
+
+    @Autowired
+    ITipoRicalcoloService tipoRicalcoloService;
+
     @GetMapping(value = "/list")
     public ModelAndView list(Model model, Principal principal) {
         ModelAndView modelAndView = new ModelAndView("ricalcoli/list");
@@ -45,14 +55,18 @@ public class RicalcoliController {
     }
 
     @GetMapping(value = "/affluenza")
-    public ModelAndView inserimento(Principal principal) {
+    public ModelAndView affluenza(Principal principal) {
         ModelAndView modelAndView = new ModelAndView("ricalcoli/affluenza");
         String tipo = "RIC";
+        List<Aggregazione> list =  aggregazioneService.FindAll();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        List<TipoRicalcolo> ricalcoli =  tipoRicalcoloService.findAllByTipoelezioneIdAndCodiceFase(tipoelezioneid, tipo);
         if (businessRules.IsEnabled(tipo, tipoelezioneid)) {
             String titolo = businessRules.getTitoloByFase(tipo, "I");
             modelAndView.addObject("titlepage", titolo);
             modelAndView.addObject("tipo", tipo);
+            modelAndView.addObject("aggregazioni", list);
+            modelAndView.addObject("tipiricalcolo", ricalcoli);
         } else {
             modelAndView = new ModelAndView("common/unauthorized");
             modelAndView.addObject("errMsg", "Fase non abilitata");

@@ -1,0 +1,85 @@
+@import "../common/menu.css";
+@import "../font-awesome/all.css";
+
+.bg-dark
+{
+    background-color: #54272F!important;
+}
+li {
+    list-style: none;
+}
+.delta_services {
+    padding: 40px 20px 80px;
+    border-radius: 6px;
+    background-color: #6d353a;
+    margin-top: 20px;
+}
+.delta_services ul {
+    display: block;
+}
+
+.delta_services ul li {
+    display: block;
+    margin-bottom: 15px;
+    color: #fff;
+    text-decoration: none;
+    -webkit-transition: 0.5s;
+    -o-transition: 0.5s;
+    transition: 0.5s;
+}
+
+
+.delta_services ul li a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    -webkit-transition: 0.5s;
+    -o-transition: 0.5s;
+    transition: 0.5s;
+}
+
+
+.delta_services ul li a span.icon {
+    width: 50px;
+    display: block;
+    font-size: 30px;
+    vertical-align: middle;
+    float: left;
+}
+
+
+.delta_services ul li a span.text {
+    display: block;
+    vertical-align: middle;
+    font-size: 16px;
+    margin-left: 50px;
+    /*  padding-top: 12px;*/
+}
+
+li.disabled {
+    cursor: not-allowed;
+}
+li.disabled a {
+    pointer-events: none;
+}
+
+.table-riepilogo td, .table-riepilogo th
+{
+    border-top: 1px solid #54272F!important;
+    color: #54272F!important;
+}
+
+.table-riepilogo thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #54272F!important;
+}
+
+.table-riepilogo td, .table-riepilogo th {
+    border-top: 1px solid #54272F!important;
+}
+
+.table-riepilogo {
+    display: table;
+    border-spacing: 2px;
+    border-color: #54272F!important;
+}
