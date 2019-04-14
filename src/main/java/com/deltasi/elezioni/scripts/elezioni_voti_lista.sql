@@ -34,7 +34,7 @@ CREATE TABLE `voti_lista` (
   KEY `fk_voti_lista_liste_idx` (`idlista`),
   CONSTRAINT `fk_voti_lista_liste` FOREIGN KEY (`idlista`) REFERENCES `liste` (`id`),
   CONSTRAINT `fk_voti_lista_sezioni` FOREIGN KEY (`idsezione`) REFERENCES `sezioni` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,6 +43,7 @@ CREATE TABLE `voti_lista` (
 
 LOCK TABLES `voti_lista` WRITE;
 /*!40000 ALTER TABLE `voti_lista` DISABLE KEYS */;
+INSERT INTO `voti_lista` VALUES (1,13,533,100,'2019-04-13 20:19:44','admin'),(2,14,533,10,'2019-04-13 20:19:44','admin'),(3,15,533,10,'2019-04-13 20:19:44','admin'),(4,16,533,10,'2019-04-13 20:19:44','admin'),(5,17,533,200,'2019-04-13 20:19:44','admin'),(6,18,533,10,'2019-04-13 20:19:44','admin'),(7,19,533,10,'2019-04-13 20:19:44','admin'),(8,20,533,10,'2019-04-13 20:19:44','admin'),(9,21,533,10,'2019-04-13 20:19:44','admin'),(10,22,533,10,'2019-04-13 20:19:44','admin'),(11,23,533,10,'2019-04-13 20:19:44','admin'),(12,24,533,10,'2019-04-13 20:19:44','admin'),(13,25,533,0,'2019-04-13 20:19:44','admin');
 /*!40000 ALTER TABLE `voti_lista` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-31 17:41:00
+-- Dump completed on 2019-04-14 20:54:51

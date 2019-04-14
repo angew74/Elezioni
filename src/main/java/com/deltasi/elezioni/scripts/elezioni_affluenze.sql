@@ -60,6 +60,8 @@ CREATE TABLE `affluenze` (
   KEY `fk_affluenze_iscritti_idx` (`idiscritti`),
   KEY `fk_affluenze_tipo_elezione_idx` (`idtipoelezione`),
   KEY `fk_affluenze_plessi_idx` (`idplesso`),
+  KEY `fk_affluenza_sezioni_idx` (`idsezione`),
+  CONSTRAINT `fk_affluenza_sezioni` FOREIGN KEY (`idsezione`) REFERENCES `sezioni` (`id`),
   CONSTRAINT `fk_affluenze_iscritti` FOREIGN KEY (`idiscritti`) REFERENCES `iscritti` (`idiscritti`),
   CONSTRAINT `fk_affluenze_plessi` FOREIGN KEY (`idplesso`) REFERENCES `plessi` (`id`),
   CONSTRAINT `fk_affluenze_tipo_elezione` FOREIGN KEY (`idtipoelezione`) REFERENCES `tipoelezione` (`id`)
@@ -171,4 +173,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-31 17:40:58
+-- Dump completed on 2019-04-14 20:54:47
