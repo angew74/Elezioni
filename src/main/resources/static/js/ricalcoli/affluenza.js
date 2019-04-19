@@ -2,7 +2,7 @@ jQuery(document).ready(function ($) {
     //  var presenzaForm = '#riepilogoButton';
     // $('#Mese').on('click', ajaxPostGiorni);
     // $('#Utente').on('click', ajaxPostMesi);
-    $("#butttoRicalcolo").on('click', ajaxPostRicalcolo);
+    $("#butttonRicalcolo").on('click', ajaxPostRicalcolo);
 
     function ajaxPostRicalcolo() {
         var errorcontainer = '#errorModal';
@@ -29,7 +29,18 @@ jQuery(document).ready(function ($) {
                 .done(function (data) {
                     try {
                         if (data !== null) {
-                            jQuery.parseJSON(data);
+                            var responseRicalcolo = data;
+                            $("#RicalcoloAffluenzaTable").DataTable({
+                                data:responseRicalcolo,
+                                columns: [
+                                    { data: "municipio" },
+                                    { data: "numerosezioni" },
+                                    { data: "totalesezioni" },
+                                    { data: "affluenzamaschi" },
+                                    { data: "affluenzafemmine" },
+                                    { data: "affluenzatotale" }
+                                ]});
+                       $("#VisualizzazioneRicalcolo").show();
                         } else {
                             //Set error messages
                             $.each(data.errorMessages, function (key, value) {
@@ -37,7 +48,8 @@ jQuery(document).ready(function ($) {
                             });
                             $(errorcontainer).modal('show');
                         }
-                    } catch (err) {
+                    } catch
+                        (err) {
                         $(errorDisplay).text(err);
                         $(errorcontainer).modal('show');
                     }

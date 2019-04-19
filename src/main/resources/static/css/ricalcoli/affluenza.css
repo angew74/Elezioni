@@ -1,6 +1,11 @@
 @import "../common/menu.css";
 @import "../font-awesome/all.css";
 
+.capitolium {
+    background-color:#54272F!important;
+    color: white;
+}
+
 .bg-dark
 {
     background-color: #54272F!important;
