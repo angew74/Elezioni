@@ -7,23 +7,40 @@ package com.deltasi.elezioni.model.configuration;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
- *
  * @author AdminDSI
  */
 @Entity
 @Table(name = "iscritti")
 public class Iscritti implements Serializable {
 
+    public Iscritti() {
+
+    }
+
+    public Iscritti(int iscrittiMaschi, int iscrittiFemmine, int iscrittiTotali, int Municipio) {
+        this.iscrittifemmine = iscrittiFemmine;
+        this.iscrittimaschi = iscrittiMaschi;
+        this.iscrittitotali = iscrittiTotali;
+        this.municipio = Municipio;
+    }
+
+    public Iscritti(Long iscrittiMaschi, Long iscrittiFemmine, Long iscrittiTotali) {
+        this.iscrittifemmine =Integer.parseInt(iscrittiFemmine.toString());
+        this.iscrittimaschi =Integer.parseInt(iscrittiMaschi.toString());
+        this.iscrittitotali =Integer.parseInt(iscrittiTotali.toString());
+    }
+
     private static final long serialVersionUID = 1L;
-   
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idiscritti")  
+    @Column(name = "id")
     private Integer id;
 
     public Integer getId() {
@@ -36,60 +53,60 @@ public class Iscritti implements Serializable {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idsezione", referencedColumnName = "id")
-    @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Sezione sezione;
-    
-   @Column(name = "municipio")
-   private Integer municipio;
-   
+
+    @Column(name = "municipio")
+    private Integer municipio;
+
     @Column(name = "collegiocamera")
-   private Integer collegiocamera;
-    
-   @Column(name = "collegiosenato")
-   private Integer collegiosenato;
-   
-   @Column(name = "collegioprovinciale")
-   private Integer collegioprovinciale;
-   
-   @Column(name = "iscrittimaschi")
-   private Integer iscrittimaschi;
-   
-   @Column(name = "iscrittitotali")
-   private Integer iscrittitotali;
-   
-   @Column(name = "iscrittimaschiue")
-   private Integer iscrittimaschiue;
-   
+    private Integer collegiocamera;
+
+    @Column(name = "collegiosenato")
+    private Integer collegiosenato;
+
+    @Column(name = "collegioprovinciale")
+    private Integer collegioprovinciale;
+
+    @Column(name = "iscrittimaschi")
+    private Integer iscrittimaschi;
+
+    @Column(name = "iscrittitotali")
+    private Integer iscrittitotali;
+
+    @Column(name = "iscrittimaschiue")
+    private Integer iscrittimaschiue;
+
     @Column(name = "iscrittimaschigen")
-   private Integer iscrittimaschigen;
-   
-   @Column(name = "iscrittifemmineue")
-   private Integer iscrittifemmineue;
-   
-   @Column(name = "iscrittifemminegen")
-   private Integer iscrittifemminegen;
-   
-   @Column(name = "iscrittitotaligen")
-   private Integer iscrittitotaligen;
-   
-   @Column(name = "iscrittitotaliue")
-   private Integer iscrittitotaliue;
-   
-   @Column(name = "iscrittifemmine")
-   private Integer iscrittifemmine;
-    
-      @Column(name = "cabina")
-   private Integer cabina;
+    private Integer iscrittimaschigen;
+
+    @Column(name = "iscrittifemmineue")
+    private Integer iscrittifemmineue;
+
+    @Column(name = "iscrittifemminegen")
+    private Integer iscrittifemminegen;
+
+    @Column(name = "iscrittitotaligen")
+    private Integer iscrittitotaligen;
+
+    @Column(name = "iscrittitotaliue")
+    private Integer iscrittitotaliue;
+
+    @Column(name = "iscrittifemmine")
+    private Integer iscrittifemmine;
+
+    @Column(name = "cabina")
+    private Integer cabina;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idtipoelezione", referencedColumnName = "id")
-    @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
-  private TipoElezione  tipoelezione;
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    private TipoElezione tipoelezione;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idtiposezione", referencedColumnName = "id")
-    @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
-   private TipoSezione  tiposezione;
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    private TipoSezione tiposezione;
 
     @Override
     public int hashCode() {

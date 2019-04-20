@@ -74,6 +74,26 @@ public class RicalcoliController {
         return modelAndView;
     }
 
+    @GetMapping(value = "/costituzione")
+    public ModelAndView costituzione(Principal principal) {
+        ModelAndView modelAndView = new ModelAndView("ricalcoli/costituzione");
+        String tipo = "RIC";
+        List<Aggregazione> list =  aggregazioneService.FindAll();
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        List<TipoRicalcolo> ricalcoli =  tipoRicalcoloService.findAllByTipoelezioneIdAndCodiceFase(tipoelezioneid, tipo);
+        if (businessRules.IsEnabled(tipo, tipoelezioneid)) {
+            String titolo = businessRules.getTitoloByFase(tipo, "I");
+            modelAndView.addObject("titlepage", titolo);
+            modelAndView.addObject("tipo", tipo);
+            modelAndView.addObject("aggregazioni", list);
+            modelAndView.addObject("tipiricalcolo", ricalcoli);
+        } else {
+            modelAndView = new ModelAndView("common/unauthorized");
+            modelAndView.addObject("errMsg", "Fase non abilitata");
+        }
+        return modelAndView;
+    }
+
     @GetMapping(value = "/voti")
     public ModelAndView voti(Principal principal) {
         ModelAndView modelAndView = new ModelAndView("ricalcoli/voti");

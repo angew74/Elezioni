@@ -36,6 +36,9 @@ public class RicalcoloCostApertura {
     @Column(name = "percentuale_costituite")
     private String percentualecostituite;
 
+
+    private Integer iscrittitotali;
+
     @Column(name = "numero_aperte")
     private Integer numeroaperte;
 
@@ -121,5 +124,29 @@ public class RicalcoloCostApertura {
 
     public void setDataoperazione(LocalDateTime dataoperazione) {
         this.dataoperazione = dataoperazione;
+    }
+
+    public String getPercentualecostituite() {
+        return percentualecostituite;
+    }
+
+    public void setPercentualecostituite(String percentualecostituite) {
+        this.percentualecostituite = percentualecostituite;
+    }
+
+    public Integer getIscrittitotali() {
+        return iscrittitotali;
+    }
+
+    public void setIscrittitotali(Integer iscrittitotali) {
+        this.iscrittitotali = iscrittitotali;
+    }
+
+    public String getPercentualeaperte() {
+        return percentualeaperte;
+    }
+
+    public void setPercentualeaperte(String percentualeaperte) {
+        this.percentualeaperte = percentualeaperte;
     }
 }

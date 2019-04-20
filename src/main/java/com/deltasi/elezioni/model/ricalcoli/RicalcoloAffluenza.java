@@ -4,6 +4,7 @@ package com.deltasi.elezioni.model.ricalcoli;
 import com.deltasi.elezioni.model.configuration.TipoElezione;
 import com.deltasi.elezioni.model.configuration.TipoRicalcolo;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -39,12 +40,12 @@ public class RicalcoloAffluenza {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idtipoelezione", referencedColumnName = "id")
-    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+    @JsonIgnore
     private TipoElezione tipoelezione;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idtiporicalcolo", referencedColumnName = "id")
-    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+    @JsonIgnore
     private TipoRicalcolo tiporicalcolo;
 
     @Column(name = "numero_sezioni")
@@ -68,6 +69,12 @@ public class RicalcoloAffluenza {
     @Column(name = "percentuale_totale")
     private String percentualetotale;
 
+    @Column(name = "iscritti_maschi")
+    private Integer iscrittimaschi;
+
+    @Column(name = "iscritti_femmine")
+    private Integer iscrittifemmine;
+
     @Column(name = "percentuale_maschi")
     private String percentualemaschi;
 
@@ -82,6 +89,12 @@ public class RicalcoloAffluenza {
 
     @Column(name = "data_operazione")
     private LocalDateTime dataoperazione;
+
+    @Column(name = "percentuale_pervenute")
+    private String percentualepervenute;
+
+    @Column(name = "iscritti_totale")
+    private Integer iscrittitotali;
 
     public Integer getId() {
         return id;
@@ -201,5 +214,37 @@ public class RicalcoloAffluenza {
 
     public void setTotalesezioni(Integer totalesezioni) {
         this.totalesezioni = totalesezioni;
+    }
+
+    public String getPercentualepervenute() {
+        return percentualepervenute;
+    }
+
+    public void setPercentualepervenute(String percentualepervenute) {
+        this.percentualepervenute = percentualepervenute;
+    }
+
+    public Integer getIscrittimaschi() {
+        return iscrittimaschi;
+    }
+
+    public void setIscrittimaschi(Integer iscrittimaschi) {
+        this.iscrittimaschi = iscrittimaschi;
+    }
+
+    public Integer getIscrittifemmine() {
+        return iscrittifemmine;
+    }
+
+    public void setIscrittifemmine(Integer iscrittifemmine) {
+        this.iscrittifemmine = iscrittifemmine;
+    }
+
+    public Integer getIscrittitotali() {
+        return iscrittitotali;
+    }
+
+    public void setIscrittitotali(Integer iscrittitotali) {
+        this.iscrittitotali = iscrittitotali;
     }
 }

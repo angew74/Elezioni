@@ -15,6 +15,9 @@
             <h3><a href="#">
                 <i class="fas fa-percentage"></i>Ricalcoli</a></h3>
             <ul>
+                <li><a th:if="${#lists.contains(fasi, 'RIC')}" href="/ricalcoli/costituzione">
+                    <i class="fas fa-check-double"></i>Costituzione-Apertura</a>
+                </li>
                 <li><a th:if="${#lists.contains(fasi, 'RIC')}" href="/ricalcoli/affluenza">
                     <i class="fas fa-check-double"></i>Affluenza</a>
                 </li>

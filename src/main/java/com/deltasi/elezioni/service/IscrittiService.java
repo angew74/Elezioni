@@ -73,4 +73,74 @@ public class IscrittiService implements IIscrittiService {
         return iscrittiDAO.findByTipoelezione(tipoelezione);
     }
 
+    @Override
+    public List<Iscritti> countIscrittiSezioniPervenuteMunicipioAffluenza1(int tipoelezioneid) {
+        return iscrittiDAO.countIscrittiSezioniPervenuteMunicipioAffluenza1(tipoelezioneid);
+    }
+
+    @Override
+    public List<Iscritti> countIscrittiSezioniPervenuteAllAffluenza1(int tipoelezioneid) {
+        return iscrittiDAO.countIscrittiSezioniPervenuteAllAffluenza1(tipoelezioneid);
+    }
+
+    @Override
+    public List<Iscritti> countIscrittiSezioniPervenuteMunicipioAffluenza2(int tipoelezioneid) {
+        return iscrittiDAO.countIscrittiSezioniPervenuteMunicipioAffluenza2(tipoelezioneid);
+    }
+
+    @Override
+    public List<Iscritti> countIscrittiSezioniPervenuteAllAffluenza2(int tipoelezioneid) {
+        return iscrittiDAO.countIscrittiSezioniPervenuteAllAffluenza2(tipoelezioneid);
+    }
+
+    @Override
+    public List<Iscritti> countIscrittiSezioniPervenuteMunicipioAffluenza3(int tipoelezioneid) {
+        return iscrittiDAO.countIscrittiSezioniPervenuteMunicipioAffluenza3(tipoelezioneid);
+    }
+
+    @Override
+    public List<Iscritti> countIscrittiSezioniPervenuteAllAffluenza3(int tipoelezioneid) {
+        return iscrittiDAO.countIscrittiSezioniPervenuteAllAffluenza3(tipoelezioneid);
+    }
+
+    @Override
+    public List<Iscritti> countIscrittiSezioniPervenuteMunicipioApertura1(int tipoelezioneid) {
+        return null;
+    }
+
+    @Override
+    public List<Iscritti> countIscrittiSezioniPervenuteAllApertura1(int tipoelezioneid) {
+        return iscrittiDAO.countIscrittiSezioniPervenuteAllApertura1(tipoelezioneid);
+    }
+
+    @Override
+    public List<Iscritti> countIscrittiSezioniPervenuteMunicipioApertura2(int tipoelezioneid) {
+        return iscrittiDAO.countIscrittiSezioniPervenuteMunicipioApertura2(tipoelezioneid);
+    }
+
+    @Override
+    public List<Iscritti> countIscrittiSezioniPervenuteAllApertura2(int tipoelezioneid) {
+        return iscrittiDAO.countIscrittiSezioniPervenuteAllApertura2(tipoelezioneid);
+    }
+
+    @Override
+    public List<Iscritti> countIscrittiSezioniPervenuteMunicipioCostituzione1(int tipoelezioneid) {
+        return iscrittiDAO.countIscrittiSezioniPervenuteMunicipioCostituzione1(tipoelezioneid);
+    }
+
+    @Override
+    public List<Iscritti> countIscrittiSezioniPervenuteAllCostituzione1(int tipoelezioneid) {
+        return iscrittiDAO.countIscrittiSezioniPervenuteAllCostituzione1(tipoelezioneid);
+    }
+
+    @Override
+    public List<Iscritti> countIscrittiSezioniPervenuteMunicipioCostituzione2(int tipoelezioneid) {
+        return iscrittiDAO.countIscrittiSezioniPervenuteMunicipioCostituzione2(tipoelezioneid);
+    }
+
+    @Override
+    public List<Iscritti> countIscrittiSezioniPervenuteAllCostituzione2(int tipoelezioneid) {
+        return iscrittiDAO.countIscrittiSezioniPervenuteAllCostituzione2(tipoelezioneid);
+    }
+
 }

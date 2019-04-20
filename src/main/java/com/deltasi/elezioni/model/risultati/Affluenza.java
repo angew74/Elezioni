@@ -37,7 +37,7 @@ public class Affluenza {
 
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idiscritti", referencedColumnName = "idiscritti")
+    @JoinColumn(name = "idiscritti", referencedColumnName = "id")
     @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
     private Iscritti iscritti;
 

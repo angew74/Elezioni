@@ -31,6 +31,11 @@ public class RicalcoloAffluenzaService implements IRicalcoloAffluenzaService {
     public List<RicalcoloAffluenza> findByTipoelezioneId(int tipoElezioneId) {
         return ricalcoloAffluenzaDAO.findByTipoelezioneId(tipoElezioneId);
     }
+    @Override
+    public void SaveAll(List<RicalcoloAffluenza> list)
+    {
+        ricalcoloAffluenzaDAO.saveAll(list);
+    }
 
     @Override
     public List<RicalcoloAffluenza> findByTiporicalcoloIdAndTipoelezioneId(int tipoRicalcoloId, int tipoElezioneId) {

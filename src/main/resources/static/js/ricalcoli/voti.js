@@ -1,11 +1,7 @@
 jQuery(document).ready(function ($) {
-    //  var presenzaForm = '#riepilogoButton';
-    // $('#Mese').on('click', ajaxPostGiorni);
-    // $('#Utente').on('click', ajaxPostMesi);
     $('#butttonRicalcolo').click(function(){
         ajaxPostRicalcolo();
     });
-    // $("#butttonRicalcolo").on('click', ajaxPostRicalcolo);
     $("#btnSalvaRicalcolo").on('click', ajaxSalvaRicalcolo);
 
     function ajaxPostRicalcolo() {
@@ -27,18 +23,13 @@ jQuery(document).ready(function ($) {
             $.ajax({
                 type: "GET",
                 contentType: "application/json",
-                url: '/dati/ricalcola/' + aggregazione + '/' + tipoRicalcolo,
+                url: '/dati/ricalcolavoti/' + aggregazione + '/' + tipoRicalcolo,
                 dataType: 'json'
             })
                 .done(function (data) {
                     try {
                         if (data !== null) {
                             var responseRicalcolo = data;
-                          /*  if ($.fn.DataTable.isDataTable("#RicalcoloAffluenzaTable")) {
-                                $("#RicalcoloAffluenzaTable").DataTable().clear().draw();
-                                $("#RicalcoloAffluenzaTable").DataTable().destroy();
-                                $("#RicalcoloAffluenzaTable thead").html('');
-                            }*/
                             $("#RicalcoloAffluenzaTable").DataTable({
                                 data:responseRicalcolo,
                                 searching: false,
@@ -60,7 +51,7 @@ jQuery(document).ready(function ($) {
                                     { data: "iscrittitotali" },
                                     { data: "percentualetotale" }
                                 ]});
-                       $("#VisualizzazioneRicalcolo").show();
+                            $("#VisualizzazioneRicalcolo").show();
                         } else {
                             //Set error messages
                             $.each(data.errorMessages, function (key, value) {
@@ -81,36 +72,36 @@ jQuery(document).ready(function ($) {
                 });
         }
     }
-   function  ajaxSalvaRicalcolo() {
-       var aggregazione = $("#Aggregazione").val();
-       var tipoRicalcolo = $("#TipoRicalcolo").val();
-       var errorcontainer = '#errorModal';
-       var errorDisplay = '#errorDisplay';
-       var successcontainer = '#successModal';
-       var mdisplay = "#messagesuccess";
-       $.ajax({
-           type: "GET",
-           contentType: "application/json",
-           url: '/dati/salvaricalcolo/' + aggregazione + '/' + tipoRicalcolo,
-           dataType: 'json'
-       })
-           .done(function (data) {
-               try {
-                   if (data !== null) {
-                       $(mdisplay).text("Ricalcolo salvato correttamente");
-                       $(successcontainer).modal('show');
-                   }
-               } catch
-                   (err) {
-                   $(errorDisplay).text(err);
-                   $(errorcontainer).modal('show');
-               }
+    function  ajaxSalvaRicalcolo() {
+        var aggregazione = $("#Aggregazione").val();
+        var tipoRicalcolo = $("#TipoRicalcolo").val();
+        var errorcontainer = '#errorModal';
+        var errorDisplay = '#errorDisplay';
+        var successcontainer = '#successModal';
+        var mdisplay = "#messagesuccess";
+        $.ajax({
+            type: "GET",
+            contentType: "application/json",
+            url: '/dati/salvaricalcolovoti/' + aggregazione + '/' + tipoRicalcolo,
+            dataType: 'json'
+        })
+            .done(function (data) {
+                try {
+                    if (data !== null) {
+                        $(mdisplay).text("Ricalcolo salvato correttamente");
+                        $(successcontainer).modal('show');
+                    }
+                } catch
+                    (err) {
+                    $(errorDisplay).text(err);
+                    $(errorcontainer).modal('show');
+                }
 
-           })
-           .fail(function (e) {
-               $(errorDisplay).text("errore di connessione dettagli " + e);
-               $(errorcontainer).modal('show');
-           });
-   }
+            })
+            .fail(function (e) {
+                $(errorDisplay).text("errore di connessione dettagli " + e);
+                $(errorcontainer).modal('show');
+            });
+    }
 
 });

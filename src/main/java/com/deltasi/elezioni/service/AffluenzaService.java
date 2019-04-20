@@ -4,6 +4,7 @@ import com.deltasi.elezioni.contracts.IAffluenzaService;
 import com.deltasi.elezioni.model.configuration.Plesso;
 import com.deltasi.elezioni.model.configuration.TipoElezione;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloAffluenza;
+import com.deltasi.elezioni.model.ricalcoli.RicalcoloCostApertura;
 import com.deltasi.elezioni.model.risultati.Affluenza;
 import com.deltasi.elezioni.repository.AffluenzaDAO;
 import org.apache.logging.log4j.LogManager;
@@ -202,10 +203,6 @@ public class AffluenzaService implements IAffluenzaService {
         return affluenzaDAO.findByApertura2AndTipoelezioneIdAndSezione_Municipio(a,idTipoElezione,municipio);
     }
 
-    @Override
-    public List<Integer> countByAffluenza2AndTipoelezioneIdAndTipoelezioneIn(int a, int tipoElezioneId, int tipoElezioneId1) {
-        return affluenzaDAO.countByAffluenza2AndTipoelezioneIdAndTipoelezioneIdIn(a,tipoElezioneId,tipoElezioneId1);
-    }
 
     @Override
     public List<Integer> countByAffluenza1AndSezione_MunicipioAndTipoelezioneIdAndTipoelezioneIdIn(int a, int municipio, int tipoElezione, int tipoElezione1) {
@@ -243,12 +240,17 @@ public class AffluenzaService implements IAffluenzaService {
     }
 
     @Override
-    public List<Integer> countByAffluenza1AndTipoelezioneIdAndTipoelezioneIdIn(int a, int tipoElezione, int tipoElezione1) {
+    public List<Long> countByAffluenza1AndTipoelezioneIdAndTipoelezioneIdIn(int a, int tipoElezione, int tipoElezione1) {
         return affluenzaDAO.countByAffluenza1AndTipoelezioneIdAndTipoelezioneIdIn(a, tipoElezione, tipoElezione1);
     }
 
     @Override
-    public List<Integer> countByAffluenza3AndTipoelezioneIdAndTipoelezioneIdIn(int a, int tipoElezione, int tipoElezione1) {
+    public List<Long> countByAffluenza2AndTipoelezioneIdAndTipoelezioneIdIn(int a, int tipoElezione, int tipoElezione1) {
+        return affluenzaDAO.countByAffluenza2AndTipoelezioneIdAndTipoelezioneIdIn(a, tipoElezione, tipoElezione1);
+    }
+
+    @Override
+    public List<Long> countByAffluenza3AndTipoelezioneIdAndTipoelezioneIdIn(int a, int tipoElezione, int tipoElezione1) {
         return affluenzaDAO.countByAffluenza3AndTipoelezioneIdAndTipoelezioneIdIn(a, tipoElezione, tipoElezione1);
     }
 
@@ -281,6 +283,68 @@ public class AffluenzaService implements IAffluenzaService {
     public List<RicalcoloAffluenza> countAffluenza1ByMunicipio(int tipoelezioneid)
     {
         return  affluenzaDAO.countAffluenza1ByMunicipio(tipoelezioneid);
+    }
+    @Override
+    public List<RicalcoloAffluenza> countAffluenza2(int tipoelezioneid)
+    {
+        return affluenzaDAO.countAffluenza2(tipoelezioneid);
+    }
+    @Override
+    public List<RicalcoloAffluenza> countAffluenza2ByMunicipio(int tipoelezioneid)
+    {
+        return  affluenzaDAO.countAffluenza2ByMunicipio(tipoelezioneid);
+    }
+    @Override
+    public List<RicalcoloAffluenza> countAffluenza3(int tipoelezioneid)
+    {
+        return affluenzaDAO.countAffluenza3(tipoelezioneid);
+    }
+    @Override
+    public List<RicalcoloAffluenza> countAffluenza3ByMunicipio(int tipoelezioneid)
+    {
+        return  affluenzaDAO.countAffluenza3ByMunicipio(tipoelezioneid);
+    }
+
+    @Override
+    public List<RicalcoloCostApertura> countApertura1(int tipoelezioneid)
+    {
+        return affluenzaDAO.countApertura1(tipoelezioneid);
+    }
+    @Override
+    public List<RicalcoloCostApertura> countApertura1ByMunicipio(int tipoelezioneid)
+    {
+        return  affluenzaDAO.countApertura1ByMunicipio(tipoelezioneid);
+    }
+    @Override
+    public List<RicalcoloCostApertura> countApertura2(int tipoelezioneid)
+    {
+        return affluenzaDAO.countApertura2(tipoelezioneid);
+    }
+    @Override
+    public List<RicalcoloCostApertura> countApertura2ByMunicipio(int tipoelezioneid)
+    {
+        return  affluenzaDAO.countApertura2ByMunicipio(tipoelezioneid);
+    }
+
+    @Override
+    public List<RicalcoloCostApertura> countCostituzione1(int tipoelezioneid)
+    {
+        return affluenzaDAO.countCostituzione1(tipoelezioneid);
+    }
+    @Override
+    public List<RicalcoloCostApertura> countCostituzione1ByMunicipio(int tipoelezioneid)
+    {
+        return  affluenzaDAO.countCostituzione1ByMunicipio(tipoelezioneid);
+    }
+    @Override
+    public List<RicalcoloCostApertura> countCostituzione2(int tipoelezioneid)
+    {
+        return affluenzaDAO.countCostituzione2(tipoelezioneid);
+    }
+    @Override
+    public List<RicalcoloCostApertura> countCostituzione2ByMunicipio(int tipoelezioneid)
+    {
+        return  affluenzaDAO.countCostituzione2ByMunicipio(tipoelezioneid);
     }
 
 }

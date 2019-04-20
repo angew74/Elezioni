@@ -3,6 +3,7 @@ package com.deltasi.elezioni.service;
 
 import com.deltasi.elezioni.contracts.ISezioneService;
 import com.deltasi.elezioni.model.configuration.Sezione;
+import com.deltasi.elezioni.model.risultati.Lista;
 import com.deltasi.elezioni.repository.SezioneDAO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,7 +39,7 @@ public class SezioneService implements ISezioneService {
     }
 
     @Override
-    public List<Integer> countAllByTipoelezioneIdAndTipoelezioneIdIn(int tipoElezione, int tipoElezione1) {
+    public List<Long> countAllByTipoelezioneIdAndTipoelezioneIdIn(int tipoElezione, int tipoElezione1) {
         return sezioneDAO.countAllByTipoelezioneIdAndTipoelezioneIdIn(tipoElezione,tipoElezione1);
     }
 

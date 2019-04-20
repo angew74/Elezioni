@@ -5,6 +5,7 @@ import com.deltasi.elezioni.model.configuration.Plesso;
 import com.deltasi.elezioni.model.configuration.Sezione;
 import com.deltasi.elezioni.model.configuration.TipoElezione;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloAffluenza;
+import com.deltasi.elezioni.model.ricalcoli.RicalcoloCostApertura;
 import com.deltasi.elezioni.model.risultati.Affluenza;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -60,9 +61,9 @@ public interface AffluenzaDAO extends JpaRepository<Affluenza, Long> {
     List<Integer> countByCostituzione1AndSezione_MunicipioAndTipoelezioneIdAndTipoelezioneIdIn(int a, int municipio, int tipoElezione, int tipoElezione1);
     List<Integer> countByCostituzione2AndSezione_MunicipioAndTipoelezioneIdAndTipoelezioneIdIn(int a, int municipio, int tipoElezione, int tipoElezione1);
     /* count per sola tipologia */
-    List<Integer> countByAffluenza1AndTipoelezioneIdAndTipoelezioneIdIn(int a, int tipoElezione, int tipoElezione1);
-    List<Integer> countByAffluenza2AndTipoelezioneIdAndTipoelezioneIdIn(int a, int tipoElezione, int tipoElezione1);
-    List<Integer> countByAffluenza3AndTipoelezioneIdAndTipoelezioneIdIn(int a, int tipoElezione, int tipoElezione1);
+    List<Long> countByAffluenza1AndTipoelezioneIdAndTipoelezioneIdIn(int a, int tipoElezione, int tipoElezione1);
+    List<Long> countByAffluenza2AndTipoelezioneIdAndTipoelezioneIdIn(int a, int tipoElezione, int tipoElezione1);
+    List<Long> countByAffluenza3AndTipoelezioneIdAndTipoelezioneIdIn(int a, int tipoElezione, int tipoElezione1);
     List<Integer> countByApertura1AndTipoelezioneIdAndTipoelezioneIdIn(int a, int tipoElezione, int tipoElezione1);
     List<Integer> countByApertura2AndTipoelezioneIdAndTipoelezioneIdIn(int a, int tipoElezione, int tipoElezione1);
     List<Integer> countByCostituzione1AndTipoelezioneIdAndTipoelezioneIdIn(int a, int tipoElezione, int tipoElezione1);
@@ -75,6 +76,18 @@ public interface AffluenzaDAO extends JpaRepository<Affluenza, Long> {
     List<RicalcoloAffluenza> countAffluenza1(int tipoelezioneid);
 
     @Modifying
+    @Query("select new RicalcoloAffluenza(a.votantitotali1 as affluenzatotale, a.votantimaschi1 as affluenzamaschi, a.votantifemmine1 as affluenzafemmine," +
+            " count(*) as numerosezioni) " +
+            " from Affluenza a where a.affluenza2=1 and a.tipoelezione.id=?1 group by a.affluenza1")
+    List<RicalcoloAffluenza> countAffluenza2(int tipoelezioneid);
+
+    @Modifying
+    @Query("select new RicalcoloAffluenza(a.votantitotali1 as affluenzatotale, a.votantimaschi1 as affluenzamaschi, a.votantifemmine1 as affluenzafemmine," +
+            " count(*) as numerosezioni) " +
+            " from Affluenza a where a.affluenza3=1 and a.tipoelezione.id=?1 group by a.affluenza1")
+    List<RicalcoloAffluenza> countAffluenza3(int tipoelezioneid);
+
+    @Modifying
     @Query("select new RicalcoloAffluenza(a.votantitotali1 as affluenzatotale, a.votantimaschi1 as affluenzamaschi, a.votantifemmine1 as affluenzafemmine, " +
             "s.municipio as municipio, count(*) " +
             "as numerosezioni) " +
@@ -82,6 +95,69 @@ public interface AffluenzaDAO extends JpaRepository<Affluenza, Long> {
             " where a.affluenza1=1 and a.tipoelezione.id=?1 " +
             " group by s.municipio")
     List<RicalcoloAffluenza> countAffluenza1ByMunicipio(int tipoelezioneid);
+
+    @Modifying
+    @Query("select new RicalcoloAffluenza(a.votantitotali1 as affluenzatotale, a.votantimaschi1 as affluenzamaschi, a.votantifemmine1 as affluenzafemmine, " +
+            "s.municipio as municipio, count(*) " +
+            "as numerosezioni) " +
+            " from Affluenza a inner join Sezione s on a.sezione.id=s.id" +
+            " where a.affluenza2=1 and a.tipoelezione.id=?1 " +
+            " group by s.municipio")
+    List<RicalcoloAffluenza> countAffluenza2ByMunicipio(int tipoelezioneid);
+    @Modifying
+    @Query("select new RicalcoloAffluenza(a.votantitotali1 as affluenzatotale, a.votantimaschi1 as affluenzamaschi, a.votantifemmine1 as affluenzafemmine, " +
+            "s.municipio as municipio, count(*) " +
+            "as numerosezioni) " +
+            " from Affluenza a inner join Sezione s on a.sezione.id=s.id" +
+            " where a.affluenza3=1 and a.tipoelezione.id=?1 " +
+            " group by s.municipio")
+    List<RicalcoloAffluenza> countAffluenza3ByMunicipio(int tipoelezioneid);
+
+
+    @Modifying
+    @Query("select new RicalcoloCostApertura(select count(*) as numerocostituite) from Affluenza a where a.apertura1=?1")
+    List<RicalcoloCostApertura> countApertura1(int tipoelezioneid);
+
+    @Modifying
+    @Query("select new RicalcoloCostApertura(select count(*) as numerocostituite) from Affluenza a where a.apertura2=?1")
+    List<RicalcoloCostApertura> countApertura2(int tipoelezioneid);
+
+    @Modifying
+    @Query("select new RicalcoloCostApertura(select count(*) as numerocostituite) from Affluenza a where a.costituzione1=?1")
+    List<RicalcoloCostApertura> countCostituzione1(int tipoelezioneid);
+
+    @Modifying
+    @Query("select new RicalcoloCostApertura(select count(*) as numerocostituite) from Affluenza a where a.costituzione2=?1")
+    List<RicalcoloCostApertura> countCostituzione2(int tipoelezioneid);
+
+    @Modifying
+    @Query("select new RicalcoloCostApertura(select count(*) as numeroaperte, s.municipio as municipio) from Affluenza a " +
+           " inner join Sezione s on a.sezione.id=s.id" +
+            " where a.apertura1=1 and a.tipoelezione.id=?1 " +
+            "group by s.municipio")
+    List<RicalcoloCostApertura> countApertura1ByMunicipio(int tipoelezioneid);
+
+    @Modifying
+    @Query("select new RicalcoloCostApertura(select count(*) as numeroaperte, s.municipio as municipio) from Affluenza a " +
+            " inner join Sezione s on a.sezione.id=s.id" +
+            " where a.apertura2=1 and a.tipoelezione.id=?1 " +
+            "group by s.municipio")
+    List<RicalcoloCostApertura> countApertura2ByMunicipio(int tipoelezioneid);
+
+    @Modifying
+    @Query("select new RicalcoloCostApertura(select count(*) as numerocostituite, s.municipio as municipio) from Affluenza a " +
+            " inner join Sezione s on a.sezione.id=s.id" +
+            " where a.costituzione1=1 and a.tipoelezione.id=?1 " +
+            "group by s.municipio")
+    List<RicalcoloCostApertura> countCostituzione1ByMunicipio(int tipoelezioneid);
+
+    @Modifying
+    @Query("select new RicalcoloCostApertura(select count(*) as numerocostituite, s.municipio as municipio) from Affluenza a " +
+            " inner join Sezione s on a.sezione.id=s.id" +
+            " where a.costituzione2=1 and a.tipoelezione.id=?1 " +
+            "group by s.municipio")
+    List<RicalcoloCostApertura> countCostituzione2ByMunicipio(int tipoelezioneid);
+
 
 
 }

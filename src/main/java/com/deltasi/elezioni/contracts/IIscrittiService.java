@@ -32,4 +32,45 @@ public interface IIscrittiService {
 
     List<Iscritti> findByTipoElezione(TipoElezione tipoelezione);
 
+    List<Iscritti> countIscrittiSezioniPervenuteMunicipioAffluenza1(int tipoelezioneid);
+
+
+    List<Iscritti> countIscrittiSezioniPervenuteAllAffluenza1(int tipoelezioneid);
+
+
+    List<Iscritti> countIscrittiSezioniPervenuteMunicipioAffluenza2(int tipoelezioneid);
+
+
+    List<Iscritti> countIscrittiSezioniPervenuteAllAffluenza2(int tipoelezioneid);
+
+
+    List<Iscritti> countIscrittiSezioniPervenuteMunicipioAffluenza3(int tipoelezioneid);
+
+
+    List<Iscritti> countIscrittiSezioniPervenuteAllAffluenza3(int tipoelezioneid);
+
+
+    List<Iscritti> countIscrittiSezioniPervenuteMunicipioApertura1(int tipoelezioneid);
+
+
+    List<Iscritti> countIscrittiSezioniPervenuteAllApertura1(int tipoelezioneid);
+
+
+    List<Iscritti> countIscrittiSezioniPervenuteMunicipioApertura2(int tipoelezioneid);
+
+
+    List<Iscritti> countIscrittiSezioniPervenuteAllApertura2(int tipoelezioneid);
+
+
+    List<Iscritti> countIscrittiSezioniPervenuteMunicipioCostituzione1(int tipoelezioneid);
+
+
+    List<Iscritti> countIscrittiSezioniPervenuteAllCostituzione1(int tipoelezioneid);
+
+
+    List<Iscritti> countIscrittiSezioniPervenuteMunicipioCostituzione2(int tipoelezioneid);
+
+
+    List<Iscritti> countIscrittiSezioniPervenuteAllCostituzione2(int tipoelezioneid);
+
 }

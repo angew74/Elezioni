@@ -3,7 +3,10 @@ package com.deltasi.elezioni.contracts;
 import com.deltasi.elezioni.model.configuration.Plesso;
 import com.deltasi.elezioni.model.configuration.TipoElezione;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloAffluenza;
+import com.deltasi.elezioni.model.ricalcoli.RicalcoloCostApertura;
 import com.deltasi.elezioni.model.risultati.Affluenza;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -83,8 +86,6 @@ public interface IAffluenzaService {
 
     List<Affluenza> findByApertura2AndTipoelezioneIdAndSezione_Municipio(int a, int idTipoElezione, int municipio);
 
-    List<Integer> countByAffluenza2AndTipoelezioneIdAndTipoelezioneIn(int a, int tipoElezionId, int tipoElezioneId1);
-
     List<Integer> countByAffluenza1AndSezione_MunicipioAndTipoelezioneIdAndTipoelezioneIdIn(int a, int municipio, int tipoElezione, int tipoElezione1);
     List<Integer> countByAffluenza2AndSezione_MunicipioAndTipoelezioneIdAndTipoelezioneIdIn(int a, int municipio, int tipoElezione, int tipoElezione1);
     List<Integer> countByAffluenza3AndSezione_MunicipioAndTipoelezioneIdAndTipoelezioneIdIn(int a, int municipio, int tipoElezione, int tipoElezione1);
@@ -93,12 +94,26 @@ public interface IAffluenzaService {
     List<Integer> countByCostituzione1AndSezione_MunicipioAndTipoelezioneIdAndTipoelezioneIdIn(int a, int municipio, int tipoElezione, int tipoElezione1);
     List<Integer> countByCostituzione2AndSezione_MunicipioAndTipoelezioneIdAndTipoelezioneIdIn(int a, int municipio, int tipoElezione, int tipoElezione1);
     /* count per sola tipologia */
-    List<Integer> countByAffluenza1AndTipoelezioneIdAndTipoelezioneIdIn(int a, int tipoElezione, int tipoElezione1);
-    List<Integer> countByAffluenza3AndTipoelezioneIdAndTipoelezioneIdIn(int a, int tipoElezione, int tipoElezione1);
+    List<Long> countByAffluenza1AndTipoelezioneIdAndTipoelezioneIdIn(int a, int tipoElezione, int tipoElezione1);
+    List<Long> countByAffluenza2AndTipoelezioneIdAndTipoelezioneIdIn(int a, int tipoElezione, int tipoElezione1);
+    List<Long> countByAffluenza3AndTipoelezioneIdAndTipoelezioneIdIn(int a, int tipoElezione, int tipoElezione1);
     List<Integer> countByApertura1AndTipoelezioneIdAndTipoelezioneIdIn(int a, int tipoElezione, int tipoElezione1);
     List<Integer> countByApertura2AndTipoelezioneIdAndTipoelezioneIdIn(int a, int tipoElezione, int tipoElezione1);
     List<Integer> countByCostituzione1AndTipoelezioneIdAndTipoelezioneIdIn(int a, int tipoElezione, int tipoElezione1);
     List<Integer> countByCostituzione2AndTipoelezioneIdAndTipoelezioneIdIn(int a, int tipoElezione, int tipoElezione1);
     List<RicalcoloAffluenza> countAffluenza1(int tipoelezioneid);
     List<RicalcoloAffluenza> countAffluenza1ByMunicipio(int tipoelezioneid);
+    List<RicalcoloAffluenza> countAffluenza2(int tipoelezioneid);
+    List<RicalcoloAffluenza> countAffluenza2ByMunicipio(int tipoelezioneid);
+    List<RicalcoloAffluenza> countAffluenza3(int tipoelezioneid);
+    List<RicalcoloAffluenza> countAffluenza3ByMunicipio(int tipoelezioneid);
+    List<RicalcoloCostApertura> countApertura1(int tipoelezioneid);
+    List<RicalcoloCostApertura> countApertura2(int tipoelezioneid);
+    List<RicalcoloCostApertura> countCostituzione1(int tipoelezioneid);
+    List<RicalcoloCostApertura> countCostituzione2(int tipoelezioneid);
+    List<RicalcoloCostApertura> countApertura1ByMunicipio(int tipoelezioneid);
+    List<RicalcoloCostApertura> countApertura2ByMunicipio(int tipoelezioneid);
+    List<RicalcoloCostApertura> countCostituzione1ByMunicipio(int tipoelezioneid);
+    List<RicalcoloCostApertura> countCostituzione2ByMunicipio(int tipoelezioneid);
+
 }
