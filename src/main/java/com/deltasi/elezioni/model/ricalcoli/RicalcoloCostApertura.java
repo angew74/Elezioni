@@ -7,11 +7,62 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "ricalcoli_apertura_costituzione")
 public class RicalcoloCostApertura {
+
+
+    public RicalcoloCostApertura(Long numeroCostituite, Long numeroAperte)
+    {
+        this.numeroaperte=Integer.parseInt(numeroAperte.toString());
+        this.numerocostituite= Integer.parseInt(numeroCostituite.toString());
+
+
+    }
+
+    public RicalcoloCostApertura(Long numeroCostituite, Long numeroAperte, Integer Municipio)
+    {
+        this.numeroaperte=Integer.parseInt(numeroAperte.toString());
+        this.numerocostituite= Integer.parseInt(numeroCostituite.toString());
+        this.municipio=Integer.parseInt(Municipio.toString());
+
+    }
+
+    public RicalcoloCostApertura(Integer numeroCostituite, Long numeroAperte)
+    {
+        this.numeroaperte=Integer.parseInt(numeroAperte.toString());
+        this.numerocostituite= Integer.parseInt(numeroCostituite.toString());
+
+
+    }
+
+    public RicalcoloCostApertura(Long numeroCostituite, Integer numeroAperte, Integer Municipio)
+    {
+        this.numeroaperte=Integer.parseInt(numeroAperte.toString());
+        this.numerocostituite= Integer.parseInt(numeroCostituite.toString());
+        this.municipio=Integer.parseInt(Municipio.toString());
+
+    }
+    public RicalcoloCostApertura(Long numeroCostituite, Integer numeroAperte)
+    {
+        this.numeroaperte=Integer.parseInt(numeroAperte.toString());
+        this.numerocostituite= Integer.parseInt(numeroCostituite.toString());
+
+
+    }
+
+        public RicalcoloCostApertura(Integer numeroCostituite, Long numeroAperte, int Municipio)
+    {
+        this.numeroaperte=Integer.parseInt(numeroAperte.toString());
+        this.numerocostituite= Integer.parseInt(numeroCostituite.toString());
+        this.municipio=(int)Municipio;
+
+    }
+
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +87,7 @@ public class RicalcoloCostApertura {
     @Column(name = "percentuale_costituite")
     private String percentualecostituite;
 
-
+    @Column(name = "iscritti_totali")
     private Integer iscrittitotali;
 
     @Column(name = "numero_aperte")

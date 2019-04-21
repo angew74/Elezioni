@@ -115,44 +115,44 @@ public interface AffluenzaDAO extends JpaRepository<Affluenza, Long> {
 
 
     @Modifying
-    @Query("select new RicalcoloCostApertura(select count(*) as numerocostituite) from Affluenza a where a.apertura1=?1")
+    @Query("select new RicalcoloCostApertura(0 as numeroCostituite, count(*) as numeroAperte) from Affluenza a where a.apertura1=?1")
     List<RicalcoloCostApertura> countApertura1(int tipoelezioneid);
 
     @Modifying
-    @Query("select new RicalcoloCostApertura(select count(*) as numerocostituite) from Affluenza a where a.apertura2=?1")
+    @Query("select new RicalcoloCostApertura(0 as numeroCostituite, count(*) as numeroAperte) from Affluenza a where a.apertura2=?1")
     List<RicalcoloCostApertura> countApertura2(int tipoelezioneid);
 
     @Modifying
-    @Query("select new RicalcoloCostApertura(select count(*) as numerocostituite) from Affluenza a where a.costituzione1=?1")
+    @Query("select new RicalcoloCostApertura(count(*) as numeroCostituite, 0 as numeroAperte) from Affluenza a where a.costituzione1=?1")
     List<RicalcoloCostApertura> countCostituzione1(int tipoelezioneid);
 
     @Modifying
-    @Query("select new RicalcoloCostApertura(select count(*) as numerocostituite) from Affluenza a where a.costituzione2=?1")
+    @Query("select new RicalcoloCostApertura(count(*) as numerocostituite, 0 as numeroAperte) from Affluenza a where a.costituzione2=?1")
     List<RicalcoloCostApertura> countCostituzione2(int tipoelezioneid);
 
     @Modifying
-    @Query("select new RicalcoloCostApertura(select count(*) as numeroaperte, s.municipio as municipio) from Affluenza a " +
+    @Query("select new RicalcoloCostApertura(0 as numeroCostituite, count(*) as numeroaperte, s.municipio as municipio) from Affluenza a " +
            " inner join Sezione s on a.sezione.id=s.id" +
             " where a.apertura1=1 and a.tipoelezione.id=?1 " +
             "group by s.municipio")
     List<RicalcoloCostApertura> countApertura1ByMunicipio(int tipoelezioneid);
 
     @Modifying
-    @Query("select new RicalcoloCostApertura(select count(*) as numeroaperte, s.municipio as municipio) from Affluenza a " +
+    @Query("select new RicalcoloCostApertura(0 as numeroCostituite, count(*) as numeroaperte, s.municipio as municipio) from Affluenza a " +
             " inner join Sezione s on a.sezione.id=s.id" +
             " where a.apertura2=1 and a.tipoelezione.id=?1 " +
             "group by s.municipio")
     List<RicalcoloCostApertura> countApertura2ByMunicipio(int tipoelezioneid);
 
     @Modifying
-    @Query("select new RicalcoloCostApertura(select count(*) as numerocostituite, s.municipio as municipio) from Affluenza a " +
+    @Query("select new RicalcoloCostApertura(count(*) as numerocostituite, 0 as numeroAperte, s.municipio as municipio) from Affluenza a " +
             " inner join Sezione s on a.sezione.id=s.id" +
             " where a.costituzione1=1 and a.tipoelezione.id=?1 " +
             "group by s.municipio")
     List<RicalcoloCostApertura> countCostituzione1ByMunicipio(int tipoelezioneid);
 
     @Modifying
-    @Query("select new RicalcoloCostApertura(select count(*) as numerocostituite, s.municipio as municipio) from Affluenza a " +
+    @Query("select new RicalcoloCostApertura(count(*) as numerocostituite, 0 as numeroAperte, s.municipio as municipio) from Affluenza a " +
             " inner join Sezione s on a.sezione.id=s.id" +
             " where a.costituzione2=1 and a.tipoelezione.id=?1 " +
             "group by s.municipio")

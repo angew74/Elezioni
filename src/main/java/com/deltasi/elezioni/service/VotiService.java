@@ -1,6 +1,7 @@
 package com.deltasi.elezioni.service;
 
 import com.deltasi.elezioni.contracts.IVotiService;
+import com.deltasi.elezioni.model.ricalcoli.RicalcoloVoti;
 import com.deltasi.elezioni.model.risultati.Voti;
 import com.deltasi.elezioni.repository.VotiDAO;
 import org.apache.logging.log4j.LogManager;
@@ -71,5 +72,35 @@ public class VotiService implements IVotiService {
     @Override
     public List<Voti> findByListaDenominazione(String denominazione) {
         return votiDAO.findByListaDenominazione(denominazione);
+    }
+
+    @Override
+    public List<RicalcoloVoti> countListaByMunicipio(int tipoelezioneid) {
+        return votiDAO.countListaByMunicipio(tipoelezioneid);
+    }
+
+    @Override
+    public List<RicalcoloVoti> countPervenuteByMunicipio(int tipoelezioneid) {
+        return votiDAO.countPervenuteByMunicipio(tipoelezioneid);
+    }
+
+    @Override
+    public List<RicalcoloVoti> countPervenute(int tipoelezioneid) {
+        return votiDAO.countPervenute(tipoelezioneid);
+    }
+
+    @Override
+    public List<RicalcoloVoti> countLista(int tipoelezioneid) {
+        return votiDAO.countLista(tipoelezioneid);
+    }
+
+    @Override
+    public List<RicalcoloVoti> countListaSingle(int tipoelezioneid, int idlista) {
+        return votiDAO.countListaSingle(tipoelezioneid,idlista);
+    }
+
+    @Override
+    public List<RicalcoloVoti> countListaSingleByMunicipio(int tipoelezioneid, int idlista) {
+        return votiDAO.countListaSingle(tipoelezioneid,idlista);
     }
 }

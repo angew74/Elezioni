@@ -41,15 +41,12 @@ jQuery(document).ready(function ($) {
                                     { data: "numerosezioni" },
                                     { data: "totalesezioni" },
                                     { data: "percentualepervenute" },
-                                    { data: "affluenzamaschi" },
-                                    { data: "iscrittimaschi" },
-                                    { data: "percentualemaschi"},
-                                    { data: "affluenzafemmine" },
-                                    { data: "iscrittifemmine" },
-                                    { data: "percentualefemmine" },
-                                    { data: "affluenzatotale" },
-                                    { data: "iscrittitotali" },
-                                    { data: "percentualetotale" }
+                                    { data: "lista.denominazione" },
+                                    { data: "numerovoti" },
+                                    { data: "percentualevoti" },
+                                    { data: "votantipervenute"},
+                                    { data: "iscrittipervenute" },
+                                    { data: "percentualevotantipervenute" }
                                 ]});
                             $("#VisualizzazioneRicalcolo").show();
                         } else {

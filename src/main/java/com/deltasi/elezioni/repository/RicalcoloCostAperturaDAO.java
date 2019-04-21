@@ -2,9 +2,11 @@ package com.deltasi.elezioni.repository;
 
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloCostApertura;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface RicalcoloCostAperturaDAO extends JpaRepository<RicalcoloCostApertura, Long> {
 
     List<RicalcoloCostApertura> findAllBy();

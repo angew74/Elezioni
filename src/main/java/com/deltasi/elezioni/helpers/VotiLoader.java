@@ -42,6 +42,7 @@ public class VotiLoader {
         LocalDateTime oggi = LocalDateTime.now();
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        TipoElezione tipoElezione = tipoElezioneService.findTipoElezioneById(tipoelezioneid);
         Sezione sezione = sezioneService.findByNumerosezioneAndTipoelezioneId(list.get(0).getNumerosezione(), tipoelezioneid);
         for (ListaSemplice l:  list) {
             Voti v = new Voti();
@@ -49,6 +50,7 @@ public class VotiLoader {
             v.setNumerovoti(l.getVoti());
             v.setUtenteoperazione(user);
             v.setSezione(sezione);
+            v.setTipoelezione(tipoElezione);
             Lista lista = listaService.findById(l.getIdlista());
             v.setLista(lista);
             votiList.add(v);

@@ -190,53 +190,63 @@ public class RicalcoliDraft {
     public List<RicalcoloCostApertura> costApertura(String aggregazione, String codice) {
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         List<RicalcoloCostApertura> complete = new ArrayList<RicalcoloCostApertura>();
+        List<Iscritti> liscritti = new ArrayList<>();
         try {
             switch (codice) {
                 case "AP1":
                     switch (aggregazione) {
                         case "MUN":
-                            List<RicalcoloCostApertura> coll = affluenzaService.countApertura1ByMunicipio(tipoelezioneid);
-                            List<Iscritti> liscritti = iscrittiService.countIscrittiSezioniPervenuteMunicipioApertura1(tipoelezioneid);
-                            CalcolaRicalcoloCostituzione(coll, codice,liscritti);
+                            complete = affluenzaService.countApertura1ByMunicipio(tipoelezioneid);
+                            liscritti = iscrittiService.countIscrittiSezioniPervenuteMunicipioApertura1(tipoelezioneid);
+                            CalcolaRicalcoloCostituzione(complete, codice,liscritti);
                             break;
                         case "SEZ":
                             break;
                         case "COM":
+                            complete = affluenzaService.countApertura1(tipoelezioneid);
+                            liscritti = iscrittiService.countIscrittiSezioniPervenuteAllApertura1(tipoelezioneid);
+                            CalcolaRicalcoloCostituzione(complete, codice,liscritti);
                             break;
                     }
                     break;
                 case "AP2":
                     switch (aggregazione) {
                         case "MUN":
-                            List<RicalcoloCostApertura> coll = affluenzaService.countApertura2ByMunicipio(tipoelezioneid);
-                            List<Iscritti> liscritti = iscrittiService.countIscrittiSezioniPervenuteMunicipioApertura2(tipoelezioneid);
-                            CalcolaRicalcoloCostituzione(coll, codice,liscritti);
+                            complete = affluenzaService.countApertura2ByMunicipio(tipoelezioneid);
+                            liscritti = iscrittiService.countIscrittiSezioniPervenuteMunicipioApertura2(tipoelezioneid);
+                            CalcolaRicalcoloCostituzione(complete, codice,liscritti);
                             break;
                         case "SEZ":
                             break;
                         case "COM":
+                            complete = affluenzaService.countApertura2(tipoelezioneid);
+                            liscritti = iscrittiService.countIscrittiSezioniPervenuteAllApertura2(tipoelezioneid);
+                            CalcolaRicalcoloCostituzione(complete, codice,liscritti);
                             break;
                     }
                     break;
                 case "CO1":
                     switch (aggregazione) {
                         case "MUN":
-                            List<RicalcoloCostApertura> coll = affluenzaService.countCostituzione1ByMunicipio(tipoelezioneid);
-                            List<Iscritti> liscritti = iscrittiService.countIscrittiSezioniPervenuteMunicipioCostituzione1(tipoelezioneid);
-                            CalcolaRicalcoloCostituzione(coll, codice,liscritti);
+                            complete = affluenzaService.countCostituzione1ByMunicipio(tipoelezioneid);
+                            liscritti = iscrittiService.countIscrittiSezioniPervenuteMunicipioCostituzione1(tipoelezioneid);
+                            CalcolaRicalcoloCostituzione(complete, codice,liscritti);
                             break;
                         case "SEZ":
                             break;
                         case "COM":
+                            complete = affluenzaService.countCostituzione1(tipoelezioneid);
+                            liscritti = iscrittiService.countIscrittiSezioniPervenuteAllCostituzione1(tipoelezioneid);
+                            CalcolaRicalcoloCostituzione(complete, codice,liscritti);
                             break;
                     }
                     break;
                 case "CO2":
                     switch (aggregazione) {
                         case "MUN":
-                            List<RicalcoloCostApertura> coll = affluenzaService.countCostituzione2ByMunicipio(tipoelezioneid);
-                            List<Iscritti> liscritti = iscrittiService.countIscrittiSezioniPervenuteMunicipioCostituzione2(tipoelezioneid);
-                            CalcolaRicalcoloCostituzione(coll, codice,liscritti);
+                            complete= affluenzaService.countCostituzione2(tipoelezioneid);
+                            liscritti = iscrittiService.countIscrittiSezioniPervenuteAllCostituzione2(tipoelezioneid);
+                            CalcolaRicalcoloCostituzione(complete, codice,liscritti);
                             break;
                         case "SEZ":
                             break;
@@ -267,6 +277,10 @@ public class RicalcoliDraft {
             l.get(m).setUtenteoperazione(user);
             l.get(m).setTipoelezione(tipoElezione);
             l.get(m).setTiporicalcolo(t);
+            String perc =calculatePercentage(l.get(m).getNumerocostituite() ,l.get(m).getNumerosezioni());
+            String pera =calculatePercentage(l.get(m).getNumeroaperte() ,l.get(m).getNumerosezioni());
+            l.get(m).setPercentualeaperte(pera);
+            l.get(m).setPercentualecostituite(perc);
             l.get(m).setIscrittitotali(iiscritti.get(m).getIscrittitotali());
         }
     }

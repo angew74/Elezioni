@@ -77,7 +77,7 @@ public class RicalcoliController {
     @GetMapping(value = "/costituzione")
     public ModelAndView costituzione(Principal principal) {
         ModelAndView modelAndView = new ModelAndView("ricalcoli/costituzione");
-        String tipo = "RIC";
+        String tipo = "RIA";
         List<Aggregazione> list =  aggregazioneService.FindAll();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         List<TipoRicalcolo> ricalcoli =  tipoRicalcoloService.findAllByTipoelezioneIdAndCodiceFase(tipoelezioneid, tipo);

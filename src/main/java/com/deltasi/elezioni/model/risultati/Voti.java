@@ -2,6 +2,7 @@ package com.deltasi.elezioni.model.risultati;
 
 
 import com.deltasi.elezioni.model.configuration.Sezione;
+import com.deltasi.elezioni.model.configuration.TipoElezione;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -22,6 +23,12 @@ public class Voti {
     @JoinColumn(name = "idsezione", referencedColumnName = "id")
     @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
     private Sezione sezione;
+
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idtipoelezione", referencedColumnName = "id")
+    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+    private TipoElezione tipoelezione;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idlista", referencedColumnName = "id")
@@ -84,5 +91,13 @@ public class Voti {
 
     public void setNumerovoti(Integer numerovoti) {
         this.numerovoti = numerovoti;
+    }
+
+    public TipoElezione getTipoelezione() {
+        return tipoelezione;
+    }
+
+    public void setTipoelezione(TipoElezione tipoelezione) {
+        this.tipoelezione = tipoelezione;
     }
 }

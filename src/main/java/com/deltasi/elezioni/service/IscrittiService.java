@@ -105,7 +105,7 @@ public class IscrittiService implements IIscrittiService {
 
     @Override
     public List<Iscritti> countIscrittiSezioniPervenuteMunicipioApertura1(int tipoelezioneid) {
-        return null;
+        return iscrittiDAO.countIscrittiSezioniPervenuteMunicipioApertura1(tipoelezioneid);
     }
 
     @Override

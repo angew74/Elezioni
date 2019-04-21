@@ -1,5 +1,6 @@
 package com.deltasi.elezioni.contracts;
 
+import com.deltasi.elezioni.model.ricalcoli.RicalcoloVoti;
 import com.deltasi.elezioni.model.risultati.Voti;
 
 import java.util.List;
@@ -16,4 +17,11 @@ public interface IVotiService {
     Voti findByListaProgressivoAndSezioneNumerosezione(Integer progressivo,Integer numerosezione);
     Voti findByListaDenominazioneAndSezioneNumerosezione(String denominazione,Integer numerosezione);
     List<Voti> findByListaDenominazione(String denominazione);
+    List<RicalcoloVoti> countListaByMunicipio(int tipoelezioneid);
+    List<RicalcoloVoti> countPervenuteByMunicipio(int tipoelezioneid);
+    List<RicalcoloVoti> countPervenute(int tipoelezioneid);
+    List<RicalcoloVoti> countLista(int tipoelezioneid);
+    List<RicalcoloVoti> countListaSingle(int tipoelezioneid, int idlista);
+    List<RicalcoloVoti> countListaSingleByMunicipio(int tipoelezioneid, int idlista);
+
 }

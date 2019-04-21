@@ -8,6 +8,7 @@ import com.deltasi.elezioni.model.json.ListeWrapper;
 import com.deltasi.elezioni.model.json.VotiJson;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloAffluenza;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloCostApertura;
+import com.deltasi.elezioni.model.ricalcoli.RicalcoloVoti;
 import com.deltasi.elezioni.state.SessionStateHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -85,6 +86,28 @@ public class RestRicalcoliController {
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         try {
             l= draft.costApertura(aggregazione,tipoRicalcolo);
+
+        } catch(AccessDeniedException e) {
+            logger.warn("Unauthorized", e);
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Risorsa non trovata", ex);
+        }
+        stateHelper.add("Ricalcolo",l);
+        //httpSession.setAttribute("Ricalcolo",l);
+        return l;
+    }
+
+    @GetMapping(value = "/ricalcolacostituzione/{aggregazione}/{tipoRicalcolo}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Secured("ROLE_ADMIN")
+    public List<RicalcoloVoti> ricalcolavoti(@PathVariable("aggregazione") String aggregazione, @PathVariable("tipoRicalcolo") String tipoRicalcolo
+    ) {
+        Map<String, String> errors = null;
+        List<RicalcoloVoti> l = new ArrayList<RicalcoloVoti>();
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        try {
+
 
         } catch(AccessDeniedException e) {
             logger.warn("Unauthorized", e);
