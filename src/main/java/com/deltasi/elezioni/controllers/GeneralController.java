@@ -30,9 +30,9 @@ public class GeneralController {
         return "admin";
     }
 
-        @RequestMapping(value = "/error", method = RequestMethod.GET)
+    @RequestMapping(value = "/error", method = RequestMethod.GET)
     public String loginError(ModelMap model) {
-            model.addAttribute("titlepage", "Errore applicativo");
+        model.addAttribute("titlepage", "Errore applicativo");
         return "error";
 
     }

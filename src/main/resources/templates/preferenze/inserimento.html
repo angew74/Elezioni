@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
+<head>
+    <div th:replace="fragments/head :: header-css-js"/>
+    <link th:href="@{~/css/common/parsley.css}" type="text/css" rel="stylesheet"/>
+    <link th:href="@{~/css/common/sezione.css}" type="text/css" rel="stylesheet"/>
+</head>
+</head>
+<body>
+<div th:replace="fragments/menu :: menu"/>
+<div th:replace="common/ricercasezione" ::ricercasezione/>
+<div th:replace="common/sezione :: sezione"/>
+<div th:replace="fragments/modalerror :: error"/>
+<div th:replace="fragments/modalsuccess :: success"/>
+<input type="hidden"  id="tipopagina" value="I" />
+<div class="container" id="spoglio" style="display: none;border: 1px #6d353a solid;">
+    <div class="row" style="margin:5px;margin-bottom:0px">
+        <h5>Votanti <span id="Votanti" style="margin-right:10px" class="badge badge-secondary badge-pill"></span></h5>
+        <h5>Iscritti<span id="Iscritti" style="margin-left:10px" class="badge badge-secondary badge-pill"></span></h5>
+    </div>
+    <div id="spogliodiv"/>
+</div>
+<div th:replace="fragments/modalerror :: error"/>
+<div th:replace="fragments/modalsuccess :: success"/>
+</body>
+</html>

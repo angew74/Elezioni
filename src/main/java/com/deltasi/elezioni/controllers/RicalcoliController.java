@@ -2,10 +2,12 @@ package com.deltasi.elezioni.controllers;
 
 import com.deltasi.elezioni.contracts.IAbilitazioniService;
 import com.deltasi.elezioni.contracts.IAggregazioneService;
+import com.deltasi.elezioni.contracts.IMunicipioService;
 import com.deltasi.elezioni.contracts.ITipoRicalcoloService;
 import com.deltasi.elezioni.helpers.BusinessRules;
 import com.deltasi.elezioni.model.configuration.Aggregazione;
 import com.deltasi.elezioni.model.configuration.FaseElezione;
+import com.deltasi.elezioni.model.configuration.Municipio;
 import com.deltasi.elezioni.model.configuration.TipoRicalcolo;
 import com.deltasi.elezioni.model.json.AffluenzaJson;
 import org.apache.logging.log4j.LogManager;
@@ -39,6 +41,9 @@ public class RicalcoliController {
     IAbilitazioniService abilitazioniService;
 
     @Autowired
+    IMunicipioService municipiService;
+
+    @Autowired
     IAggregazioneService aggregazioneService;
 
     @Autowired
@@ -58,9 +63,9 @@ public class RicalcoliController {
     public ModelAndView affluenza(Principal principal) {
         ModelAndView modelAndView = new ModelAndView("ricalcoli/affluenza");
         String tipo = "RIC";
-        List<Aggregazione> list =  aggregazioneService.FindAll();
+        List<Aggregazione> list = aggregazioneService.FindAll();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
-        List<TipoRicalcolo> ricalcoli =  tipoRicalcoloService.findAllByTipoelezioneIdAndCodiceFase(tipoelezioneid, tipo);
+        List<TipoRicalcolo> ricalcoli = tipoRicalcoloService.findAllByTipoelezioneIdAndCodiceFase(tipoelezioneid, tipo);
         if (businessRules.IsEnabled(tipo, tipoelezioneid)) {
             String titolo = businessRules.getTitoloByFase(tipo, "I");
             modelAndView.addObject("titlepage", titolo);
@@ -78,9 +83,9 @@ public class RicalcoliController {
     public ModelAndView costituzione(Principal principal) {
         ModelAndView modelAndView = new ModelAndView("ricalcoli/costituzione");
         String tipo = "RIA";
-        List<Aggregazione> list =  aggregazioneService.FindAll();
+        List<Aggregazione> list = aggregazioneService.FindAll();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
-        List<TipoRicalcolo> ricalcoli =  tipoRicalcoloService.findAllByTipoelezioneIdAndCodiceFase(tipoelezioneid, tipo);
+        List<TipoRicalcolo> ricalcoli = tipoRicalcoloService.findAllByTipoelezioneIdAndCodiceFase(tipoelezioneid, tipo);
         if (businessRules.IsEnabled(tipo, tipoelezioneid)) {
             String titolo = businessRules.getTitoloByFase(tipo, "I");
             modelAndView.addObject("titlepage", titolo);
@@ -99,10 +104,14 @@ public class RicalcoliController {
         ModelAndView modelAndView = new ModelAndView("ricalcoli/voti");
         String tipo = "RIL";
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        List<TipoRicalcolo> ricalcoli = tipoRicalcoloService.findAllByTipoelezioneIdAndCodiceFase(tipoelezioneid, tipo);
+        List<Municipio> municipi = municipiService.getAll();
         if (businessRules.IsEnabled(tipo, tipoelezioneid)) {
             String titolo = businessRules.getTitoloByFase(tipo, "I");
             modelAndView.addObject("titlepage", titolo);
             modelAndView.addObject("tipo", tipo);
+            modelAndView.addObject("municipi", municipi);
+            modelAndView.addObject("tipiricalcolo", ricalcoli);
         } else {
             modelAndView = new ModelAndView("common/unauthorized");
             modelAndView.addObject("errMsg", "Fase non abilitata");

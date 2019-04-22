@@ -35,10 +35,10 @@ public class AbilitazioniController {
         ModelAndView modelAndView = new ModelAndView("abilitazioni/map");
         modelAndView.addObject("titlepage", "Gestione Abilitazioni fasi");
         List<FaseElezione> list = new ArrayList<FaseElezione>();
-         try {
+        try {
             list = abilitazioniService.getAll();
             modelAndView.addObject("Fasi", list);
-             modelAndView.addObject("fasicount",list.size());
+            modelAndView.addObject("fasicount", list.size());
         } catch (Exception ex) {
             String error = ex.getMessage();
             ModelAndView errormodelAndView = new ModelAndView("common/error");
@@ -58,7 +58,7 @@ public class AbilitazioniController {
         try {
             list = abilitazioniService.getAll();
             modelAndView.addObject("Fasi", list);
-            modelAndView.addObject("fasicount",list.size());
+            modelAndView.addObject("fasicount", list.size());
         } catch (Exception ex) {
             String error = ex.getMessage();
             ModelAndView errormodelAndView = new ModelAndView("common/error");
@@ -89,7 +89,6 @@ public class AbilitazioniController {
         }
         return response;
     }
-
 
 
 }

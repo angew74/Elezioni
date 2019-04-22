@@ -23,17 +23,24 @@ public class Iscritti implements Serializable {
 
     }
 
-    public Iscritti(int iscrittiMaschi, int iscrittiFemmine, int iscrittiTotali, int Municipio) {
-        this.iscrittifemmine = iscrittiFemmine;
-        this.iscrittimaschi = iscrittiMaschi;
-        this.iscrittitotali = iscrittiTotali;
+    public Iscritti(int iscrittiMaschiGen, int iscrittiFemmineGen, int iscrittiTotaliGen, int Municipio) {
+        this.iscrittifemminegen = iscrittiFemmineGen;
+        this.iscrittimaschigen = iscrittiMaschiGen;
+        this.iscrittitotaligen = iscrittiTotaliGen;
         this.municipio = Municipio;
     }
 
-    public Iscritti(Long iscrittiMaschi, Long iscrittiFemmine, Long iscrittiTotali) {
-        this.iscrittifemmine =Integer.parseInt(iscrittiFemmine.toString());
-        this.iscrittimaschi =Integer.parseInt(iscrittiMaschi.toString());
-        this.iscrittitotali =Integer.parseInt(iscrittiTotali.toString());
+    public Iscritti(Long iscrittiMaschiGen, Long iscrittiFemmineGen, Long iscrittiTotaliGen) {
+        this.iscrittifemminegen =Integer.parseInt(iscrittiFemmineGen.toString());
+        this.iscrittimaschigen =Integer.parseInt(iscrittiMaschiGen.toString());
+        this.iscrittitotaligen =Integer.parseInt(iscrittiTotaliGen.toString());
+    }
+
+    public Iscritti(Long iscrittiMaschiGen, Long iscrittiFemmineGen, Long iscrittiTotaliGen,int Municipio) {
+        this.iscrittifemminegen =Integer.parseInt(iscrittiFemmineGen.toString());
+        this.iscrittimaschigen =Integer.parseInt(iscrittiMaschiGen.toString());
+        this.iscrittitotaligen =Integer.parseInt(iscrittiTotaliGen.toString());
+        this.municipio = Municipio;
     }
 
     private static final long serialVersionUID = 1L;

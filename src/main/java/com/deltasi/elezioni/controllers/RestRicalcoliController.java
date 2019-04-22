@@ -54,25 +54,24 @@ public class RestRicalcoliController {
     private HttpSession httpSession;
 
 
-
     @GetMapping(value = "/ricalcola/{aggregazione}/{tipoRicalcolo}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Secured("ROLE_ADMIN")
     public List<RicalcoloAffluenza> ricalcola(@PathVariable("aggregazione") String aggregazione, @PathVariable("tipoRicalcolo") String tipoRicalcolo
-                                       ) {
+    ) {
         Map<String, String> errors = null;
         List<RicalcoloAffluenza> l = new ArrayList<RicalcoloAffluenza>();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         try {
-           l= draft.Affluenza(aggregazione,tipoRicalcolo);
+            l = draft.Affluenza(aggregazione, tipoRicalcolo);
 
-        } catch(AccessDeniedException e) {
+        } catch (AccessDeniedException e) {
             logger.warn("Unauthorized", e);
         } catch (Exception ex) {
             logger.error(ex.getMessage());
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Risorsa non trovata", ex);
         }
-        stateHelper.add("Ricalcolo",l);
+        stateHelper.add("Ricalcolo", l);
         //httpSession.setAttribute("Ricalcolo",l);
         return l;
     }
@@ -85,38 +84,38 @@ public class RestRicalcoliController {
         List<RicalcoloCostApertura> l = new ArrayList<RicalcoloCostApertura>();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         try {
-            l= draft.costApertura(aggregazione,tipoRicalcolo);
+            l = draft.costApertura(aggregazione, tipoRicalcolo);
 
-        } catch(AccessDeniedException e) {
+        } catch (AccessDeniedException e) {
             logger.warn("Unauthorized", e);
         } catch (Exception ex) {
             logger.error(ex.getMessage());
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Risorsa non trovata", ex);
         }
-        stateHelper.add("Ricalcolo",l);
+        stateHelper.add("Ricalcolo", l);
         //httpSession.setAttribute("Ricalcolo",l);
         return l;
     }
 
-    @GetMapping(value = "/ricalcolacostituzione/{aggregazione}/{tipoRicalcolo}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/ricalcolavoti/{aggregazione}/{tipoRicalcolo}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Secured("ROLE_ADMIN")
-    public List<RicalcoloVoti> ricalcolavoti(@PathVariable("aggregazione") String aggregazione, @PathVariable("tipoRicalcolo") String tipoRicalcolo
+    public List<RicalcoloVoti> SommaVoti(@PathVariable("aggregazione") String aggregazione, @PathVariable("tipoRicalcolo") String tipoRicalcolo
     ) {
         Map<String, String> errors = null;
         List<RicalcoloVoti> l = new ArrayList<RicalcoloVoti>();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         try {
 
-
-        } catch(AccessDeniedException e) {
+            l = draft.voti(aggregazione, tipoRicalcolo);
+        } catch (AccessDeniedException e) {
             logger.warn("Unauthorized", e);
         } catch (Exception ex) {
             logger.error(ex.getMessage());
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Risorsa non trovata", ex);
         }
-        stateHelper.add("Ricalcolo",l);
+        stateHelper.add("Ricalcolo", l);
         //httpSession.setAttribute("Ricalcolo",l);
         return l;
     }
@@ -128,17 +127,15 @@ public class RestRicalcoliController {
 
         List<RicalcoloAffluenza> l = new ArrayList<>();
         try {
-             l =(List<RicalcoloAffluenza>) stateHelper.get("Ricalcolo");
+            l = (List<RicalcoloAffluenza>) stateHelper.get("Ricalcolo");
             //l =(List<RicalcoloAffluenza>) httpSession.getAttribute("Ricalcolo");
-             if(l.get(0).getTiporicalcolo().getCodice().equals(tipoRicalcolo))
-             {
-                 ricalcoloAffluenzaService.SaveAll(l);
-             }
-             else {
-                 throw new ResponseStatusException(
-                         HttpStatus.BAD_REQUEST, "Ricalcolo non congruente");
-             }
-        } catch(AccessDeniedException e) {
+            if (l.get(0).getTiporicalcolo().getCodice().equals(tipoRicalcolo)) {
+                ricalcoloAffluenzaService.SaveAll(l);
+            } else {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST, "Ricalcolo non congruente");
+            }
+        } catch (AccessDeniedException e) {
             logger.warn("Unauthorized", e);
         } catch (Exception ex) {
             logger.error(ex.getMessage());

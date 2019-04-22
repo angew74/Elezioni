@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `iscritti`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `iscritti` (
-  `idiscritti` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `idtipoelezione` int(10) unsigned NOT NULL,
   `idsezione` int(10) unsigned NOT NULL,
   `idtiposezione` int(10) unsigned DEFAULT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE `iscritti` (
   `iscrittimaschigen` int(10) unsigned NOT NULL,
   `iscrittifemminegen` int(10) unsigned NOT NULL,
   `iscrittitotaligen` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`idiscritti`),
+  PRIMARY KEY (`id`),
   UNIQUE KEY `idsezione_UNIQUE` (`idsezione`),
   KEY `fk_tiposezione_iscritti_idx` (`idtiposezione`),
   KEY `fk_tipo_elezione_iscritti_idx` (`idtipoelezione`),
@@ -70,4 +70,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-14 20:54:52
+-- Dump completed on 2019-04-22 20:36:54

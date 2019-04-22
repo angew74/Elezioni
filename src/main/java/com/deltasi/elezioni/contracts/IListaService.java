@@ -10,4 +10,5 @@ public interface IListaService {
     List<Lista> findAllBy();
     Lista findByDenominazioneAndTipoelezioneId(String denominazione, Integer tipoelezioneid);
     Lista findByProgressivoAndTipoelezioneId(Integer progressivo, Integer tipoelezioneid);
+    List<Lista> findAllByTipoelezioneId(int tipoElezione);
 }

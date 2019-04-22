@@ -143,4 +143,14 @@ public class IscrittiService implements IIscrittiService {
         return iscrittiDAO.countIscrittiSezioniPervenuteAllCostituzione2(tipoelezioneid);
     }
 
+    @Override
+    public List<Iscritti> countIscrittiPervenute(int tipoelezioneid) {
+        return iscrittiDAO.countIscrittiPervenute(tipoelezioneid);
+    }
+
+    @Override
+    public List<Iscritti> countIscrittiPervenuteByMun(int tipoelezioneid) {
+        return iscrittiDAO.countIscrittiPervenuteByMun(tipoelezioneid);
+        }
+
 }

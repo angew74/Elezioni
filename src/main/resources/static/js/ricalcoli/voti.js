@@ -30,7 +30,7 @@ jQuery(document).ready(function ($) {
                     try {
                         if (data !== null) {
                             var responseRicalcolo = data;
-                            $("#RicalcoloAffluenzaTable").DataTable({
+                            $("#RicalcoloVotiTable").DataTable({
                                 data:responseRicalcolo,
                                 searching: false,
                                 paging: false,
@@ -64,7 +64,7 @@ jQuery(document).ready(function ($) {
 
                 })
                 .fail(function (e) {
-                    $(errorDisplay).text("errore di connessione dettagli " + e);
+                    $(errorDisplay).text("errore di connessione dettagli: " + $.parseJSON(e.responseText).details[0]);
                     $(errorcontainer).modal('show');
                 });
         }

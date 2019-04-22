@@ -90,7 +90,7 @@ public class RicalcoloAffluenza {
     @Column(name = "data_operazione")
     private LocalDateTime dataoperazione;
 
-    @Column(name = "percentuale_pervenute")
+    @Column(name = "percentuale_sezioni_pervenute")
     private String percentualepervenute;
 
     @Column(name = "iscritti_totale")

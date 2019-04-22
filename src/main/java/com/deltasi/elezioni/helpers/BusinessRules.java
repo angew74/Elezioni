@@ -1,12 +1,10 @@
 package com.deltasi.elezioni.helpers;
 
-import com.deltasi.elezioni.contracts.IAbilitazioniService;
-import com.deltasi.elezioni.contracts.IAffluenzaService;
-import com.deltasi.elezioni.contracts.ITipoElezioneService;
-import com.deltasi.elezioni.contracts.IVotiService;
+import com.deltasi.elezioni.contracts.*;
 import com.deltasi.elezioni.model.configuration.FaseElezione;
 import com.deltasi.elezioni.model.configuration.TipoElezione;
 import com.deltasi.elezioni.model.risultati.Affluenza;
+import com.deltasi.elezioni.model.risultati.Preferenze;
 import com.deltasi.elezioni.model.risultati.Voti;
 import com.sun.org.apache.bcel.internal.generic.BREAKPOINT;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +27,9 @@ public class BusinessRules {
 
     @Autowired
     IVotiService votiService;
+
+    @Autowired
+    IPreferenzeService preferenzeService;
 
     @Autowired
     IAbilitazioniService abilitazioniService;
@@ -162,7 +163,7 @@ public class BusinessRules {
                 }
                 break;
             case "VL":
-                List<Voti> lvoti = votiService.findBySezioneNumerosezioneAndSezioneTipoelezioneId(sezione, idtipoelezione);
+                List<Voti> lvoti = votiService.findBySezioneNumerosezioneAndTipoelezioneId(sezione,idtipoelezione);
                 if (affluenza == null) {
                     return "Sezione non costitutita";
                 }
@@ -174,7 +175,7 @@ public class BusinessRules {
                 }
                 break;
             case "RVL":
-                List<Voti> lvotir = votiService.findBySezioneNumerosezioneAndSezioneTipoelezioneId(sezione, idtipoelezione);
+                List<Voti> lvotir = votiService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, idtipoelezione);
                 if (affluenza == null) {
                     return "Sezione non costitutita";
                 }
@@ -183,6 +184,34 @@ public class BusinessRules {
                 }
                 if ((lvotir == null) || (lvotir.size() == 0)) {
                     return "Scrutinio non registrato usare inserimento";
+                }
+                break;
+            case "PE":
+                List<Voti> lvotip = votiService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, idtipoelezione);
+                List<Preferenze> lpreferenze = preferenzeService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, idtipoelezione);
+                if (affluenza == null) {
+                    return "Sezione non costitutita";
+                }
+                if (affluenza.getAffluenza3() == null && affluenza.getAffluenza3().equals(0)) {
+                    return "Chiusura non registrata";
+                }
+                if ((lvotip == null) || (lvotip.size() == 0)) {
+                    return "Scrutinio non registrato impossibile inserire preferenze";
+                }
+                if (lpreferenze != null && lpreferenze.size() > 0) {
+                    return "Preferenze già registrate usare rettifica";
+                }
+                break;
+            case "RPE":
+                List<Preferenze> rlpreferenze = preferenzeService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, idtipoelezione);
+                if (affluenza == null) {
+                    return "Sezione non costitutita";
+                }
+                if (affluenza.getAffluenza3() == null || affluenza.getAffluenza3().equals(0)) {
+                    return "Chiusura non registrata";
+                }
+                if ((rlpreferenze == null) || (rlpreferenze.size() == 0)) {
+                    return "Preferenze non registrate usare inserimento";
                 }
                 // todo aggiungere controllo preferenze
                 break;
@@ -293,10 +322,16 @@ public class BusinessRules {
                 titolo = "Annullamento Voti Lista";
                 break;
             case "RIC":
-                titolo = "Ricalcolo Voti Lista";
+                titolo = "Ricalcolo Affluenze";
                 break;
             case "RIL":
-                titolo = "Ricalcolo Affluenze";
+                titolo = "Ricalcolo Voti Lista";
+                break;
+            case "RIP":
+                titolo = "Ricalcolo Preferenze";
+                break;
+            case "RIA":
+                titolo = "Ricalcolo Costituzione Apertura";
                 break;
 
         }

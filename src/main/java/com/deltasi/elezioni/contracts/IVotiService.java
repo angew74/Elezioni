@@ -10,18 +10,19 @@ public interface IVotiService {
     void SaveAll(List<Voti> list);
     Voti findById(Integer id);
     List<Voti> findAllBy();
-    List<Voti> findBySezioneNumerosezioneAndSezioneTipoelezioneId(Integer numerosezione, Integer tipoelezioneid);
-    List<Voti> findByListaId(Integer listaid);
-    List<Voti> findByListaProgressivo(Integer progressivo);
-    Voti findByListaIdAndSezioneNumerosezione(Integer listaid,Integer numerosezione);
-    Voti findByListaProgressivoAndSezioneNumerosezione(Integer progressivo,Integer numerosezione);
-    Voti findByListaDenominazioneAndSezioneNumerosezione(String denominazione,Integer numerosezione);
-    List<Voti> findByListaDenominazione(String denominazione);
-    List<RicalcoloVoti> countListaByMunicipio(int tipoelezioneid);
-    List<RicalcoloVoti> countPervenuteByMunicipio(int tipoelezioneid);
+    List<Voti> findBySezioneNumerosezioneAndTipoelezioneId(Integer numerosezione, Integer tipoelezioneid);
+    List<Voti> findByListaIdAndTipoelezioneId(Integer listaid, Integer tipoElezioneId);
+    List<Voti> findByListaProgressivoAndTipoelezioneId(Integer progressivo,Integer tipoElezioneId);
+    Voti findByListaIdAndSezioneNumerosezioneAndTipoelezioneId(Integer listaid,Integer numerosezione, Integer tipoElezioneId);
+    Voti findByListaProgressivoAndSezioneNumerosezioneAndTipoelezioneId(Integer progressivo,Integer numerosezione, Integer tipoElezioneId);
+    Voti findByListaDenominazioneAndSezioneNumerosezioneAndTipoelezioneId(String denominazione,Integer numerosezione, Integer tipoElezioneId);
+    List<RicalcoloVoti> countListaByMunicipio(int tipoelezioneid, int municipio);
+    List<RicalcoloVoti> countPervenuteByMunicipio(int tipoelezioneid, int municipio);
     List<RicalcoloVoti> countPervenute(int tipoelezioneid);
     List<RicalcoloVoti> countLista(int tipoelezioneid);
     List<RicalcoloVoti> countListaSingle(int tipoelezioneid, int idlista);
-    List<RicalcoloVoti> countListaSingleByMunicipio(int tipoelezioneid, int idlista);
+    List<RicalcoloVoti> countListaSingleMunicipio(int tipoelezioneid, int idlista);
+    List<RicalcoloVoti> countVotantiPervenute(int tipoelezioneid);
+    List<RicalcoloVoti> countVotantiPervenuteByMunicipio(int tipoelezioneid,int municipio);
 
 }

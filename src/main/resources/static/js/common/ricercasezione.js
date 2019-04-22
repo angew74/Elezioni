@@ -149,16 +149,45 @@ jQuery(document).ready(function ($) {
         })
     }
 
+    function ajaxPrepopulatePreferenze() {
+        var errorcontainer = '#errorModal';
+        var errorDisplay = '#errorDisplay';
+        var tipoPagina = $("#tipopagina").val();
+        $.post({
+            url: '/search/voti',
+            data: $('form[name=rsezioneForm]').serialize(),
+            success: function (res) {
+                try {
+                    if (res.validated) {
+                        $("#numerosezioneinput").val(res.numerosezione)
+                        var iscrittitotali = res.iscritti + 5;
+                        var votanti = res.votanti;
+                        $("#Votanti").text(votanti);
+                        $("#Iscritti").text(res.iscritti);
+                        var url = "/voti/spoglio/" + res.tipo+ "/" + res.numerosezione;
+                        $("#spogliodiv").load(url);
+                        $("#spoglio").show();
+                        $("#spogliodiv").show();
+                    }
+                } catch (e) {
+                    $(errorDisplay).text(e);
+                    $(errorcontainer).modal('show');
+                }
+
+            },
+            error: function () {
+                $(errorDisplay).text("errore di connessione");
+                $(errorcontainer).modal('show');
+            }
+        })
+    }
+
+
     function ajaxPost() {
         var errorcontainer = '#errorModal';
         var errorDisplay = '#errorDisplay';
         var successcontainer = '#successModal';
         var mdisplay = "#messagesuccess";
-        //    var form = $('form[name=rsezioneForm]').serialize();
-        //   var dati = JSON.stringify(form);
-        //   var dati = $('form[name=rsezioneForm]').serialize();
-        //Remove all errors
-        //  $('input').next().remove();
         $.post({
             url: '/search/sezione',
             data: $('form[name=rsezioneForm]').serialize(),
@@ -178,10 +207,14 @@ jQuery(document).ready(function ($) {
                         $("#tipoelezione").text(res.iscritti.tipoelezione.descrizione);
                         $("#tiposezione").text(" Tipo sezione: " + res.iscritti.sezione.tiposezione.descrizione);
                         $("#sezionediv").show();
-                        if (res.tipo !== "RVL" && res.tipo !== "VL") {
-                            ajaxPrepopulate();
-                        } else {
+                        if (res.tipo === "RVL" && res.tipo === "VL") {
                             ajaxPrepopulateVoti();
+                        }
+                        if (res.tipo === "PE" && res.tipo === "RPE") {
+                            ajaxPrepopulatePreferenze();
+                        }
+                        else {
+                            ajaxPrepopulate();
                         }
                     } else {
                         //Set error messages

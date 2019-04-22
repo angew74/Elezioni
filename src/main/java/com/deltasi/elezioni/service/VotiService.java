@@ -39,68 +39,82 @@ public class VotiService implements IVotiService {
     }
 
     @Override
-    public List<Voti> findBySezioneNumerosezioneAndSezioneTipoelezioneId(Integer numerosezione, Integer tipoelezioneid) {
-        List<Voti> l = votiDAO.findBySezioneNumerosezioneAndSezioneTipoelezioneId(numerosezione,tipoelezioneid);
+    public List<Voti> findBySezioneNumerosezioneAndTipoelezioneId(Integer numerosezione, Integer tipoelezioneid) {
+        return votiDAO.findBySezioneNumerosezioneAndTipoelezioneId(numerosezione,tipoelezioneid);
+    }
+
+    @Override
+    public List<Voti> findByListaIdAndTipoelezioneId(Integer listaid,Integer tipoElezioneId) {
+        return votiDAO.findByListaIdAndTipoelezioneId(listaid,tipoElezioneId);
+    }
+
+    @Override
+    public List<Voti> findByListaProgressivoAndTipoelezioneId(Integer progressivo, Integer tipoElezioneId) {
+        return votiDAO.findByListaProgressivoAndTipoelezioneId(progressivo, tipoElezioneId);
+    }
+
+    @Override
+    public Voti findByListaIdAndSezioneNumerosezioneAndTipoelezioneId(Integer listaid, Integer numerosezione, Integer tipoElezioneId) {
+        return votiDAO.findByListaIdAndSezioneNumerosezioneAndTipoelezioneId(listaid,numerosezione,tipoElezioneId);
+    }
+
+    @Override
+    public Voti findByListaProgressivoAndSezioneNumerosezioneAndTipoelezioneId(Integer progressivo, Integer numerosezione, Integer tipoElezioneId) {
+        return votiDAO.findByListaProgressivoAndSezioneNumerosezioneAndTipoelezioneId(progressivo,numerosezione,tipoElezioneId);
+    }
+
+    @Override
+    public Voti findByListaDenominazioneAndSezioneNumerosezioneAndTipoelezioneId(String denominazione, Integer numerosezione, Integer tipoElezioneId) {
+        return votiDAO.findByListaDenominazioneAndSezioneNumerosezioneAndTipoelezioneId(denominazione,numerosezione,tipoElezioneId);
+    }
+
+
+    @Override
+    public List<RicalcoloVoti> countListaByMunicipio(int tipoelezioneid, int municipio) {
+        List<RicalcoloVoti> l= votiDAO.sumListaByMunicipio(tipoelezioneid, municipio);
+        return  l;
+      //  return  null;
+    }
+
+    @Override
+    public List<RicalcoloVoti> countPervenuteByMunicipio(int tipoelezioneid,int municipio) {
+        List<RicalcoloVoti> l = votiDAO.countPervenuteByMunicipio(tipoelezioneid, municipio);
         return l;
-    }
-
-    @Override
-    public List<Voti> findByListaId(Integer listaid) {
-        return null;
-    }
-
-    @Override
-    public List<Voti> findByListaProgressivo(Integer progressivo) {
-        return votiDAO.findByListaProgressivo(progressivo);
-    }
-
-    @Override
-    public Voti findByListaIdAndSezioneNumerosezione(Integer listaid, Integer numerosezione) {
-        return votiDAO.findByListaIdAndSezioneNumerosezione(listaid,numerosezione);
-    }
-
-    @Override
-    public Voti findByListaProgressivoAndSezioneNumerosezione(Integer progressivo, Integer numerosezione) {
-        return votiDAO.findByListaProgressivoAndSezioneNumerosezione(progressivo,numerosezione);
-    }
-
-    @Override
-    public Voti findByListaDenominazioneAndSezioneNumerosezione(String denominazione, Integer numerosezione) {
-        return votiDAO.findByListaDenominazioneAndSezioneNumerosezione(denominazione,numerosezione);
-    }
-
-    @Override
-    public List<Voti> findByListaDenominazione(String denominazione) {
-        return votiDAO.findByListaDenominazione(denominazione);
-    }
-
-    @Override
-    public List<RicalcoloVoti> countListaByMunicipio(int tipoelezioneid) {
-        return votiDAO.countListaByMunicipio(tipoelezioneid);
-    }
-
-    @Override
-    public List<RicalcoloVoti> countPervenuteByMunicipio(int tipoelezioneid) {
-        return votiDAO.countPervenuteByMunicipio(tipoelezioneid);
     }
 
     @Override
     public List<RicalcoloVoti> countPervenute(int tipoelezioneid) {
         return votiDAO.countPervenute(tipoelezioneid);
+       // return  null;
     }
 
     @Override
     public List<RicalcoloVoti> countLista(int tipoelezioneid) {
-        return votiDAO.countLista(tipoelezioneid);
+        return votiDAO.sumLista(tipoelezioneid);
+       // return null;
     }
 
     @Override
     public List<RicalcoloVoti> countListaSingle(int tipoelezioneid, int idlista) {
-        return votiDAO.countListaSingle(tipoelezioneid,idlista);
+       return votiDAO.sumListaByLista(tipoelezioneid,idlista);
+        //return  null;
     }
 
     @Override
-    public List<RicalcoloVoti> countListaSingleByMunicipio(int tipoelezioneid, int idlista) {
-        return votiDAO.countListaSingle(tipoelezioneid,idlista);
+    public List<RicalcoloVoti> countListaSingleMunicipio(int tipoelezioneid, int idlista) {
+       return votiDAO.sumListaMunicipioByLista(tipoelezioneid,idlista);
+
+    }
+
+    @Override
+    public  List<RicalcoloVoti> countVotantiPervenute(int tipoelezioneid)
+    {
+        return  votiDAO.countVotantiPervenute(tipoelezioneid);
+    }
+    @Override
+    public  List<RicalcoloVoti> countVotantiPervenuteByMunicipio(int tipoelezioneid, int municipio)
+    {
+        List<RicalcoloVoti> l=  votiDAO.countVotantiPervenuteByMunicipio(tipoelezioneid,municipio);
+        return  l;
     }
 }

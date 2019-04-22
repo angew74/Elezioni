@@ -73,4 +73,8 @@ public interface IIscrittiService {
 
     List<Iscritti> countIscrittiSezioniPervenuteAllCostituzione2(int tipoelezioneid);
 
+    List<Iscritti> countIscrittiPervenute(int tipoelezioneid);
+
+    List<Iscritti> countIscrittiPervenuteByMun(int tipoelezioneid);
+
 }

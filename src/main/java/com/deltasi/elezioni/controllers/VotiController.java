@@ -84,12 +84,12 @@ public class VotiController {
     public ModelAndView scrutinio(@PathVariable String tipo, @PathVariable Integer sezione) {
         ModelAndView modelAndView = new ModelAndView("voti/scrutinio");
         ListeWrapper listeWrapper = new ListeWrapper();
-        int count=0;
+        int count = 0;
         VotiJson json = new VotiJson();
         String titolo = businessRules.getTitoloByFase(tipo, "I");
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         if (tipo.equals("RVL")) {
-            List<Voti> l = votiService.findBySezioneNumerosezioneAndSezioneTipoelezioneId(sezione, tipoelezioneid);
+            List<Voti> l = votiService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, tipoelezioneid);
             List<ListaJson> listaJsons = new ArrayList<ListaJson>();
             for (Voti v : l) {
                 ListaJson j = new ListaJson();
@@ -118,10 +118,10 @@ public class VotiController {
             listeWrapper.setListe(s);
         }
 
-      //  modelAndView.addObject("ListeInserimento", new VotiJson());
+        //  modelAndView.addObject("ListeInserimento", new VotiJson());
         modelAndView.addObject("Liste", json);
-        modelAndView.addObject("ListWrapper",listeWrapper);
-        modelAndView.addObject("Count",count);
+        modelAndView.addObject("ListWrapper", listeWrapper);
+        modelAndView.addObject("Count", count);
         modelAndView.addObject("titlepage", titolo);
         return modelAndView;
     }
@@ -136,7 +136,7 @@ public class VotiController {
             modelAndView.addObject("titlepage", titolo);
             modelAndView.addObject("tipo", tipo);
             ListaJson json = new ListaJson();
-          //  List<ListaJson> listevuote = new ArrayList<ListaJson>();
+            //  List<ListaJson> listevuote = new ArrayList<ListaJson>();
             ListeWrapper listeWrapper = new ListeWrapper();
             List<ListaSemplice> liste = new ArrayList<ListaSemplice>();
             listeWrapper.setListe(liste);
@@ -189,9 +189,10 @@ public class VotiController {
     }
 
 
-   // @PostMapping(value = "/lreg" ,consumes = da)
+    // @PostMapping(value = "/lreg" ,consumes = da)
     @RequestMapping(value = "/lreg", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public  @ResponseBody ListaJson registraScrutinio(@ModelAttribute ListeWrapper form, Model model) {
+    public @ResponseBody
+    ListaJson registraScrutinio(@ModelAttribute ListeWrapper form, Model model) {
         ListaJson response = new ListaJson();
         Map<String, String> errors = null;
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
@@ -205,26 +206,26 @@ public class VotiController {
                 response.setValidated(false);
                 response.setErrorMessages(errors);
             }*/
-                switch (form.getListe().get(0).getTipo()) {
-                    case "VL":
-                      List<Voti> v = votiLoader.prepareVoti(form.getListe());
-                      votiService.SaveAll(v);
-                      response.setValidated(true);
-                      response.setTipo("VL");
-                        break;
-                    case "RVL":
-                        List<Voti> vr = votiLoader.prepareVotiR(form.getListe());
-                        votiService.SaveAll(vr);
-                        response.setValidated(true);
-                        response.setTipo("RVL");
-                        break;
-                    default:
-                        errors = new HashMap<String, String>();
-                        errors.put("Errore grave", "Parametri non validi");
-                        response.setValidated(false);
-                        response.setErrorMessages(errors);
-                        break;
-                }
+            switch (form.getListe().get(0).getTipo()) {
+                case "VL":
+                    List<Voti> v = votiLoader.prepareVoti(form.getListe());
+                    votiService.SaveAll(v);
+                    response.setValidated(true);
+                    response.setTipo("VL");
+                    break;
+                case "RVL":
+                    List<Voti> vr = votiLoader.prepareVotiR(form.getListe());
+                    votiService.SaveAll(vr);
+                    response.setValidated(true);
+                    response.setTipo("RVL");
+                    break;
+                default:
+                    errors = new HashMap<String, String>();
+                    errors.put("Errore grave", "Parametri non validi");
+                    response.setValidated(false);
+                    response.setErrorMessages(errors);
+                    break;
+            }
 
         } catch (Exception ex) {
             errors = new HashMap<String, String>();

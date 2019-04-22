@@ -27,11 +27,11 @@ import org.springframework.web.bind.annotation.*;
 public class LoginController {
 
 
-    @Resource(name="authenticationManager")
+    @Resource(name = "authenticationManager")
     private AuthenticationManager authManager;
 
     @RequestMapping(value = "/dologin", method = RequestMethod.POST)
-    public String dologin(@RequestParam("username") final String username, @RequestParam("password") final String password,Model model, final HttpServletRequest request) {
+    public String dologin(@RequestParam("username") final String username, @RequestParam("password") final String password, Model model, final HttpServletRequest request) {
         UsernamePasswordAuthenticationToken authReq =
                 new UsernamePasswordAuthenticationToken(username, password);
         Authentication auth = authManager.authenticate(authReq);
@@ -43,7 +43,7 @@ public class LoginController {
         model.addAttribute("titlepage", "Homepage");
         String loggedInUserName = auth.getName();
         model.addAttribute("user", loggedInUserName);
-        return  "/home";
+        return "/home";
 
     }
 
@@ -55,10 +55,8 @@ public class LoginController {
     }
 
 
-
-
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout(ModelMap model,Principal principal) {
+    public String logout(ModelMap model, Principal principal) {
         model.addAttribute("message",
                 "La tua sessione è stata chiusa correttamente!");
         return "logout";

@@ -39,4 +39,10 @@ public class ListaService implements IListaService {
     public Lista findByProgressivoAndTipoelezioneId(Integer progressivo, Integer tipoelezioneid) {
        return  listaDAO.findByProgressivoAndTipoelezioneId(progressivo,tipoelezioneid);
     }
+
+    @Override
+    public List<Lista> findAllByTipoelezioneId(int tipoElezione)
+    {
+        return listaDAO.findAllByTipoelezioneId(tipoElezione);
+    }
 }

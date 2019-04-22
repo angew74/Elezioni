@@ -22,15 +22,15 @@
 <div class="container delta_services">
     <div class="col-lg-6">
         <div class="input-group my-group">
-            <a href="#" title="Tipo Aggregazione">
+            <a href="#" title="Municipio Comune">
                 <span class="icon"><i class="fas fa-user"></i></span>
                 <span class="text">
              <select id="Aggregazione"
                      required="true"
                      data-parsley-errors-container="#errorSelectAggregazione"
-                     th:field="*{aggregazioni}">
-            <option th:each="e: ${aggregazioni}"
-                    th:value="${e.getCodice()}"
+                     th:field="*{municipi}">
+            <option th:each="e: ${municipi}"
+                    th:value="${e.getMunicipio()}"
                     th:text="${e.getDescrizione()}"/>
         </select>
                     </span>
@@ -79,14 +79,11 @@
         <th>Sezioni Pervenute</th>
         <th>Sezioni Totali</th>
         <th>%</th>
-        <th>Votanti Maschi</th>
-        <th>Iscritti Maschi</th>
+        <th>Lista</th>
+        <th>Numero Voti</th>
         <th>%</th>
-        <th>Votanti Femmine</th>
-        <th>Iscritti Femmine</th>
-        <th>%</th>
-        <th>Votanti Totali</th>
-        <th>Iscritti Totali</th>
+        <th>Votanti Pervenute</th>
+        <th>Iscritti Pervenute</th>
         <th>%</th>
         </thead>
     </table>

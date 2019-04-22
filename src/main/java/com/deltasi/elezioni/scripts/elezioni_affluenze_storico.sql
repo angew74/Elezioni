@@ -61,7 +61,7 @@ CREATE TABLE `affluenze_storico` (
   KEY `fk_affluenze_storico_tipo_elezione_idx` (`idtipoelezione`),
   KEY `fk_affluenze_storico_plessi_idx` (`idplesso`),
   KEY `fk_affluenze_storico_sezioni_idx` (`idsezione`),
-  CONSTRAINT `fk_affluenze_storico_iscritti` FOREIGN KEY (`idiscritti`) REFERENCES `iscritti` (`idiscritti`),
+  CONSTRAINT `fk_affluenze_storico_iscritti` FOREIGN KEY (`idiscritti`) REFERENCES `iscritti` (`id`),
   CONSTRAINT `fk_affluenze_storico_plessi` FOREIGN KEY (`idplesso`) REFERENCES `plessi` (`id`),
   CONSTRAINT `fk_affluenze_storico_tipo_elezione` FOREIGN KEY (`idtipoelezione`) REFERENCES `tipoelezione` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -86,4 +86,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-14 20:54:50
+-- Dump completed on 2019-04-22 20:36:51

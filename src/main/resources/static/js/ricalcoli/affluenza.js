@@ -76,7 +76,7 @@ jQuery(document).ready(function ($) {
 
                 })
                 .fail(function (e) {
-                    $(errorDisplay).text("errore di connessione dettagli " + e);
+                    $(errorDisplay).text("errore di connessione dettagli " + $.parseJSON(e.responseText).details[0]);
                     $(errorcontainer).modal('show');
                 });
         }

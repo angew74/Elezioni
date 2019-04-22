@@ -10,8 +10,8 @@ import java.util.List;
 @Repository
 public interface RicalcoloVotiDAO extends JpaRepository<RicalcoloVoti, Long> {
 
+
     List<RicalcoloVoti> findAllBy();
     RicalcoloVoti findAllById(int id);
-    void SaveAll(List<RicalcoloVoti> list);
 
 }

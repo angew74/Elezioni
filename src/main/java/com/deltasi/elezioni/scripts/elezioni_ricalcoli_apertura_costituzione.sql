@@ -31,6 +31,7 @@ CREATE TABLE `ricalcoli_apertura_costituzione` (
   `percentuale_costituite` varchar(6) NOT NULL DEFAULT '0.0',
   `numero_aperte` int(10) unsigned NOT NULL DEFAULT '0',
   `percentuale_aperte` varchar(6) NOT NULL DEFAULT '0.0',
+  `iscritti_totali` int(10) unsigned NOT NULL,
   `municipio` int(10) unsigned NOT NULL,
   `utente_operazione` varchar(45) NOT NULL,
   `data_operazione` datetime NOT NULL,
@@ -60,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-14 20:54:46
+-- Dump completed on 2019-04-22 20:36:48

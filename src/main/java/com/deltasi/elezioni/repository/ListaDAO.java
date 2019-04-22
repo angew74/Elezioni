@@ -1,5 +1,6 @@
 package com.deltasi.elezioni.repository;
 
+import com.deltasi.elezioni.model.configuration.TipoElezione;
 import com.deltasi.elezioni.model.risultati.Lista;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -11,4 +12,6 @@ public interface ListaDAO extends JpaRepository<Lista, Long> {
     List<Lista> findAllBy();
     Lista findByDenominazioneAndTipoelezioneId(String denominazione, Integer tipoelezioneid);
     Lista findByProgressivoAndTipoelezioneId(Integer progressivo, Integer tipoelezioneid);
+    List<Lista> findAllByTipoelezioneId(int tipoElezione);
+
 }

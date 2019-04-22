@@ -59,7 +59,7 @@ public class UsersController {
         try {
             list = userservice.getAllUtenti();
             modelAndView.addObject("Users", list);
-            modelAndView.addObject("userscount",list.size());
+            modelAndView.addObject("userscount", list.size());
         } catch (Exception ex) {
             String error = ex.getMessage();
             ModelAndView errormodelAndView = new ModelAndView("common/error");
@@ -151,7 +151,7 @@ public class UsersController {
     }
 
     @Secured("ROLE_ADMIN")
-    @PostMapping(value = "/modify", produces = {MediaType.APPLICATION_JSON_VALUE},consumes = (MediaType.APPLICATION_JSON_VALUE))
+    @PostMapping(value = "/modify", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = (MediaType.APPLICATION_JSON_VALUE))
     // @ResponseBody
     public @ResponseBody
     UserJsonResponse ModifyUser(@RequestBody User user,
@@ -180,8 +180,7 @@ public class UsersController {
                 response.setValidated(false);
                 response.setErrorMessages(errors);
             }
-            if(ok == true)
-            {
+            if (ok == true) {
                 String passwordhash = user.getPassword();
                 user.setPassword(passwordEncoder.encode(passwordhash));
                 user.setUsername(user.getUsername().toLowerCase());

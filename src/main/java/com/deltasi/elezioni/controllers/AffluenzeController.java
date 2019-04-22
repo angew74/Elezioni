@@ -150,11 +150,11 @@ public class AffluenzeController {
                         sezioneJson.setValidated(true);
                         break;
                     case "CO":
-                        if(affluenza == null) {
+                        if (affluenza == null) {
                             affluenza = new Affluenza();
                             Sezione sezione = sezioneService.findByNumerosezioneAndTipoelezioneId(sezioneRichiesta, tipoelezioneid);
                             affluenza.setSezione(sezione);
-                            Iscritti iscritti = iscrittiService.findByTipoelezioneIdAndSezioneNumerosezione(tipoelezioneid,sezioneRichiesta);
+                            Iscritti iscritti = iscrittiService.findByTipoelezioneIdAndSezioneNumerosezione(tipoelezioneid, sezioneRichiesta);
                             affluenza.setIscritti(iscritti);
                         }
                         affluenza.setDataoperazione(oggi);

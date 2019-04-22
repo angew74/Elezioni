@@ -6,6 +6,7 @@ import com.deltasi.elezioni.model.configuration.TipoElezione;
 import com.deltasi.elezioni.model.configuration.TipoRicalcolo;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloAffluenza;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloCostApertura;
+import com.deltasi.elezioni.model.ricalcoli.RicalcoloVoti;
 import com.deltasi.elezioni.model.risultati.Affluenza;
 import com.deltasi.elezioni.state.SessionStateHelper;
 import com.sun.org.apache.bcel.internal.generic.BREAKPOINT;
@@ -21,6 +22,7 @@ import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class RicalcoliDraft {
@@ -29,6 +31,9 @@ public class RicalcoliDraft {
 
     @Autowired
     IAffluenzaService affluenzaService;
+
+    @Autowired
+    IVotiService votiService;
 
     @Autowired
     ITipoRicalcoloService tipoRicalcoloService;
@@ -56,13 +61,13 @@ public class RicalcoliDraft {
                         case "MUN":
                             complete = affluenzaService.countAffluenza1ByMunicipio(tipoelezioneid);
                             List<Iscritti> liscritti = iscrittiService.countIscrittiSezioniPervenuteMunicipioAffluenza1(tipoelezioneid);
-                            CalcolaRicalcolo(complete, codice, liscritti,1);
+                            CalcolaRicalcolo(complete, codice, liscritti, 1);
                             break;
                         case "COM":
                             List<Long> comune = affluenzaService.countByAffluenza1AndTipoelezioneIdAndTipoelezioneIdIn(1, tipoelezioneid, tipoelezioneid);
                             complete = affluenzaService.countAffluenza1(tipoelezioneid);
                             List<Iscritti> liscrittic = iscrittiService.countIscrittiSezioniPervenuteAllAffluenza3(tipoelezioneid);
-                            CalcolaRicalcoloAll(comune,complete, codice,liscrittic, 1);
+                            CalcolaRicalcoloAll(comune, complete, codice, liscrittic, 1);
                             break;
                         case "SEZ":
                             break;
@@ -73,13 +78,13 @@ public class RicalcoliDraft {
                         case "MUN":
                             complete = affluenzaService.countAffluenza2ByMunicipio(tipoelezioneid);
                             List<Iscritti> liscritti = iscrittiService.countIscrittiSezioniPervenuteMunicipioAffluenza2(tipoelezioneid);
-                            CalcolaRicalcolo(complete, codice, liscritti,2);
+                            CalcolaRicalcolo(complete, codice, liscritti, 2);
                             break;
                         case "COM":
                             List<Long> comune = affluenzaService.countByAffluenza2AndTipoelezioneIdAndTipoelezioneIdIn(1, tipoelezioneid, tipoelezioneid);
                             List<Iscritti> liscrittic = iscrittiService.countIscrittiSezioniPervenuteAllAffluenza3(tipoelezioneid);
                             complete = affluenzaService.countAffluenza2(tipoelezioneid);
-                            CalcolaRicalcoloAll(comune,complete, codice,liscrittic, 2);
+                            CalcolaRicalcoloAll(comune, complete, codice, liscrittic, 2);
                             break;
                         case "SEZ":
                             break;
@@ -90,13 +95,13 @@ public class RicalcoliDraft {
                         case "MUN":
                             complete = affluenzaService.countAffluenza3ByMunicipio(tipoelezioneid);
                             List<Iscritti> liscritti = iscrittiService.countIscrittiSezioniPervenuteMunicipioAffluenza3(tipoelezioneid);
-                            CalcolaRicalcolo(complete, codice,liscritti, 3);
+                            CalcolaRicalcolo(complete, codice, liscritti, 3);
                             break;
                         case "COM":
                             List<Long> comune = affluenzaService.countByAffluenza3AndTipoelezioneIdAndTipoelezioneIdIn(1, tipoelezioneid, tipoelezioneid);
                             complete = affluenzaService.countAffluenza3(tipoelezioneid);
                             List<Iscritti> liscrittic = iscrittiService.countIscrittiSezioniPervenuteAllAffluenza3(tipoelezioneid);
-                            CalcolaRicalcoloAll(comune,complete, codice, liscrittic,3);
+                            CalcolaRicalcoloAll(comune, complete, codice, liscrittic, 3);
                             break;
                         case "SEZ":
                             break;
@@ -110,7 +115,7 @@ public class RicalcoliDraft {
         return complete;
     }
 
-    private void CalcolaRicalcoloAll(List<Long> comune,List<RicalcoloAffluenza> l, String codice,List<Iscritti> liscritti, int i) {
+    private void CalcolaRicalcoloAll(List<Long> comune, List<RicalcoloAffluenza> l, String codice, List<Iscritti> liscritti, int i) {
         LocalDateTime oggi = LocalDateTime.now();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -122,18 +127,18 @@ public class RicalcoliDraft {
         c.setUtenteoperazione(user);
         c.setMunicipio(99);
         Long totale = comune.get(0);
-        int perv =Integer.parseInt(comune.get(0).toString());
+        int perv = Integer.parseInt(comune.get(0).toString());
         int num = Integer.parseInt(sezioni.get(0).toString());
-        String perctot = calculatePercentage(perv , num);
+        String perctot = calculatePercentage(perv, num);
         c.setNumerosezioni(perv);
         c.setTotalesezioni(num);
         c.setPercentualepervenute(perctot);
         c.setTipoelezione(tipoElezione);
         c.setTiporicalcolo(t);
-        Integer imaschi = liscritti.get(0).getIscrittimaschi();
-        Integer ifemmine = liscritti.get(0).getIscrittifemmine();
-        Integer itotali = liscritti.get(0).getIscrittitotali();
-        String perm = calculatePercentage(c.getAffluenzamaschi() , imaschi);
+        Integer imaschi = liscritti.get(0).getIscrittimaschigen();
+        Integer ifemmine = liscritti.get(0).getIscrittifemminegen();
+        Integer itotali = liscritti.get(0).getIscrittitotaligen();
+        String perm = calculatePercentage(c.getAffluenzamaschi(), imaschi);
         String perf = calculatePercentage(c.getAffluenzafemmine(), ifemmine);
         String pert = calculatePercentage(c.getAffluenzatotale(), itotali);
         c.setIscrittimaschi(imaschi);
@@ -160,14 +165,14 @@ public class RicalcoliDraft {
             complete.get(m).setDataoperazione(oggi);
             complete.get(m).setUtenteoperazione(user);
             int perv = complete.get(m).getNumerosezioni();
-            String perctot = calculatePercentage(perv , totale);
+            String perctot = calculatePercentage(perv, totale);
             complete.get(m).setPercentualepervenute(perctot);
-            Integer imaschi = liscritti.get(m).getIscrittimaschi();
-            Integer ifemmine = liscritti.get(m).getIscrittifemmine();
-            Integer itotali = liscritti.get(m).getIscrittitotali();
-            String perm =calculatePercentage(complete.get(m).getAffluenzamaschi() , imaschi);
-            String perf =calculatePercentage(complete.get(m).getAffluenzafemmine(), ifemmine);
-            String pert =calculatePercentage(complete.get(m).getAffluenzatotale() , itotali);
+            Integer imaschi = liscritti.get(m).getIscrittimaschigen();
+            Integer ifemmine = liscritti.get(m).getIscrittifemminegen();
+            Integer itotali = liscritti.get(m).getIscrittitotaligen();
+            String perm = calculatePercentage(complete.get(m).getAffluenzamaschi(), imaschi);
+            String perf = calculatePercentage(complete.get(m).getAffluenzafemmine(), ifemmine);
+            String pert = calculatePercentage(complete.get(m).getAffluenzatotale(), itotali);
             complete.get(m).setPercentualemaschi(perm);
             complete.get(m).setPercentualefemmine(perf);
             complete.get(m).setIscrittimaschi(imaschi);
@@ -179,12 +184,13 @@ public class RicalcoliDraft {
             complete.get(m).setNumeroaffluenza(n);
         }
     }
+
     public String calculatePercentage(double obtained, double total) {
         double percentage = obtained * 100 / total;
         NumberFormat nf = NumberFormat.getInstance(); // get instance
         nf.setMaximumFractionDigits(2); // set decimal places
         String s = nf.format(percentage);
-        return  s;
+        return s;
     }
 
     public List<RicalcoloCostApertura> costApertura(String aggregazione, String codice) {
@@ -198,14 +204,14 @@ public class RicalcoliDraft {
                         case "MUN":
                             complete = affluenzaService.countApertura1ByMunicipio(tipoelezioneid);
                             liscritti = iscrittiService.countIscrittiSezioniPervenuteMunicipioApertura1(tipoelezioneid);
-                            CalcolaRicalcoloCostituzione(complete, codice,liscritti);
+                            CalcolaRicalcoloCostituzione(complete, codice, liscritti);
                             break;
                         case "SEZ":
                             break;
                         case "COM":
                             complete = affluenzaService.countApertura1(tipoelezioneid);
                             liscritti = iscrittiService.countIscrittiSezioniPervenuteAllApertura1(tipoelezioneid);
-                            CalcolaRicalcoloCostituzione(complete, codice,liscritti);
+                            CalcolaRicalcoloCostituzione(complete, codice, liscritti);
                             break;
                     }
                     break;
@@ -214,14 +220,14 @@ public class RicalcoliDraft {
                         case "MUN":
                             complete = affluenzaService.countApertura2ByMunicipio(tipoelezioneid);
                             liscritti = iscrittiService.countIscrittiSezioniPervenuteMunicipioApertura2(tipoelezioneid);
-                            CalcolaRicalcoloCostituzione(complete, codice,liscritti);
+                            CalcolaRicalcoloCostituzione(complete, codice, liscritti);
                             break;
                         case "SEZ":
                             break;
                         case "COM":
                             complete = affluenzaService.countApertura2(tipoelezioneid);
                             liscritti = iscrittiService.countIscrittiSezioniPervenuteAllApertura2(tipoelezioneid);
-                            CalcolaRicalcoloCostituzione(complete, codice,liscritti);
+                            CalcolaRicalcoloCostituzione(complete, codice, liscritti);
                             break;
                     }
                     break;
@@ -230,23 +236,23 @@ public class RicalcoliDraft {
                         case "MUN":
                             complete = affluenzaService.countCostituzione1ByMunicipio(tipoelezioneid);
                             liscritti = iscrittiService.countIscrittiSezioniPervenuteMunicipioCostituzione1(tipoelezioneid);
-                            CalcolaRicalcoloCostituzione(complete, codice,liscritti);
+                            CalcolaRicalcoloCostituzione(complete, codice, liscritti);
                             break;
                         case "SEZ":
                             break;
                         case "COM":
                             complete = affluenzaService.countCostituzione1(tipoelezioneid);
                             liscritti = iscrittiService.countIscrittiSezioniPervenuteAllCostituzione1(tipoelezioneid);
-                            CalcolaRicalcoloCostituzione(complete, codice,liscritti);
+                            CalcolaRicalcoloCostituzione(complete, codice, liscritti);
                             break;
                     }
                     break;
                 case "CO2":
                     switch (aggregazione) {
                         case "MUN":
-                            complete= affluenzaService.countCostituzione2(tipoelezioneid);
+                            complete = affluenzaService.countCostituzione2(tipoelezioneid);
                             liscritti = iscrittiService.countIscrittiSezioniPervenuteAllCostituzione2(tipoelezioneid);
-                            CalcolaRicalcoloCostituzione(complete, codice,liscritti);
+                            CalcolaRicalcoloCostituzione(complete, codice, liscritti);
                             break;
                         case "SEZ":
                             break;
@@ -254,7 +260,7 @@ public class RicalcoliDraft {
                             break;
                     }
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             logger.error(e.getMessage());
             throw e;
         }
@@ -277,11 +283,93 @@ public class RicalcoliDraft {
             l.get(m).setUtenteoperazione(user);
             l.get(m).setTipoelezione(tipoElezione);
             l.get(m).setTiporicalcolo(t);
-            String perc =calculatePercentage(l.get(m).getNumerocostituite() ,l.get(m).getNumerosezioni());
-            String pera =calculatePercentage(l.get(m).getNumeroaperte() ,l.get(m).getNumerosezioni());
+            String perc = calculatePercentage(l.get(m).getNumerocostituite(), l.get(m).getNumerosezioni());
+            String pera = calculatePercentage(l.get(m).getNumeroaperte(), l.get(m).getNumerosezioni());
             l.get(m).setPercentualeaperte(pera);
             l.get(m).setPercentualecostituite(perc);
-            l.get(m).setIscrittitotali(iiscritti.get(m).getIscrittitotali());
+            l.get(m).setIscrittitotali(iiscritti.get(m).getIscrittitotaligen());
+        }
+    }
+
+    public List<RicalcoloVoti> voti(String aggregazione, String tipoRicalcolo) {
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        List<RicalcoloVoti> complete = new ArrayList<RicalcoloVoti>();
+        List<RicalcoloVoti> pervenute = new ArrayList<>();
+        List<RicalcoloVoti> liscrittic = new ArrayList<>();
+        try {
+            switch (aggregazione) {
+                case "99":
+                    pervenute = votiService.countPervenute(tipoelezioneid);
+                    liscrittic = votiService.countVotantiPervenute(tipoelezioneid);
+                    complete = votiService.countLista(tipoelezioneid);
+                    combineAggregazioniComune(pervenute, liscrittic, complete);
+                    break;
+                default:
+                    int municipio = Integer.parseInt(aggregazione);
+                    pervenute = votiService.countPervenuteByMunicipio(tipoelezioneid,municipio);
+                    liscrittic = votiService.countVotantiPervenuteByMunicipio(tipoelezioneid,municipio);
+                    complete = votiService.countListaByMunicipio(tipoelezioneid,municipio);
+                    combineAggregazioni(pervenute, liscrittic, complete);
+                    break;
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
+        return complete;
+    }
+
+    private void combineAggregazioniComune(List<RicalcoloVoti> pervenute, List<RicalcoloVoti> liscrittic, List<RicalcoloVoti> complete) {
+        LocalDateTime oggi = LocalDateTime.now();
+        String user = SecurityContextHolder.getContext().getAuthentication().getName();
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        TipoElezione tipoElezione = tipoElezioneService.findTipoElezioneById(tipoelezioneid);
+        for (int m = 0; m < complete.size(); m++) {
+            complete.get(m).setDataoperazione(oggi);
+            complete.get(m).setUtenteoperazione(user);
+            int numsez = pervenute.get(0).getNumerosezioni();
+            complete.get(m).setNumerosezioni(numsez);
+            int iscritti = liscrittic.get(0).getIscrittipervenute();
+            int votanti = liscrittic.get(0).getVotantipervenute();
+            complete.get(m).setIscrittipervenute(iscritti);
+            complete.get(m).setVotantipervenute(votanti);
+            List<Long> sezioni = sezioniService.countAllByTipoelezioneIdAndTipoelezioneIdIn(tipoelezioneid, tipoelezioneid);
+            Long totale = sezioni.get(0);
+            complete.get(m).setTotalesezioni(Integer.parseInt(totale.toString()));
+            String percpervenute = calculatePercentage(complete.get(m).getNumerosezioni(), complete.get(m).getTotalesezioni());
+            String percvotpervenute = calculatePercentage(complete.get(m).getVotantipervenute(), complete.get(m).getIscrittipervenute());
+            String percvot = calculatePercentage(complete.get(m).getNumerovoti(), complete.get(m).getVotantipervenute());
+            complete.get(m).setPercentualepervenute(percpervenute);
+            complete.get(m).setPercentualevotantipervenute(percvotpervenute);
+            complete.get(m).setPercentualevoti(percvot);
+        }
+
+    }
+
+    private void combineAggregazioni(List<RicalcoloVoti> pervenute, List<RicalcoloVoti> liscrittic, List<RicalcoloVoti> complete) {
+        LocalDateTime oggi = LocalDateTime.now();
+        String user = SecurityContextHolder.getContext().getAuthentication().getName();
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        TipoElezione tipoElezione = tipoElezioneService.findTipoElezioneById(tipoelezioneid);
+        for (int m = 0; m < complete.size(); m++) {
+            complete.get(m).setDataoperazione(oggi);
+            complete.get(m).setUtenteoperazione(user);
+            int numeromunicipio = complete.get(m).getMunicipio();
+            int numsezmuni = pervenute.stream().filter(p -> p.getMunicipio() == numeromunicipio).collect(Collectors.toList()).get(0).getNumerosezioni();
+            complete.get(m).setNumerosezioni(numsezmuni);
+            int iscrittimun = liscrittic.stream().filter(i -> i.getMunicipio() == numeromunicipio).collect(Collectors.toList()).get(0).getIscrittipervenute();
+            complete.get(m).setIscrittipervenute(iscrittimun);
+            int votantimun = liscrittic.stream().filter(i -> i.getMunicipio() == numeromunicipio).collect(Collectors.toList()).get(0).getVotantipervenute();
+            complete.get(m).setVotantipervenute(votantimun);
+            List<Long> sezionimun = sezioniService.countAllByTipoelezioneIdAndMunicipioAndTipoelezioneIdIn(tipoelezioneid, numeromunicipio, tipoelezioneid);
+            Long totale = sezionimun.get(0);
+            complete.get(m).setTotalesezioni(Integer.parseInt(totale.toString()));
+            String percpervenute = calculatePercentage(complete.get(m).getNumerosezioni(), complete.get(m).getTotalesezioni());
+            String percvotpervenute = calculatePercentage(complete.get(m).getVotantipervenute(), complete.get(m).getIscrittipervenute());
+            String percvot = calculatePercentage(complete.get(m).getNumerovoti(), complete.get(m).getVotantipervenute());
+            complete.get(m).setPercentualepervenute(percpervenute);
+            complete.get(m).setPercentualevotantipervenute(percvotpervenute);
+            complete.get(m).setPercentualevoti(percvot);
         }
     }
 }

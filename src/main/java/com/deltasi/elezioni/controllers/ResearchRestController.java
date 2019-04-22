@@ -10,6 +10,7 @@ import com.deltasi.elezioni.model.json.ListaJson;
 import com.deltasi.elezioni.model.json.SezioneJson;
 import com.deltasi.elezioni.model.json.VotiJson;
 import com.deltasi.elezioni.model.risultati.Affluenza;
+import com.deltasi.elezioni.model.risultati.Lista;
 import com.deltasi.elezioni.model.risultati.Voti;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -149,24 +150,22 @@ public class ResearchRestController {
             json.setTipo(sezione.getTipo());
             /* imposto iscritti per confronti */
             if (!(sezione.getTipo().equals("CO"))) {
-                json.setIscrittimaschi(afp.getIscritti().getIscrittimaschi());
-                json.setIscrittifemmine(afp.getIscritti().getIscrittifemmine());
-                json.setIscrittitotali(afp.getIscritti().getIscrittitotali());
+                json.setIscrittimaschi(afp.getIscritti().getIscrittimaschigen());
+                json.setIscrittifemmine(afp.getIscritti().getIscrittifemminegen());
+                json.setIscrittitotali(afp.getIscritti().getIscrittitotaligen());
             } else {
                 Iscritti iscritti = iscrittiService.findByTipoelezioneIdAndSezioneNumerosezione(tipoelezioneid, sezione.getSezione());
-                json.setIscrittimaschi(iscritti.getIscrittimaschi());
-                json.setIscrittifemmine(iscritti.getIscrittifemmine());
-                json.setIscrittitotali(iscritti.getIscrittitotali());
+                json.setIscrittimaschi(iscritti.getIscrittimaschigen());
+                json.setIscrittifemmine(iscritti.getIscrittifemminegen());
+                json.setIscrittitotali(iscritti.getIscrittitotaligen());
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             errors = new HashMap<String, String>();
             errors.put("Errore grave", ex.getMessage());
             logger.error(ex.getMessage());
             json.setValidated(false);
             json.setErrorMessages(errors);
-            return  json;
+            return json;
         }
         json.setValidated(true);
         return json;
@@ -182,18 +181,42 @@ public class ResearchRestController {
             Affluenza afp = affluenzeService.findBySezioneNumerosezioneAndTipoelezioneId(sezione.getSezione(), tipoelezioneid);
             json.setVotanti(afp.getVotantitotali3());
             Iscritti iscritti = iscrittiService.findByTipoelezioneIdAndSezioneNumerosezione(tipoelezioneid, sezione.getSezione());
-            json.setIscritti(iscritti.getIscrittitotali());
+            json.setIscritti(iscritti.getIscrittitotaligen());
             json.setNumerosezione(sezione.getSezione());
             json.setTipo(sezione.getTipo());
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             errors = new HashMap<String, String>();
             errors.put("Errore grave", ex.getMessage());
             logger.error(ex.getMessage());
             json.setValidated(false);
             json.setErrorMessages(errors);
-            return  json;
+            return json;
+        }
+        json.setValidated(true);
+        return json;
+    }
+
+
+    @PostMapping(value = "search/preferenze", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public VotiJson researchPreferenze(@RequestBody @ModelAttribute("SezioneJsno") SezioneJson sezione, BindingResult result) {
+        VotiJson json = new VotiJson();
+        Map<String, String> errors = null;
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        try {
+            Affluenza afp = affluenzeService.findBySezioneNumerosezioneAndTipoelezioneId(sezione.getSezione(), tipoelezioneid);
+            json.setVotanti(afp.getVotantitotali3());
+            Iscritti iscritti = iscrittiService.findByTipoelezioneIdAndSezioneNumerosezione(tipoelezioneid, sezione.getSezione());
+            json.setIscritti(iscritti.getIscrittitotaligen());
+            json.setNumerosezione(sezione.getSezione());
+            json.setTipo(sezione.getTipo());
+        } catch (Exception ex) {
+            errors = new HashMap<String, String>();
+            errors.put("Errore grave", ex.getMessage());
+            logger.error(ex.getMessage());
+            json.setValidated(false);
+            json.setErrorMessages(errors);
+            return json;
         }
         json.setValidated(true);
         return json;

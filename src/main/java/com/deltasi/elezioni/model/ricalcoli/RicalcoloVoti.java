@@ -15,24 +15,48 @@ import java.time.LocalDateTime;
 @Table(name = "ricalcolo_voti")
 public class RicalcoloVoti {
 
-    public RicalcoloVoti(Long numeroVoti, Lista listaNew, int Municipio)
+    public RicalcoloVoti(Long numeroVoti, Integer idLista, String listaNew, int Municipio)
     {
+        super();
         this.numerovoti=Integer.parseInt(numeroVoti.toString());
-        this.lista= listaNew;
+        this.lista = new Lista();
+        this.lista.setDenominazione(listaNew);
+        this.lista.setId(idLista);
+        this.municipio = Municipio;
+    }
+    public RicalcoloVoti(Long numeroVoti, Integer Idlista, String ListaNew)
+    {
+        super();
+        this.numerovoti=Integer.parseInt(numeroVoti.toString());
+        this.lista = new Lista();
+        this.lista.setDenominazione(ListaNew);
+        this.lista.setId(Idlista);
+    }
+
+    public RicalcoloVoti(long numeroPervenute, int Municipio)
+    {
+        super();
+        this.numerosezioni=(int)(numeroPervenute);
+        this.municipio= Municipio;
+    }
+
+    public RicalcoloVoti(long Votanti,long Iscritti, int Municipio)
+    {
+        super();
+        this.iscrittipervenute=(int)(Iscritti);
+        this.votantipervenute=(int) Votanti;
         this.municipio = Municipio;
     }
 
-    public RicalcoloVoti(Long numeroVoti, Lista listaNew)
+    public RicalcoloVoti(long Votanti,long Iscritti)
     {
-        this.numerovoti=Integer.parseInt(numeroVoti.toString());
-        this.lista= listaNew;
+        super();
+        this.iscrittipervenute=(int)(Iscritti);
+        this.votantipervenute=(int) Votanti;
     }
 
-    public RicalcoloVoti(Long numeroPervenute, int Municipio)
-    {
-        this.numerosezioni=Integer.parseInt(numeroPervenute.toString());
-        this.municipio= Municipio;
-    }
+
+
     public RicalcoloVoti(Long numeroPervenute)
     {
         this.numerosezioni=Integer.parseInt(numeroPervenute.toString());
@@ -73,7 +97,7 @@ public class RicalcoloVoti {
     @Column(name = "data_operazione")
     private LocalDateTime dataoperazione;
 
-    @Column(name = "percentuale_pervenute")
+    @Column(name = "percentuale_sezioni_pervenute")
     private String percentualepervenute;
 
     @Column(name = "percentuale_voti")
@@ -82,11 +106,12 @@ public class RicalcoloVoti {
     @Column(name = "percentuale_votanti_pervenute")
     private String percentualevotantipervenute;
 
+    @Column(name = "votanti_pervenute")
+    private Integer votantipervenute;
+
+
     @Column(name = "percentuale_votanti_totale")
     private String percentualevotantitotale;
-
-    @Column(name = "percentuale_sezioni")
-    private String percentualesezioni;
 
     @Column(name = "iscritti_totale")
     private Integer iscrittitotali;
@@ -202,13 +227,6 @@ public class RicalcoloVoti {
         this.percentualevotantitotale = percentualevotantitotale;
     }
 
-    public String getPercentualesezioni() {
-        return percentualesezioni;
-    }
-
-    public void setPercentualesezioni(String percentualesezioni) {
-        this.percentualesezioni = percentualesezioni;
-    }
 
     public Integer getIscrittitotali() {
         return iscrittitotali;
@@ -232,5 +250,13 @@ public class RicalcoloVoti {
 
     public void setNumerovoti(Integer numerovoti) {
         this.numerovoti = numerovoti;
+    }
+
+    public Integer getVotantipervenute() {
+        return votantipervenute;
+    }
+
+    public void setVotantipervenute(Integer votantipervenute) {
+        this.votantipervenute = votantipervenute;
     }
 }
