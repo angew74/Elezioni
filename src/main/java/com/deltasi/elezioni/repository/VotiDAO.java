@@ -36,23 +36,25 @@ public interface VotiDAO extends JpaRepository<Voti, Long> {
     List<RicalcoloVoti> countPervenute(int tipoelezioneid);
 
     @Modifying
-    @Query("select new RicalcoloVoti(sum(v.numerovoti) as numeroVoti, sum(i.iscrittitotaligen) as iscrittipervenute) from Lista l " +
-            " inner join Voti v on l.id=v.lista.id" +
-            " and l.tipoelezione.id=v.tipoelezione.id "+
+    @Query("select new RicalcoloVoti(sum(f.votantitotali3) as numeroVoti, sum(i.iscrittitotaligen) as iscrittipervenute) from Affluenza f " +
+            " inner join Voti v on f.sezione.id=v.sezione.id" +
+            " and v.tipoelezione.id=f.tipoelezione.id "+
             " inner join Sezione s on v.sezione.id=s.id" +
             " inner join Iscritti i on s.id=i.sezione.id " +
             " where v.tipoelezione.id=?1 " +
-            " and l.tipoelezione.id=?1 " )
+            " and f.tipoelezione.id=?1 " )
     List<RicalcoloVoti> countVotantiPervenute(int tipoelezioneid);
 
     @Modifying
-    @Query("select new RicalcoloVoti(sum(v.numerovoti) as numeroVoti, sum(i.iscrittitotaligen) as iscrittipervenute, s.municipio as Municipio) from Lista l " +
-            " inner join Voti v on l.id=v.lista.id" +
-            " and l.tipoelezione.id=v.tipoelezione.id "+
+    @Query("select new RicalcoloVoti(sum(f.votantitotali3) as numeroVoti, sum(i.iscrittitotaligen) as iscrittipervenute, s.municipio as Municipio) " +
+            " from Affluenza f " +
+            " inner join Voti v on f.sezione.id=v.sezione.id" +
+            " and v.tipoelezione.id=f.tipoelezione.id "+
             " inner join Sezione s on v.sezione.id=s.id" +
+            " and v.tipoelezione.id=s.tipoelezione.id "+
             " inner join Iscritti i on s.id=i.sezione.id " +
             " where v.tipoelezione.id=?1 " +
-            " and l.tipoelezione.id=?1 "+
+            " and f.tipoelezione.id=?1 "+
             " and s.municipio=?2" +
             " group by  s.municipio order by  s.municipio asc ")
     List<RicalcoloVoti> countVotantiPervenuteByMunicipio(int tipoelezioneid, int municipio);

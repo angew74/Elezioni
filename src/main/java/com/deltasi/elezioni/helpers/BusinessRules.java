@@ -35,7 +35,7 @@ public class BusinessRules {
     IAbilitazioniService abilitazioniService;
 
 
-    public String IsInsertable(Integer sezione, String codiceFase, Integer idtipoelezione) {
+    public String IsInsertable(Integer sezione, String codiceFase, Integer cabina, Integer idtipoelezione) {
         //    Integer idtipoelezione = Integer.parseInt(env.getProperty("tipoelezioneid"));
         String message = "";
         FaseElezione fase = abilitazioniService.findByCodiceAndTipoelezioneId(codiceFase, idtipoelezione);
@@ -43,6 +43,11 @@ public class BusinessRules {
             return "Funzionalità non abilitata";
         }
         Affluenza affluenza = affluenzaService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, idtipoelezione);
+        if(cabina > 0) {
+            if (!(cabina.equals(affluenza.getSezione().getCabina()))) {
+                return "cabina sezione non corrette";
+            }
+        }
         switch (codiceFase) {
             case "AP":
                 if (affluenza == null) {
@@ -163,11 +168,11 @@ public class BusinessRules {
                 }
                 break;
             case "VL":
-                List<Voti> lvoti = votiService.findBySezioneNumerosezioneAndTipoelezioneId(sezione,idtipoelezione);
+                List<Voti> lvoti = votiService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, idtipoelezione);
                 if (affluenza == null) {
                     return "Sezione non costitutita";
                 }
-                if (affluenza.getAffluenza3() == null && affluenza.getAffluenza3().equals(0)) {
+                if (affluenza.getAffluenza3() == null || affluenza.getAffluenza3().equals(0)) {
                     return "Chiusura non registrata";
                 }
                 if (lvoti != null && lvoti.size() > 0) {

@@ -21,6 +21,9 @@ public class Sezione implements Serializable {
     @Column(name = "municipio")
     private Integer municipio;
 
+    @Column(name = "cabina")
+    private Integer cabina;
+
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idtipoelezione", referencedColumnName = "id")
     @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
@@ -103,5 +106,13 @@ public class Sezione implements Serializable {
 
     public void setPlesso(Plesso plesso) {
         this.plesso = plesso;
+    }
+
+    public Integer getCabina() {
+        return cabina;
+    }
+
+    public void setCabina(Integer cabina) {
+        this.cabina = cabina;
     }
 }

@@ -62,6 +62,7 @@ public class ResearchRestController {
             sezione.setErrorMessages(errors);
         }
         try {
+
             if (sezione.getSezione() == 0 || sezione.getSezione() == null) {
                 sezione.setValidated(false);
                 errors = new HashMap<String, String>();
@@ -76,7 +77,7 @@ public class ResearchRestController {
                 sezione.setErrorMessages(errors);
                 return sezione;
             }
-            String msg = businessRules.IsInsertable(sezione.getSezione(), sezione.getTipo(), tipoelezioneid);
+            String msg = businessRules.IsInsertable(sezione.getSezione(), sezione.getTipo(),sezione.getCabina(), tipoelezioneid);
             if (msg.equals("")) {
                 iscritti = iscrittiService.findByTipoelezioneIdAndSezioneNumerosezione(tipoelezioneid, sezione.getSezione());
                 if (iscritti.getCabina().equals(sezione.getCabina())) {

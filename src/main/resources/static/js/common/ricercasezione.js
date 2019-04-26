@@ -153,8 +153,9 @@ jQuery(document).ready(function ($) {
         var errorcontainer = '#errorModal';
         var errorDisplay = '#errorDisplay';
         var tipoPagina = $("#tipopagina").val();
+        var lista = $( "#Liste option:selected" ).val();
         $.post({
-            url: '/search/voti',
+            url: '/search/preferenze',
             data: $('form[name=rsezioneForm]').serialize(),
             success: function (res) {
                 try {
@@ -164,7 +165,7 @@ jQuery(document).ready(function ($) {
                         var votanti = res.votanti;
                         $("#Votanti").text(votanti);
                         $("#Iscritti").text(res.iscritti);
-                        var url = "/voti/spoglio/" + res.tipo+ "/" + res.numerosezione;
+                        var url = "/preferenze/spoglio/" + lista + "/" + res.tipo+ "/" + res.numerosezione;
                         $("#spogliodiv").load(url);
                         $("#spoglio").show();
                         $("#spogliodiv").show();
@@ -207,10 +208,10 @@ jQuery(document).ready(function ($) {
                         $("#tipoelezione").text(res.iscritti.tipoelezione.descrizione);
                         $("#tiposezione").text(" Tipo sezione: " + res.iscritti.sezione.tiposezione.descrizione);
                         $("#sezionediv").show();
-                        if (res.tipo === "RVL" && res.tipo === "VL") {
+                        if (res.tipo === "RVL" || res.tipo === "VL") {
                             ajaxPrepopulateVoti();
                         }
-                        if (res.tipo === "PE" && res.tipo === "RPE") {
+                        if (res.tipo === "PE" || res.tipo === "RPE") {
                             ajaxPrepopulatePreferenze();
                         }
                         else {

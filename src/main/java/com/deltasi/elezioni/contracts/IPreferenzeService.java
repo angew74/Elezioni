@@ -24,12 +24,16 @@ public interface IPreferenzeService {
     List<Preferenze> findByListaProgressivoAndSezioneNumerosezioneAndTipoelezioneId(Integer progressivo,Integer numerosezione,int tipoElezioneId);
     List<Preferenze> findByListaDenominazioneAndSezioneNumerosezioneAndTipoelezioneId(String denominazione,Integer numerosezione,int tipoElezioneId);
     List<Preferenze> findByListaDenominazioneAndTipoelezioneId(String denominazione,int tipoElezioneId);
-    List<RicalcoloPreferenze> countListaByMunicipio(int tipoelezioneid, int municipio);
     List<RicalcoloPreferenze> countPervenuteByMunicipio(int tipoelezioneid, int municipio);
     List<RicalcoloPreferenze> countPervenute(int tipoelezioneid);
-    List<RicalcoloPreferenze> countLista(int tipoelezioneid);
-    List<RicalcoloPreferenze> countListaSingle(int tipoelezioneid, int idlista);
-    List<RicalcoloPreferenze> countListaSingleMunicipio(int tipoelezioneid, int idlista);
+    List<RicalcoloPreferenze> sumCandidato(int tipoelezioneid);
+    List<RicalcoloPreferenze> sumCandidatoByMunicipio(int tipoelezioneid, int municipio);
+    List<RicalcoloPreferenze> sumCandidatoByLista(int tipoelezioneid, int idlista);
+    List<RicalcoloPreferenze> sumCandidatoByListaMunicipio(int tipoelezioneid, int municipio, int idlista);
     List<RicalcoloPreferenze> countVotantiPervenute(int tipoelezioneid);
     List<RicalcoloPreferenze> countVotantiPervenuteByMunicipio(int tipoelezioneid, int municipio);
+    List<Preferenze> findByCandidatoIdAndTipoelezioneId(int id, int tipoElezioneId);
+    List<Preferenze> findByCandidatoIdAndTipoelezioneIdAndSezioneId(int id, int tipoElezioneId, int sezioneId);
+    List<Preferenze> findByCandidatoIdAndTipoelezioneIdAndSezioneMunicipio(int id, int tipoElezioneId, int municipio);
 }
+

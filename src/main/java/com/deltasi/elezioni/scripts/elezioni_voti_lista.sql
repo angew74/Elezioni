@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: elezioni
+-- Host: localhost    Database: elezioni
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -37,7 +37,7 @@ CREATE TABLE `voti_lista` (
   CONSTRAINT `fk_voti_lista_liste` FOREIGN KEY (`idlista`) REFERENCES `liste` (`id`),
   CONSTRAINT `fk_voti_lista_sezioni` FOREIGN KEY (`idsezione`) REFERENCES `sezioni` (`id`),
   CONSTRAINT `fk_voti_lista_tipo_elezione` FOREIGN KEY (`idtipoelezione`) REFERENCES `tipoelezione` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +46,7 @@ CREATE TABLE `voti_lista` (
 
 LOCK TABLES `voti_lista` WRITE;
 /*!40000 ALTER TABLE `voti_lista` DISABLE KEYS */;
-INSERT INTO `voti_lista` VALUES (1,13,533,1,100,'2019-04-13 20:19:44','admin'),(2,14,533,1,10,'2019-04-13 20:19:44','admin'),(3,15,533,1,10,'2019-04-13 20:19:44','admin'),(4,16,533,1,10,'2019-04-13 20:19:44','admin'),(5,17,533,1,200,'2019-04-13 20:19:44','admin'),(6,18,533,1,10,'2019-04-13 20:19:44','admin'),(7,19,533,1,10,'2019-04-13 20:19:44','admin'),(8,20,533,1,10,'2019-04-13 20:19:44','admin'),(9,21,533,1,10,'2019-04-13 20:19:44','admin'),(10,22,533,1,10,'2019-04-13 20:19:44','admin'),(11,23,533,1,10,'2019-04-13 20:19:44','admin'),(12,24,533,1,10,'2019-04-13 20:19:44','admin'),(13,25,533,1,0,'2019-04-13 20:19:44','admin');
+INSERT INTO `voti_lista` VALUES (1,13,533,1,100,'2019-04-13 20:19:44','admin'),(2,14,533,1,10,'2019-04-13 20:19:44','admin'),(3,15,533,1,10,'2019-04-13 20:19:44','admin'),(4,16,533,1,10,'2019-04-13 20:19:44','admin'),(5,17,533,1,200,'2019-04-13 20:19:44','admin'),(6,18,533,1,10,'2019-04-13 20:19:44','admin'),(7,19,533,1,10,'2019-04-13 20:19:44','admin'),(8,20,533,1,10,'2019-04-13 20:19:44','admin'),(9,21,533,1,10,'2019-04-13 20:19:44','admin'),(10,22,533,1,10,'2019-04-13 20:19:44','admin'),(11,23,533,1,10,'2019-04-13 20:19:44','admin'),(12,24,533,1,10,'2019-04-13 20:19:44','admin'),(13,25,533,1,0,'2019-04-13 20:19:44','admin'),(14,13,535,1,20,'2019-04-26 20:20:08','admin'),(15,14,535,1,20,'2019-04-26 20:20:08','admin'),(16,15,535,1,20,'2019-04-26 20:20:08','admin'),(17,16,535,1,20,'2019-04-26 20:20:08','admin'),(18,17,535,1,510,'2019-04-26 20:20:08','admin'),(19,18,535,1,20,'2019-04-26 20:20:08','admin'),(20,19,535,1,20,'2019-04-26 20:20:08','admin'),(21,20,535,1,40,'2019-04-26 20:20:08','admin'),(22,21,535,1,20,'2019-04-26 20:20:08','admin'),(23,22,535,1,0,'2019-04-26 20:20:08','admin'),(24,23,535,1,0,'2019-04-26 20:20:08','admin'),(25,24,535,1,10,'2019-04-26 20:20:08','admin'),(26,25,535,1,10,'2019-04-26 20:20:08','admin');
 /*!40000 ALTER TABLE `voti_lista` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -59,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-22 20:36:52
+-- Dump completed on 2019-04-26 22:07:43

@@ -61,7 +61,7 @@ public class PreferenzeController {
             modelAndView.addObject("tipo", tipo);
             List<Lista> liste = new ArrayList<Lista>();
             liste = listaService.findAllByTipoelezioneId(tipoelezioneid);
-            modelAndView.addObject("ListeCanditati", liste);
+            modelAndView.addObject("ListeCandidati", liste);
             modelAndView.addObject("CandidatiWrapper",wrapper);
             modelAndView.addObject("Candidati",candidatijson);
         } else {
@@ -73,8 +73,9 @@ public class PreferenzeController {
 
     @GetMapping(value = "/spoglio/{idlista}/{tipo}/{sezione}")
     public ModelAndView spoglio(@PathVariable String idlista, @PathVariable String tipo, @PathVariable Integer sezione) {
-        ModelAndView modelAndView = new ModelAndView("spoglio/scrutinio");
+        ModelAndView modelAndView = new ModelAndView("preferenze/spoglio");
         CandidatiWrapper wrapper = new CandidatiWrapper();
+        CandidatiWrapper wrapperFull = new CandidatiWrapper();
         int count=0;
         String titolo = businessRules.getTitoloByFase(tipo, "I");
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
@@ -99,6 +100,7 @@ public class PreferenzeController {
                 j.setNomecognome(p.get(i).getCandidato().getNome() + " " + p.get(i).getCandidato().getCognome());
                 candidatijson.add(j);
             }
+            wrapperFull.setCandidati(candidatijson);
         }
         else {
             List<Candidato> candidatoes = candidatoService.findByListaIdAndTipoelezioneId(id,tipoelezioneid);
@@ -122,7 +124,7 @@ public class PreferenzeController {
         modelAndView.addObject("titlepage", titolo);
         modelAndView.addObject("Count", count);
         modelAndView.addObject("CandidatiWrapper",wrapper);
-        modelAndView.addObject("Candidati", candidatijson);
+        modelAndView.addObject("CandidatiWrapperFull", wrapperFull);
         return modelAndView;
     }
 }

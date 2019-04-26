@@ -135,7 +135,7 @@ public class AffluenzeController {
         Map<String, String> errors = null;
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         try {
-            String msg = businessRules.IsInsertable(sezioneRichiesta, tipo, tipoelezioneid);
+            String msg = businessRules.IsInsertable(sezioneRichiesta, tipo, 0 ,tipoelezioneid);
             if (msg.equals("")) {
                 LocalDateTime oggi = LocalDateTime.now();
                 tipoElezione = tipoElezioneService.findTipoElezioneById(tipoelezioneid);
@@ -192,7 +192,7 @@ public class AffluenzeController {
         Map<String, String> errors = null;
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         try {
-            String msg = businessRules.IsInsertable(sezione, tipo, tipoelezioneid);
+            String msg = businessRules.IsInsertable(sezione, tipo,0, tipoelezioneid);
             if (msg.equals("")) {
                 LocalDateTime oggi = LocalDateTime.now();
                 tipoElezione = tipoElezioneService.findTipoElezioneById(tipoelezioneid);
@@ -309,7 +309,7 @@ public class AffluenzeController {
         Map<String, String> errors = null;
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         try {
-            String msg = businessRules.IsInsertable(sezione, tipo, tipoelezioneid);
+            String msg = businessRules.IsInsertable(sezione, tipo,0, tipoelezioneid);
             if (msg.equals("")) {
                 LocalDateTime oggi = LocalDateTime.now();
                 TipoElezione tipoElezione = tipoElezioneService.findTipoElezioneById(tipoelezioneid);
