@@ -211,6 +211,7 @@ public class ResearchRestController {
             json.setIscritti(iscritti.getIscrittitotaligen());
             json.setNumerosezione(sezione.getSezione());
             json.setTipo(sezione.getTipo());
+
         } catch (Exception ex) {
             errors = new HashMap<String, String>();
             errors.put("Errore grave", ex.getMessage());

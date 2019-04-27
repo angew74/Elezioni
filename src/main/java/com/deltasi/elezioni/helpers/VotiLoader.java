@@ -1,13 +1,13 @@
 package com.deltasi.elezioni.helpers;
 
-import com.deltasi.elezioni.contracts.IListaService;
-import com.deltasi.elezioni.contracts.ISezioneService;
-import com.deltasi.elezioni.contracts.ITipoElezioneService;
-import com.deltasi.elezioni.contracts.IVotiService;
+import com.deltasi.elezioni.contracts.*;
 import com.deltasi.elezioni.model.configuration.Sezione;
 import com.deltasi.elezioni.model.configuration.TipoElezione;
+import com.deltasi.elezioni.model.json.CandidatoJson;
 import com.deltasi.elezioni.model.json.ListaSemplice;
+import com.deltasi.elezioni.model.risultati.Candidato;
 import com.deltasi.elezioni.model.risultati.Lista;
+import com.deltasi.elezioni.model.risultati.Preferenze;
 import com.deltasi.elezioni.model.risultati.Voti;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -31,10 +31,16 @@ public class VotiLoader {
     ITipoElezioneService tipoElezioneService;
 
     @Autowired
+    ICandidatoService candidatoService;
+
+    @Autowired
     IListaService listaService;
 
     @Autowired
     IVotiService votiService;
+
+    @Autowired
+    IPreferenzeService preferenzeService;
 
 
     public  List<Voti> prepareVoti(List<ListaSemplice> list) {
@@ -70,5 +76,44 @@ public class VotiLoader {
             votiList.add(v);
         }
         return  votiList;
+    }
+
+    public List<Preferenze> preparePreferenze(List<CandidatoJson> candidati)
+    {
+        List<Preferenze> preferenzeList = new ArrayList<Preferenze>();
+        LocalDateTime oggi = LocalDateTime.now();
+        String user = SecurityContextHolder.getContext().getAuthentication().getName();
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        TipoElezione tipoElezione = tipoElezioneService.findTipoElezioneById(tipoelezioneid);
+        Sezione sezione = sezioneService.findByNumerosezioneAndTipoelezioneId(candidati.get(0).getNumerosezione(), tipoelezioneid);
+        Lista lista = listaService.findById(candidati.get(0).getIdlista());
+        for (CandidatoJson c:  candidati) {
+            Preferenze p = new Preferenze();
+            p.setDataoperazione(oggi);
+            p.setNumerovoti(c.getNumerovoti());
+            p.setUtenteoperazione(user);
+            p.setSezione(sezione);
+            p.setTipoelezione(tipoElezione);
+            Candidato candidato = candidatoService.findById(c.getIdcandidato());
+            p.setCandidato(candidato);
+            p.setMunicipio(sezione.getMunicipio());
+            p.setLista(lista);
+            preferenzeList.add(p);
+        }
+        return  preferenzeList;
+    }
+
+    public List<Preferenze> preparePreferenzeR(List<CandidatoJson> candidati) {
+        List<Preferenze> preferenzeList = new ArrayList<Preferenze>();
+        LocalDateTime oggi = LocalDateTime.now();
+        String user = SecurityContextHolder.getContext().getAuthentication().getName();
+        for (CandidatoJson c:  candidati) {
+            Preferenze p = preferenzeService.findById(c.getId());
+            p.setDataoperazione(oggi);
+            p.setNumerovoti(c.getNumerovoti());
+            p.setUtenteoperazione(user);
+            preferenzeList.add(p);
+        }
+        return  preferenzeList;
     }
 }

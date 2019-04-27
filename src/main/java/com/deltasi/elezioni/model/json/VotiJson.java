@@ -24,6 +24,7 @@ public class VotiJson {
     private Integer numerosezione;
     private Integer votanti;
     private Integer iscritti;
+    private String  denominazioneListaVoti;
     private boolean validated;
     private List<ListaJson> liste;
     private Map<String, String> errorMessages;
@@ -91,5 +92,13 @@ public class VotiJson {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public String getDenominazioneListaVoti() {
+        return denominazioneListaVoti;
+    }
+
+    public void setDenominazioneLista(String denominazioneListaVoti) {
+        this.denominazioneListaVoti = denominazioneListaVoti;
     }
 }

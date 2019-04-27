@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: localhost    Database: elezioni
+-- Host: 127.0.0.1    Database: elezioni
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -36,7 +36,7 @@ CREATE TABLE `candidati` (
   KEY `fk_candidati_tipo_elezione_idx` (`tipoelezioneid`),
   CONSTRAINT `fk_candidati_lista` FOREIGN KEY (`listaid`) REFERENCES `liste` (`id`),
   CONSTRAINT `fk_candidati_tipo_elezione` FOREIGN KEY (`tipoelezioneid`) REFERENCES `tipoelezione` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,6 +45,7 @@ CREATE TABLE `candidati` (
 
 LOCK TABLES `candidati` WRITE;
 /*!40000 ALTER TABLE `candidati` DISABLE KEYS */;
+INSERT INTO `candidati` VALUES (1,'LUCA','ZINGARETTI','M',1,13,1),(2,'MATTEO','RENZI','M',2,13,1),(3,'MATTEO ','SALVINI','M',1,14,1),(4,'SAMANTHA','COZZA','F',2,14,1),(5,'MARIA ELENA','BOSCHI','F',3,13,1),(6,'LUGIA','MARCHINI','F',3,14,1),(7,'GIOVANNA','MELANDRI','F',4,13,1),(8,'ROBERTO','MARONI','M',4,14,1),(9,'NICOLA','ZINGARETTI','M',5,13,1),(10,'PIER LUIGI','BERSANI','M',6,13,1),(11,'WANDA','NARA','F',5,14,1),(16,'ROSY','BINDI','F',7,13,1),(17,'ROBERTO','CALDEROLI','M',6,14,1),(18,'MASSIMO','D\'ALEMA','M',8,13,1),(19,'RENZO','BOSSI','M',7,14,1),(20,'MAURIZIO','CENTOMO','M',8,14,1),(21,'MASSIMO','SMERIGLIO','M',9,13,1),(22,'LUIGI','PAPETTI','M',9,14,1),(23,'ALDA','BALLA','F',10,13,1),(24,'MARINA','MARAFOGLIA','F',10,14,1);
 /*!40000 ALTER TABLE `candidati` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-26 22:07:42
+-- Dump completed on 2019-04-27 21:14:45

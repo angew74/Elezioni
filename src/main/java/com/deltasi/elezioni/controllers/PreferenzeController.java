@@ -1,6 +1,7 @@
 package com.deltasi.elezioni.controllers;
 
 import com.deltasi.elezioni.helpers.BusinessRules;
+import com.deltasi.elezioni.helpers.VotiLoader;
 import com.deltasi.elezioni.model.json.*;
 import com.deltasi.elezioni.model.risultati.Candidato;
 import com.deltasi.elezioni.model.risultati.Lista;
@@ -14,15 +15,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -48,6 +51,9 @@ public class PreferenzeController {
 
     @Autowired
     PreferenzeService prefrenzeService;
+
+    @Autowired
+    VotiLoader votiLoader;
 
     @GetMapping(value = "/inserimento/{tipo}")
     public ModelAndView inserimento(@PathVariable String tipo, Principal principal) {
@@ -77,7 +83,9 @@ public class PreferenzeController {
         CandidatiWrapper wrapper = new CandidatiWrapper();
         CandidatiWrapper wrapperFull = new CandidatiWrapper();
         int count=0;
-        String titolo = businessRules.getTitoloByFase(tipo, "I");
+        String titolo = "";
+        Integer numeroVoti;
+        //String titolo = businessRules.getTitoloByFase(tipo, "I");
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         Integer id = Integer.parseInt(idlista);
         Lista l = listaService.findById(id);
@@ -85,7 +93,7 @@ public class PreferenzeController {
         Voti v = votiService.findByListaIdAndSezioneNumerosezioneAndTipoelezioneId(id,sezione,tipoelezioneid);
         if (tipo.equals("RVL")) {
             List<Preferenze> p = prefrenzeService.findByListaIdAndSezioneNumerosezioneAndTipoelezioneId(id,sezione,tipoelezioneid);
-            for (int i = 0; i < p.size(); i++) {
+             for (int i = 0; i < p.size(); i++) {
                 CandidatoJson j = new CandidatoJson();
                 j.setNumerosezione(sezione);
                 j.setTipo(tipo);
@@ -119,12 +127,62 @@ public class PreferenzeController {
             }
             wrapper.setCandidati(candidatijson);        }
 
-
+        titolo = l.getDenominazione() + ": " +  v.getNumerovoti().toString();
+        numeroVoti = v.getNumerovoti();
         count = candidatijson.size();
         modelAndView.addObject("titlepage", titolo);
         modelAndView.addObject("Count", count);
+        modelAndView.addObject("NumeroVoti", numeroVoti);
         modelAndView.addObject("CandidatiWrapper",wrapper);
         modelAndView.addObject("CandidatiWrapperFull", wrapperFull);
         return modelAndView;
     }
+
+    @RequestMapping(value = "/registra", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public @ResponseBody
+    ListaJson registraSpoglio(@ModelAttribute CandidatiWrapper form, Model model) {
+        ListaJson response = new ListaJson();
+        Map<String, String> errors = null;
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        try {
+          /*  if (result.hasErrors()) {
+                errors = result.getFieldErrors().stream()
+                        .collect(
+                                Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage)
+                        );
+
+                response.setValidated(false);
+                response.setErrorMessages(errors);
+            }*/
+            switch (form.getCandidati().get(0).getTipo()) {
+                case "PE":
+                    List<Preferenze> p = votiLoader.preparePreferenze(form.getCandidati());
+                    prefrenzeService.SaveAll(p);
+                    response.setValidated(true);
+                    response.setTipo("PE");
+                    break;
+                case "RPE":
+                    List<Preferenze> pr = votiLoader.preparePreferenzeR(form.getCandidati());
+                    prefrenzeService.SaveAll(pr);
+                    response.setValidated(true);
+                    response.setTipo("RPE");
+                    break;
+                default:
+                    errors = new HashMap<String, String>();
+                    errors.put("Errore grave", "Parametri non validi");
+                    response.setValidated(false);
+                    response.setErrorMessages(errors);
+                    break;
+            }
+
+        } catch (Exception ex) {
+            errors = new HashMap<String, String>();
+            errors.put("Errore grave", ex.getMessage());
+            logger.error(ex.getMessage());
+            response.setValidated(false);
+            response.setErrorMessages(errors);
+        }
+        return response;
+    }
+
 }

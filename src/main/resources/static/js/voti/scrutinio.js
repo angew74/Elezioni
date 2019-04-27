@@ -8,7 +8,6 @@ jQuery(document).ready(function ($) {
             if ($(this).parsley().validate() !== true)
                 isValidSelect = false;
         });
-        debugger;
         $('input').each(function () {
             if ($(this).parsley().validate() !== true)
                 isValidSelect = false;

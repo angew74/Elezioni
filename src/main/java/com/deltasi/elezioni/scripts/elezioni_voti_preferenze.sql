@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: localhost    Database: elezioni
+-- Host: 127.0.0.1    Database: elezioni
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -42,7 +42,7 @@ CREATE TABLE `voti_preferenze` (
   CONSTRAINT `fk_voti_preferenze_liste` FOREIGN KEY (`listaid`) REFERENCES `liste` (`id`),
   CONSTRAINT `fk_voti_preferenze_sezioni` FOREIGN KEY (`sezioneid`) REFERENCES `sezioni` (`id`),
   CONSTRAINT `fk_voti_preferenze_tipoelezione_id` FOREIGN KEY (`tipoelezioneid`) REFERENCES `tipoelezione` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -51,6 +51,7 @@ CREATE TABLE `voti_preferenze` (
 
 LOCK TABLES `voti_preferenze` WRITE;
 /*!40000 ALTER TABLE `voti_preferenze` DISABLE KEYS */;
+INSERT INTO `voti_preferenze` VALUES (1,1,535,1,13,1,10,'admin','2019-04-27 21:11:11'),(2,1,535,2,13,1,10,'admin','2019-04-27 21:11:11'),(3,1,535,5,13,1,0,'admin','2019-04-27 21:11:11'),(4,1,535,7,13,1,0,'admin','2019-04-27 21:11:11'),(5,1,535,9,13,1,0,'admin','2019-04-27 21:11:11'),(6,1,535,10,13,1,0,'admin','2019-04-27 21:11:11'),(7,1,535,16,13,1,0,'admin','2019-04-27 21:11:11'),(8,1,535,18,13,1,0,'admin','2019-04-27 21:11:11'),(9,1,535,21,13,1,0,'admin','2019-04-27 21:11:11'),(10,1,535,23,13,1,0,'admin','2019-04-27 21:11:11');
 /*!40000 ALTER TABLE `voti_preferenze` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -99,4 +100,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-26 22:07:40
+-- Dump completed on 2019-04-27 21:14:42
