@@ -70,25 +70,25 @@ public interface AffluenzaDAO extends JpaRepository<Affluenza, Long> {
     List<Integer> countByCostituzione2AndTipoelezioneIdAndTipoelezioneIdIn(int a, int tipoElezione, int tipoElezione1);
     /* count per tipologia e plesso */
     @Modifying
-    @Query("select new RicalcoloAffluenza(a.votantitotali1 as affluenzatotale, a.votantimaschi1 as affluenzamaschi, a.votantifemmine1 as affluenzafemmine," +
+    @Query("select new RicalcoloAffluenza(sum(a.votantitotali1) as affluenzatotale, sum(a.votantimaschi1) as affluenzamaschi, sum(a.votantifemmine1) as affluenzafemmine," +
             " count(*) as numerosezioni) " +
             " from Affluenza a where a.affluenza1=1 and a.tipoelezione.id=?1 group by a.affluenza1")
     List<RicalcoloAffluenza> countAffluenza1(int tipoelezioneid);
 
     @Modifying
-    @Query("select new RicalcoloAffluenza(a.votantitotali1 as affluenzatotale, a.votantimaschi1 as affluenzamaschi, a.votantifemmine1 as affluenzafemmine," +
+    @Query("select new RicalcoloAffluenza(sum(a.votantitotali2) as affluenzatotale, sum(a.votantimaschi2) as affluenzamaschi, sum(a.votantifemmine2) as affluenzafemmine," +
             " count(*) as numerosezioni) " +
             " from Affluenza a where a.affluenza2=1 and a.tipoelezione.id=?1 group by a.affluenza1")
     List<RicalcoloAffluenza> countAffluenza2(int tipoelezioneid);
 
     @Modifying
-    @Query("select new RicalcoloAffluenza(a.votantitotali1 as affluenzatotale, a.votantimaschi1 as affluenzamaschi, a.votantifemmine1 as affluenzafemmine," +
+    @Query("select new RicalcoloAffluenza(sum(a.votantitotali3) as affluenzatotale, sum(a.votantimaschi3) as affluenzamaschi, sum(a.votantifemmine3) as affluenzafemmine," +
             " count(*) as numerosezioni) " +
             " from Affluenza a where a.affluenza3=1 and a.tipoelezione.id=?1 group by a.affluenza1")
     List<RicalcoloAffluenza> countAffluenza3(int tipoelezioneid);
 
     @Modifying
-    @Query("select new RicalcoloAffluenza(a.votantitotali1 as affluenzatotale, a.votantimaschi1 as affluenzamaschi, a.votantifemmine1 as affluenzafemmine, " +
+    @Query("select new RicalcoloAffluenza(sum(a.votantitotali1) as affluenzatotale, sum(a.votantimaschi1) as affluenzamaschi, sum(a.votantifemmine1) as affluenzafemmine, " +
             "s.municipio as municipio, count(*) " +
             "as numerosezioni) " +
             " from Affluenza a inner join Sezione s on a.sezione.id=s.id" +
@@ -97,7 +97,7 @@ public interface AffluenzaDAO extends JpaRepository<Affluenza, Long> {
     List<RicalcoloAffluenza> countAffluenza1ByMunicipio(int tipoelezioneid);
 
     @Modifying
-    @Query("select new RicalcoloAffluenza(a.votantitotali1 as affluenzatotale, a.votantimaschi1 as affluenzamaschi, a.votantifemmine1 as affluenzafemmine, " +
+    @Query("select new RicalcoloAffluenza(sum(a.votantitotali2) as affluenzatotale, sum(a.votantimaschi2) as affluenzamaschi, sum(a.votantifemmine2) as affluenzafemmine, " +
             "s.municipio as municipio, count(*) " +
             "as numerosezioni) " +
             " from Affluenza a inner join Sezione s on a.sezione.id=s.id" +
@@ -105,7 +105,7 @@ public interface AffluenzaDAO extends JpaRepository<Affluenza, Long> {
             " group by s.municipio")
     List<RicalcoloAffluenza> countAffluenza2ByMunicipio(int tipoelezioneid);
     @Modifying
-    @Query("select new RicalcoloAffluenza(a.votantitotali1 as affluenzatotale, a.votantimaschi1 as affluenzamaschi, a.votantifemmine1 as affluenzafemmine, " +
+    @Query("select new RicalcoloAffluenza(sum(a.votantitotali3) as affluenzatotale, sum(a.votantimaschi3) as affluenzamaschi, sum(a.votantifemmine3) as affluenzafemmine, " +
             "s.municipio as municipio, count(*) " +
             "as numerosezioni) " +
             " from Affluenza a inner join Sezione s on a.sezione.id=s.id" +

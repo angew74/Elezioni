@@ -16,30 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `authorities`
+-- Table structure for table `aggregazione_interrogazioni`
 --
 
-DROP TABLE IF EXISTS `authorities`;
+DROP TABLE IF EXISTS `aggregazione_interrogazioni`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `authorities` (
-  `idauthorities` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `authority` varchar(90) DEFAULT NULL,
-  `user_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`idauthorities`),
-  KEY `fk_users_authorities_idx` (`user_id`),
-  CONSTRAINT `fk_users_authorities` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `aggregazione_interrogazioni` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `codice` varchar(3) NOT NULL,
+  `descrizione` varchar(45) NOT NULL,
+  `tipoelezioneid` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_aggregazione_interrogazioni` (`descrizione`,`tipoelezioneid`,`codice`),
+  KEY `fk_aggregazione_interrogazioni_tipo_elezione_idx` (`tipoelezioneid`),
+  CONSTRAINT `fk_aggregazione_interrogazioni_tipo_elezione` FOREIGN KEY (`tipoelezioneid`) REFERENCES `tipoelezione` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `authorities`
+-- Dumping data for table `aggregazione_interrogazioni`
 --
 
-LOCK TABLES `authorities` WRITE;
-/*!40000 ALTER TABLE `authorities` DISABLE KEYS */;
-INSERT INTO `authorities` VALUES (10,'ADMIN',112),(11,'ADMIN',116),(12,'USER',113),(13,'ADMIN',114),(14,'USER',115);
-/*!40000 ALTER TABLE `authorities` ENABLE KEYS */;
+LOCK TABLES `aggregazione_interrogazioni` WRITE;
+/*!40000 ALTER TABLE `aggregazione_interrogazioni` DISABLE KEYS */;
+INSERT INTO `aggregazione_interrogazioni` VALUES (2,'COM','Comune',1),(1,'MUN','Municipi',1),(4,'PLE','Plesso',1),(3,'SEZ','Sezione',1);
+/*!40000 ALTER TABLE `aggregazione_interrogazioni` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

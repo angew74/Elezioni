@@ -24,7 +24,7 @@ public interface PreferenzeDAO extends JpaRepository<Preferenze, Long> {
 
 
     @Modifying
-    @Query("select new RicalcoloPreferenze(count(distinct idsezione) as numeroPervenute, s.municipio as municipio) from Preferenze v " +
+    @Query("select new RicalcoloPreferenze(count(distinct sezioneid) as numeroPervenute, s.municipio as municipio) from Preferenze v " +
             " inner join Sezione s on v.sezione.id=s.id" +
             " where v.tipoelezione.id=?1 " +
             " and s.municipio=?2 " +
@@ -32,7 +32,7 @@ public interface PreferenzeDAO extends JpaRepository<Preferenze, Long> {
     List<RicalcoloPreferenze> countPervenuteByMunicipio(int tipoelezioneid, int municipio);
 
     @Modifying
-    @Query("select new RicalcoloPreferenze(count(distinct idsezione) as numeroPervenute) from Preferenze v " +
+    @Query("select new RicalcoloPreferenze(count(distinct sezioneid) as numeroPervenute) from Preferenze v " +
             " where v.tipoelezione.id=?1 ")
     List<RicalcoloPreferenze> countPervenute(int tipoelezioneid);
 
@@ -95,25 +95,23 @@ public interface PreferenzeDAO extends JpaRepository<Preferenze, Long> {
 
 
     @Modifying
-    @Query("select new RicalcoloVoti(sum(f.votantitotali3) as numeroVoti, sum(i.iscrittitotaligen) as iscrittipervenute) from Affluenza f " +
-            " inner join Preferenze v on f.sezione.id=v.sezione.id" +
-            " and v.tipoelezione.id=f.tipoelezione.id "+
-            " inner join Sezione s on v.sezione.id=s.id" +
+    @Query("select new RicalcoloPreferenze(sum(f.votantitotali3) as numeroVoti, sum(i.iscrittitotaligen) as iscrittipervenute) from Affluenza f " +
+            " inner join Sezione s on f.sezione.id=s.id" +
             " inner join Iscritti i on s.id=i.sezione.id " +
-            " where v.tipoelezione.id=?1 " +
+            " where f.tipoelezione.id=?1 " +
+            " and f.sezione.id in (select sezione.id from Preferenze p where numerovoti is not null) " +
             " and f.tipoelezione.id=?1 " )
     List<RicalcoloPreferenze> countVotantiPervenute(int tipoelezioneid);
 
     @Modifying
-    @Query("select new RicalcoloVoti(sum(f.votantitotali3) as numeroVoti, sum(i.iscrittitotaligen) as iscrittipervenute, s.municipio as Municipio) " +
+    @Query("select new RicalcoloPreferenze(sum(f.votantitotali3) as numeroVoti, sum(i.iscrittitotaligen) as iscrittipervenute, s.municipio as Municipio) " +
             " from Affluenza f " +
-            " inner join Preferenze v on f.sezione.id=v.sezione.id" +
-            " and v.tipoelezione.id=f.tipoelezione.id "+
-            " inner join Sezione s on v.sezione.id=s.id" +
-            " and v.tipoelezione.id=s.tipoelezione.id "+
+            " inner join Sezione s on f.sezione.id=s.id" +
+            " and f.tipoelezione.id=s.tipoelezione.id "+
             " inner join Iscritti i on s.id=i.sezione.id " +
-            " where v.tipoelezione.id=?1 " +
+            " where f.tipoelezione.id=?1 " +
             " and f.tipoelezione.id=?1 "+
+            " and f.sezione.id in (select sezione.id from Preferenze p where numerovoti is not null) " +
             " and s.municipio=?2" +
             " group by  s.municipio order by  s.municipio asc ")
     List<RicalcoloPreferenze> countVotantiPervenuteByMunicipio(int tipoelezioneid, int municipio);

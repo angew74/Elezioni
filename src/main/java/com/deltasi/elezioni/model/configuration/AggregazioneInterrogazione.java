@@ -8,8 +8,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "tipo_ricalcolo_aggregazione")
-public class Aggregazione {
+@Table(name = "aggregazione_interrogazioni")
+public class AggregazioneInterrogazione {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

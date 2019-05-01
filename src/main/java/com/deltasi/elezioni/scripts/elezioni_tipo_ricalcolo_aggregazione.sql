@@ -26,7 +26,11 @@ CREATE TABLE `tipo_ricalcolo_aggregazione` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `descrizione` varchar(200) NOT NULL,
   `codice` varchar(3) NOT NULL,
-  PRIMARY KEY (`id`)
+  `tipoelezioneid` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `tipo_ricalcolo_aggregazione_unique` (`descrizione`,`codice`,`tipoelezioneid`),
+  KEY `tipo_ricalcolo_aggregazione_tipo_elezione_idx` (`tipoelezioneid`),
+  CONSTRAINT `tipo_ricalcolo_aggregazione_tipo_elezione` FOREIGN KEY (`tipoelezioneid`) REFERENCES `tipoelezione` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -36,7 +40,7 @@ CREATE TABLE `tipo_ricalcolo_aggregazione` (
 
 LOCK TABLES `tipo_ricalcolo_aggregazione` WRITE;
 /*!40000 ALTER TABLE `tipo_ricalcolo_aggregazione` DISABLE KEYS */;
-INSERT INTO `tipo_ricalcolo_aggregazione` VALUES (1,'Municipio','MUN'),(2,'Comune','COM'),(3,'Sezione','SEZ'),(4,'Plesso','PLE');
+INSERT INTO `tipo_ricalcolo_aggregazione` VALUES (2,'Comune','COM',1),(1,'Municipio','MUN',1),(4,'Plesso','PLE',3),(3,'Sezione','SEZ',3);
 /*!40000 ALTER TABLE `tipo_ricalcolo_aggregazione` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-27 21:14:43
+-- Dump completed on 2019-05-01 20:47:22

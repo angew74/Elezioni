@@ -14,21 +14,23 @@ import java.time.LocalDateTime;
 @Table(name = "ricalcoli_affluenza")
 public class RicalcoloAffluenza {
 
-    public RicalcoloAffluenza(int affluenzaTotale, int affluenzaMaschi, int affluenzaFemmine, long numeroSezioni)
+    public RicalcoloAffluenza(long affluenzaTotale, long affluenzaMaschi, long affluenzaFemmine, long numeroSezioni)
     {
-        this.affluenzatotale=affluenzaTotale;
-        this.affluenzamaschi=affluenzaMaschi;
-        this.affluenzafemmine=affluenzaFemmine;
+        this.affluenzatotale=(int)affluenzaTotale;
+        this.affluenzamaschi=(int)affluenzaMaschi;
+        this.affluenzafemmine=(int)affluenzaFemmine;
         this.numerosezioni=(int)numeroSezioni;
 
     }
 
-    public RicalcoloAffluenza(int affluenzaTotale, int affluenzaMaschi, int affluenzaFemmine, int numeroSezioni,long Municipio)
+
+
+    public RicalcoloAffluenza(long affluenzaTotale, long affluenzaMaschi, long affluenzaFemmine, int Municipio,long numeroSezioni)
     {
-        this.affluenzatotale=affluenzaTotale;
-        this.affluenzamaschi=affluenzaMaschi;
-        this.affluenzafemmine=affluenzaFemmine;
-        this.numerosezioni=numeroSezioni;
+        this.affluenzatotale=(int)affluenzaTotale;
+        this.affluenzamaschi=(int)affluenzaMaschi;
+        this.affluenzafemmine=(int)affluenzaFemmine;
+        this.numerosezioni=(int)numeroSezioni;
         this.municipio=(int)Municipio;
 
     }

@@ -37,24 +37,22 @@ public interface VotiDAO extends JpaRepository<Voti, Long> {
 
     @Modifying
     @Query("select new RicalcoloVoti(sum(f.votantitotali3) as numeroVoti, sum(i.iscrittitotaligen) as iscrittipervenute) from Affluenza f " +
-            " inner join Voti v on f.sezione.id=v.sezione.id" +
-            " and v.tipoelezione.id=f.tipoelezione.id "+
-            " inner join Sezione s on v.sezione.id=s.id" +
+            " inner join Sezione s on f.sezione.id=s.id" +
             " inner join Iscritti i on s.id=i.sezione.id " +
-            " where v.tipoelezione.id=?1 " +
+            " where s.tipoelezione.id=?1 " +
+            " and f.sezione.id in (select sezione.id from Voti v where numerovoti is not null) " +
             " and f.tipoelezione.id=?1 " )
     List<RicalcoloVoti> countVotantiPervenute(int tipoelezioneid);
 
     @Modifying
     @Query("select new RicalcoloVoti(sum(f.votantitotali3) as numeroVoti, sum(i.iscrittitotaligen) as iscrittipervenute, s.municipio as Municipio) " +
             " from Affluenza f " +
-            " inner join Voti v on f.sezione.id=v.sezione.id" +
-            " and v.tipoelezione.id=f.tipoelezione.id "+
-            " inner join Sezione s on v.sezione.id=s.id" +
-            " and v.tipoelezione.id=s.tipoelezione.id "+
+             " inner join Sezione s on f.sezione.id=s.id" +
+            " and f.tipoelezione.id=s.tipoelezione.id "+
             " inner join Iscritti i on s.id=i.sezione.id " +
-            " where v.tipoelezione.id=?1 " +
+            " where s.tipoelezione.id=?1 " +
             " and f.tipoelezione.id=?1 "+
+            " and f.sezione.id in (select sezione.id from Voti v where numerovoti is not null) " +
             " and s.municipio=?2" +
             " group by  s.municipio order by  s.municipio asc ")
     List<RicalcoloVoti> countVotantiPervenuteByMunicipio(int tipoelezioneid, int municipio);

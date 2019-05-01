@@ -12,6 +12,6 @@ public interface AggregazioneDAO extends JpaRepository<Aggregazione, Long> {
 
     Aggregazione findById(Integer id);
     void deleteById(Integer id);
-    List<Aggregazione> findAllBy();
+    List<Aggregazione> findAllByTipoelezioneId(int tipoElezioneId);
 
 }

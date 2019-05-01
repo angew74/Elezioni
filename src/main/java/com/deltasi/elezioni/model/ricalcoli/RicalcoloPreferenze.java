@@ -32,10 +32,11 @@ public class RicalcoloPreferenze {
         this.lista = new Lista();
         this.lista.setDenominazione(ListaNew);
         this.lista.setId(Idlista);
-        this.candidato.setId(idcandidato);
-        this.candidato.setCognome(Cognome);
-        this.candidato.setSesso(Sesso);
-        this.candidato.setNome(Nome);
+        this.candidato= new Candidato();
+        this.getCandidato().setId(idcandidato);
+        this.getCandidato().setCognome(Cognome);
+        this.getCandidato().setSesso(Sesso);
+        this.getCandidato().setNome(Nome);
 
     }
 
@@ -46,10 +47,11 @@ public class RicalcoloPreferenze {
         this.lista = new Lista();
         this.lista.setDenominazione(ListaNew);
         this.lista.setId(Idlista);
-        this.candidato.setId(idcandidato);
-        this.candidato.setCognome(Cognome);
-        this.candidato.setSesso(Sesso);
-        this.candidato.setNome(Nome);
+        this.candidato = new Candidato();
+        this.getCandidato().setId(idcandidato);
+        this.getCandidato().setCognome(Cognome);
+        this.getCandidato().setSesso(Sesso);
+        this.getCandidato().setNome(Nome);
         this.municipio = Municipio;
 
     }
@@ -285,5 +287,13 @@ public class RicalcoloPreferenze {
 
     public void setVotantipervenute(Integer votantipervenute) {
         this.votantipervenute = votantipervenute;
+    }
+
+    public Candidato getCandidato() {
+        return candidato;
+    }
+
+    public void setCandidato(Candidato candidato) {
+        this.candidato = candidato;
     }
 }

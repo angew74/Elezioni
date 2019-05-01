@@ -27,7 +27,7 @@ public class AggregazioneService implements IAggregazioneService {
     }
 
     @Override
-    public List<Aggregazione> FindAll() {
-        return aggregazioneDAO.findAll();
+    public List<Aggregazione> FindAllBytipoElezioneId(int tipoElezioneId) {
+        return aggregazioneDAO.findAllByTipoelezioneId(tipoElezioneId);
     }
 }
