@@ -36,20 +36,7 @@ jQuery(document).ready(function ($) {
                 sum += parseFloat(field.value);
             }
         });
-       // if (group.length > 1) {
-         //   group.each(function () {
-           //     sum += parseFloat($(this)[0].value);
-           // });
-       // }
-      /*  $(":input").each(function(){
-            var key = $(this).attr('name');
-            var val = $(this).val();
-            if(key.contains("voti"))
-            {
-                sum += parseFloat(val);
-            }
-        });
-        */
+        debugger;
         if (sum !== votanti) {
             $("#errorcontrol").append("Somma scrutinio diversa da votanti " + sum + " <> " + $("#Votanti").val());
             isValid = false;

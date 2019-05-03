@@ -47,4 +47,10 @@ public class SezioneService implements ISezioneService {
     public List<Long> countAllByTipoelezioneIdAndMunicipioAndTipoelezioneIdIn(int tipoElezioneId, int municipio, int tipoElezioneId1) {
         return sezioneDAO.countAllByTipoelezioneIdAndMunicipioAndTipoelezioneIdIn(tipoElezioneId, municipio, tipoElezioneId1);
     }
+
+    @Override
+    public Sezione findByNumerosezioneAndCabinaAndTipoelezioneId(int numeroSezione, int cabina, int tipoElezioneId)
+    {
+        return sezioneDAO.findByNumerosezioneAndCabinaAndTipoelezioneId(numeroSezione,cabina,tipoElezioneId);
+    }
 }

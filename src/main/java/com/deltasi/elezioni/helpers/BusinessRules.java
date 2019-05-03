@@ -2,6 +2,7 @@ package com.deltasi.elezioni.helpers;
 
 import com.deltasi.elezioni.contracts.*;
 import com.deltasi.elezioni.model.configuration.FaseElezione;
+import com.deltasi.elezioni.model.configuration.Sezione;
 import com.deltasi.elezioni.model.configuration.TipoElezione;
 import com.deltasi.elezioni.model.risultati.Affluenza;
 import com.deltasi.elezioni.model.risultati.Preferenze;
@@ -35,6 +36,10 @@ public class BusinessRules {
     IAbilitazioniService abilitazioniService;
 
 
+    @Autowired
+    ISezioneService sezioneService;
+
+
     public String IsInsertable(Integer sezione, String codiceFase, Integer cabina, Integer idtipoelezione) {
         //    Integer idtipoelezione = Integer.parseInt(env.getProperty("tipoelezioneid"));
         String message = "";
@@ -42,10 +47,20 @@ public class BusinessRules {
         if (fase.getAbilitata().equals(0)) {
             return "Funzionalità non abilitata";
         }
+        Sezione sezionecontrollo = sezioneService.findByNumerosezioneAndCabinaAndTipoelezioneId(sezione,cabina,idtipoelezione);
+        if(sezionecontrollo == null)
+        {
+            return "cabina sezione non corrette";
+        }
         Affluenza affluenza = affluenzaService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, idtipoelezione);
         if(cabina > 0) {
-            if (!(cabina.equals(affluenza.getSezione().getCabina()))) {
-                return "cabina sezione non corrette";
+            if(affluenza != null) {
+                if (!(cabina.equals(affluenza.getSezione().getCabina()))) {
+                    return "cabina sezione non corrette";
+                }
+            }
+            else {
+                return "affluenza non pervenuta";
             }
         }
         switch (codiceFase) {
