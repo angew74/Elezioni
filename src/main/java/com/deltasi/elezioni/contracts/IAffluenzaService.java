@@ -8,6 +8,7 @@ import com.deltasi.elezioni.model.risultati.Affluenza;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 public interface IAffluenzaService {
@@ -19,41 +20,30 @@ public interface IAffluenzaService {
 
     void delete(Long id);
 
-    Affluenza findBySezioneNumerosezioneAndTipoelezioneId(Integer sezione, Integer tipoElezioneId);
-
     Affluenza findById(Integer id);
-
-    List<Affluenza> findByPlessoMunicipio(Integer municipio);
-
-    Affluenza findBySezioneId(Integer sezioneid);
-
-    List<Affluenza> findByPlessoId(Integer idplesso);
-
-    List<Affluenza> findByPlesso(Plesso plesso);
 
     List<Affluenza> findByTipoelezione(TipoElezione tipoElezione);
 
     List<Affluenza> findByTipoelezioneId(Integer idTipoElezione);
+    Affluenza findBySezioneNumerosezioneAndTipoelezioneId(Integer sezione,Integer tipoElezioneId);
 
-    List<Affluenza> findByApertura1(int a, int idTipoElezione);
+    Affluenza findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza1(Integer sezione, Integer tipoElezioneId,Integer a);
+    Affluenza findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza2(Integer sezione, Integer tipoElezioneId,Integer a);
+    Affluenza findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza3(Integer sezione, Integer tipoElezioneId, Integer a);
 
-    List<Affluenza> findByApertura2(int a, int idTipoElezione);
+    Affluenza findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza4(Integer sezione, Integer tipoElezioneId,Integer a);
+    Affluenza findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza5(Integer sezione, Integer tipoElezioneId, Integer a);
+    Affluenza findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndApertura1(Integer sezione, Integer tipoElezioneId, Integer a);
+    Affluenza findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndCostituzione1(Integer sezione, Integer tipoElezioneId, Integer a);
 
-    List<Affluenza> findByApertura3(int a, int idTipoElezione);
-
-    List<Affluenza> findByCostituzione1(int c, int idTipoElezione);
-
-    List<Affluenza> findByCostituzione2(int c, int idTipoElezione);
-
-    List<Affluenza> findByAffluenza1(int a, int idTipoElezione);
-
-    List<Affluenza> findByAffluenza2(int a, int idTipoElezione);
-
-    List<Affluenza> findByAffluenza3(int a, int idTipoElezione);
-
-    List<Affluenza> findByAffluenza4(int a, int idTipoElezione);
-
-    List<Affluenza> findByAffluenza5(int a, int idTipoElezione);
+    // ricerca per plesso
+    List<Affluenza> findBySezionePlessoIdAndTipoelezioneIdAndAffluenza1(Integer plessoid, Integer tipoElezioneId,Integer a);
+    List<Affluenza> findBySezionePlessoIdAndTipoelezioneIdAndAffluenza2(Integer plessoid, Integer tipoElezioneId,Integer a);
+    List<Affluenza> findBySezionePlessoIdAndTipoelezioneIdAndAffluenza3(Integer plessoid, Integer tipoElezioneId,Integer a);
+    List<Affluenza> findBySezionePlessoIdAndTipoelezioneIdAndAffluenza4(Integer plessoid, Integer tipoElezioneId,Integer a);
+    List<Affluenza> findBySezionePlessoIdAndTipoelezioneIdAndAffluenza5(Integer plessoid, Integer tipoElezioneId,Integer a);
+    List<Affluenza> findBySezionePlessoIdAndTipoelezioneIdAndCostituzione1(Integer plessoid, Integer tipoElezioneId,Integer a);
+    List<Affluenza> findBySezionePlessoIdAndTipoelezioneIdAndApertura1(Integer plessoid, Integer tipoElezioneId,Integer a);
 
     /* count totali */
     /* interrogazioni per sezione */

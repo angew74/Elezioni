@@ -2,6 +2,7 @@ package com.deltasi.elezioni.helpers;
 
 import com.deltasi.elezioni.contracts.*;
 import com.deltasi.elezioni.model.configuration.FaseElezione;
+import com.deltasi.elezioni.model.configuration.Sezione;
 import com.deltasi.elezioni.model.configuration.TipoElezione;
 import com.deltasi.elezioni.model.risultati.Affluenza;
 import com.deltasi.elezioni.model.risultati.Preferenze;
@@ -34,6 +35,9 @@ public class BusinessRules {
     @Autowired
     IAbilitazioniService abilitazioniService;
 
+    @Autowired
+    ISezioneService sezioneService;
+
 
     public String IsInsertable(Integer sezione, String codiceFase, Integer cabina, Integer idtipoelezione) {
         //    Integer idtipoelezione = Integer.parseInt(env.getProperty("tipoelezioneid"));
@@ -42,12 +46,17 @@ public class BusinessRules {
         if (fase.getAbilitata().equals(0)) {
             return "Funzionalità non abilitata";
         }
-        Affluenza affluenza = affluenzaService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, idtipoelezione);
-        if(cabina > 0) {
-            if (!(cabina.equals(affluenza.getSezione().getCabina()))) {
-                return "cabina sezione non corrette";
+        if(cabina != 0) {
+            Sezione sezioneControllo = sezioneService.findByNumerosezioneAndTipoelezioneId(sezione, idtipoelezione);
+            if (sezioneControllo != null) {
+                if (!(sezioneControllo.getCabina().equals(cabina))) {
+                    return "cabina sezione non corrette";
+                }
+            } else {
+                return " sezione non corretta";
             }
         }
+        Affluenza affluenza = affluenzaService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, idtipoelezione);
         switch (codiceFase) {
             case "AP":
                 if (affluenza == null) {
@@ -113,7 +122,7 @@ public class BusinessRules {
                 if (affluenza == null) {
                     return "Sezione non costitutita";
                 }
-                if (affluenza.getAffluenza1() != null && affluenza.getAffluenza1().equals(0)) {
+                if (affluenza.getAffluenza1() == null || affluenza.getAffluenza1().equals(0)) {
                     return "1 Affluenza non registrata usare inserimento";
                 }
                 if (affluenza.getAffluenza2() != null && affluenza.getAffluenza2().equals(1)) {

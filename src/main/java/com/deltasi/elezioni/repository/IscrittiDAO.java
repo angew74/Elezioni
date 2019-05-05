@@ -9,6 +9,8 @@ package com.deltasi.elezioni.repository;
 import com.deltasi.elezioni.model.configuration.Iscritti;
 import com.deltasi.elezioni.model.configuration.TipoElezione;
 import java.util.List;
+
+import com.deltasi.elezioni.model.risultati.Lista;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -22,15 +24,17 @@ import com.deltasi.elezioni.model.risultati.Affluenza;
 @Repository
 public interface IscrittiDAO extends JpaRepository<Iscritti, Integer> {
     Iscritti findById(long id);
-    List<Iscritti> findByMunicipio(Integer mun);
-    Iscritti findBySezioneId(Integer idsezione);
+    List<Iscritti> findByMunicipioAndTipoelezioneId(Integer mun, int TipoElezioneId);
+    List<Long> countAllByTipoelezioneIdAndMunicipio(int mun, int TipoElezioneId);
+    List<Long> countAllByTipoelezioneId(int TipoElezioneId);
+    Iscritti findBySezioneIdAndTipoelezioneId(Integer idsezione,int TipoElezioneId);
     Iscritti findByTipoelezioneIdAndSezioneNumerosezione(Integer tipoElezioneId,Integer numerosezione);
     void deleteById(Integer id);
     List<Iscritti> findByTipoelezioneId(Integer idtipoelezione);
     List<Iscritti> findByTipoelezione(TipoElezione tipoElezione);
 
     @Modifying
-    @Query("select new Iscritti (a.iscrittimaschigen as iscrittimaschigen, a.iscrittifemminegen as iscrittifemminegen, a.iscrittitotaligen as iscrittitotaligen, " +
+    @Query("select new Iscritti (sum(a.iscrittimaschigen) as iscrittimaschigen, sum(a.iscrittifemminegen) as iscrittifemminegen, sum(a.iscrittitotaligen) as iscrittitotaligen, " +
             "a.municipio as municipio) " +
             " from Iscritti a inner join Affluenza s on a.id=s.iscritti.id" +
             " where s.affluenza1=1 and a.tipoelezione.id=?1 " +
@@ -46,7 +50,7 @@ public interface IscrittiDAO extends JpaRepository<Iscritti, Integer> {
     List<Iscritti> countIscrittiSezioniPervenuteAllAffluenza1(int tipoelezioneid);
 
     @Modifying
-    @Query("select new Iscritti (a.iscrittimaschigen as iscrittimaschigen, a.iscrittifemminegen as iscrittifemminegen, a.iscrittitotaligen as iscrittitotaligen, " +
+    @Query("select new Iscritti (sum(a.iscrittimaschigen) as iscrittimaschigen, sum(a.iscrittifemminegen) as iscrittifemminegen, sum(a.iscrittitotaligen) as iscrittitotaligen, " +
             "a.municipio as municipio) " +
             " from Iscritti a inner join Affluenza s on a.id=s.iscritti.id" +
             " where s.affluenza2=1 and a.tipoelezione.id=?1 " +
@@ -62,8 +66,8 @@ public interface IscrittiDAO extends JpaRepository<Iscritti, Integer> {
     List<Iscritti> countIscrittiSezioniPervenuteAllAffluenza2(int tipoelezioneid);
 
     @Modifying
-    @Query("select new Iscritti (a.iscrittimaschigen as iscrittimaschigen, a.iscrittifemminegen as iscrittifemminegen, a.iscrittitotaligen as iscrittitotaligen, " +
-            "a.municipio as municipio) " +
+    @Query("select new Iscritti (sum(a.iscrittimaschigen) as iscrittimaschigen, sum(a.iscrittifemminegen) as iscrittifemminegen, sum(a.iscrittitotaligen) as iscrittitotaligen, " +
+            " a.municipio as municipio) " +
             " from Iscritti a inner join Affluenza s on a.id=s.iscritti.id" +
             " where s.affluenza3=1 and a.tipoelezione.id=?1 " +
             " and s.tipoelezione.id=?1" +
@@ -78,8 +82,8 @@ public interface IscrittiDAO extends JpaRepository<Iscritti, Integer> {
     List<Iscritti> countIscrittiSezioniPervenuteAllAffluenza3(int tipoelezioneid);
 
     @Modifying
-    @Query("select new Iscritti (a.iscrittimaschigen as iscrittimaschigen, a.iscrittifemminegen as iscrittifemminegen, a.iscrittitotaligen as iscrittitotaligen, " +
-            "a.municipio as municipio) " +
+    @Query("select new Iscritti (sum(a.iscrittimaschigen) as iscrittimaschigen, sum(a.iscrittifemminegen) as iscrittifemminegen, sum(a.iscrittitotaligen) as iscrittitotaligen, " +
+            " a.municipio as municipio) " +
             " from Iscritti a inner join Affluenza s on a.id=s.iscritti.id" +
             " where s.apertura1=1 and a.tipoelezione.id=?1 " +
             " and s.tipoelezione.id=?1" +
@@ -94,8 +98,8 @@ public interface IscrittiDAO extends JpaRepository<Iscritti, Integer> {
     List<Iscritti> countIscrittiSezioniPervenuteAllApertura1(int tipoelezioneid);
 
     @Modifying
-    @Query("select new Iscritti (a.iscrittimaschigen as iscrittimaschigen, a.iscrittifemminegen as iscrittifemminegen, a.iscrittitotaligen as iscrittitotaligen, " +
-            "a.municipio as municipio) " +
+    @Query("select new Iscritti (sum(a.iscrittimaschigen) as iscrittimaschigen, sum(a.iscrittifemminegen) as iscrittifemminegen, sum(a.iscrittitotaligen) as iscrittitotaligen, " +
+            " a.municipio as municipio) " +
             " from Iscritti a inner join Affluenza s on a.id=s.iscritti.id" +
             " where s.apertura2=1 and a.tipoelezione.id=?1 " +
             " and s.tipoelezione.id=?1" +
@@ -110,8 +114,8 @@ public interface IscrittiDAO extends JpaRepository<Iscritti, Integer> {
     List<Iscritti> countIscrittiSezioniPervenuteAllApertura2(int tipoelezioneid);
 
     @Modifying
-    @Query("select new Iscritti (a.iscrittimaschigen as iscrittimaschigen, a.iscrittifemminegen as iscrittifemminegen, a.iscrittitotaligen as iscrittitotaligen, " +
-            "a.municipio as municipio) " +
+    @Query("select new Iscritti (sum(a.iscrittimaschigen) as iscrittimaschigen, sum(a.iscrittifemminegen) as iscrittifemminegen, sum(a.iscrittitotaligen) as iscrittitotaligen, " +
+            "  a.municipio as municipio) " +
             " from Iscritti a inner join Affluenza s on a.id=s.iscritti.id" +
             " where s.costituzione1=1 and a.tipoelezione.id=?1 " +
             " and s.tipoelezione.id=?1" +
@@ -126,8 +130,8 @@ public interface IscrittiDAO extends JpaRepository<Iscritti, Integer> {
     List<Iscritti> countIscrittiSezioniPervenuteAllCostituzione1(int tipoelezioneid);
 
     @Modifying
-    @Query("select new Iscritti (a.iscrittimaschigen as iscrittimaschigen, a.iscrittifemminegen as iscrittifemminegen, a.iscrittitotaligen as iscrittitotaligen, " +
-            "a.municipio as municipio) " +
+    @Query("select new Iscritti (sum(a.iscrittimaschigen) as iscrittimaschigen, sum(a.iscrittifemminegen) as iscrittifemminegen, sum(a.iscrittitotaligen) as iscrittitotaligen, " +
+            " a.municipio as municipio) " +
             " from Iscritti a inner join Affluenza s on a.id=s.iscritti.id" +
             " where s.costituzione2=1 and a.tipoelezione.id=?1 " +
             " and s.tipoelezione.id=?1" +

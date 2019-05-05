@@ -38,14 +38,14 @@ public class IscrittiService implements IIscrittiService {
     }
 
     @Override
-    public List<Iscritti> findIscrittiByMun(Integer mun) {
+    public List<Iscritti> findIscrittiByMunicipioAndTipoElezioneId(Integer mun, int tipoElezioneId) {
         return
-                iscrittiDAO.findByMunicipio(mun);
+                iscrittiDAO.findByMunicipioAndTipoelezioneId(mun, tipoElezioneId);
     }
 
     @Override
-    public Iscritti findBySezioneId(Integer idsezione) {
-        return iscrittiDAO.findBySezioneId(idsezione);
+    public Iscritti findBySezioneIdAndTipoElezioneId(Integer idsezione,int TipoElezioneId) {
+        return iscrittiDAO.findBySezioneIdAndTipoelezioneId(idsezione, TipoElezioneId);
     }
 
     @Override
@@ -53,6 +53,16 @@ public class IscrittiService implements IIscrittiService {
         return iscrittiDAO.findByTipoelezioneIdAndSezioneNumerosezione(tipoElezioneId, numerosezione);
     }
 
+    @Override
+    public  List<Long> countAllByTipoelezioneIdAndMunicipio(int mun, int TipoElezioneId)
+    {
+        return iscrittiDAO.countAllByTipoelezioneIdAndMunicipio(mun,TipoElezioneId);
+    }
+    @Override
+    public  List<Long> countAllByTipoelezioneId(int TipoElezioneId)
+    {
+        return iscrittiDAO.countAllByTipoelezioneId(TipoElezioneId);
+    }
     @Override
     public void add(Iscritti matrice) {
         iscrittiDAO.save(matrice);

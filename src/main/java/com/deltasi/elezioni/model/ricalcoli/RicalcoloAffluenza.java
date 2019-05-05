@@ -14,6 +14,11 @@ import java.time.LocalDateTime;
 @Table(name = "ricalcoli_affluenza")
 public class RicalcoloAffluenza {
 
+    public RicalcoloAffluenza()
+    {
+
+    }
+
     public RicalcoloAffluenza(long affluenzaTotale, long affluenzaMaschi, long affluenzaFemmine, long numeroSezioni)
     {
         this.affluenzatotale=(int)affluenzaTotale;
@@ -98,6 +103,9 @@ public class RicalcoloAffluenza {
     @Column(name = "iscritti_totale")
     private Integer iscrittitotali;
 
+    @Transient
+    private Integer sezione;
+
     public Integer getId() {
         return id;
     }
@@ -105,6 +113,7 @@ public class RicalcoloAffluenza {
     public void setId(Integer id) {
         this.id = id;
     }
+
 
     public TipoElezione getTipoelezione() {
         return tipoelezione;
@@ -248,5 +257,13 @@ public class RicalcoloAffluenza {
 
     public void setIscrittitotali(Integer iscrittitotali) {
         this.iscrittitotali = iscrittitotali;
+    }
+
+    public Integer getSezione() {
+        return sezione;
+    }
+
+    public void setSezione(Integer sezione) {
+        this.sezione = sezione;
     }
 }

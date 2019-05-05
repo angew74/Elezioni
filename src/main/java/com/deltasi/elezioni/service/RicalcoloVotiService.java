@@ -31,4 +31,22 @@ public class RicalcoloVotiService implements IRicalcoloVotiService {
     public void SaveAll(List<RicalcoloVoti> list) {
         ricalcoloVotiDAO.saveAll(list);
     }
+
+    @Override
+    public List<RicalcoloVoti> findFirstByTipoelezioneIdAndListaIdOrderByDataoperazioneDesc(int tipoElezioneId, int ListaId)
+    {
+        return ricalcoloVotiDAO.findFirstByTipoelezioneIdAndListaIdOrderByDataoperazioneDesc(tipoElezioneId,ListaId);
+    }
+
+    @Override
+    public RicalcoloVoti findFirstByTipoelezioneIdAndMunicipioAndListaIdOrderByDataoperazioneDesc(int tipoElezioneId, int Municipio,int ListaId)
+    {
+        return  ricalcoloVotiDAO.findFirstByTipoelezioneIdAndMunicipioAndListaIdOrderByDataoperazioneDesc(tipoElezioneId, Municipio, ListaId);
+    }
+
+    @Override
+    public List<RicalcoloVoti> findFirstByTipoelezioneIdAndMunicipioOrderByDataoperazioneDesc(int tipoElezioneId, int ListaId) {
+        return  ricalcoloVotiDAO.findFirstByTipoelezioneIdAndMunicipioOrderByDataoperazioneDesc(tipoElezioneId,ListaId);
+    }
+
 }

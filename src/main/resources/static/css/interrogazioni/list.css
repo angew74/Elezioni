@@ -1,0 +1,92 @@
+@import "../common/menu.css";
+@import "../font-awesome/all.css";
+#accordian {
+    background: #6d353a;
+    width: 700px;
+    margin: 50px auto 0 auto;
+    color: white;
+    box-shadow: 0 5px 15px 1px rgba(0, 0, 0, 0.6), 0 0 200px 1px rgba(255, 255, 255, 0.5);
+}
+
+#accordian h3 {
+    background: #54272F;
+    background: linear-gradient(#54272F, #702f43);
+}
+
+.bg-dark
+{
+    background-color: #54272F!important;
+}
+
+
+#accordian h3 a {
+    padding: 0 10px;
+    font-size: 1.1rem;
+    line-height: 34px;
+    display: block;
+    color: white;
+    text-decoration: none;
+}
+
+#accordian h3:hover {
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.7);
+}
+
+i {
+    margin-right: 10px;
+}
+
+#accordian li {
+    list-style-type: none;
+}
+
+#accordian ul ul li a,
+#accordian h4 {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    line-height: 27px;
+    display: block;
+    padding: 0 15px;
+    transition: all 0.15s;
+    position: relative;
+}
+
+#accordian ul ul li a:hover {
+    background: #54272F;
+    border-left: 5px solid lightgreen;
+}
+
+#accordian ul ul {
+    display: none;
+}
+
+#accordian li.active>ul {
+    display: block;
+}
+
+#accordian ul ul ul {
+    margin-left: 15px;
+    border-left: 1px dotted rgba(0, 0, 0, 0.5);
+}
+
+#accordian a:not(:only-child):after {
+    content: "\f104";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    right: 10px;
+    top: 0;
+    font-size: 1.1rem;
+}
+
+#accordian .active>a:not(:only-child):after {
+    content: "\f107";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+.parsley-errors-list
+{
+    margin: 12px 7px 3px;
+}

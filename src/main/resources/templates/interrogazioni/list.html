@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
+<head>
+    <div th:replace="fragments/head :: header-css-js"/>
+    <link th:href="@{~/css/interrogazioni/list.css}" type="text/css" rel="stylesheet" />
+    <script th:src="@{~/js/interrogazioni/list.js}" type="text/javascript">
+    </script>
+</head>
+<body>
+<div th:replace="fragments/menu :: menu"/>
+<main>
+<div id="accordian">
+    <ul>
+        <li>
+            <h3><a href="#">
+                <i class="fas fa-percentage"></i>Interrogazioni</a></h3>
+            <ul>
+                <li><a th:if="${#lists.contains(fasi, 'RIA')}" href="/interrograzioni/costituzione">
+                    <i class="fas fa-check-double"></i>Costituzione-Apertura</a>
+                </li>
+                <li><a th:if="${#lists.contains(fasi, 'RIC')}" href="/interrogazioni/affluenza">
+                    <i class="fas fa-check-double"></i>Affluenza</a>
+                </li>
+                <li>
+                    <a th:if="${#lists.contains(fasi, 'RIL')}" href="/interrogazioni/voti">
+                        <i class="fas fa-calculator"></i>Voti Lista</a></li>
+                <li>
+                    <a th:if="${#lists.contains(fasi, 'RIP')}" href="/interrogazioni/preferenze">
+                        <i class="fas fa-divide"></i>Preferenze</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+</main>
+<div th:replace="fragments/footer :: footer"/>
+</body>
+</html>

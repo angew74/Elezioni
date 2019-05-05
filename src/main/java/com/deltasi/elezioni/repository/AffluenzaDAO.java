@@ -16,14 +16,30 @@ import java.util.List;
 public interface AffluenzaDAO extends JpaRepository<Affluenza, Long> {
 
     Affluenza findById(Integer id);
-    Affluenza findBySezioneNumerosezioneAndSezioneTipoelezioneId(Integer sezione, Integer tipoElezioneId);
-    Affluenza findBySezioneId(Integer idsezione);
-    List<Affluenza> findByPlessoId(Integer idplesso);
-    List<Affluenza> findByPlessoMunicipio(Integer municipio);
-    List<Affluenza> findByPlesso(Plesso plesso);
+    List<Affluenza> findBySezioneIdAndTipoelezioneId(Integer idsezione,Integer tipoElezioneId);
     List<Affluenza> findByTipoelezione(TipoElezione tipoElezione);
     List<Affluenza> findByTipoelezioneId(Integer idTipoElezione);
     Affluenza findBySezioneNumerosezioneAndTipoelezioneId(int numero,int tipoElezioneId);
+// ricerca per sezione
+    Affluenza findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza1(Integer sezione, Integer tipoElezioneId,Integer a);
+    Affluenza findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza2(Integer sezione, Integer tipoElezioneId,Integer a);
+    Affluenza findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza3(Integer sezione, Integer tipoElezioneId, Integer a);
+
+    Affluenza findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza4(Integer sezione, Integer tipoElezioneId,Integer a);
+    Affluenza findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza5(Integer sezione, Integer tipoElezioneId, Integer a);
+    Affluenza findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndApertura1(Integer sezione, Integer tipoElezioneId, Integer a);
+    Affluenza findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndCostituzione1(Integer sezione, Integer tipoElezioneId, Integer a);
+
+    // ricerca per plesso
+    List<Affluenza> findBySezionePlessoIdAndTipoelezioneIdAndAffluenza1(Integer plessoid, Integer tipoElezioneId,Integer a);
+    List<Affluenza> findBySezionePlessoIdAndTipoelezioneIdAndAffluenza2(Integer plessoid, Integer tipoElezioneId,Integer a);
+    List<Affluenza> findBySezionePlessoIdAndTipoelezioneIdAndAffluenza3(Integer plessoid, Integer tipoElezioneId,Integer a);
+    List<Affluenza> findBySezionePlessoIdAndTipoelezioneIdAndAffluenza4(Integer plessoid, Integer tipoElezioneId,Integer a);
+    List<Affluenza> findBySezionePlessoIdAndTipoelezioneIdAndAffluenza5(Integer plessoid, Integer tipoElezioneId,Integer a);
+    List<Affluenza> findBySezionePlessoIdAndTipoelezioneIdAndCostituzione1(Integer plessoid, Integer tipoElezioneId,Integer a);
+    List<Affluenza> findBySezionePlessoIdAndTipoelezioneIdAndApertura1(Integer plessoid, Integer tipoElezioneId,Integer a);
+
+
     List<Affluenza> findByApertura1AndTipoelezioneId(int a, int tipoElezioneId);
     List<Affluenza> findByApertura2AndTipoelezioneId(int a,int tipoElezioneId);
     List<Affluenza> findByApertura3AndTipoelezioneId(int a,int tipoElezioneId);

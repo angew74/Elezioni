@@ -6,7 +6,7 @@
     <link th:href="@{~/css/common/parsley.css}" type="text/css" rel="stylesheet"/>
     <link th:href="@{~/css/voti/modifica.css}" type="text/css" rel="stylesheet"/>
     <link th:href="@{~/css/common/sezione.css}" type="text/css" rel="stylesheet"/>
-</head>
+    <script th:src="@{~/js/voti/scrutinio.js}" type="text/javascript"></script>
 </head>
 <body>
 <div th:replace="fragments/menu :: menu"/>
@@ -22,7 +22,5 @@
     </div>
     <div id="scrutiniodiv"/>
 </div>
-<div th:replace="fragments/modalerror :: error"/>
-<div th:replace="fragments/modalsuccess :: success"/>
 </body>
 </html>

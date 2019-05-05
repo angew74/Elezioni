@@ -43,34 +43,10 @@ public class AffluenzaService implements IAffluenzaService {
     }
 
     @Override
-    public Affluenza findBySezioneNumerosezioneAndTipoelezioneId(Integer sezione, Integer tipoElezioneId) {
-        return affluenzaDAO.findBySezioneNumerosezioneAndTipoelezioneId(sezione,tipoElezioneId);
-    }
-
-    @Override
     public Affluenza findById(Integer id) {
       return  affluenzaDAO.findById(id);
     }
 
-    @Override
-    public List<Affluenza> findByPlessoMunicipio(Integer municipio) {
-        return  affluenzaDAO.findByPlessoMunicipio(municipio);
-    }
-
-    @Override
-    public Affluenza findBySezioneId(Integer sezioneid) {
-        return  affluenzaDAO.findBySezioneId(sezioneid);
-    }
-
-    @Override
-    public List<Affluenza> findByPlessoId(Integer idplesso) {
-        return  affluenzaDAO.findByPlessoId(idplesso);
-    }
-
-    @Override
-    public List<Affluenza> findByPlesso(Plesso plesso) {
-        return  affluenzaDAO.findByPlesso(plesso);
-    }
 
     @Override
     public List<Affluenza> findByTipoelezione(TipoElezione tipoElezione) {
@@ -83,53 +59,79 @@ public class AffluenzaService implements IAffluenzaService {
     }
 
     @Override
-    public List<Affluenza> findByApertura1(int a, int idTipoElezione) {
-        return  affluenzaDAO.findByApertura1AndTipoelezioneId(a, idTipoElezione);
+    public Affluenza findBySezioneNumerosezioneAndTipoelezioneId(Integer sezione,Integer tipoElezioneId)
+    {
+        return affluenzaDAO.findBySezioneNumerosezioneAndTipoelezioneId(sezione,tipoElezioneId);
     }
 
     @Override
-    public List<Affluenza> findByApertura2(int a, int idTipoElezione) {
-        return  affluenzaDAO.findByApertura2AndTipoelezioneId(a, idTipoElezione);
+    public Affluenza findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza1(Integer sezione, Integer tipoElezioneId, Integer a) {
+        return  affluenzaDAO.findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza1(sezione,tipoElezioneId,a);
     }
 
     @Override
-    public List<Affluenza> findByApertura3(int a, int idTipoElezione) {
-        return  affluenzaDAO.findByApertura3AndTipoelezioneId(a,idTipoElezione);
+    public Affluenza findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza2(Integer sezione, Integer tipoElezioneId, Integer a) {
+        return affluenzaDAO.findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza2(sezione,tipoElezioneId,a);
     }
 
     @Override
-    public List<Affluenza> findByCostituzione1(int c,int idTipoElezione) {
-        return  affluenzaDAO.findByCostituzione1AndTipoelezioneId(c, idTipoElezione);
+    public Affluenza findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza3(Integer sezione, Integer tipoElezioneId, Integer a) {
+        return affluenzaDAO.findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza3(sezione,tipoElezioneId,a);
     }
 
     @Override
-    public List<Affluenza> findByCostituzione2(int c,int idTipoElezione) {
-        return  affluenzaDAO.findByCostituzione2AndTipoelezioneId(c,idTipoElezione);
+    public Affluenza findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza4(Integer sezione, Integer tipoElezioneId, Integer a) {
+        return affluenzaDAO.findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza4(sezione,tipoElezioneId,a);
     }
 
     @Override
-    public List<Affluenza> findByAffluenza1(int a,int idTipoElezione) {
-        return  affluenzaDAO.findByAffluenza1AndTipoelezioneId(a,idTipoElezione);
+    public Affluenza findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza5(Integer sezione, Integer tipoElezioneId, Integer a) {
+        return affluenzaDAO.findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza5(sezione,tipoElezioneId,a);
     }
 
     @Override
-    public List<Affluenza> findByAffluenza2(int a,int idTipoElezione) {
-        return  affluenzaDAO.findByAffluenza2AndTipoelezioneId(a,idTipoElezione);
+    public Affluenza findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndApertura1(Integer sezione, Integer tipoElezioneId, Integer a) {
+        return affluenzaDAO.findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndApertura1(sezione,tipoElezioneId,a);
     }
 
     @Override
-    public List<Affluenza> findByAffluenza3(int a, int idTipoElezione) {
-        return  affluenzaDAO.findByAffluenza3AndTipoelezioneId(a,idTipoElezione);
+    public Affluenza findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndCostituzione1(Integer sezione, Integer tipoElezioneId, Integer a) {
+        return affluenzaDAO.findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndCostituzione1(sezione,tipoElezioneId,a);
     }
 
     @Override
-    public List<Affluenza> findByAffluenza4(int a,int idTipoElezione) {
-        return  affluenzaDAO.findByAffluenza4AndTipoelezioneId(a,idTipoElezione);
+    public List<Affluenza> findBySezionePlessoIdAndTipoelezioneIdAndAffluenza1(Integer plessoid, Integer tipoElezioneId, Integer a) {
+        return affluenzaDAO.findBySezionePlessoIdAndTipoelezioneIdAndAffluenza1(plessoid,tipoElezioneId,a);
     }
 
     @Override
-    public List<Affluenza> findByAffluenza5(int a, int idTipoElezione) {
-        return  affluenzaDAO.findByAffluenza5AndTipoelezioneId(a,idTipoElezione);
+    public List<Affluenza> findBySezionePlessoIdAndTipoelezioneIdAndAffluenza2(Integer plessoid, Integer tipoElezioneId, Integer a) {
+        return affluenzaDAO.findBySezionePlessoIdAndTipoelezioneIdAndAffluenza2(plessoid,tipoElezioneId,a);
+    }
+
+    @Override
+    public List<Affluenza> findBySezionePlessoIdAndTipoelezioneIdAndAffluenza3(Integer plessoid, Integer tipoElezioneId, Integer a) {
+        return affluenzaDAO.findBySezionePlessoIdAndTipoelezioneIdAndAffluenza3(plessoid,tipoElezioneId,a);
+    }
+
+    @Override
+    public List<Affluenza> findBySezionePlessoIdAndTipoelezioneIdAndAffluenza4(Integer plessoid, Integer tipoElezioneId, Integer a) {
+        return affluenzaDAO.findBySezionePlessoIdAndTipoelezioneIdAndAffluenza4(plessoid,tipoElezioneId,a);
+    }
+
+    @Override
+    public List<Affluenza> findBySezionePlessoIdAndTipoelezioneIdAndAffluenza5(Integer plessoid, Integer tipoElezioneId, Integer a) {
+        return affluenzaDAO.findBySezionePlessoIdAndTipoelezioneIdAndAffluenza5(plessoid,tipoElezioneId,a);
+    }
+
+    @Override
+    public List<Affluenza> findBySezionePlessoIdAndTipoelezioneIdAndCostituzione1(Integer plessoid, Integer tipoElezioneId, Integer a) {
+        return affluenzaDAO.findBySezionePlessoIdAndTipoelezioneIdAndCostituzione1(plessoid,tipoElezioneId,a);
+    }
+
+    @Override
+    public List<Affluenza> findBySezionePlessoIdAndTipoelezioneIdAndApertura1(Integer plessoid, Integer tipoElezioneId, Integer a) {
+        return affluenzaDAO.findBySezionePlessoIdAndTipoelezioneIdAndApertura1(plessoid,tipoElezioneId,a);
     }
 
 

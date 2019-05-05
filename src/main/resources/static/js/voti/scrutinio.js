@@ -4,6 +4,7 @@ jQuery(document).ready(function ($) {
         event.preventDefault();
         var isValid = true;
         var isValidSelect = true;
+        debugger;
         $('select').each(function () {
             if ($(this).parsley().validate() !== true)
                 isValidSelect = false;
@@ -27,6 +28,7 @@ jQuery(document).ready(function ($) {
         var votanti = parseInt($('#Votanti').text());
         var iscritti = parseInt($('#Iscritti').text());
         var sum = 0;
+        debugger;
         var group = $('input[name="liste.voti"]');
         var count = $('#count').text();
         var fields = $( ":input" ).serializeArray();
