@@ -139,9 +139,9 @@ public class AffluenzeController {
             if (msg.equals("")) {
                 LocalDateTime oggi = LocalDateTime.now();
                 tipoElezione = tipoElezioneService.findTipoElezioneById(tipoelezioneid);
-                affluenza = affluenzaService.findBySezioneNumerosezioneAndTipoelezioneId(sezioneRichiesta, tipoelezioneid);
                 switch (tipo) {
                     case "AP":
+                        affluenza = affluenzaService.findBySezioneNumerosezioneAndTipoelezioneId(sezioneRichiesta, tipoelezioneid);
                         affluenza.setDataoperazione(oggi);
                         affluenza.setUtenteoperazione(SecurityContextHolder.getContext().getAuthentication().getName());
                         affluenza.setApertura1(1);
@@ -150,6 +150,7 @@ public class AffluenzeController {
                         sezioneJson.setValidated(true);
                         break;
                     case "CO":
+                        affluenza = affluenzaService.findBySezioneNumerosezioneAndTipoelezioneId(sezioneRichiesta, tipoelezioneid);
                         if (affluenza == null) {
                             affluenza = new Affluenza();
                             Sezione sezione = sezioneService.findByNumerosezioneAndTipoelezioneId(sezioneRichiesta, tipoelezioneid);

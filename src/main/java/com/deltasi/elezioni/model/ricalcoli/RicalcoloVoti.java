@@ -113,6 +113,9 @@ public class RicalcoloVoti {
     @Column(name = "percentuale_votanti_totale")
     private String percentualevotantitotale;
 
+    @Column(name = "votanti_totali")
+    private Integer votantitotale;
+
     @Column(name = "iscritti_totale")
     private Integer iscrittitotali;
 
@@ -258,5 +261,13 @@ public class RicalcoloVoti {
 
     public void setVotantipervenute(Integer votantipervenute) {
         this.votantipervenute = votantipervenute;
+    }
+
+    public Integer getVotantitotale() {
+        return votantitotale;
+    }
+
+    public void setVotantitotale(Integer votantitotale) {
+        this.votantitotale = votantitotale;
     }
 }

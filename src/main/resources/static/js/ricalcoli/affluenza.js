@@ -1,11 +1,7 @@
 jQuery(document).ready(function ($) {
-    //  var presenzaForm = '#riepilogoButton';
-    // $('#Mese').on('click', ajaxPostGiorni);
-    // $('#Utente').on('click', ajaxPostMesi);
-    $('#butttonRicalcolo').click(function(){
+     $('#butttonRicalcolo').click(function(){
         ajaxPostRicalcolo();
     });
-    // $("#butttonRicalcolo").on('click', ajaxPostRicalcolo);
     $("#btnSalvaRicalcolo").on('click', ajaxSalvaRicalcolo);
 
     function ajaxPostRicalcolo() {

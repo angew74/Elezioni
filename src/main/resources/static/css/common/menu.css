@@ -1,5 +1,14 @@
 /*@import url("//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");*/
 @import "../font-awesome/all.min.css";
+@import "footer.css";
+main {
+  flex-grow: 1;
+}
+
+header, main, footer {
+  flex-shrink: 0;
+}
+
 
 .bg-dark
 {

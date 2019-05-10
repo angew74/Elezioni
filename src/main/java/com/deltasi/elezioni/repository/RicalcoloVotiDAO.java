@@ -13,5 +13,9 @@ public interface RicalcoloVotiDAO extends JpaRepository<RicalcoloVoti, Long> {
 
     List<RicalcoloVoti> findAllBy();
     RicalcoloVoti findAllById(int id);
+    List<RicalcoloVoti> findFirstByTipoelezioneIdAndListaIdOrderByDataoperazioneDesc(int tipoElezioneId, int ListaId);
+    List<RicalcoloVoti> findFirstByTipoelezioneIdAndMunicipioOrderByDataoperazioneDesc(int tipoElezioneId, int ListaId);
+    RicalcoloVoti findFirstByTipoelezioneIdAndMunicipioAndListaIdOrderByDataoperazioneDesc(int tipoElezioneId, int Municipio, int ListaId);
+
 
 }

@@ -18,13 +18,16 @@ public interface IIscrittiService {
 
     Optional<Iscritti> findIscrittiById(Integer id);
 
-    List<Iscritti> findIscrittiByMun(Integer mun);
+    List<Iscritti> findIscrittiByMunicipioAndTipoElezioneId(Integer mun, int tipoElezioneId);
 
-    Iscritti findBySezioneId(Integer idsezione);
+    Iscritti findBySezioneIdAndTipoElezioneId(Integer idsezione,int tipoElezioneId);
 
     Iscritti findByTipoelezioneIdAndSezioneNumerosezione(Integer tipoElezioneId, Integer numerosezione);
 
-    void add(Iscritti matrice);
+    List<Long> countAllByTipoelezioneIdAndMunicipio(int mun, int TipoElezioneId);
+    List<Long> countAllByTipoelezioneId(int TipoElezioneId);
+
+    void add(Iscritti iscritti);
 
     void delete(Integer id);
 

@@ -1,6 +1,9 @@
 package com.deltasi.elezioni.controllers;
 
+
 import com.deltasi.elezioni.contracts.IRicalcoloAffluenzaService;
+import com.deltasi.elezioni.contracts.IRicalcoloPreferenzeService;
+import com.deltasi.elezioni.contracts.IRicalcoloVotiService;
 import com.deltasi.elezioni.helpers.RicalcoliDraft;
 import com.deltasi.elezioni.model.json.ListaJson;
 import com.deltasi.elezioni.model.json.ListaSemplice;
@@ -47,6 +50,12 @@ public class RestRicalcoliController {
 
     @Autowired
     private IRicalcoloAffluenzaService ricalcoloAffluenzaService;
+
+    @Autowired
+    private IRicalcoloVotiService ricalcoloVotiService;
+
+    @Autowired
+    private IRicalcoloPreferenzeService ricalcoloPreferenzeService;
 
     @Autowired
     SessionStateHelper stateHelper;
@@ -154,6 +163,57 @@ public class RestRicalcoliController {
             //l =(List<RicalcoloAffluenza>) httpSession.getAttribute("Ricalcolo");
             if (l.get(0).getTiporicalcolo().getCodice().equals(tipoRicalcolo)) {
                 ricalcoloAffluenzaService.SaveAll(l);
+            } else {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST, "Ricalcolo non congruente");
+            }
+        } catch (AccessDeniedException e) {
+            logger.warn("Unauthorized", e);
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Risorsa non trovata", ex);
+        }
+        stateHelper.remove("Ricalcolo");
+        return l;
+    }
+
+    @GetMapping(value = "/salvaricalcolovoti/{aggregazione}/{tipoRicalcolo}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Secured("ROLE_ADMIN")
+    public List<RicalcoloVoti> salvaRicalcoloVoti(@PathVariable("aggregazione") String aggregazione, @PathVariable("tipoRicalcolo") String tipoRicalcolo
+    ) {
+
+        List<RicalcoloVoti> l = new ArrayList<>();
+        try {
+            l = (List<RicalcoloVoti>) stateHelper.get("Ricalcolo");
+            //l =(List<RicalcoloAffluenza>) httpSession.getAttribute("Ricalcolo");
+            if (l.get(0).getTiporicalcolo().getCodice().equals(tipoRicalcolo)) {
+                ricalcoloVotiService.SaveAll(l);
+            } else {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST, "Ricalcolo non congruente");
+            }
+        } catch (AccessDeniedException e) {
+            logger.warn("Unauthorized", e);
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Risorsa non trovata", ex);
+        }
+        stateHelper.remove("Ricalcolo");
+        return l;
+    }
+
+    @GetMapping(value = "/salvaricalcolopreferenze/{aggregazione}/{tipoRicalcolo}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Secured("ROLE_ADMIN")
+    public List<RicalcoloPreferenze> salvaRicalcoloPreferenze(@PathVariable("aggregazione") String aggregazione, @PathVariable("tipoRicalcolo") String tipoRicalcolo,@PathVariable("lista") int lista
+    ) {
+
+        List<RicalcoloPreferenze> l = new ArrayList<>();
+        try {
+            l = (List<RicalcoloPreferenze>) stateHelper.get("Ricalcolo");
+           if (l.get(0).getTiporicalcolo().getCodice().equals(tipoRicalcolo)) {
+                ricalcoloPreferenzeService.SaveAll(l);
             } else {
                 throw new ResponseStatusException(
                         HttpStatus.BAD_REQUEST, "Ricalcolo non congruente");

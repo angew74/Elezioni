@@ -35,7 +35,6 @@ public class BusinessRules {
     @Autowired
     IAbilitazioniService abilitazioniService;
 
-
     @Autowired
     ISezioneService sezioneService;
 
@@ -47,22 +46,17 @@ public class BusinessRules {
         if (fase.getAbilitata().equals(0)) {
             return "Funzionalità non abilitata";
         }
-        Sezione sezionecontrollo = sezioneService.findByNumerosezioneAndCabinaAndTipoelezioneId(sezione,cabina,idtipoelezione);
-        if(sezionecontrollo == null)
-        {
-            return "cabina sezione non corrette";
-        }
-        Affluenza affluenza = affluenzaService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, idtipoelezione);
-        if(cabina > 0) {
-            if(affluenza != null) {
-                if (!(cabina.equals(affluenza.getSezione().getCabina()))) {
+        if(cabina != 0) {
+            Sezione sezioneControllo = sezioneService.findByNumerosezioneAndTipoelezioneId(sezione, idtipoelezione);
+            if (sezioneControllo != null) {
+                if (!(sezioneControllo.getCabina().equals(cabina))) {
                     return "cabina sezione non corrette";
                 }
-            }
-            else {
-                return "affluenza non pervenuta";
+            } else {
+                return " sezione non corretta";
             }
         }
+        Affluenza affluenza = affluenzaService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, idtipoelezione);
         switch (codiceFase) {
             case "AP":
                 if (affluenza == null) {
@@ -128,7 +122,7 @@ public class BusinessRules {
                 if (affluenza == null) {
                     return "Sezione non costitutita";
                 }
-                if (affluenza.getAffluenza1() != null && affluenza.getAffluenza1().equals(0)) {
+                if (affluenza.getAffluenza1() == null || affluenza.getAffluenza1().equals(0)) {
                     return "1 Affluenza non registrata usare inserimento";
                 }
                 if (affluenza.getAffluenza2() != null && affluenza.getAffluenza2().equals(1)) {
