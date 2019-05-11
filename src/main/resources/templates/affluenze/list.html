@@ -9,6 +9,7 @@
 </head>
 <body>
 <div th:replace="fragments/menu :: menu"/>
+<div id="main">
 <main>
 <div id="accordian">
     <ul>
@@ -78,6 +79,7 @@
     </ul>
 </div>
 </main>
-<div th:replace="fragments/footer :: footer"/>
+</div>
+<div id="footer" th:replace="fragments/footer :: footer"/>
 </body>
 </html>

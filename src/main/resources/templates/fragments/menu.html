@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
-<div th:fragment="menu">
+<div id="header" th:fragment="menu">
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand"  href="http://Deltasi.it">
         <img th:src="@{~/css/images/goverment.png}" style="height: 4em; display: inline-block;vertical-align: middle; max-width: 100%;" /></a>
@@ -17,7 +17,7 @@
                     Home
                 </a>
             </li>
-                <li class="nav-item active"  sec:authorize=”isAuthenticated()”>
+                <li class="nav-item active"  sec:authorize="isAuthenticated()">
                     <a class="nav-link" th:href="@{/logout}">
                     <i class="fa fa-sign-out-alt"></i>
                     Logout
@@ -29,25 +29,37 @@
                 Interrogazioni
                 </a>
             </li>
-                <li class="nav-item" sec:authorize="hasRole('USER','ADMIN')">
+                <li class="nav-item" sec:authorize="hasRole('USER')">
                     <a class="nav-link" th:href="@{/affluenze/list}">
                     <i class="fa fa-bars"></i>
                     Andamento
                     </a>
                 </li>
-                <li class="nav-item"  sec:authorize="hasRole('USER','ADMIN')">
+            <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                <a class="nav-link" th:href="@{/affluenze/list}">
+                    <i class="fa fa-bars"></i>
+                    Andamento
+                </a>
+            </li>
+                <li class="nav-item"  sec:authorize="hasRole('ADMIN')">
                     <a class="nav-link" th:href="@{/voti/list}">
                     <i class="fa fa-address-card"></i>
                     Scrutinio
                     </a>
                 </li>
+            <li class="nav-item"  sec:authorize="hasRole('USER')">
+                <a class="nav-link" th:href="@{/voti/list}">
+                    <i class="fa fa-address-card"></i>
+                    Scrutinio
+                </a>
+            </li>
             <li class="nav-item"  sec:authorize="hasRole('ADMIN')">
                     <a class="nav-link" th:href="@{/ricalcoli/list}">
                     <i class="fa fa-bars"></i>
                     Ricalcoli
                     </a>
                 </li>
-                <li class="nav-item"  sec:authorize="hasRole('USER','ADMIN')">
+                <li class="nav-item"  sec:authorize="hasRole('ADMIN')">
                     <a class="nav-link" th:href="@{/controlli/list}">
                     <i class="fa fa-address-card"></i>
                     Controlli

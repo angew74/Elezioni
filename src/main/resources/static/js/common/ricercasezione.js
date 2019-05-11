@@ -64,6 +64,8 @@ jQuery(document).ready(function ($) {
                                 $("#votantiFemmine").val(res.votantifemmine);
                                 $("#votantiMaschi").val(res.votantimaschi);
                                 $("#votantiTotali").val(res.votantitotali);
+                                $("#footer").removeClass("absolute");
+                                $("#footer").addClass("relative");
                             }
                         }
                         if ((res.tipo === "2A" || res.tipo === "3C" || res.tipo === "R2A" || res.tipo === "R3C") && tipoPagina != "A") {
@@ -85,6 +87,8 @@ jQuery(document).ready(function ($) {
                             $("#divVotantiFemmineaffp").show();
                             $("#divVotantiMaschiaffp").show();
                             $("#divVotantiTotaliaffp").show();
+                            $("#footer").removeClass("absolute");
+                            $("#footer").addClass("relative");
                         }
                         if (res.tipo === "2A" || res.tipo === "R2A") {
                             if (tipoPagina != "A") {

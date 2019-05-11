@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
 <head>
     <div th:replace="fragments/head :: header-css-js"/>
-    <link th:href="@{~/css/users/panel.css}" type="text/css" rel="stylesheet" />
+    <link th:href="@{~/css/common/panel.css}" type="text/css" rel="stylesheet" />
 </head>
 <body>
 <div th:replace="fragments/menu :: menu"/>
@@ -12,16 +12,9 @@
         <div class="row">
             <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
                 <div class="heading-title text-center wow fadeInUp" data-wow-delay="300ms">
-                    <h2 class="darkcolor bottom20 text-capitalize" th:text="'Benvenuto ' + ${user}"></h2>
-                    <div  class="bottom0">
-                        <div sec:authentication="principal.authorities"></div>
-                    </div>
-                    <div  sec:authorize="hasRole('ADMIN')" class="bottom0">
-                        di seguito un riepilogo delle funzioni accessibili dall'applicazione per il ruolo di Amministratore
-                    </div>
-                    <div  sec:authorize="hasRole('USER')" class="bottom0">
-                        di seguito un riepilogo delle funzioni accessibili dall'applicazione per il ruolo di Utente
-                    </div>
+                    <h5><span  style="margin-right:10px" class="badge badge-info badge-pill" th:text="'Benvenuto ' + ${user}"></span></h5>
+                    <h5><span  style="margin-right:10px" class="badge badge-secondary badge-pill" sec:authentication="principal.authorities"></span></h5>
+                    <h5><span  style="margin-right:10px" class="badge badge-secondary badge-pill">di seguito un riepilogo delle funzioni accessibili</span></h5>
                 </div>
             </div>
         </div>
@@ -29,14 +22,14 @@
             <ul class="process-wrapp">
                 <li class="wow fadeIn" data-wow-delay="300ms">
                             <span class="pro-step gradient_bg_two bottom20">
-                              <i class="fas fa-users" style="vertical-align: bottom"></i>
+                              <i class="fas fa-users"></i>
                             </span>
                     <h4 class="font-light darkcolor bottom25">Utenti</h4>
                     <p class="bottom0"><a th:href="@{/users/manage}"> gestire gli utenti</a></p>
                 </li>
                 <li class="wow fadeIn" data-wow-delay="350ms">
                     <span class="pro-step gradient_bg_three bottom20"><i class="fas fa-address-book"></i></span>
-                    <h4 class="font-light darkcolor bottom25">Affluene</h4>
+                    <h4 class="font-light darkcolor bottom25">Affluenze</h4>
                     <p class="bottom0"><a th:href="@{/affluenze/list}"> gestire le affluenze</a></p>
                 </li>
                 <li class="wow fadeIn" data-wow-delay="400ms">

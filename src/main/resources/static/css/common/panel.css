@@ -1,4 +1,4 @@
-@import "../common/menu.css";
+@import "menu.css";
 
 body {
     font-family: 'Raleway', sans-serif;
@@ -32,7 +32,7 @@ body {
     overflow: hidden;
     display: table;
     table-layout: fixed;
-    margin: 0 15px;
+    margin-left: 200px;
 }
 
 .process-box {

@@ -17,6 +17,7 @@ html {
 
 body {
   background: rgb(251, 251, 251);
+    margin-bottom: 130px;
 background: -moz-linear-gradient(-45deg, rgb(142, 0, 28) 0%, rgba(251, 251, 251, 0.59) 100%);
 background: -webkit-gradient(left top, right bottom, color-stop(0%, rgb(142, 0, 28)), color-stop(100%, rgb(251, 251, 251)));
 background: -webkit-linear-gradient(-45deg, rgb(142, 0, 28) 0%, rgb(251, 251, 251) 100%);
