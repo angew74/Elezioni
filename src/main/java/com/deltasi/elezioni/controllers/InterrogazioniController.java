@@ -4,6 +4,7 @@ package com.deltasi.elezioni.controllers;
 import com.deltasi.elezioni.contracts.*;
 import com.deltasi.elezioni.helpers.BusinessRules;
 import com.deltasi.elezioni.model.configuration.*;
+import com.deltasi.elezioni.model.risultati.Lista;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,6 +97,28 @@ public class InterrogazioniController {
             modelAndView.addObject("tipo", tipo);
             modelAndView.addObject("tipiinterrogazione",i);
             modelAndView.addObject("aggregazioniint", list);
+        } else {
+            modelAndView = new ModelAndView("common/unauthorized");
+            modelAndView.addObject("errMsg", "Fase non abilitata");
+        }
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/preferenze")
+    public ModelAndView preferenze(Principal principal) {
+        ModelAndView modelAndView = new ModelAndView("interrogazioni/preferenze");
+        String tipo = "RIP";
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        List<AggregazioneInterrogazione> list = aggregazioneService.findAllByTipoelezioneId(tipoelezioneid);
+        List<TipoInterrogazione> i = tipoInterrogazioneService.findAllByTipoelezioneIdAndCodiceFase(tipoelezioneid, tipo);
+        List<Lista> l = listaService.findAllByTipoelezioneId(tipoelezioneid);
+        if (businessRules.IsEnabled(tipo, tipoelezioneid)) {
+            String titolo = businessRules.getTitoloByFase(tipo, "I");
+            modelAndView.addObject("titlepage", titolo);
+            modelAndView.addObject("tipo", tipo);
+            modelAndView.addObject("tipiinterrogazione",i);
+            modelAndView.addObject("aggregazioniint", list);
+            modelAndView.addObject("tipolista", l);
         } else {
             modelAndView = new ModelAndView("common/unauthorized");
             modelAndView.addObject("errMsg", "Fase non abilitata");

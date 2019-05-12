@@ -6,8 +6,10 @@ import com.deltasi.elezioni.model.configuration.Sezione;
 import com.deltasi.elezioni.model.configuration.TipoElezione;
 import com.deltasi.elezioni.model.json.CandidatoJson;
 import com.deltasi.elezioni.model.json.ListaSemplice;
+import com.deltasi.elezioni.model.ricalcoli.RicalcoloPreferenze;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloVoti;
 import com.deltasi.elezioni.model.risultati.*;
+import com.deltasi.elezioni.service.VotiService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,4 +158,28 @@ public class VotiLoader {
         return s;
     }
 
+    public RicalcoloPreferenze preferenzeSplit(Preferenze v, String tipoInterrogazione) {
+        RicalcoloPreferenze r = new RicalcoloPreferenze();
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        Iscritti i = iIscrittiService.findByTipoelezioneIdAndSezioneNumerosezione(tipoelezioneid,v.getSezione().getNumerosezione());
+        Affluenza a = affluenzaService.findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza3(v.getSezione().getNumerosezione(),tipoelezioneid,1);
+        try {
+            r.setMunicipio(v.getSezione().getMunicipio());
+            r.setSezione(v.getSezione().getNumerosezione());
+            r.setNumerovoti(v.getNumerovoti());
+            Voti c = votiService.findByListaIdAndSezioneNumerosezioneAndTipoelezioneId(v.getLista().getId(),v.getSezione().getNumerosezione(), tipoelezioneid);
+            r.setVotantipervenute(c.getNumerovoti());
+            r.setPercentualevoti(calculatePercentage(r.getNumerovoti(),r.getVotantipervenute()));
+            r.setIscrittipervenute(i.getIscrittitotaligen());
+            r.setPercentualevotantipervenute(calculatePercentage(r.getVotantipervenute(),r.getIscrittipervenute()));
+            r.setDenominazioneLista(v.getLista().getDenominazione());
+            r.setDenominazioneCandidato(v.getCandidato().getNome() + " " + v.getCandidato().getCognome());
+        }
+        catch (Exception ex)
+        {
+            logger.error(ex.getMessage());
+            throw ex;
+        }
+        return r;
+    }
 }

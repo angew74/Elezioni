@@ -16,6 +16,11 @@ import java.time.LocalDateTime;
 @Table(name = "ricalcolo_preferenze")
 public class RicalcoloPreferenze {
 
+    public RicalcoloPreferenze()
+    {
+
+    }
+
     public RicalcoloPreferenze(Long numeroVoti, Integer idLista, String listaNew, int Municipio)
     {
         super();
@@ -151,6 +156,13 @@ public class RicalcoloPreferenze {
     @Column(name = "numero_voti")
     private Integer numerovoti;
 
+    @Transient
+    private  Integer sezione;
+
+    @Transient
+    private String denominazioneLista;
+    @Transient
+    private  String denominazioneCandidato;
 
     public Integer getId() {
         return id;
@@ -295,5 +307,29 @@ public class RicalcoloPreferenze {
 
     public void setCandidato(Candidato candidato) {
         this.candidato = candidato;
+    }
+
+    public Integer getSezione() {
+        return sezione;
+    }
+
+    public void setSezione(Integer sezione) {
+        this.sezione = sezione;
+    }
+
+    public String getDenominazioneLista() {
+        return denominazioneLista;
+    }
+
+    public void setDenominazioneLista(String denominazioneLista) {
+        this.denominazioneLista = denominazioneLista;
+    }
+
+    public String getDenominazioneCandidato() {
+        return denominazioneCandidato;
+    }
+
+    public void setDenominazioneCandidato(String denominazioneCandidato) {
+        this.denominazioneCandidato = denominazioneCandidato;
     }
 }
