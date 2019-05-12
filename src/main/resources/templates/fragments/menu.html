@@ -23,69 +23,69 @@
                     Logout
                     </a>
                 </li>
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" th:href="@{/interrogazioni/list}">
-                <i class="fa fa-plus-square"></i>
+                    <i class="fa fa-history"></i>
                 Interrogazioni
                 </a>
             </li>
-                <li class="nav-item" sec:authorize="hasRole('USER')">
+                <li class="nav-item active" sec:authorize="hasRole('USER')">
                     <a class="nav-link" th:href="@{/affluenze/list}">
                     <i class="fa fa-bars"></i>
                     Andamento
                     </a>
                 </li>
-            <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+            <li class="nav-item active" sec:authorize="hasRole('ADMIN')">
                 <a class="nav-link" th:href="@{/affluenze/list}">
                     <i class="fa fa-bars"></i>
                     Andamento
                 </a>
             </li>
-                <li class="nav-item"  sec:authorize="hasRole('ADMIN')">
+                <li class="nav-item active"  sec:authorize="hasRole('ADMIN')">
                     <a class="nav-link" th:href="@{/voti/list}">
-                    <i class="fa fa-address-card"></i>
+                    <i class="fa fa-tasks"></i>
                     Scrutinio
                     </a>
                 </li>
-            <li class="nav-item"  sec:authorize="hasRole('USER')">
+            <li class="nav-item active"  sec:authorize="hasRole('USER')">
                 <a class="nav-link" th:href="@{/voti/list}">
-                    <i class="fa fa-address-card"></i>
+                 <i class="fa fa-tasks"></i>
                     Scrutinio
                 </a>
             </li>
-            <li class="nav-item"  sec:authorize="hasRole('ADMIN')">
+            <li class="nav-item active"  sec:authorize="hasRole('ADMIN')">
                     <a class="nav-link" th:href="@{/ricalcoli/list}">
-                    <i class="fa fa-bars"></i>
+                        <i class="fa fa-calculator"></i>
                     Ricalcoli
                     </a>
                 </li>
-                <li class="nav-item"  sec:authorize="hasRole('ADMIN')">
+                <li class="nav-item active"  sec:authorize="hasRole('ADMIN')">
                     <a class="nav-link" th:href="@{/controlli/list}">
-                    <i class="fa fa-address-card"></i>
+                        <i class="fa fa-receipt"></i>
                     Controlli
                     </a>
                 </li>
         </ul>
-        <ul class="navbar-nav ">
-               <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+        <ul class="navbar-nav">
+               <li class="nav-item active" sec:authorize="hasRole('ADMIN')">
                     <a class="nav-link" th:href="@{/users/manage}">
                     <i class="fa fa-users"></i>
                     Utenti
                     </a>
                 </li>
-                <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                <li class="nav-item active" sec:authorize="hasRole('ADMIN')">
                     <a class="nav-link" th:href="@{/users/register}">
                     <i class="fa fa-user-plus"></i>
                     Registrazione
                     </a>
                 </li>
-                <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                <li class="nav-item active" sec:authorize="hasRole('ADMIN')">
                     <a class="nav-link" th:href="@{/abilitazioni/list}">
                     <i class="fa fa-clone"></i>
                     Abilitazioni
                     </a>
                 </li>
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" th:href="@{/manuali/docs}">
                 <i class="fa fa-university"></i>
                 Manuali utente

@@ -24,5 +24,6 @@ public interface IVotiService {
     List<RicalcoloVoti> countListaSingleMunicipio(int tipoelezioneid, int idlista);
     List<RicalcoloVoti> countVotantiPervenute(int tipoelezioneid);
     List<RicalcoloVoti> countVotantiPervenuteByMunicipio(int tipoelezioneid,int municipio);
+    List<Voti> findBySezionePlessoIdAndTipoelezioneId(int plessoid,int tipoelezioneid);
 
 }

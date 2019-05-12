@@ -306,6 +306,7 @@ public class RicalcoliDraft {
                 l.get(0).setUtenteoperazione(user);
                 l.get(0).setTipoelezione(tipoElezione);
                 l.get(0).setTiporicalcolo(t);
+                l.get(0).setMunicipio(99);
                 String perc = calculatePercentage(l.get(0).getNumerocostituite(), l.get(0).getNumerosezioni());
                 String pera = calculatePercentage(l.get(0).getNumeroaperte(), l.get(0).getNumerosezioni());
                 l.get(0).setPercentualeaperte(pera);
@@ -475,6 +476,8 @@ public class RicalcoliDraft {
             complete.get(m).setVotantipervenute(votantimun);
             List<Long> sezionimun = sezioniService.countAllByTipoelezioneIdAndMunicipioAndTipoelezioneIdIn(tipoelezioneid, numeromunicipio, tipoelezioneid);
             Long totale = sezionimun.get(0);
+            int iscrittitotali= Integer.parseInt(iscrittiService.countAllByTipoelezioneIdAndMunicipio(m,tipoelezioneid).get(0).toString());
+            complete.get(m).setIscrittitotali(iscrittitotali);
             complete.get(m).setTotalesezioni(Integer.parseInt(totale.toString()));
             String percpervenute = calculatePercentage(complete.get(m).getNumerosezioni(), complete.get(m).getTotalesezioni());
             String percvotpervenute = calculatePercentage(complete.get(m).getVotantipervenute(), complete.get(m).getIscrittipervenute());
@@ -482,6 +485,12 @@ public class RicalcoliDraft {
             complete.get(m).setPercentualepervenute(percpervenute);
             complete.get(m).setPercentualevotantipervenute(percvotpervenute);
             complete.get(m).setPercentualevoti(percvot);
+            if(percpervenute.equals("100.00")) {
+                complete.get(m).setPercentualevotantitotale(percpervenute);
+            }
+            else {
+                complete.get(m).setPercentualevotantitotale("0.0");
+            }
         }
     }
 
@@ -506,6 +515,8 @@ public class RicalcoliDraft {
                 complete.get(m).setVotantipervenute(votantimun);
                 List<Long> sezionimun = sezioniService.countAllByTipoelezioneIdAndMunicipioAndTipoelezioneIdIn(tipoelezioneid, numeromunicipio, tipoelezioneid);
                 Long totale = sezionimun.get(0);
+                int iscrittitotali=Integer.parseInt(iscrittiService.countAllByTipoelezioneId(tipoelezioneid).get(0).toString());
+                complete.get(m).setIscrittitotali(iscrittitotali);
                 complete.get(m).setTotalesezioni(Integer.parseInt(totale.toString()));
                 String percpervenute = calculatePercentage(complete.get(m).getNumerosezioni(), complete.get(m).getTotalesezioni());
                 String percvotpervenute = calculatePercentage(complete.get(m).getVotantipervenute(), complete.get(m).getIscrittipervenute());
@@ -513,6 +524,12 @@ public class RicalcoliDraft {
                 complete.get(m).setPercentualepervenute(percpervenute);
                 complete.get(m).setPercentualevotantipervenute(percvotpervenute);
                 complete.get(m).setPercentualevoti(percvot);
+                if(percpervenute.equals("100.00")) {
+                    complete.get(m).setPercentualevotantitotale(percpervenute);
+                }
+                else {
+                    complete.get(m).setPercentualevotantitotale("0.0");
+                }
         }
     }
 }

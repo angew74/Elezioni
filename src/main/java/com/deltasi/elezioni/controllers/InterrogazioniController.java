@@ -18,6 +18,14 @@ import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+/*
+le fasi delle interrogazioni seguono i ricalcoli se è abilitato il ricalcolo è abilitata l'interrogazine quindi sulla configurazione delle fasi
+basta abilitare la fase ricalcolo per abilitare la fase interrogazione anche il codice fase sulla tabella tipo_interrogazioni è lo stesso
+l'interrogazione complessiva (per municipio o per comune) è possibile solo se si è memorizzato almeno un ricalcolo mentre l'interrogazione per sezione è possibile
+sempre basta che la fase sia abilitata
+ */
+
 @Controller
 @RequestMapping(value = "/interrogazioni")
 public class InterrogazioniController {
@@ -69,6 +77,46 @@ public class InterrogazioniController {
             modelAndView.addObject("tipiinterrogazione",i);
             modelAndView.addObject("aggregazioniint", list);
            } else {
+            modelAndView = new ModelAndView("common/unauthorized");
+            modelAndView.addObject("errMsg", "Fase non abilitata");
+        }
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/voti")
+    public ModelAndView voti(Principal principal) {
+        ModelAndView modelAndView = new ModelAndView("interrogazioni/voti");
+        String tipo = "RIL";
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        List<AggregazioneInterrogazione> list = aggregazioneService.findAllByTipoelezioneId(tipoelezioneid);
+        List<TipoInterrogazione> i = tipoInterrogazioneService.findAllByTipoelezioneIdAndCodiceFase(tipoelezioneid, tipo);
+        if (businessRules.IsEnabled(tipo, tipoelezioneid)) {
+            String titolo = businessRules.getTitoloByFase(tipo, "I");
+            modelAndView.addObject("titlepage", titolo);
+            modelAndView.addObject("tipo", tipo);
+            modelAndView.addObject("tipiinterrogazione",i);
+            modelAndView.addObject("aggregazioniint", list);
+        } else {
+            modelAndView = new ModelAndView("common/unauthorized");
+            modelAndView.addObject("errMsg", "Fase non abilitata");
+        }
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/costituzione")
+    public ModelAndView costituzione(Principal principal) {
+        ModelAndView modelAndView = new ModelAndView("interrogazioni/costituzione");
+        String tipo = "RIA";
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        List<AggregazioneInterrogazione> list = aggregazioneService.findAllByTipoelezioneId(tipoelezioneid);
+        List<TipoInterrogazione> i = tipoInterrogazioneService.findAllByTipoelezioneIdAndCodiceFase(tipoelezioneid, tipo);
+        if (businessRules.IsEnabled(tipo, tipoelezioneid)) {
+            String titolo = businessRules.getTitoloByFase(tipo, "I");
+            modelAndView.addObject("titlepage", titolo);
+            modelAndView.addObject("tipo", tipo);
+            modelAndView.addObject("tipiinterrogazione",i);
+            modelAndView.addObject("aggregazioniint", list);
+        } else {
             modelAndView = new ModelAndView("common/unauthorized");
             modelAndView.addObject("errMsg", "Fase non abilitata");
         }

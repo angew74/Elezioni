@@ -27,6 +27,7 @@
                 <span class="text">
              <select id="Aggregazione"
                      required="true"
+                     style="width:250px"
                      data-parsley-errors-container="#errorSelectAggregazione"
                      th:field="*{municipi}">
             <option th:each="e: ${municipi}"
@@ -51,6 +52,7 @@
                 <span class="text">
         <select id="TipoRicalcolo"
                 required="true"
+                style="width:250px"
                 data-parsley-errors-container="#errorSelectTipoRicalcolo"
                 th:field="*{tipiricalcolo}">
             <option th:each="e: ${tipiricalcolo}"
@@ -75,16 +77,16 @@
 <div id="VisualizzazioneRicalcolo" class="container delta_dati" style="display:none;">
     <table id="RicalcoloVotiTable" class="table table-sm table-striped" style="width:100%">
         <thead class="capitolium">
-        <th>Mun</th>
-        <th>Sez Per</th>
-        <th>Sez Tot</th>
-        <th>%</th>
-        <th>Lista</th>
-        <th>Voti</th>
-        <th>%</th>
-        <th>Vot Perv</th>
-        <th>Iscr Per</th>
-        <th>%</th>
+        <th class="text-center">Mun</th>
+        <th class="text-center">Sez Per</th>
+        <th class="text-center">Sez Tot</th>
+        <th class="text-center">%</th>
+        <th class="text-center">Lista</th>
+        <th class="text-center">Voti</th>
+        <th class="text-center">%</th>
+        <th class="text-center">Vot Perv</th>
+        <th class="text-center">Iscr Per</th>
+        <th class="text-center">%</th>
         </thead>
     </table>
     <div class="form-group">
@@ -96,4 +98,5 @@
         </div>
     </div>
 </div>
+<div th:replace="fragments/footer :: footer"/>
 </body>

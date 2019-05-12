@@ -14,13 +14,13 @@
     <ul>
         <li>
             <h3><a href="#">
-                <i class="fas fa-percentage"></i>Interrogazioni</a></h3>
+                <i class="fas fa-history"></i>Interrogazioni</a></h3>
             <ul>
-                <li><a th:if="${#lists.contains(fasi, 'RIA')}" href="/interrograzioni/costituzione">
+                <li><a th:if="${#lists.contains(fasi, 'RIA')}" href="/interrogazioni/costituzione">
                     <i class="fas fa-check-double"></i>Costituzione-Apertura</a>
                 </li>
                 <li><a th:if="${#lists.contains(fasi, 'RIC')}" href="/interrogazioni/affluenza">
-                    <i class="fas fa-check-double"></i>Affluenza</a>
+                    <i class="far fa-thumbs-up"></i>Affluenza</a>
                 </li>
                 <li>
                     <a th:if="${#lists.contains(fasi, 'RIL')}" href="/interrogazioni/voti">

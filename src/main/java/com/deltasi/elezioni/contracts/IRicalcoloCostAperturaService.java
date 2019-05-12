@@ -7,6 +7,7 @@ import java.util.List;
 public interface IRicalcoloCostAperturaService {
     void add(RicalcoloCostApertura cost);
     void update(RicalcoloCostApertura cost);
+    void SaveAll(List<RicalcoloCostApertura> list);
     void delete(Long id);
     List<RicalcoloCostApertura> findAllBy();
     RicalcoloCostApertura findAllById(int id);
@@ -16,4 +17,7 @@ public interface IRicalcoloCostAperturaService {
     List<RicalcoloCostApertura> findByMunicipioAndTipoelezioneId(int municipio, int tipoRicalcoloId);
     List<RicalcoloCostApertura> findByMunicipioAndTipoelezioneIdOrderByDataoperazioneDesc(int municipio, int tipoRicalcoloId);
     List<RicalcoloCostApertura> findByMunicipioAndTipoelezioneIdAndTiporicalcoloIdOrderByDataoperazioneDesc(int municipio, int tipoElezioneId, int tipoRicalcoloId);
+    List<RicalcoloCostApertura> findByTipoelezioneIdAndTiporicalcoloIdAndMunicipioNotIn(int tipoElezioneId, int tipoRicalcoloId,int municipio);
+    List<RicalcoloCostApertura> findTopByTipoelezioneIdAndTiporicalcoloIdAndMunicipioNotInOrderByDataoperazioneDesc(int tipoElezioneId, int tipoRicalcoloId,int municipio);
+    List<RicalcoloCostApertura> findTopByTipoelezioneIdAndTiporicalcoloIdAndMunicipioInOrderByDataoperazioneDesc(int tipoElezioneId, int tipoRicalcoloId,int municipio);
 }

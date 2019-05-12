@@ -49,4 +49,19 @@ public class RicalcoloVotiService implements IRicalcoloVotiService {
         return  ricalcoloVotiDAO.findFirstByTipoelezioneIdAndMunicipioOrderByDataoperazioneDesc(tipoElezioneId,ListaId);
     }
 
+    @Override
+    public List<RicalcoloVoti> findByTipoelezioneIdAndTiporicalcoloIdAndMunicipioNotInAndDataoperazioneMax(int tipoElezioneId, int tipoRicalcoloId, int municipio) {
+        return ricalcoloVotiDAO.findByTipoelezioneIdAndTiporicalcoloIdAndMunicipioNotIn(tipoElezioneId,tipoRicalcoloId,municipio);
+    }
+
+    @Override
+    public List<RicalcoloVoti> findTopByTipoelezioneIdAndTiporicalcoloIdAndMunicipioNotInOrderByDataoperazioneDesc(int tipoElezioneId, int tipoRicalcoloId, int municipio) {
+        return ricalcoloVotiDAO.findTopByTipoelezioneIdAndTiporicalcoloIdAndMunicipioNotInOrderByDataoperazioneDesc(tipoElezioneId,tipoRicalcoloId,municipio);
+    }
+
+    @Override
+    public List<RicalcoloVoti> findByTipoelezioneIdAndTiporicalcoloIdAndMunicipioInOrderByDataoperazioneDesc(int tipoElezioneId, int tipoRicalcoloId, int municipio) {
+        return ricalcoloVotiDAO.findByTipoelezioneIdAndTiporicalcoloIdAndMunicipioInOrderByDataoperazioneDesc(tipoElezioneId,tipoRicalcoloId,municipio);
+    }
+
 }

@@ -13,17 +13,17 @@
     <ul>
         <li>
             <h3><a href="#">
-                <i class="fas fa-percentage"></i>Ricalcoli</a></h3>
+                <i class="fa fa-calculator"></i>Ricalcoli</a></h3>
             <ul>
                 <li><a th:if="${#lists.contains(fasi, 'RIA')}" href="/ricalcoli/costituzione">
                     <i class="fas fa-check-double"></i>Costituzione-Apertura</a>
                 </li>
                 <li><a th:if="${#lists.contains(fasi, 'RIC')}" href="/ricalcoli/affluenza">
-                    <i class="fas fa-check-double"></i>Affluenza</a>
+                    <i class="far fa-thumbs-up"></i>Affluenza</a>
                 </li>
                 <li>
                     <a th:if="${#lists.contains(fasi, 'RIL')}" href="/ricalcoli/voti">
-                        <i class="fas fa-calculator"></i>Voti Lista</a></li>
+                        <i class="fas fa-tags"></i>Voti Lista</a></li>
                 <li>
                     <a th:if="${#lists.contains(fasi, 'RIP')}" href="/ricalcoli/preferenze">
                         <i class="fas fa-divide"></i>Preferenze</a></li>
@@ -31,5 +31,6 @@
         </li>
     </ul>
 </div>
+<div th:replace="fragments/footer :: footer"/>
 </body>
 </html>

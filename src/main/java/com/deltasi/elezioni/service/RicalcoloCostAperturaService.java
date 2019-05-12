@@ -17,6 +17,11 @@ public class RicalcoloCostAperturaService implements IRicalcoloCostAperturaServi
     @Autowired
     private RicalcoloCostAperturaDAO ricalcoloCostAperturaDAO;
 
+    @Override
+    public void SaveAll(List<RicalcoloCostApertura> list)
+    {
+        ricalcoloCostAperturaDAO.saveAll(list);
+    }
 
     @Override
     public void add(RicalcoloCostApertura cost) {
@@ -73,6 +78,21 @@ public class RicalcoloCostAperturaService implements IRicalcoloCostAperturaServi
     @Override
     public List<RicalcoloCostApertura> findByMunicipioAndTipoelezioneIdAndTiporicalcoloIdOrderByDataoperazioneDesc(int municipio,int tipoElezioneId, int tipoRicalcoloId) {
         return ricalcoloCostAperturaDAO.findByMunicipioAndTipoelezioneIdAndTiporicalcoloIdOrderByDataoperazioneDesc(municipio,tipoElezioneId, tipoRicalcoloId);
+    }
+
+    @Override
+    public List<RicalcoloCostApertura> findByTipoelezioneIdAndTiporicalcoloIdAndMunicipioNotIn(int tipoElezioneId, int tipoRicalcoloId, int municipio) {
+        return ricalcoloCostAperturaDAO.findByTipoelezioneIdAndTiporicalcoloIdAndMunicipioNotIn(tipoElezioneId,tipoRicalcoloId,municipio);
+    }
+
+    @Override
+    public List<RicalcoloCostApertura> findTopByTipoelezioneIdAndTiporicalcoloIdAndMunicipioNotInOrderByDataoperazioneDesc(int tipoElezioneId, int tipoRicalcoloId, int municipio) {
+        return ricalcoloCostAperturaDAO.findTopByTipoelezioneIdAndTiporicalcoloIdAndMunicipioNotInOrderByDataoperazioneDesc(tipoElezioneId,tipoRicalcoloId,municipio);
+    }
+
+    @Override
+    public List<RicalcoloCostApertura> findTopByTipoelezioneIdAndTiporicalcoloIdAndMunicipioInOrderByDataoperazioneDesc(int tipoElezioneId, int tipoRicalcoloId, int municipio) {
+        return ricalcoloCostAperturaDAO.findTopByTipoelezioneIdAndTiporicalcoloIdAndMunicipioInOrderByDataoperazioneDesc(tipoElezioneId,tipoRicalcoloId,municipio);
     }
 
 

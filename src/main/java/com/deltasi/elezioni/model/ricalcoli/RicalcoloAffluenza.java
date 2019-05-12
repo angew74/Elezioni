@@ -106,6 +106,7 @@ public class RicalcoloAffluenza {
     @Transient
     private Integer sezione;
 
+
     public Integer getId() {
         return id;
     }

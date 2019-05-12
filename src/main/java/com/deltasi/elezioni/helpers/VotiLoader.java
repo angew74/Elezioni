@@ -1,26 +1,28 @@
 package com.deltasi.elezioni.helpers;
 
 import com.deltasi.elezioni.contracts.*;
+import com.deltasi.elezioni.model.configuration.Iscritti;
 import com.deltasi.elezioni.model.configuration.Sezione;
 import com.deltasi.elezioni.model.configuration.TipoElezione;
 import com.deltasi.elezioni.model.json.CandidatoJson;
 import com.deltasi.elezioni.model.json.ListaSemplice;
-import com.deltasi.elezioni.model.risultati.Candidato;
-import com.deltasi.elezioni.model.risultati.Lista;
-import com.deltasi.elezioni.model.risultati.Preferenze;
-import com.deltasi.elezioni.model.risultati.Voti;
+import com.deltasi.elezioni.model.ricalcoli.RicalcoloVoti;
+import com.deltasi.elezioni.model.risultati.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class VotiLoader {
-
+    private static final Logger logger = LogManager.getLogger(AffluenzaLoader.class);
     @Autowired
     ISezioneService sezioneService;
 
@@ -34,10 +36,16 @@ public class VotiLoader {
     ICandidatoService candidatoService;
 
     @Autowired
+    IIscrittiService iIscrittiService;
+
+    @Autowired
     IListaService listaService;
 
     @Autowired
     IVotiService votiService;
+
+    @Autowired
+    IAffluenzaService affluenzaService;
 
     @Autowired
     IPreferenzeService preferenzeService;
@@ -116,4 +124,36 @@ public class VotiLoader {
         }
         return  preferenzeList;
     }
+
+    public RicalcoloVoti votiSplit(Voti v, String tipoInterrogazione) {
+        RicalcoloVoti r = new RicalcoloVoti();
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        Iscritti i = iIscrittiService.findByTipoelezioneIdAndSezioneNumerosezione(tipoelezioneid,v.getSezione().getNumerosezione());
+        Affluenza a = affluenzaService.findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza3(v.getSezione().getNumerosezione(),tipoelezioneid,1);
+        try {
+         r.setMunicipio(v.getSezione().getMunicipio());
+         r.setSezione(v.getSezione().getNumerosezione());
+         r.setNumerovoti(v.getNumerovoti());
+         r.setVotantipervenute(a.getVotantitotali3());
+         r.setPercentualevoti(calculatePercentage(r.getNumerovoti(),r.getVotantipervenute()));
+         r.setIscrittipervenute(i.getIscrittitotaligen());
+         r.setPercentualevotantipervenute(calculatePercentage(r.getVotantipervenute(),r.getIscrittipervenute()));
+         r.setDenominazioneLista(v.getLista().getDenominazione());
+        }
+        catch (Exception ex)
+        {
+            logger.error(ex.getMessage());
+            throw ex;
+        }
+        return r;
+    }
+
+    public String calculatePercentage(double obtained, double total) {
+        double percentage = obtained * 100 / total;
+        NumberFormat nf = NumberFormat.getInstance(); // get instance
+        nf.setMaximumFractionDigits(2); // set decimal places
+        String s = nf.format(percentage);
+        return s;
+    }
+
 }

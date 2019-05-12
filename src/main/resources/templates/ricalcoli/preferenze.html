@@ -27,6 +27,7 @@
                 <span class="text">
              <select id="Aggregazione"
                      required="true"
+                     style="width:250px"
                      data-parsley-errors-container="#errorSelectAggregazione"
                      th:field="*{municipi}">
             <option th:each="e: ${municipi}"
@@ -51,6 +52,7 @@
                 <span class="text">
         <select id="TipoRicalcolo"
                 required="true"
+                style="width:250px"
                 data-parsley-errors-container="#errorSelectTipoRicalcolo"
                 th:field="*{tipiricalcolo}">
             <option th:each="e: ${tipiricalcolo}"
@@ -74,6 +76,7 @@
                 <span class="text">
             <select id="Liste"
                     required="true"
+                    style="width:250px"
                    data-parsley-errors-container="#errorSelectLista">
                 <option th:each="e: ${Liste}"
                         th:value="${e.getId()}"
@@ -120,4 +123,5 @@
         </div>
     </div>
 </div>
+<div th:replace="fragments/footer :: footer"/>
 </body>

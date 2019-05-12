@@ -87,11 +87,11 @@ jQuery(document).ready(function ($) {
                             $("#divVotantiFemmineaffp").show();
                             $("#divVotantiMaschiaffp").show();
                             $("#divVotantiTotaliaffp").show();
-                            $("#footer").removeClass("absolute");
-                            $("#footer").addClass("relative");
                         }
                         if (res.tipo === "2A" || res.tipo === "R2A") {
                             if (tipoPagina != "A") {
+                                $("#footer").removeClass("absolute");
+                                $("#footer").addClass("relative");
                                 $("#affluenza").show();
                             } else {
                                 $("#annullaffluenza").show();
@@ -99,6 +99,8 @@ jQuery(document).ready(function ($) {
                         }
                         if (res.tipo === "3C" || res.tipo === "R3C") {
                             if (tipoPagina != "A") {
+                                $("#footer").removeClass("absolute");
+                                $("#footer").addClass("relative");
                                 $("#affluenza").show();
                             } else {
                                 $("#annullaffluenza").show();
@@ -169,6 +171,8 @@ jQuery(document).ready(function ($) {
                         var votanti = res.votanti;
                         $("#Votanti").text(votanti);
                         $("#Iscritti").text(res.iscritti);
+                        $("#footer").removeClass("absolute");
+                        $("#footer").addClass("relative");
                         var url = "/preferenze/spoglio/" + lista + "/" + res.tipo+ "/" + res.numerosezione;
                         $("#spogliodiv").load(url);
                         $("#spoglio").show();
@@ -213,9 +217,13 @@ jQuery(document).ready(function ($) {
                         $("#tiposezione").text(" Tipo sezione: " + res.iscritti.sezione.tiposezione.descrizione);
                         $("#sezionediv").show();
                         if (res.tipo === "RVL" || res.tipo === "VL") {
+                            $("#footer").removeClass("absolute");
+                            $("#footer").addClass("relative");
                             ajaxPrepopulateVoti();
                         }
                         if (res.tipo === "PE" || res.tipo === "RPE") {
+                            $("#footer").removeClass("absolute");
+                            $("#footer").addClass("relative");
                             ajaxPrepopulatePreferenze();
                         }
                         else {

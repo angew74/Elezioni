@@ -1,6 +1,11 @@
 jQuery(document).ready(function ($) {
      $('#butttonRicalcolo').click(function(){
         ajaxPostRicalcolo();
+         $('#RicalcoloAffluenzaTable').dataTable( {
+             "language": {
+                 "url": "/js/lang/italian.json"
+             }
+         } );
     });
     $("#btnSalvaRicalcolo").on('click', ajaxSalvaRicalcolo);
 
@@ -29,13 +34,17 @@ jQuery(document).ready(function ($) {
                 .done(function (data) {
                     try {
                         if (data !== null) {
+                            if(data.length > 5)
+                            {
+                                $("#footer").removeClass("absolute");
+                                $("#footer").addClass("relative");
+                            }
+                            else {
+                                $("#footer").removeClass("relative");
+                                $("#footer").addClass("absolute");
+                            }
                             var responseRicalcolo = data;
-                          /*  if ($.fn.DataTable.isDataTable("#RicalcoloAffluenzaTable")) {
-                                $("#RicalcoloAffluenzaTable").DataTable().clear().draw();
-                                $("#RicalcoloAffluenzaTable").DataTable().destroy();
-                                $("#RicalcoloAffluenzaTable thead").html('');
-                            }*/
-                            $("#RicalcoloAffluenzaTable").DataTable({
+                             $("#RicalcoloAffluenzaTable").DataTable({
                                 data:responseRicalcolo,
                                 searching: false,
                                 paging: false,

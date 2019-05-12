@@ -15,6 +15,12 @@ import java.time.LocalDateTime;
 @Table(name = "ricalcolo_voti")
 public class RicalcoloVoti {
 
+
+    public RicalcoloVoti()
+    {
+
+    }
+
     public RicalcoloVoti(Long numeroVoti, Integer idLista, String listaNew, int Municipio)
     {
         super();
@@ -125,6 +131,10 @@ public class RicalcoloVoti {
     @Column(name = "numero_voti")
     private Integer numerovoti;
 
+    @Transient
+    private  Integer sezione;
+    @Transient
+    private  String denominazioneLista;
 
     public Integer getId() {
         return id;
@@ -269,5 +279,21 @@ public class RicalcoloVoti {
 
     public void setVotantitotale(Integer votantitotale) {
         this.votantitotale = votantitotale;
+    }
+
+    public Integer getSezione() {
+        return sezione;
+    }
+
+    public void setSezione(Integer sezione) {
+        this.sezione = sezione;
+    }
+
+    public String getDenominazioneLista() {
+        return denominazioneLista;
+    }
+
+    public void setDenominazioneLista(String denominazioneLista) {
+        this.denominazioneLista = denominazioneLista;
     }
 }

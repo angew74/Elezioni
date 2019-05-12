@@ -117,4 +117,9 @@ public class VotiService implements IVotiService {
         List<RicalcoloVoti> l=  votiDAO.countVotantiPervenuteByMunicipio(tipoelezioneid,municipio);
         return  l;
     }
+
+    @Override
+    public List<Voti> findBySezionePlessoIdAndTipoelezioneId(int plessoid, int tipoelezioneid) {
+        return votiDAO.findBySezionePlessoIdAndTipoelezioneId(plessoid,tipoelezioneid);
+    }
 }

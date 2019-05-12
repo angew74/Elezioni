@@ -34,6 +34,15 @@ jQuery(document).ready(function ($) {
                 .done(function (data) {
                     try {
                         if (data !== null) {
+                            if(data.length > 8)
+                            {
+                                $("#footer").removeClass("absolute");
+                                $("#footer").addClass("relative");
+                            }
+                            else {
+                                $("#footer").removeClass("relative");
+                                $("#footer").addClass("absolute");
+                            }
                             var responseRicalcolo = data;
                             $("#RicalcoloPreferenzeTable").DataTable({
                                 data:responseRicalcolo,

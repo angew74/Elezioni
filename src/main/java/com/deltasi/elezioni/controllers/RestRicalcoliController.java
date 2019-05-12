@@ -2,6 +2,7 @@ package com.deltasi.elezioni.controllers;
 
 
 import com.deltasi.elezioni.contracts.IRicalcoloAffluenzaService;
+import com.deltasi.elezioni.contracts.IRicalcoloCostAperturaService;
 import com.deltasi.elezioni.contracts.IRicalcoloPreferenzeService;
 import com.deltasi.elezioni.contracts.IRicalcoloVotiService;
 import com.deltasi.elezioni.helpers.RicalcoliDraft;
@@ -50,6 +51,9 @@ public class RestRicalcoliController {
 
     @Autowired
     private IRicalcoloAffluenzaService ricalcoloAffluenzaService;
+
+    @Autowired
+    private IRicalcoloCostAperturaService ricalcoloCostAperturaService;
 
     @Autowired
     private IRicalcoloVotiService ricalcoloVotiService;
@@ -178,6 +182,32 @@ public class RestRicalcoliController {
         return l;
     }
 
+    @GetMapping(value = "/salvaricalcolocostituzione/{aggregazione}/{tipoRicalcolo}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Secured("ROLE_ADMIN")
+    public List<RicalcoloCostApertura> salvaRicalcoloCostAper(@PathVariable("aggregazione") String aggregazione, @PathVariable("tipoRicalcolo") String tipoRicalcolo
+    ) {
+
+        List<RicalcoloCostApertura> l = new ArrayList<>();
+        try {
+            l = (List<RicalcoloCostApertura>) stateHelper.get("Ricalcolo");
+            //l =(List<RicalcoloAffluenza>) httpSession.getAttribute("Ricalcolo");
+            if (l.get(0).getTiporicalcolo().getCodice().equals(tipoRicalcolo)) {
+                ricalcoloCostAperturaService.SaveAll(l);
+            } else {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST, "Ricalcolo non congruente");
+            }
+        } catch (AccessDeniedException e) {
+            logger.warn("Unauthorized", e);
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Risorsa non trovata", ex);
+        }
+        stateHelper.remove("Ricalcolo");
+        return l;
+    }
+
     @GetMapping(value = "/salvaricalcolovoti/{aggregazione}/{tipoRicalcolo}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Secured("ROLE_ADMIN")
     public List<RicalcoloVoti> salvaRicalcoloVoti(@PathVariable("aggregazione") String aggregazione, @PathVariable("tipoRicalcolo") String tipoRicalcolo
@@ -204,7 +234,7 @@ public class RestRicalcoliController {
         return l;
     }
 
-    @GetMapping(value = "/salvaricalcolopreferenze/{aggregazione}/{tipoRicalcolo}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/salvaricalcolopreferenze/{aggregazione}/{tipoRicalcolo}/{lista}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Secured("ROLE_ADMIN")
     public List<RicalcoloPreferenze> salvaRicalcoloPreferenze(@PathVariable("aggregazione") String aggregazione, @PathVariable("tipoRicalcolo") String tipoRicalcolo,@PathVariable("lista") int lista
     ) {

@@ -1,6 +1,9 @@
 /*--------------------
 General Style
 ---------------------*/
+@import "../font-awesome/all.min.css";
+
+
 *,
 *::before,
 *::after {

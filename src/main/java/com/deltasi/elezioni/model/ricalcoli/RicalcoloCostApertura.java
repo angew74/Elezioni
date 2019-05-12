@@ -14,6 +14,10 @@ import java.time.LocalDateTime;
 @Table(name = "ricalcoli_apertura_costituzione")
 public class RicalcoloCostApertura {
 
+    public RicalcoloCostApertura()
+    {
+
+    }
 
     public RicalcoloCostApertura(Long numeroCostituite, Long numeroAperte)
     {
@@ -104,6 +108,19 @@ public class RicalcoloCostApertura {
 
     @Column(name = "data_operazione")
     private LocalDateTime dataoperazione;
+
+    @Transient
+    private Integer sezione;
+
+    @Transient
+    private String status;
+
+    @Transient
+    private Integer iscrittimaschi;
+
+    @Transient
+    private Integer iscrittifemmine;
+
 
     public Integer getId() {
         return id;
@@ -200,4 +217,38 @@ public class RicalcoloCostApertura {
     public void setPercentualeaperte(String percentualeaperte) {
         this.percentualeaperte = percentualeaperte;
     }
+
+    public Integer getSezione() {
+        return sezione;
+    }
+
+    public void setSezione(Integer sezione) {
+        this.sezione = sezione;
+    }
+
+    public Integer getIscrittimaschi() {
+        return iscrittimaschi;
+    }
+
+    public void setIscrittimaschi(Integer iscrittimaschi) {
+        this.iscrittimaschi = iscrittimaschi;
+    }
+
+    public Integer getIscrittifemmine() {
+        return iscrittifemmine;
+    }
+
+    public void setIscrittifemmine(Integer iscrittifemmine) {
+        this.iscrittifemmine = iscrittifemmine;
+    }
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
 }

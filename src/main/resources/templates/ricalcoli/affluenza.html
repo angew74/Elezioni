@@ -27,6 +27,7 @@
                 <span class="text">
              <select id="Aggregazione"
                      required="true"
+                     style="width:250px"
                      data-parsley-errors-container="#errorSelectAggregazione"
                      th:field="*{aggregazioni}">
             <option th:each="e: ${aggregazioni}"
@@ -51,6 +52,7 @@
                 <span class="text">
         <select id="TipoRicalcolo"
                 required="true"
+                style="width:250px"
                 data-parsley-errors-container="#errorSelectTipoRicalcolo"
                 th:field="*{tipiricalcolo}">
             <option th:each="e: ${tipiricalcolo}"
@@ -75,8 +77,8 @@
 <div id="VisualizzazioneRicalcolo" class="container delta_dati" style="display:none;">
     <table id="RicalcoloAffluenzaTable" class="table table-sm table-striped" style="width:100%">
         <thead class="capitolium">
-        <th>Municipio</th>
-        <th>Sezioni Pervenute</th>
+        <th class="text-center">Municipio</th>
+        <th class="text-center">Sezioni Pervenute</th>
         <th>Sezioni Totali</th>
         <th>%</th>
         <th>Votanti Maschi</th>
@@ -99,4 +101,5 @@
         </div>
     </div>
 </div>
+<div th:replace="fragments/footer :: footer"/>
 </body>

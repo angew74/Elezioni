@@ -2,7 +2,8 @@ jQuery(document).ready(function ($) {
     $('#butttonRicalcolo').click(function(){
         ajaxPostRicalcolo();
     });
-    $("#btnSalvaRicalcolo").on('click', ajaxSalvaRicalcolo);
+    $("#btnSalvaRicalcoloCostituzione").on('click', ajaxSalvaRicalcolo);
+    $("#btnSalvaRicalcoloApertura").on('click', ajaxSalvaRicalcolo);
 
     function ajaxPostRicalcolo() {
         var errorcontainer = '#errorModal';
@@ -29,24 +30,53 @@ jQuery(document).ready(function ($) {
                 .done(function (data) {
                     try {
                         if (data !== null) {
+                            if(data.length > 5)
+                            {
+                                $("#footer").removeClass("absolute");
+                                $("#footer").addClass("relative");
+                            }
+                            else {
+                                $("#footer").removeClass("relative");
+                                $("#footer").addClass("absolute");
+                            }
                             var responseRicalcolo = data;
-                            $("#RicalcoloCostituzioneTable").DataTable({
-                                data:responseRicalcolo,
-                                searching: false,
-                                paging: false,
-                                info: false,
-                                destroy:true,
-                                columns: [
-                                    { data: "municipio" },
-                                    { data: "numerocostituite" },
-                                    { data: "numerosezioni" },
-                                    { data: "percentualecostituite" },
-                                    { data: "numeroaperte" },
-                                    { data: "numerosezioni" },
-                                    { data: "percentualeaperte" },
-                                    { data: "iscrittitotali" }
-                                ]});
-                            $("#VisualizzazioneRicalcolo").show();
+                            if(tipoRicalcolo === "CO1") {
+                                $("#RicalcoloCostituzioneTable").DataTable({
+                                    data: responseRicalcolo,
+                                    searching: false,
+                                    paging: false,
+                                    info: false,
+                                    destroy: true,
+                                    columns: [
+                                        {data: "municipio"},
+                                        {data: "numerocostituite"},
+                                        {data: "numerosezioni"},
+                                        {data: "percentualecostituite"},
+                                        {data: "iscrittitotali"}
+                                    ]
+                                });
+                                $("#VisualizzazioneRicalcoloCostituzione").show();
+                                $("#VisualizzazioneRicalcoloApertura").hide();
+                            }
+                            if(tipoRicalcolo === "AP1")
+                            {
+                                $("#RicalcoloAperturaTable").DataTable({
+                                    data: responseRicalcolo,
+                                    searching: false,
+                                    paging: false,
+                                    info: false,
+                                    destroy: true,
+                                    columns: [
+                                        {data: "municipio"},
+                                        {data: "numeroaperte"},
+                                        {data: "numerosezioni"},
+                                        {data: "percentualeaperte"},
+                                        {data: "iscrittitotali"}
+                                    ]
+                                });
+                                $("#VisualizzazioneRicalcoloApertura").show();
+                                $("#VisualizzazioneRicalcoloCostituzione").hide();
+                            }
                         } else {
                             //Set error messages
                             $.each(data.errorMessages, function (key, value) {

@@ -4,6 +4,7 @@ import com.deltasi.elezioni.contracts.IIscrittiService;
 import com.deltasi.elezioni.controllers.RestInterrogazioniController;
 import com.deltasi.elezioni.model.configuration.Iscritti;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloAffluenza;
+import com.deltasi.elezioni.model.ricalcoli.RicalcoloCostApertura;
 import com.deltasi.elezioni.model.risultati.Affluenza;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -41,7 +42,7 @@ public class AffluenzaLoader {
                     r.setAffluenzafemmine(a.getVotantifemmine1());
                     r.setAffluenzatotale(a.getVotantitotali1());
                     break;
-                case "AF3":
+                case "CHI":
                     r.setAffluenzamaschi(a.getVotantimaschi3());
                     r.setAffluenzafemmine(a.getVotantifemmine3());
                     r.setAffluenzatotale(a.getVotantitotali3());
@@ -70,5 +71,34 @@ public class AffluenzaLoader {
         nf.setMaximumFractionDigits(2); // set decimal places
         String s = nf.format(percentage);
         return s;
+    }
+
+    public RicalcoloCostApertura costituzioneSplit(Affluenza a, String tipoInterrogazione) {
+        RicalcoloCostApertura r = new RicalcoloCostApertura();
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        try {
+            Iscritti i = iIscrittiService.findByTipoelezioneIdAndSezioneNumerosezione(tipoelezioneid,a.getSezione().getNumerosezione());
+            r.setIscrittifemmine(i.getIscrittifemminegen());
+            r.setIscrittimaschi(i.getIscrittimaschigen());
+            r.setIscrittitotali(i.getIscrittitotaligen());
+            r.setMunicipio(i.getMunicipio());
+            r.setSezione(a.getSezione().getNumerosezione());
+            switch (tipoInterrogazione)
+            {
+                case "CO1":
+                    r.setStatus("Costituita");
+                    break;
+                case "AP1":
+                    r.setStatus("Aperta");
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.error(ex.getMessage());
+            throw ex;
+        }
+        return r;
+
     }
 }

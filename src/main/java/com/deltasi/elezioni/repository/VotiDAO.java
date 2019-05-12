@@ -16,6 +16,7 @@ public interface VotiDAO extends JpaRepository<Voti, Long> {
     Voti findById(Integer id);
     List<Voti> findAllBy();
     List<Voti> findBySezioneNumerosezioneAndTipoelezioneId(Integer numerosezione, Integer tipoelezioneid);
+    List<Voti> findBySezionePlessoIdAndTipoelezioneId(Integer numerosezione, Integer tipoelezioneid);
     List<Voti> findByListaIdAndTipoelezioneId(Integer listaid, Integer tipoElezioneId);
     List<Voti> findByListaProgressivoAndTipoelezioneId(Integer progressivo,Integer tipoElezioneId);
     Voti findByListaIdAndSezioneNumerosezioneAndTipoelezioneId(Integer listaid,Integer numerosezione, Integer tipoElezioneId);

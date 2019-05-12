@@ -34,7 +34,7 @@ function ajaxPostInterrogazioni() {
         if ($(this).parsley().validate() !== true)
             isValidSelect = false;
     });
-   if($("#divsezione").is(":visible") === true)
+    if($("#divsezione").is(":visible") === true)
     {
         if ($("#numeroSezione").parsley().validate() !== true)
             isValidSelect = false;
@@ -58,7 +58,7 @@ function ajaxPostInterrogazioni() {
         $.ajax({
             type: "GET",
             contentType: "application/json",
-            url: '/interrogazioni/affluenza/' + aggregazione + '/' + tipoInterrogazione + "/" + sezione + "/" + plesso,
+            url: '/interrogazioni/voti/' + aggregazione + '/' + tipoInterrogazione + "/" + sezione + "/" + plesso,
             dataType: 'json'
         })
             .done(function (data) {
@@ -75,7 +75,7 @@ function ajaxPostInterrogazioni() {
                         }
                         var responseInterrogazione = data;
                         if (aggregazione === "SEZ" || aggregazione === "PLE") {
-                            $("#InterrogazioneAffluenzaTableSez").DataTable({
+                            $("#InterrogazioneVotiTableSez").DataTable({
                                 data: responseInterrogazione,
                                 searching: false,
                                 paging: false,
@@ -84,40 +84,34 @@ function ajaxPostInterrogazioni() {
                                 columns: [
                                     {data: "sezione"},
                                     {data: "municipio"},
-                                    {data: "affluenzamaschi"},
-                                    {data: "iscrittimaschi"},
-                                    {data: "percentualemaschi"},
-                                    {data: "affluenzafemmine"},
-                                    {data: "iscrittifemmine"},
-                                    {data: "percentualefemmine"},
-                                    {data: "affluenzatotale"},
-                                    {data: "iscrittitotali"},
-                                    {data: "percentualetotale"}
+                                    {data: "denominazioneLista"},
+                                    {data: "numerovoti"},
+                                    {data: "percentualevoti"},
+                                    {data: "votantipervenute"},
+                                    {data: "iscrittipervenute"},
+                                    {data: "percentualevotantipervenute"}
                                 ]
                             });
                             $("#VisualizzazioneInterrogazioneSez").show();
                             $("#VisualizzazioneInterrogazione").hide();
                         } else {
-                            $("#InterrogazioneAffluenzaTable").DataTable({
+                            $("#InterrogazioneVotiTable").DataTable({
                                 data: responseInterrogazione,
                                 searching: false,
                                 paging: false,
                                 info: false,
                                 destroy: true,
                                 columns: [
-                                    {data: "municipio"},
-                                    {data: "numerosezioni"},
-                                    {data: "totalesezioni"},
-                                    {data: "percentualepervenute"},
-                                    {data: "affluenzamaschi"},
-                                    {data: "iscrittimaschi"},
-                                    {data: "percentualemaschi"},
-                                    {data: "affluenzafemmine"},
-                                    {data: "iscrittifemmine"},
-                                    {data: "percentualefemmine"},
-                                    {data: "affluenzatotale"},
-                                    {data: "iscrittitotali"},
-                                    {data: "percentualetotale"}
+                                    { data: "municipio" },
+                                    { data: "numerosezioni" },
+                                    { data: "totalesezioni" },
+                                    { data: "percentualepervenute" },
+                                    { data: "lista.denominazione" },
+                                    { data: "numerovoti" },
+                                    { data: "percentualevoti" },
+                                    { data: "votantipervenute"},
+                                    { data: "iscrittipervenute" },
+                                    { data: "percentualevotantipervenute" }
                                 ]
                             });
                             $("#VisualizzazioneInterrogazione").show();

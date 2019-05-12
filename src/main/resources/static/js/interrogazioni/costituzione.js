@@ -1,4 +1,14 @@
 jQuery(document).ready(function ($) {
+    $('#InterrogazioneCostituzioneTableSez').dataTable( {
+        "language": {
+            "url": "/js/lang/italian.json"
+        }
+    } );
+    $('#InterrogazioneCostituzioneTable').dataTable( {
+        "language": {
+            "url": "/js/lang/italian.json"
+        }
+    } );
     $('#butttonInterroga').click(function () {
         ajaxPostInterrogazioni();
     });
@@ -11,11 +21,9 @@ function ajaxPostAggregazione() {
     var aggregazione = $("#Aggregazione").val();
     if (aggregazione === "SEZ") {
         $("#divsezione").show();
-        $("#divplesso").hide();
     }
     if (aggregazione === "PLE") {
         $("#divplesso").show();
-        $("#divsezione").hide();
     }
 }
 
@@ -34,7 +42,7 @@ function ajaxPostInterrogazioni() {
         if ($(this).parsley().validate() !== true)
             isValidSelect = false;
     });
-   if($("#divsezione").is(":visible") === true)
+    if($("#divsezione").is(":visible") === true)
     {
         if ($("#numeroSezione").parsley().validate() !== true)
             isValidSelect = false;
@@ -58,7 +66,7 @@ function ajaxPostInterrogazioni() {
         $.ajax({
             type: "GET",
             contentType: "application/json",
-            url: '/interrogazioni/affluenza/' + aggregazione + '/' + tipoInterrogazione + "/" + sezione + "/" + plesso,
+            url: '/interrogazioni/costituzione/' + aggregazione + '/' + tipoInterrogazione + "/" + sezione + "/" + plesso,
             dataType: 'json'
         })
             .done(function (data) {
@@ -75,7 +83,7 @@ function ajaxPostInterrogazioni() {
                         }
                         var responseInterrogazione = data;
                         if (aggregazione === "SEZ" || aggregazione === "PLE") {
-                            $("#InterrogazioneAffluenzaTableSez").DataTable({
+                            $("#InterrogazioneCostituzioneTableSez").DataTable({
                                 data: responseInterrogazione,
                                 searching: false,
                                 paging: false,
@@ -84,21 +92,16 @@ function ajaxPostInterrogazioni() {
                                 columns: [
                                     {data: "sezione"},
                                     {data: "municipio"},
-                                    {data: "affluenzamaschi"},
                                     {data: "iscrittimaschi"},
-                                    {data: "percentualemaschi"},
-                                    {data: "affluenzafemmine"},
                                     {data: "iscrittifemmine"},
-                                    {data: "percentualefemmine"},
-                                    {data: "affluenzatotale"},
                                     {data: "iscrittitotali"},
-                                    {data: "percentualetotale"}
+                                    {data: "status"}
                                 ]
                             });
-                            $("#VisualizzazioneInterrogazioneSez").show();
-                            $("#VisualizzazioneInterrogazione").hide();
+                            $("#VisualizzazioneInterrogazioneSezCostituzione").show();
+                            $("#VisualizzazioneInterrogazioneCostituzione").hide();
                         } else {
-                            $("#InterrogazioneAffluenzaTable").DataTable({
+                            $("#InterrogazioneCostituzioneTable").DataTable({
                                 data: responseInterrogazione,
                                 searching: false,
                                 paging: false,
@@ -107,21 +110,15 @@ function ajaxPostInterrogazioni() {
                                 columns: [
                                     {data: "municipio"},
                                     {data: "numerosezioni"},
-                                    {data: "totalesezioni"},
-                                    {data: "percentualepervenute"},
-                                    {data: "affluenzamaschi"},
-                                    {data: "iscrittimaschi"},
-                                    {data: "percentualemaschi"},
-                                    {data: "affluenzafemmine"},
-                                    {data: "iscrittifemmine"},
-                                    {data: "percentualefemmine"},
-                                    {data: "affluenzatotale"},
-                                    {data: "iscrittitotali"},
-                                    {data: "percentualetotale"}
+                                    {data: "numerocostituite"},
+                                    {data: "percentualecostituite"},
+                                    {data: "numeroaperte"},
+                                    {data: "percentualeaperte"},
+                                    {data: "iscrittitotali"}
                                 ]
                             });
-                            $("#VisualizzazioneInterrogazione").show();
-                            $("#VisualizzazioneInterrogazioneSez").hide();
+                            $("#VisualizzazioneInterrogazioneSezCostituzione").hide();
+                            $("#VisualizzazioneInterrogazioneCostituzione").show();
                         }
                     } else {
                         //Set error messages

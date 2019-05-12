@@ -72,27 +72,44 @@
     </div>
 </div>
 </div>
-<div id="VisualizzazioneRicalcolo" class="container delta_dati" style="display:none;">
+<div id="VisualizzazioneRicalcoloCostituzione" class="container delta_dati" style="display:none;">
     <table id="RicalcoloCostituzioneTable" class="table table-sm table-striped" style="width:100%">
         <thead class="capitolium">
-        <th>Municipio</th>
-        <th>Sezioni Costituite</th>
-        <th>Sezioni Totali</th>
-        <th>%</th>
-        <th>Sezioni Aperte</th>
-        <th>Sezioni Totali</th>
-        <th>%</th>
-        <th>Iscritti Totali</th>
+        <th class="text-center">Municipio</th>
+        <th class="text-center">Sezioni Costituite</th>
+        <th class="text-center">Sezioni Totali</th>
+        <th class="text-center">%</th>
+        <th class="text-center">Iscritti Totali</th>
         </thead>
     </table>
     <div class="form-group">
         <div class="col-md-8">
-            <button id="btnSalvaRicalcolo"
+            <button id="btnSalvaRicalcoloCostituzione"
                     class="btn btn-dark btn-sm float-right submit_btn">
                 <i class="fas fa-arrow-alt-circle-right" style="margin-right:5px"></i>Salva
             </button>
         </div>
     </div>
 </div>
+<div id="VisualizzazioneRicalcoloApertura" class="container delta_dati" style="display:none;">
+    <table id="RicalcoloAperturaTable" class="table table-sm table-striped" style="width:100%">
+        <thead class="capitolium">
+        <th class="text-center">Municipio</th>
+        <th class="text-center">Sezioni Aperte</th>
+        <th class="text-center">Sezioni Totali</th>
+        <th class="text-center">%</th>
+        <th class="text-center">Iscritti Totali</th>
+        </thead>
+    </table>
+    <div class="form-group">
+        <div class="col-md-8">
+            <button id="btnSalvaRicalcoloApertura"
+                    class="btn btn-dark btn-sm float-right submit_btn">
+                <i class="fas fa-arrow-alt-circle-right" style="margin-right:5px"></i>Salva
+            </button>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer"/>
 </body>
 
