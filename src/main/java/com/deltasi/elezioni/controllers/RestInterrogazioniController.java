@@ -5,6 +5,8 @@ import com.deltasi.elezioni.contracts.*;
 import com.deltasi.elezioni.helpers.AffluenzaLoader;
 import com.deltasi.elezioni.helpers.RicalcoliDraft;
 import com.deltasi.elezioni.helpers.VotiLoader;
+import com.deltasi.elezioni.model.authentication.User;
+import com.deltasi.elezioni.model.configuration.Plesso;
 import com.deltasi.elezioni.model.configuration.TipoRicalcolo;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloAffluenza;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloCostApertura;
@@ -13,18 +15,17 @@ import com.deltasi.elezioni.model.ricalcoli.RicalcoloVoti;
 import com.deltasi.elezioni.model.risultati.Affluenza;
 import com.deltasi.elezioni.model.risultati.Preferenze;
 import com.deltasi.elezioni.model.risultati.Voti;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -59,6 +60,11 @@ public class RestInterrogazioniController {
     @Autowired
     private IPreferenzeService preferenzeService;
 
+    @Autowired
+    private IPlessoService plessoService;
+
+    @Autowired
+    private IUserService userService;
 
     @Autowired
     private IRicalcoloCostAperturaService ricalcoloCostAperturaService;
@@ -191,8 +197,8 @@ public class RestInterrogazioniController {
     @GetMapping(value = "/preferenze/{aggregazione}/{tipoInterrogazione}/{sezione}/{plesso}/{idlista}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public List<RicalcoloPreferenze> preferenze(@PathVariable("aggregazione") String aggregazione, @PathVariable("tipoInterrogazione")
             String tipoInterrogazione, @PathVariable("sezione") Optional<String> sezione,
-                                          @PathVariable("plesso") Optional<String> plesso,
-                                          @PathVariable("idlista") String idlista
+                                                @PathVariable("plesso") Optional<String> plesso,
+                                                @PathVariable("idlista") String idlista
     ) {
         Map<String, String> errors = null;
         List<RicalcoloPreferenze> l = new ArrayList<RicalcoloPreferenze>();
@@ -203,14 +209,14 @@ public class RestInterrogazioniController {
             int id = Integer.parseInt(idlista);
             switch (aggregazione) {
                 case "MUN":
-                    l = ricalcoloPreferenzeService.findByTipoelezioneIdAndTiporicalcoloIdAndMunicipioNotIn(tipoelezioneid, tipiRicalcolo.get(0).getId(), 99,id);
+                    l = ricalcoloPreferenzeService.findByTipoelezioneIdAndTiporicalcoloIdAndMunicipioNotIn(tipoelezioneid, tipiRicalcolo.get(0).getId(), 99, id);
                     break;
                 case "COM":
-                    l = ricalcoloPreferenzeService.findByTipoelezioneIdAndTiporicalcoloIdAndMunicipioInOrderByDataoperazioneDesc(tipoelezioneid, tipiRicalcolo.get(0).getId(),99, id);
+                    l = ricalcoloPreferenzeService.findByTipoelezioneIdAndTiporicalcoloIdAndMunicipioInOrderByDataoperazioneDesc(tipoelezioneid, tipiRicalcolo.get(0).getId(), 99, id);
                     break;
                 case "SEZ":
                     int n = Integer.parseInt(sezione.get());
-                    b = preferenzeService.findByListaIdAndSezioneNumerosezioneAndTipoelezioneId(id,n, tipoelezioneid);
+                    b = preferenzeService.findByListaIdAndSezioneNumerosezioneAndTipoelezioneId(id, n, tipoelezioneid);
                     for (Preferenze v : b
                     ) {
                         RicalcoloPreferenze r = votiLoader.preferenzeSplit(v, tipoInterrogazione);
@@ -218,7 +224,7 @@ public class RestInterrogazioniController {
                     }
                     break;
                 case "PLE":
-                   throw new Exception("ricerca non implementata");
+                    throw new Exception("ricerca non implementata");
             }
         } catch (AccessDeniedException e) {
             logger.warn("Unauthorized", e);
@@ -290,4 +296,60 @@ public class RestInterrogazioniController {
         return l;
     }
 
+    @GetMapping("/autocompletePlesso")
+    public ResponseEntity<List<String>> doAutoCompletePlesso(@RequestParam("q") final String input, @RequestParam("t") final String tipo) {
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        List<Plesso> plessos = new ArrayList<Plesso>();
+        List<String> strings = new ArrayList<String>();
+        try {
+            switch (tipo) {
+                case "D":
+                    plessos = plessoService.findByTipoelezioneIdAndDescrizioneLike(tipoelezioneid, "%" + input.toUpperCase() + "%");
+                    if (plessos != null) {
+                        for (Plesso p : plessos
+                        ) {
+                            strings.add(p.getDescrizione());
+                        }
+                    }
+                    break;
+                case "U":
+                    plessos = plessoService.findByTipoelezioneIdAndUbicazioneLike(tipoelezioneid, "%" + input.toUpperCase() + "%");
+                    if (plessos != null) {
+                        for (Plesso p : plessos
+                        ) {
+                            strings.add(p.getDescrizione());
+                        }
+                    }
+                    break;
+            }
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Risorsa non trovata", ex);
+        }
+        return new ResponseEntity<List<String>>(strings, HttpStatus.OK);
+    }
+
+    @GetMapping("/autocompleteUser")
+    public ResponseEntity<List<String>> doAutoCompleteUser(@RequestParam("q") final String input) {
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        List<User> users = new ArrayList<User>();
+        List<String> strings = new ArrayList<String>();
+        try {
+
+            users = userService.getByUserNameLike("%" + input.toUpperCase() + "%");
+            if (users != null) {
+                for (User u : users
+                ) {
+                    strings.add(u.getUsername());
+                }
+            }
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Risorsa non trovata", ex);
+        }
+        return new ResponseEntity<List<String>>(strings, HttpStatus.OK);
+    }
 }

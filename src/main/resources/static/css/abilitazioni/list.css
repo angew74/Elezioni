@@ -72,7 +72,8 @@ i {
 
 #accordian a:not(:only-child):after {
     content: "\f104";
-    font-family: fontawesome;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
     position: absolute;
     right: 10px;
     top: 0;
@@ -81,4 +82,11 @@ i {
 
 #accordian .active>a:not(:only-child):after {
     content: "\f107";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+.parsley-errors-list
+{
+    margin: 12px 7px 3px;
 }

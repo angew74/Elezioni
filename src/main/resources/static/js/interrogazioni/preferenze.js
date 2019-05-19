@@ -91,11 +91,9 @@ function ajaxPostInterrogazioni() {
                                     {data: "sezione"},
                                     {data: "municipio"},
                                     {data: "denominazioneLista"},
+                                    {data: "denominazioneCandidato"},
                                     {data: "numerovoti"},
-                                    {data: "percentualevoti"},
-                                    {data: "votantipervenute"},
-                                    {data: "iscrittipervenute"},
-                                    {data: "percentualevotantipervenute"}
+                                    {data: "percentualevoti"}
                                 ]
                             });
                             $("#VisualizzazioneInterrogazioneSez").show();
@@ -112,12 +110,10 @@ function ajaxPostInterrogazioni() {
                                     { data: "numerosezioni" },
                                     { data: "totalesezioni" },
                                     { data: "percentualepervenute" },
-                                    { data: "lista.denominazione" },
+                                    { data: "denominazioneLista" },
+                                    { data:"denominazioneCandidato"},
                                     { data: "numerovoti" },
-                                    { data: "percentualevoti" },
-                                    { data: "votantipervenute"},
-                                    { data: "iscrittipervenute" },
-                                    { data: "percentualevotantipervenute" }
+                                    { data: "percentualevoti" }
                                 ]
                             });
                             $("#VisualizzazioneInterrogazione").show();

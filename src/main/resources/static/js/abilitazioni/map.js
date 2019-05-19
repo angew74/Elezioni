@@ -1,3 +1,9 @@
+
+jQuery(document).ready(function ($) {
+    $("#footer").removeClass("absolute");
+    $("#footer").addClass("relative");
+});
+
 function update(id) {
     /*  Submit form using Ajax */
     var errorcontainer = '#errorModal';

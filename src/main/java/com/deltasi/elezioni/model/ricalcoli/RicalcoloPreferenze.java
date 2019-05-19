@@ -8,6 +8,7 @@ import com.deltasi.elezioni.model.risultati.Candidato;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,28 +17,26 @@ import java.time.LocalDateTime;
 @Table(name = "ricalcolo_preferenze")
 public class RicalcoloPreferenze {
 
-    public RicalcoloPreferenze()
-    {
+    public RicalcoloPreferenze() {
 
     }
 
-    public RicalcoloPreferenze(Long numeroVoti, Integer idLista, String listaNew, int Municipio)
-    {
+    public RicalcoloPreferenze(Long numeroVoti, Integer idLista, String listaNew, int Municipio) {
         super();
-        this.numerovoti=Integer.parseInt(numeroVoti.toString());
+        this.numerovoti = Integer.parseInt(numeroVoti.toString());
         this.lista = new Lista();
         this.lista.setDenominazione(listaNew);
         this.lista.setId(idLista);
         this.municipio = Municipio;
     }
-       public RicalcoloPreferenze(Long numeroVoti,Integer idcandidato, String Nome, String Cognome, String Sesso, Integer Idlista, String ListaNew)
-    {
+
+    public RicalcoloPreferenze(Long numeroVoti, Integer idcandidato, String Nome, String Cognome, String Sesso, Integer Idlista, String ListaNew) {
         super();
-        this.numerovoti=Integer.parseInt(numeroVoti.toString());
+        this.numerovoti = Integer.parseInt(numeroVoti.toString());
         this.lista = new Lista();
         this.lista.setDenominazione(ListaNew);
         this.lista.setId(Idlista);
-        this.candidato= new Candidato();
+        this.candidato = new Candidato();
         this.getCandidato().setId(idcandidato);
         this.getCandidato().setCognome(Cognome);
         this.getCandidato().setSesso(Sesso);
@@ -45,10 +44,9 @@ public class RicalcoloPreferenze {
 
     }
 
-    public RicalcoloPreferenze(Long numeroVoti,Integer idcandidato, String Nome, String Cognome, String Sesso, Integer Idlista, String ListaNew, Integer Municipio)
-    {
+    public RicalcoloPreferenze(Long numeroVoti, Integer idcandidato, String Nome, String Cognome, String Sesso, Integer Idlista, String ListaNew, Integer Municipio) {
         super();
-        this.numerovoti=Integer.parseInt(numeroVoti.toString());
+        this.numerovoti = Integer.parseInt(numeroVoti.toString());
         this.lista = new Lista();
         this.lista.setDenominazione(ListaNew);
         this.lista.setId(Idlista);
@@ -62,33 +60,28 @@ public class RicalcoloPreferenze {
     }
 
 
-    public RicalcoloPreferenze(long numeroPervenute, int Municipio)
-    {
+    public RicalcoloPreferenze(long numeroPervenute, int Municipio) {
         super();
-        this.numerosezioni=(int)(numeroPervenute);
-        this.municipio= Municipio;
-    }
-
-    public RicalcoloPreferenze(long Votanti,long Iscritti, int Municipio)
-    {
-        super();
-        this.iscrittipervenute=(int)(Iscritti);
-        this.votantipervenute=(int) Votanti;
+        this.numerosezioni = (int) (numeroPervenute);
         this.municipio = Municipio;
     }
 
-    public RicalcoloPreferenze(long Votanti,long Iscritti)
-    {
+    public RicalcoloPreferenze(long Votanti, long Iscritti, int Municipio) {
         super();
-        this.iscrittipervenute=(int)(Iscritti);
-        this.votantipervenute=(int) Votanti;
+        this.iscrittipervenute = (int) (Iscritti);
+        this.votantipervenute = (int) Votanti;
+        this.municipio = Municipio;
+    }
+
+    public RicalcoloPreferenze(long Votanti, long Iscritti) {
+        super();
+        this.iscrittipervenute = (int) (Iscritti);
+        this.votantipervenute = (int) Votanti;
     }
 
 
-
-    public RicalcoloPreferenze(Long numeroPervenute)
-    {
-        this.numerosezioni=Integer.parseInt(numeroPervenute.toString());
+    public RicalcoloPreferenze(Long numeroPervenute) {
+        this.numerosezioni = Integer.parseInt(numeroPervenute.toString());
     }
 
     @Id
@@ -107,12 +100,12 @@ public class RicalcoloPreferenze {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "listaid", referencedColumnName = "id")
-    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Lista lista;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "candidatoid", referencedColumnName = "id")
-    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Candidato candidato;
 
 
@@ -157,12 +150,12 @@ public class RicalcoloPreferenze {
     private Integer numerovoti;
 
     @Transient
-    private  Integer sezione;
+    private Integer sezione;
 
     @Transient
     private String denominazioneLista;
     @Transient
-    private  String denominazioneCandidato;
+    private String denominazioneCandidato;
 
     public Integer getId() {
         return id;
@@ -318,7 +311,14 @@ public class RicalcoloPreferenze {
     }
 
     public String getDenominazioneLista() {
-        return denominazioneLista;
+        if (denominazioneLista != null && (!StringUtils.isEmpty(denominazioneLista))) {
+            return denominazioneLista;
+        } else if (lista != null) {
+            return lista.getDenominazione();
+        } else {
+            return "";
+        }
+
     }
 
     public void setDenominazioneLista(String denominazioneLista) {
@@ -326,8 +326,17 @@ public class RicalcoloPreferenze {
     }
 
     public String getDenominazioneCandidato() {
-        return denominazioneCandidato;
+        if (denominazioneCandidato != null && (!StringUtils.isEmpty(denominazioneCandidato))) {
+            return denominazioneCandidato;
+        } else if (candidato != null) {
+            String c = candidato.getNome() + " " + candidato.getCognome();
+            return c;
+        } else {
+            return "";
+        }
+
     }
+
 
     public void setDenominazioneCandidato(String denominazioneCandidato) {
         this.denominazioneCandidato = denominazioneCandidato;

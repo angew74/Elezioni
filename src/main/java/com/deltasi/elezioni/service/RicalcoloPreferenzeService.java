@@ -50,11 +50,7 @@ public class RicalcoloPreferenzeService implements IRicalcoloPreferenzeService {
     {
         return ricalcoloPreferenzeDAO.findByTipoelezioneIdAndTiporicalcoloIdAndMunicipioNotIn(tipoElezioneId,tipoRicalcoloId,municipio,idlista);
     }
-    @Override
-    public List<RicalcoloPreferenze> findTopByTipoelezioneIdAndTiporicalcoloIdAndMunicipioNotInOrderByDataoperazioneDesc(int tipoElezioneId, int tipoRicalcoloId,int municipio, int idlista)
-    {
-        return  ricalcoloPreferenzeDAO.findTopByTipoelezioneIdAndTiporicalcoloIdAndMunicipioNotInAnAndListaIdOrderByDataoperazioneDesc(tipoElezioneId,tipoRicalcoloId,municipio,idlista);
-    }
+
     @Override
     public List<RicalcoloPreferenze> findByTipoelezioneIdAndTiporicalcoloIdAndMunicipioInOrderByDataoperazioneDesc(int tipoElezioneId, int tipoRicalcoloId,int municipio, int idlista)
     {

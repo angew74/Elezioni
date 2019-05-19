@@ -70,6 +70,15 @@ public class AbilitazioniController {
     }
 
 
+    @GetMapping(value = "/plessi")
+    @Secured("ROLE_ADMIN")
+    public ModelAndView plessi(Model model, Principal principal) {
+        ModelAndView modelAndView = new ModelAndView("abilitazioni/plessi");
+        modelAndView.addObject("titlepage", "Gestione Plessi utenti");
+        return modelAndView;
+    }
+
+
     @PostMapping(value = "/update", produces = {MediaType.APPLICATION_JSON_VALUE})
     @Secured("ROLE_ADMIN")
     public @ResponseBody

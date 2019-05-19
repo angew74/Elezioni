@@ -1,0 +1,12 @@
+@import "menu.css";
+@import "../font-awesome/all.css";
+
+.bg-dark
+{
+    background-color: #54272F!important;
+}
+
+.ui-autocomplete-loading {
+    background: white url("/css/images/ui-anim_basic_16x16.gif") right
+    center no-repeat;
+}

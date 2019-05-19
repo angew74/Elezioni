@@ -19,10 +19,11 @@ import org.springframework.stereotype.Repository;
 public interface UserDAO extends JpaRepository<User, Integer> {
 
 
-    public List<User> findAllBy();
-    public void deleteById(Integer id);
-    public User findById(int id);
-    public User findByUsername(String username);
+    List<User> findAllBy();
+    void deleteById(Integer id);
+    User findById(int id);
+    User findByUsername(String username);
+    List<User> findByUsernameLike(String username);
 
 
 }

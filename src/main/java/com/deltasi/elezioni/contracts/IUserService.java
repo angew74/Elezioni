@@ -25,6 +25,8 @@ public interface IUserService {
     public User updateUtente(User utente);    
     
     public User getByUsername(String username);
+
+    public List<User> getByUserNameLike(String username);
     
     
 }

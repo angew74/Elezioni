@@ -1,17 +1,15 @@
 package com.deltasi.elezioni.controllers;
 
-import com.deltasi.elezioni.contracts.IAffluenzaService;
-import com.deltasi.elezioni.contracts.IIscrittiService;
-import com.deltasi.elezioni.contracts.IVotiService;
+import com.deltasi.elezioni.contracts.*;
 import com.deltasi.elezioni.helpers.BusinessRules;
+import com.deltasi.elezioni.model.authentication.User;
 import com.deltasi.elezioni.model.configuration.Iscritti;
-import com.deltasi.elezioni.model.json.AffluenzaJson;
-import com.deltasi.elezioni.model.json.ListaJson;
-import com.deltasi.elezioni.model.json.SezioneJson;
-import com.deltasi.elezioni.model.json.VotiJson;
+import com.deltasi.elezioni.model.configuration.Plesso;
+import com.deltasi.elezioni.model.json.*;
 import com.deltasi.elezioni.model.risultati.Affluenza;
 import com.deltasi.elezioni.model.risultati.Lista;
 import com.deltasi.elezioni.model.risultati.Voti;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +37,13 @@ public class ResearchRestController {
     IIscrittiService iscrittiService;
 
     @Autowired
+    IUserService userService;
+
+    @Autowired
     IAffluenzaService affluenzeService;
 
+    @Autowired
+    IPlessoService plessoService;
 
     @Autowired
     BusinessRules businessRules;
@@ -105,6 +108,68 @@ public class ResearchRestController {
             sezione.setErrorMessages(errors);
         }
         return sezione;
+    }
+
+
+    @PostMapping(value = "/search/plesso", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public PlessiWrapper researchPlesso(@RequestBody @ModelAttribute("PlessoJson") PlessoJson plesso, BindingResult result) {
+        Iscritti iscritti = new Iscritti();
+        Map<String, String> errors = null;
+        User user = new User();
+        List<Plesso> pp = new ArrayList<Plesso>();
+        PlessiWrapper plessiWrapper = new PlessiWrapper();
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        if (result.hasErrors()) {
+            errors = result.getFieldErrors().stream()
+                    .collect(
+                            Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage)
+                    );
+
+            plessiWrapper.setValidated(false);
+            plessiWrapper.setErrorMessages(errors);
+        }
+        try {
+
+            if (plesso.getUtente() == null || StringUtils.isEmpty(plesso.getUtente())) {
+                plessiWrapper.setValidated(false);
+                errors = new HashMap<String, String>();
+                errors.put("Errore grave", "Utente non può essere zero");
+                plessiWrapper.setErrorMessages(errors);
+                return plessiWrapper;
+            }
+            switch (plesso.getTipo())
+            {
+                case "U":
+                    pp = plessoService.findByTipoelezioneIdAndUbicazioneLike(tipoelezioneid,plesso.getUbicazione());
+                    break;
+                case "D":
+                    pp = plessoService.findByTipoelezioneIdAndDescrizioneLike(tipoelezioneid,plesso.getDescrizione());
+                    break;
+                case "P":
+                   pp.add(plessoService.findById(plesso.getPlesso()));
+                    break;
+            }
+            user = userService.getByUsername(plesso.getUtente());
+            if(user != null) {
+                plessiWrapper.setUser(user);
+            }
+            else {
+                plessiWrapper.setValidated(false);
+                errors = new HashMap<String, String>();
+                errors.put("Errore grave", "Utente non trovato");
+                plessiWrapper.setErrorMessages(errors);
+                return plessiWrapper;
+            }
+
+        } catch (Exception ex) {
+            errors = new HashMap<String, String>();
+            errors.put("Errore grave", ex.getMessage());
+            logger.error(ex.getMessage());
+            plessiWrapper.setValidated(false);
+            plessiWrapper.setErrorMessages(errors);
+        }
+        return plessiWrapper;
     }
 
     @PostMapping(value = "search/affluenza", produces = {MediaType.APPLICATION_JSON_VALUE})
