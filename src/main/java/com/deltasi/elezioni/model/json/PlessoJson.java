@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class PlessoJson {
 
-    @JsonProperty("sezione")
+    @JsonProperty("plesso")
     private Integer plesso;
 
     @JsonProperty("descrizione")
@@ -21,8 +21,10 @@ public class PlessoJson {
     private String utente;
     @JsonProperty("tipo")
     private String tipo;
-    @JsonProperty("sezioni")
-    private List<SezioneJson> sezioni;
+    @JsonProperty("sezione")
+    private Integer sezione;
+    @JsonProperty("cabina")
+    private Integer cabina;
     @JsonProperty("municipio")
     private Integer municipio;
 
@@ -92,11 +94,20 @@ public class PlessoJson {
         return municipio;
     }
 
-    public List<SezioneJson> getSezioni() {
-        return sezioni;
+
+    public Integer getSezione() {
+        return sezione;
     }
 
-    public void setSezioni(List<SezioneJson> sezioni) {
-        this.sezioni = sezioni;
+    public void setSezione(Integer sezione) {
+        this.sezione = sezione;
+    }
+
+    public Integer getCabina() {
+        return cabina;
+    }
+
+    public void setCabina(Integer cabina) {
+        this.cabina = cabina;
     }
 }

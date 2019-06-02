@@ -76,4 +76,9 @@ public class UserSezioneService implements IUserSezioneService {
         return  userSezioneDAO.findByTipoelezioneIdAndUserId(tipoelezioneid,userid);
     }
 
+    public   List<UserSezione> findByTipoelezioneIdAndSezionePlessoId(Integer tipoelezioneid,Integer plessoid)
+    {
+        return userSezioneDAO.findByTipoelezioneIdAndSezionePlessoId(tipoelezioneid,plessoid);
+    }
+
 }

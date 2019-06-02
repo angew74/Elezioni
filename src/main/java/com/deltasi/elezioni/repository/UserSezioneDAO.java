@@ -10,14 +10,23 @@ import java.util.List;
 
 public interface UserSezioneDAO extends JpaRepository<UserSezione, Long> {
 
-    public UserSezione findById(Integer id);
-    public UserSezione findBySezioneAndTipoelezione(Sezione sezione, TipoElezione tipoElezione);
-    public UserSezione findBySezioneIdAndTipoelezioneId(Integer sezioneid, Integer idtipoelezione);
-    public List<UserSezione> findAllBy();
-    public List<UserSezione> findByUser(User user);
-    public List<UserSezione> findByUserIdAndTipoelezioneId(Integer userid, Integer tipoElezione);
-    public List<UserSezione> findByTipoelezione(TipoElezione tipoElezione);
-    public List<UserSezione> findByTipoelezioneIdAndUserId(Integer tipoelezioneid, Integer userid);
+    UserSezione findById(Integer id);
+
+    UserSezione findBySezioneAndTipoelezione(Sezione sezione, TipoElezione tipoElezione);
+
+    UserSezione findBySezioneIdAndTipoelezioneId(Integer sezioneid, Integer idtipoelezione);
+
+    List<UserSezione> findAllBy();
+
+    List<UserSezione> findByUser(User user);
+
+    List<UserSezione> findByUserIdAndTipoelezioneId(Integer userid, Integer tipoElezione);
+
+    List<UserSezione> findByTipoelezione(TipoElezione tipoElezione);
+
+    List<UserSezione> findByTipoelezioneIdAndUserId(Integer tipoelezioneid, Integer userid);
+
+    List<UserSezione> findByTipoelezioneIdAndSezionePlessoId(Integer tipoelezioneid,Integer plessoid);
 
 
 }

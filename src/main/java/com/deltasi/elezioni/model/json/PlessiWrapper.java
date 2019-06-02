@@ -20,7 +20,7 @@ public class PlessiWrapper {
 
     @JsonProperty("Plessi")
     private List<PlessoJson> plessi;
-    private User user;
+    private UserJson user;
     public List<PlessoJson> getPlessi() {
         return plessi;
     }
@@ -47,11 +47,11 @@ public class PlessiWrapper {
         this.plessi = plessiw;
     }
 
-    public User getUser() {
+    public UserJson getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserJson user) {
         this.user = user;
     }
 }

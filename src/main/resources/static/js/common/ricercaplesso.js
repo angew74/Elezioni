@@ -11,6 +11,10 @@ jQuery(document).ready(function ($) {
         if ($("#Utente").parsley().validate() !== true) {
             isValid = false;
         }
+        if ($("#Utente").parsley().validate() !== true) {
+            isValid = false;
+        }
+
         if ($("#numeroPlesso").parsley().validate() !== true) {
             isValid = false;
         }
@@ -28,6 +32,9 @@ jQuery(document).ready(function ($) {
             ajaxPost();
         }
     }))
+
+    $("#btnSalvaAssociazione").on('click', ajaxSalvaAssociazione);
+
     $('#descrizionePlesso').autocomplete({
         source: function (request, response) {
             $.ajax({
@@ -40,7 +47,7 @@ jQuery(document).ready(function ($) {
                 success: function (data) {
                     // response(data);
                     response($.map(data, function (item) {
-                        return {value: item.descrizione, label: item.descrizione, id:item.numero};
+                        return {value: item.descrizione, label: item.descrizione, id: item.numero};
                     }));
                 }
             });
@@ -59,6 +66,7 @@ jQuery(document).ready(function ($) {
         delay: 500
     });
 
+
     $('#ubicazionePlesso').autocomplete({
         source: function (request, response) {
             $.ajax({
@@ -69,13 +77,27 @@ jQuery(document).ready(function ($) {
                     t: "U"
                 },
                 success: function (data) {
-                    response(data);
+                    // response(data);
+                    response($.map(data, function (item) {
+                        return {value: item.descrizione, label: item.descrizione, id: item.numero};
+                    }));
                 }
             });
+        },
+        search: function () {
+            $("#numeroPlesso").val("");
+        },
+        focus: function (event, ui) {
+            event.preventDefault();
+        },
+        select: function (event, ui) {
+            $("#numeroPlesso").val(ui.item.id);
+            $("#ubicazionePlesso").val(ui.item.label);
         },
         minLength: 4,
         delay: 500
     });
+
 
     $('#Utente').autocomplete({
         source: function (request, response) {
@@ -94,41 +116,48 @@ jQuery(document).ready(function ($) {
         delay: 500
     });
 
-
-    /*
-    $(function() {
-        $("#descrizionePlesso").autocomplete({
-            source : function(request, response) {
-                $.ajax({
-                    url : '',
-                    dataType : "json",
-                    data : {
-                        q : request.term
-                    },
-                    success : function(data) {
-                        response(data);
+    function ajaxSalvaAssociazione() {
+        var user = $("#userid").val();
+        var plesso = $("#plessoid").val();
+        var errorcontainer = '#errorModal';
+        var errorDisplay = '#errorDisplay';
+        var successcontainer = '#successModal';
+        var mdisplay = "#messagesuccess";
+        $.get({
+            contentType: "application/json",
+            url: '/abilitazioni/associa?userid='+user+"&plessoid="+plesso,
+            success: (function (data) {
+                try {
+                    if (data.validated) {
+                        if (data !== null) {
+                            $(mdisplay).text("Associazione salvata correttamente");
+                            $(successcontainer).modal('show');
+                        }
+                    } else {
+                        //Set error messages
+                        $.each(data.errorMessages, function (key, value) {
+                            if (value === null) {
+                                $(errorDisplay).text("errore applicativo grave");
+                            } else {
+                                $(errorDisplay).text(value);
+                            }
+                            $(errorcontainer).modal('show');
+                        });
                     }
-                });
-            },
-            minLength : 4,
-            delay:500,
-            focus: function (event, ui) {
-                $("#descrizionePlesso").val(ui.item.label);
-                return false;
-            },
-            select: function (event, ui) {
-                $("#descrizionePlesso").val(ui.item.name);
-                return false;
+                } catch
+                    (err) {
+                    $(errorDisplay).text(err);
+                    $(errorcontainer).modal('show');
+                }
+
+            }),
+            error: function () {
+                $(errorDisplay).text("errore di connessione ");
+                $(errorcontainer).modal('show');
             }
-        })
-       .data("ui-autocomplete")._renderItem = function (ul, item) {
-            return $("<li>")
-                .data("ui-autocomplete-item", item)
-                .append("<a> " + item.name + "<br>" + item.email + "</a>")
-                .appendTo(ul);
-        };
-    });
-*/
+        });
+    }
+
     function ajaxPost() {
         var errorcontainer = '#errorModal';
         var errorDisplay = '#errorDisplay';
@@ -141,10 +170,10 @@ jQuery(document).ready(function ($) {
             success: function (res) {
                 try {
                     if (res.validated) {
-                        var plessi = res.plessi;
+                        var plessi = res.Plessi;
                         $("#UtenteView").text(res.user.username);
                         $("#userid").val(res.user.id);
-                        $("#plessoid").val(plessi[0].id);
+                        $("#plessoid").val(plessi[0].numero);
                         if (plessi.length > 5) {
                             $("#footer").removeClass("absolute");
                             $("#footer").addClass("relative");
@@ -162,8 +191,8 @@ jQuery(document).ready(function ($) {
                                 {data: "numero"},
                                 {data: "descrizione"},
                                 {data: "ubicazione"},
-                                {data: "sezioni.sezione"},
-                                {data: "sezioni.cabina"},
+                                {data: "sezione"},
+                                {data: "cabina"},
                                 {data: "municipio"}
                             ]
                         });

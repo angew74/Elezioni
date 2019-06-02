@@ -52,6 +52,9 @@ public class ResearchRestController {
     @Autowired
     PlessoLoader plessoLoader;
 
+    @Autowired
+    IUserSezioneService userSezioneService;
+
 
     @PostMapping(value = "/search/sezione", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
@@ -154,14 +157,24 @@ public class ResearchRestController {
                     pp = plessoService.findByTipoelezioneIdAndDescrizioneLike(tipoelezioneid,plesso.getDescrizione());
                     break;
                 case "P":
-                   pp.add(plessoService.findById(plesso.getNumero()));
+                    if(userSezioneService.findByTipoelezioneIdAndSezionePlessoId(tipoelezioneid, plesso.getNumero()) == null) {
+                        pp.add(plessoService.findById(plesso.getNumero()));
+                    }
+                    else {
+                        plessiWrapper.setValidated(false);
+                        errors = new HashMap<String, String>();
+                        errors.put("Errore grave", "Sezione già assegnata utilizzare funzione modifica");
+                        plessiWrapper.setErrorMessages(errors);
+                        return plessiWrapper;
+                    }
                     break;
             }
             user = userService.getByUsername(plesso.getUtente());
             ppj = plessoLoader.convert(pp);
             plessiWrapper.setPlessi(ppj);
             if(user != null) {
-                plessiWrapper.setUser(user);
+                UserJson uj = new UserJson(user.getId(),user.getUsername());
+                plessiWrapper.setUser(uj);
             }
             else {
                 plessiWrapper.setValidated(false);

@@ -30,4 +30,35 @@ public class UserSezione {
     private TipoElezione tipoelezione;
 
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Sezione getSezione() {
+        return sezione;
+    }
+
+    public void setSezione(Sezione sezione) {
+        this.sezione = sezione;
+    }
+
+    public TipoElezione getTipoelezione() {
+        return tipoelezione;
+    }
+
+    public void setTipoelezione(TipoElezione tipoelezione) {
+        this.tipoelezione = tipoelezione;
+    }
 }

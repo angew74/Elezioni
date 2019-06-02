@@ -31,27 +31,18 @@ public class PlessoLoader {
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         for (Plesso p :pp
              ) {
-            PlessoJson j = new PlessoJson();
-            j.setDescrizione(p.getDescrizione());
-            j.setUbicazione(p.getUbicazione());
-            j.setNumero(p.getId());
-            j.setMunicipio(p.getMunicipio());
-            List<Sezione> s = sezioneService.findByPlessoIdAndTipoelezioneId(j.getNumero(),tipoelezioneid);
-            j.setSezioni(convertSezioni(s));
-            ppj.add(j);
+            List<Sezione> s = sezioneService.findByPlessoIdAndTipoelezioneId(p.getId(),tipoelezioneid);
+            for (Sezione su : s) {
+                PlessoJson j = new PlessoJson();
+                j.setDescrizione(p.getDescrizione());
+                j.setUbicazione(p.getUbicazione());
+                j.setNumero(p.getId());
+                j.setMunicipio(p.getMunicipio());
+                j.setCabina(su.getCabina());
+                j.setSezione(su.getNumerosezione());
+                ppj.add(j);
+            }
         }
         return ppj;
-    }
-
-    private List<SezioneJson> convertSezioni(List<Sezione> s) {
-        List<SezioneJson> sj = new ArrayList<>();
-        for(Sezione su:s)
-        {
-            SezioneJson j = new SezioneJson();
-            j.setCabina(su.getCabina());
-            j.setSezione(su.getNumerosezione());
-            sj.add(j);
-        }
-        return sj;
     }
 }

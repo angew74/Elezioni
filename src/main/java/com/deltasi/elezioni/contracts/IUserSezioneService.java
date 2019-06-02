@@ -19,4 +19,5 @@ public interface IUserSezioneService {
      List<UserSezione> findByTipoelezione(TipoElezione tipoElezione);
      List<UserSezione> findByTipoelezioneIdAndUserId(Integer tipoelezioneid, Integer userid);
      void SaveAll(List<UserSezione> list);
+     List<UserSezione> findByTipoelezioneIdAndSezionePlessoId(Integer tipoelezioneid,Integer plessoid);
 }
