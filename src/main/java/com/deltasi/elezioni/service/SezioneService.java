@@ -53,4 +53,10 @@ public class SezioneService implements ISezioneService {
     {
         return sezioneDAO.findByNumerosezioneAndCabinaAndTipoelezioneId(numeroSezione,cabina,tipoElezioneId);
     }
+
+    @Override
+    public List<Sezione> findByPlessoIdAndTipoelezioneId(int plessoid,int tipoElezioneId)
+    {
+        return sezioneDAO.findByPlessoIdAndTipoelezioneId( plessoid, tipoElezioneId);
+    }
 }

@@ -1,6 +1,7 @@
 package com.deltasi.elezioni.model.json;
 
 import com.deltasi.elezioni.model.authentication.User;
+import com.deltasi.elezioni.model.configuration.Plesso;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;

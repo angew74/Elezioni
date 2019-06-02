@@ -2,6 +2,7 @@ package com.deltasi.elezioni.controllers;
 
 import com.deltasi.elezioni.contracts.*;
 import com.deltasi.elezioni.helpers.BusinessRules;
+import com.deltasi.elezioni.helpers.PlessoLoader;
 import com.deltasi.elezioni.model.authentication.User;
 import com.deltasi.elezioni.model.configuration.Iscritti;
 import com.deltasi.elezioni.model.configuration.Plesso;
@@ -47,6 +48,9 @@ public class ResearchRestController {
 
     @Autowired
     BusinessRules businessRules;
+
+    @Autowired
+    PlessoLoader plessoLoader;
 
 
     @PostMapping(value = "/search/sezione", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -116,8 +120,10 @@ public class ResearchRestController {
     public PlessiWrapper researchPlesso(@RequestBody @ModelAttribute("PlessoJson") PlessoJson plesso, BindingResult result) {
         Iscritti iscritti = new Iscritti();
         Map<String, String> errors = null;
+        plesso.setTipo("P");
         User user = new User();
         List<Plesso> pp = new ArrayList<Plesso>();
+        List<PlessoJson> ppj = new ArrayList<PlessoJson>();
         PlessiWrapper plessiWrapper = new PlessiWrapper();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         if (result.hasErrors()) {
@@ -128,6 +134,7 @@ public class ResearchRestController {
 
             plessiWrapper.setValidated(false);
             plessiWrapper.setErrorMessages(errors);
+            return plessiWrapper;
         }
         try {
 
@@ -147,10 +154,12 @@ public class ResearchRestController {
                     pp = plessoService.findByTipoelezioneIdAndDescrizioneLike(tipoelezioneid,plesso.getDescrizione());
                     break;
                 case "P":
-                   pp.add(plessoService.findById(plesso.getPlesso()));
+                   pp.add(plessoService.findById(plesso.getNumero()));
                     break;
             }
             user = userService.getByUsername(plesso.getUtente());
+            ppj = plessoLoader.convert(pp);
+            plessiWrapper.setPlessi(ppj);
             if(user != null) {
                 plessiWrapper.setUser(user);
             }
@@ -168,7 +177,9 @@ public class ResearchRestController {
             logger.error(ex.getMessage());
             plessiWrapper.setValidated(false);
             plessiWrapper.setErrorMessages(errors);
+            return  plessiWrapper;
         }
+        plessiWrapper.setValidated(true);
         return plessiWrapper;
     }
 

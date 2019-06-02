@@ -8,69 +8,91 @@ jQuery(document).ready(function ($) {
             if ($(this).parsley().validate() !== true)
                 isValidSelect = false;
         });
+        if ($("#Utente").parsley().validate() !== true) {
+            isValid = false;
+        }
         if ($("#numeroPlesso").parsley().validate() !== true) {
             isValid = false;
         }
-        if ($("#Utente").parsley().validate() !== true) {
+        var ubi = $("#ubicazionePlesso").val();
+        var descr = $("#descrizionePlesso").val();
+        var pl = $("#numeroPlesso").val();
+        if (ubi === "" && descr === "" && pl === "") {
+            isValid = false;
+            errorUbicazionePlesso.text("inserire almeno una chiave di interrogazione relativa al plesso");
+            errorDescrizionePlesso.text("inserire almeno una chiave di interrogazione relativa al plesso");
+            errorPlesso.text("inserire almeno una chiave di interrogazione relativa al plesso");
             isValid = false;
         }
         if (isValid && isValidSelect) {
             ajaxPost();
         }
     }))
-        $('#descrizionePlesso').autocomplete({
-            source : function(request, response) {
-                $.ajax({
-                    url : '/interrogazioni/autocompletePlesso',
-                    dataType : "json",
-                    data : {
-                        q : request.term,
-                        t : "D"
-                    },
-                    success : function(data) {
-                        response(data);
-                    }
-                });
-            },
-            minLength : 4,
-            delay:500
-        });
+    $('#descrizionePlesso').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '/interrogazioni/autocompletePlesso',
+                dataType: "json",
+                data: {
+                    q: request.term,
+                    t: "D"
+                },
+                success: function (data) {
+                    // response(data);
+                    response($.map(data, function (item) {
+                        return {value: item.descrizione, label: item.descrizione, id:item.numero};
+                    }));
+                }
+            });
+        },
+        search: function () {
+            $("#numeroPlesso").val("");
+        },
+        focus: function (event, ui) {
+            event.preventDefault();
+        },
+        select: function (event, ui) {
+            $("#numeroPlesso").val(ui.item.id);
+            $("#descrizionePlesso").val(ui.item.label);
+        },
+        minLength: 4,
+        delay: 500
+    });
 
     $('#ubicazionePlesso').autocomplete({
-        source : function(request, response) {
+        source: function (request, response) {
             $.ajax({
-                url : '/interrogazioni/autocompletePlesso',
-                dataType : "json",
-                data : {
-                    q : request.term,
+                url: '/interrogazioni/autocompletePlesso',
+                dataType: "json",
+                data: {
+                    q: request.term,
                     t: "U"
                 },
-                success : function(data) {
+                success: function (data) {
                     response(data);
                 }
             });
         },
-        minLength : 4,
-        delay:500
+        minLength: 4,
+        delay: 500
     });
 
     $('#Utente').autocomplete({
-        source : function(request, response) {
+        source: function (request, response) {
             $.ajax({
-                url : '/interrogazioni/autocompleteUser',
-                dataType : "json",
-                data : {
-                    q : request.term
+                url: '/interrogazioni/autocompleteUser',
+                dataType: "json",
+                data: {
+                    q: request.term
                 },
-                success : function(data) {
+                success: function (data) {
                     response(data);
                 }
             });
         },
-        minLength : 4,
-        delay:500
+        minLength: 4,
+        delay: 500
     });
-
 
 
     /*
@@ -112,13 +134,40 @@ jQuery(document).ready(function ($) {
         var errorDisplay = '#errorDisplay';
         var successcontainer = '#successModal';
         var mdisplay = "#messagesuccess";
+        var richiesta = $('form[name=rplessoForm]').serialize();
         $.post({
             url: '/search/plesso',
-            data: $('form[name=rplessoForm]').serialize(),
+            data: richiesta,
             success: function (res) {
                 try {
                     if (res.validated) {
-
+                        var plessi = res.plessi;
+                        $("#UtenteView").text(res.user.username);
+                        $("#userid").val(res.user.id);
+                        $("#plessoid").val(plessi[0].id);
+                        if (plessi.length > 5) {
+                            $("#footer").removeClass("absolute");
+                            $("#footer").addClass("relative");
+                        } else {
+                            $("#footer").removeClass("relative");
+                            $("#footer").addClass("absolute");
+                        }
+                        $("#PlessoTable").DataTable({
+                            data: plessi,
+                            searching: false,
+                            paging: false,
+                            info: false,
+                            destroy: true,
+                            columns: [
+                                {data: "numero"},
+                                {data: "descrizione"},
+                                {data: "ubicazione"},
+                                {data: "sezioni.sezione"},
+                                {data: "sezioni.cabina"},
+                                {data: "municipio"}
+                            ]
+                        });
+                        $("#AssociazionePlessi").show();
                     } else {
                         //Set error messages
                         $.each(res.errorMessages, function (key, value) {

@@ -2,8 +2,10 @@ package com.deltasi.elezioni.controllers;
 
 
 import com.deltasi.elezioni.contracts.IAbilitazioniService;
+import com.deltasi.elezioni.contracts.IUserSezioneService;
 import com.deltasi.elezioni.model.authentication.UserJsonResponse;
 import com.deltasi.elezioni.model.configuration.FaseElezione;
+import com.deltasi.elezioni.model.configuration.UserSezione;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class AbilitazioniController {
 
     @Autowired
     IAbilitazioniService abilitazioniService;
+
+    @Autowired
+    IUserSezioneService userSezioneService;
 
 
     @GetMapping(value = "/map")
@@ -96,6 +101,17 @@ public class AbilitazioniController {
             response.setValidated(false);
             response.setErrorMessages(errors);
         }
+        return response;
+    }
+
+    @PostMapping(value = "/associa", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @Secured("ROLE_ADMIN")
+    public @ResponseBody UserJsonResponse associa(@RequestParam("userid") Integer userid, @RequestParam("plessoid") Integer plessoid)
+    {
+        Map<String, String> errors = null;
+        UserJsonResponse response = new UserJsonResponse();
+        List<UserSezione> l = new ArrayList<>();
+        userSezioneService.SaveAll(l);
         return response;
     }
 

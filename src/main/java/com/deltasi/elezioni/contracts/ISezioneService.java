@@ -12,4 +12,5 @@ public interface ISezioneService {
     List<Long> countAllByTipoelezioneIdAndTipoelezioneIdIn(int tipoElezione, int tipoElezione1);
     List<Long> countAllByTipoelezioneIdAndMunicipioAndTipoelezioneIdIn(int tipoElezioneId, int municipio,int tipoElezione1);
     Sezione findByNumerosezioneAndCabinaAndTipoelezioneId(int numeroSezione, int cabina, int tipoElezioneId);
+    List<Sezione> findByPlessoIdAndTipoelezioneId(int plessoid,int tipoElezioneId);
 }

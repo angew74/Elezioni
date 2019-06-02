@@ -8,6 +8,7 @@ import com.deltasi.elezioni.helpers.VotiLoader;
 import com.deltasi.elezioni.model.authentication.User;
 import com.deltasi.elezioni.model.configuration.Plesso;
 import com.deltasi.elezioni.model.configuration.TipoRicalcolo;
+import com.deltasi.elezioni.model.json.PlessoJson;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloAffluenza;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloCostApertura;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloPreferenze;
@@ -28,10 +29,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/interrogazioni")
@@ -297,10 +295,10 @@ public class RestInterrogazioniController {
     }
 
     @GetMapping("/autocompletePlesso")
-    public ResponseEntity<List<String>> doAutoCompletePlesso(@RequestParam("q") final String input, @RequestParam("t") final String tipo) {
+    public ResponseEntity<List<PlessoJson>> doAutoCompletePlesso(@RequestParam("q") final String input, @RequestParam("t") final String tipo) {
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         List<Plesso> plessos = new ArrayList<Plesso>();
-        List<String> strings = new ArrayList<String>();
+        List<PlessoJson> strings = new ArrayList<>();
         try {
             switch (tipo) {
                 case "D":
@@ -308,7 +306,7 @@ public class RestInterrogazioniController {
                     if (plessos != null) {
                         for (Plesso p : plessos
                         ) {
-                            strings.add(p.getDescrizione());
+                            strings.add(new PlessoJson(p.getId(), p.getDescrizione()));
                         }
                     }
                     break;
@@ -317,7 +315,7 @@ public class RestInterrogazioniController {
                     if (plessos != null) {
                         for (Plesso p : plessos
                         ) {
-                            strings.add(p.getDescrizione());
+                            strings.add(new PlessoJson(p.getId(), p.getDescrizione()));
                         }
                     }
                     break;
@@ -327,7 +325,7 @@ public class RestInterrogazioniController {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Risorsa non trovata", ex);
         }
-        return new ResponseEntity<List<String>>(strings, HttpStatus.OK);
+        return new ResponseEntity<List<PlessoJson>>(strings, HttpStatus.OK);
     }
 
     @GetMapping("/autocompleteUser")

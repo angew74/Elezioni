@@ -29,7 +29,7 @@
                                        required
                                        data-parsley-type="number"
                                        id="numeroPlesso"
-                                       placeholder="Numero Plesso" name="sezione" class="form-control"/>
+                                       placeholder="Numero Plesso" name="numero" class="form-control"/>
                             </div>
                             <div class="form-group row">
                                 <span class="col-md-1 col-md-offset-2 text-center"></span>
@@ -44,9 +44,10 @@
                                 <input type="text"
                                        data-parsley-errors-container="#errorDescrizionePlesso"
                                        required
-                                       data-parsley-type="text"
+                                       data-parsley-type="alphanum"
                                        id="descrizionePlesso"
-                                       placeholder="Descrizione Plesso" name="sezione" class="form-control"/>
+                                       data-hidden_field_id="numeroPlesso" data-item_id="id"
+                                       placeholder="Descrizione Plesso" name="descrizione" class="form-control"/>
                             </div>
                             <div class="form-group row">
                                 <span class="col-md-1 col-md-offset-2 text-center"></span>
@@ -61,9 +62,9 @@
                                 <input type="text"
                                        data-parsley-errors-container="#errorUbicazionePlesso"
                                        required
-                                       data-parsley-type="text"
+                                       data-parsley-type="alphanum"
                                        id="ubicazionePlesso"
-                                       placeholder="Ubicazione Plesso" name="sezione" class="form-control"/>
+                                       placeholder="Ubicazione Plesso" name="ubicazione" class="form-control"/>
                             </div>
                             <div class="form-group row">
                                 <span class="col-md-1 col-md-offset-2 text-center"></span>
@@ -79,8 +80,8 @@
                                        data-parsley-errors-container="#errorUtente"
                                        required
                                        id="Utente"
-                                       data-parsley-type="text"
-                                       name="cabina" class="form-control"/>
+                                       data-parsley-type="alphanum"
+                                       name="utente" class="form-control"/>
                             </div>
                             <div class="form-group row">
                                 <span class="col-md-1 col-md-offset-2 text-center"></span>
@@ -88,7 +89,7 @@
                                     <div id="errorUtente" class="errorBlock"></div>
                                 </div>
                             </div>
-                    </div>
+                        </div>
                     </div>
                     <div class="card-footer">
                         <button type="button" id="submitSearch"
@@ -101,4 +102,3 @@
             </div>
         </div>
     </form>
-</div>
