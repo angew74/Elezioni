@@ -11,9 +11,11 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class UserSezioneService implements IUserSezioneService {
 
     private static final Logger logger = LogManager.getLogger(UserService.class);
@@ -81,4 +83,8 @@ public class UserSezioneService implements IUserSezioneService {
         return userSezioneDAO.findByTipoelezioneIdAndSezionePlessoId(tipoelezioneid,plessoid);
     }
 
+    public void deleteAllBySezioneInAndUser(List<Sezione> list, User u)
+    {
+         userSezioneDAO.deleteAllBySezioneInAndUser(list, u);
+    }
 }

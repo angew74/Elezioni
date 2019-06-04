@@ -99,6 +99,15 @@ public class AbilitazioniController {
         return modelAndView;
     }
 
+    @GetMapping(value = "/sezioni")
+    @Secured("ROLE_ADMIN")
+    public ModelAndView sezioni(Model model, Principal principal) {
+        ModelAndView modelAndView = new ModelAndView("abilitazioni/sezioni");
+        modelAndView.addObject("titlepage", "Gestione Sezione");
+        modelAndView.addObject("tipo", "I");
+        return modelAndView;
+    }
+
     @GetMapping(value = "/mplessi")
     @Secured("ROLE_ADMIN")
     public ModelAndView mplessi(Model model, Principal principal) {
@@ -131,12 +140,13 @@ public class AbilitazioniController {
 
     @GetMapping(value = "/associa", produces = {MediaType.APPLICATION_JSON_VALUE})
     @Secured("ROLE_ADMIN")
-    public @ResponseBody UserJsonResponse associa(@RequestParam("userid") Integer userid, @RequestParam("plessoid") Integer plessoid)
+    public @ResponseBody UserJsonResponse associa(@RequestParam("userid") Integer userid, @RequestParam("plessoid") Integer plessoid,@RequestParam("tipo") String tipo)
     {
         Map<String, String> errors = null;
         UserJsonResponse response = new UserJsonResponse();
         List<UserSezione> l = new ArrayList<>();
         try {
+
             Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
             TipoElezione t = tipoElezioneService.findTipoElezioneById(tipoelezioneid);
             User user = userService.getUtente(userid);
@@ -149,7 +159,13 @@ public class AbilitazioniController {
                 u.setSezione(s);
                 l.add(u);
             }
-            userSezioneService.SaveAll(l);
+            if(tipo.equals("M"))
+            {
+              userSezioneService.deleteAllBySezioneInAndUser(ss,user);
+            }
+            else {
+                userSezioneService.SaveAll(l);
+            }
             response.setValidated(true);
         }catch (Exception ex) {
             errors = new HashMap<String, String>();

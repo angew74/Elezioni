@@ -2,7 +2,6 @@ jQuery(document).ready(function ($) {
     var button = '#submitSearch';
     $(button).on('click', (function (event) {
         event.preventDefault();
-        var tipo = $("#tipoOperazione").val();
         var isValid = true;
         var isValidSelect = true;
         $('select').each(function () {
@@ -35,6 +34,7 @@ jQuery(document).ready(function ($) {
     }))
 
     $("#btnSalvaAssociazione").on('click', ajaxSalvaAssociazione);
+    $("#btnRimuoviAssociazione").on('click', ajaxSalvaAssociazione);
 
     $('#descrizionePlesso').autocomplete({
         source: function (request, response) {
@@ -124,14 +124,21 @@ jQuery(document).ready(function ($) {
         var errorDisplay = '#errorDisplay';
         var successcontainer = '#successModal';
         var mdisplay = "#messagesuccess";
+        var tipo = $("#tipoRicerca").val();
         $.get({
             contentType: "application/json",
-            url: '/abilitazioni/associa?userid='+user+"&plessoid="+plesso,
+            url: '/abilitazioni/associa?userid='+user+"&plessoid="+plesso+"&tipo="+tipo,
             success: (function (data) {
                 try {
                     if (data.validated) {
                         if (data !== null) {
-                            $(mdisplay).text("Associazione salvata correttamente");
+                            if(tipo === "M")
+                            {
+                                $(mdisplay).text("Associazione rimossa correttamente");
+                            }
+                            else {
+                                $(mdisplay).text("Associazione salvata correttamente");
+                            }
                             $(successcontainer).modal('show');
                         }
                     } else {

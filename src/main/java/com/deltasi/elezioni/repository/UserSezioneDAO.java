@@ -5,9 +5,11 @@ import com.deltasi.elezioni.model.configuration.Sezione;
 import com.deltasi.elezioni.model.configuration.TipoElezione;
 import com.deltasi.elezioni.model.configuration.UserSezione;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface UserSezioneDAO extends JpaRepository<UserSezione, Long> {
 
     UserSezione findById(Integer id);
@@ -28,5 +30,5 @@ public interface UserSezioneDAO extends JpaRepository<UserSezione, Long> {
 
     List<UserSezione> findByTipoelezioneIdAndSezionePlessoId(Integer tipoelezioneid,Integer plessoid);
 
-
+    void deleteAllBySezioneInAndUser(List<Sezione> list, User u);
 }
