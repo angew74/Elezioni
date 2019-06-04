@@ -2,6 +2,7 @@ jQuery(document).ready(function ($) {
     var button = '#submitSearch';
     $(button).on('click', (function (event) {
         event.preventDefault();
+        var tipo = $("#tipoOperazione").val();
         var isValid = true;
         var isValidSelect = true;
         $('select').each(function () {
@@ -174,7 +175,7 @@ jQuery(document).ready(function ($) {
                         $("#UtenteView").text(res.user.username);
                         $("#userid").val(res.user.id);
                         $("#plessoid").val(plessi[0].numero);
-                        if (plessi.length > 5) {
+                        if (plessi.length > 3) {
                             $("#footer").removeClass("absolute");
                             $("#footer").addClass("relative");
                         } else {

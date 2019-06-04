@@ -6,6 +6,7 @@ import com.deltasi.elezioni.helpers.PlessoLoader;
 import com.deltasi.elezioni.model.authentication.User;
 import com.deltasi.elezioni.model.configuration.Iscritti;
 import com.deltasi.elezioni.model.configuration.Plesso;
+import com.deltasi.elezioni.model.configuration.UserSezione;
 import com.deltasi.elezioni.model.json.*;
 import com.deltasi.elezioni.model.risultati.Affluenza;
 import com.deltasi.elezioni.model.risultati.Lista;
@@ -148,6 +149,7 @@ public class ResearchRestController {
                 plessiWrapper.setErrorMessages(errors);
                 return plessiWrapper;
             }
+            user = userService.getByUsername(plesso.getUtente());
             switch (plesso.getTipo())
             {
                 case "U":
@@ -157,32 +159,47 @@ public class ResearchRestController {
                     pp = plessoService.findByTipoelezioneIdAndDescrizioneLike(tipoelezioneid,plesso.getDescrizione());
                     break;
                 case "P":
-                    if(userSezioneService.findByTipoelezioneIdAndSezionePlessoId(tipoelezioneid, plesso.getNumero()) == null) {
-                        pp.add(plessoService.findById(plesso.getNumero()));
-                    }
-                    else {
+                   List<UserSezione> us = userSezioneService.findByTipoelezioneIdAndSezionePlessoId(tipoelezioneid, plesso.getNumero());
+                    if(us != null && us.size() > 0 && plesso.getTipoRicerca().equals("I")) {
                         plessiWrapper.setValidated(false);
                         errors = new HashMap<String, String>();
                         errors.put("Errore grave", "Sezione già assegnata utilizzare funzione modifica");
                         plessiWrapper.setErrorMessages(errors);
                         return plessiWrapper;
                     }
+                    if(us.size() == 0 && plesso.getTipoRicerca().equals("M")) {
+                        plessiWrapper.setValidated(false);
+                        errors = new HashMap<String, String>();
+                        errors.put("Errore grave", "Sezione non assegnata utilizzare funzione inserimento");
+                        plessiWrapper.setErrorMessages(errors);
+                        return plessiWrapper;
+                    }
+                    if((us.size() != 0 && plesso.getTipoRicerca().equals("M")) && !(us.get(0).getUser().getUsername().equals(plesso.getUtente()))) {
+                        plessiWrapper.setValidated(false);
+                        errors = new HashMap<String, String>();
+                        errors.put("Errore grave", "Sezione non assegnata all'utente richiesto");
+                        plessiWrapper.setErrorMessages(errors);
+                        return plessiWrapper;
+                    }
+                    else if(plesso.getTipoRicerca().equals("I") || plesso.getTipoRicerca().equals("M")){
+                        pp.add(plessoService.findById(plesso.getNumero()));
+                        ppj = plessoLoader.convert(pp);
+                        plessiWrapper.setPlessi(ppj);
+                        if(user != null) {
+                            UserJson uj = new UserJson(user.getId(),user.getUsername());
+                            plessiWrapper.setUser(uj);
+                        }
+                        else {
+                            plessiWrapper.setValidated(false);
+                            errors = new HashMap<String, String>();
+                            errors.put("Errore grave", "Utente non trovato");
+                            plessiWrapper.setErrorMessages(errors);
+                            return plessiWrapper;
+                        }
+                    }
                     break;
             }
-            user = userService.getByUsername(plesso.getUtente());
-            ppj = plessoLoader.convert(pp);
-            plessiWrapper.setPlessi(ppj);
-            if(user != null) {
-                UserJson uj = new UserJson(user.getId(),user.getUsername());
-                plessiWrapper.setUser(uj);
-            }
-            else {
-                plessiWrapper.setValidated(false);
-                errors = new HashMap<String, String>();
-                errors.put("Errore grave", "Utente non trovato");
-                plessiWrapper.setErrorMessages(errors);
-                return plessiWrapper;
-            }
+
 
         } catch (Exception ex) {
             errors = new HashMap<String, String>();
@@ -195,6 +212,7 @@ public class ResearchRestController {
         plessiWrapper.setValidated(true);
         return plessiWrapper;
     }
+
 
     @PostMapping(value = "search/affluenza", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody

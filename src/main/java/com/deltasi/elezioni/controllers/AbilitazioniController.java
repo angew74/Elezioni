@@ -95,6 +95,16 @@ public class AbilitazioniController {
     public ModelAndView plessi(Model model, Principal principal) {
         ModelAndView modelAndView = new ModelAndView("abilitazioni/plessi");
         modelAndView.addObject("titlepage", "Gestione Plessi utenti");
+        modelAndView.addObject("tipo", "I");
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/mplessi")
+    @Secured("ROLE_ADMIN")
+    public ModelAndView mplessi(Model model, Principal principal) {
+        ModelAndView modelAndView = new ModelAndView("abilitazioni/plessi");
+        modelAndView.addObject("tipo", "M");
+        modelAndView.addObject("titlepage", "Modifica Plessi utenti");
         return modelAndView;
     }
 

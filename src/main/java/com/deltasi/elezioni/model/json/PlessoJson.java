@@ -21,6 +21,8 @@ public class PlessoJson {
     private String utente;
     @JsonProperty("tipo")
     private String tipo;
+    @JsonProperty("tipoRicerca")
+    private  String tipoRicerca;
     @JsonProperty("sezione")
     private Integer sezione;
     @JsonProperty("cabina")
@@ -109,5 +111,13 @@ public class PlessoJson {
 
     public void setCabina(Integer cabina) {
         this.cabina = cabina;
+    }
+
+    public String getTipoRicerca() {
+        return tipoRicerca;
+    }
+
+    public void setTipoRicerca(String tipoRicerca) {
+        this.tipoRicerca = tipoRicerca;
     }
 }
