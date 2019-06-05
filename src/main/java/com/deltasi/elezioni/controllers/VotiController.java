@@ -91,18 +91,7 @@ public class VotiController {
         if (tipo.equals("RVL")) {
             List<Voti> l = votiService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, tipoelezioneid);
             List<ListaJson> listaJsons = new ArrayList<ListaJson>();
-            for (Voti v : l) {
-                ListaJson j = new ListaJson();
-                j.setId(v.getId());
-                j.setDenominazione(v.getLista().getDenominazione());
-                j.setProgressivo(v.getLista().getProgressivo());
-                j.setVoti(v.getNumerovoti());
-                j.setNumerosezione(sezione);
-                j.setTipo(tipo);
-                j.setIdlista(v.getLista().getId());
-                listaJsons.add(j);
-            }
-            json.setListe(listaJsons);
+            json = votiLoader.ConvertToJson(l,sezione,tipo);
         } else {
             List<Lista> l = listaService.findAllBy();
             List<ListaSemplice> s = new ArrayList<ListaSemplice>();
@@ -143,6 +132,7 @@ public class VotiController {
             modelAndView.addObject("ListaInserimento", json);
             modelAndView.addObject("Liste", votijson);
             modelAndView.addObject("ListeWrapper", listeWrapper);
+            modelAndView.addObject("buttonSezione", "submitSearch");
         } else {
             modelAndView = new ModelAndView("common/unauthorized");
             modelAndView.addObject("errMsg", "Fase non abilitata");
@@ -164,6 +154,7 @@ public class VotiController {
             modelAndView.addObject("ListeWrapper", listeWrapper);
             AffluenzaJson json = new AffluenzaJson();
             modelAndView.addObject("Scrutinio", json);
+            modelAndView.addObject("buttonSezione", "submitSearch");
         } else {
             modelAndView = new ModelAndView("common/unauthorized");
             modelAndView.addObject("errMsg", "Fase non abilitata");
@@ -181,6 +172,7 @@ public class VotiController {
             modelAndView.addObject("tipo", tipo);
             AffluenzaJson json = new AffluenzaJson();
             modelAndView.addObject("Scrutinio", json);
+            modelAndView.addObject("buttonSezione", "submitSearch");
         } else {
             modelAndView = new ModelAndView("common/unauthorized");
             modelAndView.addObject("errMsg", "Fase non abilitata");
@@ -197,15 +189,6 @@ public class VotiController {
         Map<String, String> errors = null;
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         try {
-          /*  if (result.hasErrors()) {
-                errors = result.getFieldErrors().stream()
-                        .collect(
-                                Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage)
-                        );
-
-                response.setValidated(false);
-                response.setErrorMessages(errors);
-            }*/
             switch (form.getListe().get(0).getTipo()) {
                 case "VL":
                     List<Voti> v = votiLoader.prepareVoti(form.getListe());

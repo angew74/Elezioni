@@ -62,6 +62,7 @@ public class ResearchRestController {
     public SezioneJson researchSezione(@RequestBody @ModelAttribute("SezioneJson") SezioneJson sezione, BindingResult result) {
         Iscritti iscritti = new Iscritti();
         Map<String, String> errors = null;
+        String msg = "";
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         if (result.hasErrors()) {
             errors = result.getFieldErrors().stream()
@@ -88,7 +89,9 @@ public class ResearchRestController {
                 sezione.setErrorMessages(errors);
                 return sezione;
             }
-            String msg = businessRules.IsInsertable(sezione.getSezione(), sezione.getTipo(),sezione.getCabina(), tipoelezioneid);
+            if(sezione.getTipo() != "S") {
+                msg = businessRules.IsInsertable(sezione.getSezione(), sezione.getTipo(), sezione.getCabina(), tipoelezioneid);
+            }
             if (msg.equals("")) {
                 iscritti = iscrittiService.findByTipoelezioneIdAndSezioneNumerosezione(tipoelezioneid, sezione.getSezione());
                 if (iscritti.getCabina().equals(sezione.getCabina())) {

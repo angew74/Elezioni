@@ -3,6 +3,7 @@ package com.deltasi.elezioni.helpers;
 import com.deltasi.elezioni.contracts.IIscrittiService;
 import com.deltasi.elezioni.controllers.RestInterrogazioniController;
 import com.deltasi.elezioni.model.configuration.Iscritti;
+import com.deltasi.elezioni.model.json.AffluenzaJson;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloAffluenza;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloCostApertura;
 import com.deltasi.elezioni.model.risultati.Affluenza;
@@ -100,5 +101,31 @@ public class AffluenzaLoader {
         }
         return r;
 
+    }
+
+    public AffluenzaJson convertToJson(Affluenza a,Iscritti i,String tipo) {
+        AffluenzaJson json = new AffluenzaJson();
+        switch (tipo) {
+            case "1A":
+            json.setVotantifemmine(a.getVotantifemmine1());
+            json.setVotantimaschi(a.getVotantimaschi1());
+            json.setVotantitotali(a.getVotantitotali1());
+                json.setDescrizione("1 Affluenza");
+            case "2A":
+                json.setVotantifemmine(a.getVotantifemmine2());
+                json.setVotantimaschi(a.getVotantimaschi2());
+                json.setVotantitotali(a.getVotantitotali2());
+                json.setDescrizione("2 Affluenza");
+            case "3C":
+                json.setVotantifemmine(a.getVotantifemmine3());
+                json.setVotantimaschi(a.getVotantimaschi3());
+                json.setVotantitotali(a.getVotantitotali3());
+                json.setDescrizione("3 Affluenza");
+        }
+        json.setIscrittimaschi(i.getIscrittimaschigen());
+        json.setIscrittifemmine(i.getIscrittifemminegen());
+        json.setIscrittitotali(i.getIscrittitotaligen());
+        json.setTipo(tipo);
+        return  json;
     }
 }

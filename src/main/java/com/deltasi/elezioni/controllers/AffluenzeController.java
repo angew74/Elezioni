@@ -82,6 +82,7 @@ public class AffluenzeController {
             String titolo = businessRules.getTitoloByFase(tipo, "I");
             modelAndView.addObject("titlepage", titolo);
             modelAndView.addObject("tipo", tipo);
+            modelAndView.addObject("buttonSezione", "submitSearch");
             AffluenzaJson json = new AffluenzaJson();
             modelAndView.addObject("Andamento", json);
         } else {
@@ -99,6 +100,7 @@ public class AffluenzeController {
             String titolo = businessRules.getTitoloByFase(tipo, "M");
             modelAndView.addObject("titlepage", titolo);
             modelAndView.addObject("tipo", tipo);
+            modelAndView.addObject("buttonSezione", "submitSearch");
             AffluenzaJson json = new AffluenzaJson();
             modelAndView.addObject("Andamento", json);
         } else {
@@ -116,6 +118,7 @@ public class AffluenzeController {
             String titolo = businessRules.getTitoloByFase(tipo, "A");
             modelAndView.addObject("titlepage", titolo);
             modelAndView.addObject("tipo", tipo);
+            modelAndView.addObject("buttonSezione", "submitSearch");
             AffluenzaJson json = new AffluenzaJson();
             modelAndView.addObject("Andamento", json);
         } else {

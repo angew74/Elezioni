@@ -5,7 +5,9 @@ import com.deltasi.elezioni.model.configuration.Iscritti;
 import com.deltasi.elezioni.model.configuration.Sezione;
 import com.deltasi.elezioni.model.configuration.TipoElezione;
 import com.deltasi.elezioni.model.json.CandidatoJson;
+import com.deltasi.elezioni.model.json.ListaJson;
 import com.deltasi.elezioni.model.json.ListaSemplice;
+import com.deltasi.elezioni.model.json.VotiJson;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloPreferenze;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloVoti;
 import com.deltasi.elezioni.model.risultati.*;
@@ -181,5 +183,23 @@ public class VotiLoader {
             throw ex;
         }
         return r;
+    }
+
+    public  VotiJson ConvertToJson(List<Voti> l, int sezione,String tipo)    {
+        List<ListaJson> listaJsons = new ArrayList<ListaJson>();
+        VotiJson json = new VotiJson();
+        for (Voti v : l) {
+            ListaJson j = new ListaJson();
+            j.setId(v.getId());
+            j.setDenominazione(v.getLista().getDenominazione());
+            j.setProgressivo(v.getLista().getProgressivo());
+            j.setVoti(v.getNumerovoti());
+            j.setNumerosezione(sezione);
+            j.setTipo(tipo);
+            j.setIdlista(v.getLista().getId());
+            listaJsons.add(j);
+        }
+        json.setListe(listaJsons);
+        return  json;
     }
 }

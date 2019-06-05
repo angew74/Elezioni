@@ -6,6 +6,7 @@ public class AffluenzaJson {
 
     private Integer id;
     private Integer numerosezione;
+    private  Integer cabina;
     private Integer votantimaschi;
     private Integer votantifemmine;
     private Integer votantitotali;
@@ -18,6 +19,7 @@ public class AffluenzaJson {
     private String tipo;
     private boolean validated;
     private Map<String, String> errorMessages;
+    private String descrizione;
 
     public Integer getId() {
         return id;
@@ -129,5 +131,21 @@ public class AffluenzaJson {
 
     public void setErrorMessages(Map<String, String> errorMessages) {
         this.errorMessages = errorMessages;
+    }
+
+    public Integer getCabina() {
+        return cabina;
+    }
+
+    public void setCabina(Integer cabina) {
+        this.cabina = cabina;
+    }
+
+    public String getDescrizione() {
+        return descrizione;
+    }
+
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
     }
 }

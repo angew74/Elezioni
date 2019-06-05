@@ -40,7 +40,7 @@ public class BusinessRules {
 
 
     public String IsInsertable(Integer sezione, String codiceFase, Integer cabina, Integer idtipoelezione) {
-        //    Integer idtipoelezione = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        //    Integer idtipoelezione = Integer.parseInt(env.getProperty("tipoelezioneid")
         String message = "";
         FaseElezione fase = abilitazioniService.findByCodiceAndTipoelezioneId(codiceFase, idtipoelezione);
         if (fase.getAbilitata().equals(0)) {
