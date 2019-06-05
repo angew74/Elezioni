@@ -1,4 +1,4 @@
-@import "menu.css";
+@import "../common/menu.css";
 @import "../font-awesome/all.css";
 
 .bg-dark
@@ -42,4 +42,71 @@ h5.card-title {
     top: 18px;
     left: 10px;
     font-size: 1.8rem;
+}
+.capitolium {
+    background-color:#6D353A!important;
+    color: white;
+}
+.table.dataTable
+{
+    font-size: 0.9rem;
+    border-radius: 6px;
+}
+
+tr.odd {
+    font-weight: bold;
+    text-align: left;
+}
+tr.even
+{
+    font-weight: bold;
+    text-align: left;
+}
+
+table.dataTable.no-footer {
+    border-bottom: 1px solid #6D353A!important;
+    border-right:  1px solid #6D353A!important;
+    border-left:   1px solid #6D353A!important;
+    border-radius: 6px;
+}
+
+.bg-dark
+{
+    background-color:#6D353A!important;
+}
+
+.delta_services {
+    padding: 40px 20px 80px;
+    border-radius: 6px;
+    background-color: #6d353a;
+    margin-top: 20px;
+}
+
+
+.delta_dati{
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 0px!important;
+    padding-left: 0px!important;
+}
+
+.delta_services a
+{
+    color: white;
+}
+.delta_services a:hover  {
+    color: #E6E6E6;
+}
+
+
+.table-riepilogo td, .table-riepilogo th
+{
+    border-top: 1px solid #6D353A!important;
+    color: #6D353A!important;
+}
+
+.table-riepilogo thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #6D353A!important;
 }

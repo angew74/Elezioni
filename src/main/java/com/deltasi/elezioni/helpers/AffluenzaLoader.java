@@ -26,12 +26,11 @@ public class AffluenzaLoader {
     @Autowired
     private IIscrittiService iIscrittiService;
 
-    public RicalcoloAffluenza affluenzaSplit(Affluenza a,String tipoInterrogazione)
-    {
+    public RicalcoloAffluenza affluenzaSplit(Affluenza a, String tipoInterrogazione) {
         RicalcoloAffluenza r = new RicalcoloAffluenza();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         try {
-            Iscritti i = iIscrittiService.findByTipoelezioneIdAndSezioneNumerosezione(tipoelezioneid,a.getSezione().getNumerosezione());
+            Iscritti i = iIscrittiService.findByTipoelezioneIdAndSezioneNumerosezione(tipoelezioneid, a.getSezione().getNumerosezione());
             switch (tipoInterrogazione) {
                 case "AF1":
                     r.setAffluenzamaschi(a.getVotantimaschi1());
@@ -53,13 +52,11 @@ public class AffluenzaLoader {
             r.setIscrittimaschi(i.getIscrittimaschigen());
             r.setIscrittitotali(i.getIscrittitotaligen());
             r.setMunicipio(i.getMunicipio());
-            r.setPercentualemaschi(calculatePercentage(r.getAffluenzamaschi(),r.getIscrittimaschi()));
-            r.setPercentualefemmine(calculatePercentage(r.getAffluenzafemmine(),r.getIscrittifemmine()));
-            r.setPercentualetotale(calculatePercentage(r.getAffluenzatotale(),r.getIscrittitotali()));
+            r.setPercentualemaschi(calculatePercentage(r.getAffluenzamaschi(), r.getIscrittimaschi()));
+            r.setPercentualefemmine(calculatePercentage(r.getAffluenzafemmine(), r.getIscrittifemmine()));
+            r.setPercentualetotale(calculatePercentage(r.getAffluenzatotale(), r.getIscrittitotali()));
             r.setSezione(a.getSezione().getNumerosezione());
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             logger.error(ex.getMessage());
             throw ex;
         }
@@ -78,14 +75,13 @@ public class AffluenzaLoader {
         RicalcoloCostApertura r = new RicalcoloCostApertura();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         try {
-            Iscritti i = iIscrittiService.findByTipoelezioneIdAndSezioneNumerosezione(tipoelezioneid,a.getSezione().getNumerosezione());
+            Iscritti i = iIscrittiService.findByTipoelezioneIdAndSezioneNumerosezione(tipoelezioneid, a.getSezione().getNumerosezione());
             r.setIscrittifemmine(i.getIscrittifemminegen());
             r.setIscrittimaschi(i.getIscrittimaschigen());
             r.setIscrittitotali(i.getIscrittitotaligen());
             r.setMunicipio(i.getMunicipio());
             r.setSezione(a.getSezione().getNumerosezione());
-            switch (tipoInterrogazione)
-            {
+            switch (tipoInterrogazione) {
                 case "CO1":
                     r.setStatus("Costituita");
                     break;
@@ -93,9 +89,7 @@ public class AffluenzaLoader {
                     r.setStatus("Aperta");
                     break;
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             logger.error(ex.getMessage());
             throw ex;
         }
@@ -103,13 +97,13 @@ public class AffluenzaLoader {
 
     }
 
-    public AffluenzaJson convertToJson(Affluenza a,Iscritti i,String tipo) {
+    public AffluenzaJson convertToJson(Affluenza a, Iscritti i, String tipo) {
         AffluenzaJson json = new AffluenzaJson();
         switch (tipo) {
             case "1A":
-            json.setVotantifemmine(a.getVotantifemmine1());
-            json.setVotantimaschi(a.getVotantimaschi1());
-            json.setVotantitotali(a.getVotantitotali1());
+                json.setVotantifemmine(a.getVotantifemmine1());
+                json.setVotantimaschi(a.getVotantimaschi1());
+                json.setVotantitotali(a.getVotantitotali1());
                 json.setDescrizione("1 Affluenza");
             case "2A":
                 json.setVotantifemmine(a.getVotantifemmine2());
@@ -126,6 +120,7 @@ public class AffluenzaLoader {
         json.setIscrittifemmine(i.getIscrittifemminegen());
         json.setIscrittitotali(i.getIscrittitotaligen());
         json.setTipo(tipo);
-        return  json;
+        json.setMunicipio(i.getSezione().getMunicipio());
+        return json;
     }
 }

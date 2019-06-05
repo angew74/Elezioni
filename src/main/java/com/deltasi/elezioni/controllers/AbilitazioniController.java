@@ -7,10 +7,7 @@ import com.deltasi.elezioni.helpers.VotiLoader;
 import com.deltasi.elezioni.model.authentication.User;
 import com.deltasi.elezioni.model.authentication.UserJsonResponse;
 import com.deltasi.elezioni.model.configuration.*;
-import com.deltasi.elezioni.model.json.AffluenzaJson;
-import com.deltasi.elezioni.model.json.InterrogazioneJson;
-import com.deltasi.elezioni.model.json.SezioneJson;
-import com.deltasi.elezioni.model.json.VotiJson;
+import com.deltasi.elezioni.model.json.*;
 import com.deltasi.elezioni.model.risultati.Affluenza;
 import com.deltasi.elezioni.model.risultati.Voti;
 import org.apache.logging.log4j.LogManager;
@@ -237,7 +234,6 @@ public class AbilitazioniController {
                 return i;
             }
             UserSezione userSeziones = userSezioneService.findBySezioneIdAndTipoelezioneId(sezione.getSezione(), tipoelezioneid);
-
             Affluenza a3 = affluenzeService.findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza3(sezione.getSezione(), tipoelezioneid, 1);
             AffluenzaJson ajson = new AffluenzaJson();
             if (a3 != null) {
@@ -254,6 +250,14 @@ public class AbilitazioniController {
                 }
             }
             i.setAffluenzaJson(ajson);
+            if(userSeziones != null) {
+                i.setUserJson(new UserJson(userSeziones.getUser().getId(), userSeziones.getUser().getUsername()));
+            }
+            else {
+                i.setUserJson(new UserJson(0,"Nessuno"));
+            }
+            i.setTipoSezione(iscritti.getSezione().getTiposezione().getDescrizione());
+            i.setDescrizioneElezione(iscritti.getTipoelezione().getDescrizione());
             List<Voti> v = vctiService.findBySezioneNumerosezioneAndTipoelezioneId(sezione.getSezione(), tipoelezioneid);
             if(v != null && v.size() > 0)
             {

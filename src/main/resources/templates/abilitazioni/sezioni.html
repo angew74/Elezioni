@@ -38,6 +38,8 @@
                         </h3>
                         <h4 style="font-size:1.5rem" id="tipoelezione">
                         </h4>
+                        <h4 style="font-size:1.5rem" id="addetto">
+                        </h4>
                     </div>
                     <div class="col-md-4">
                         <div class="row contact row-first">
@@ -61,7 +63,7 @@
                                 <a href="#" id="votantimaschi" style="font-size:1.0rem"></a>
                             </div>
                             <div class="col-md-6">
-                                <a href="#" id="votantifemmine" style="font-size:0.8rem"></a>
+                                <a href="#" id="votantifemmine" style="font-size:1.0rem"></a>
                             </div>
                         </div>
                         <div class="row contact row-first">
@@ -69,7 +71,7 @@
                                 <a href="#" id="votantitotali" style="font-size:1.0rem"></a>
                             </div>
                             <div class="col-md-6">
-                                <a href="#" id="descrizione" style="font-size:0.8rem"><</a>
+                                <a href="#" id="descrizione" style="font-size:1.0rem"></a>
                             </div>
                         </div>
                     </div>
@@ -77,6 +79,14 @@
             </div>
         </div>
     </div>
+</div>
+<div id="VisualizzazioneInterrogazioneSez" class="container delta_dati" style="display:none;">
+    <table id="InterrogazioneVotiTableSez" class="table table-sm table-striped" style="width:100%">
+        <thead class="capitolium">
+        <th class="text-center">Lista</th>
+        <th class="text-left">Voti</th>
+        </thead>
+    </table>
 </div>
 <input type="hidden" id="numerosezione"/>
 <div th:replace="fragments/modalerror :: error"/>

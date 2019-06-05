@@ -18,8 +18,9 @@ public class AffluenzaJson {
     private Integer votantitotaliaffp;
     private String tipo;
     private boolean validated;
-    private Map<String, String> errorMessages;
+    private Integer municipio;
     private String descrizione;
+    private Map<String, String> errorMessages;
 
     public Integer getId() {
         return id;
@@ -147,5 +148,13 @@ public class AffluenzaJson {
 
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
+    }
+
+    public Integer getMunicipio() {
+        return municipio;
+    }
+
+    public void setMunicipio(Integer municipio) {
+        this.municipio = municipio;
     }
 }

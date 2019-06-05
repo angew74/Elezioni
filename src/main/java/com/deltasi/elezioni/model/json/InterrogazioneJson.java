@@ -9,7 +9,13 @@ public class InterrogazioneJson {
 
     private AffluenzaJson affluenzaJson;
 
+
+    private String tipoSezione;
+    private String descrizioneElezione;
+
     private VotiJson votiJson;
+
+    private UserJson userJson;
 
     public Map<String, String> getErrorMessages() {
         return errorMessages;
@@ -41,5 +47,29 @@ public class InterrogazioneJson {
 
     public void setVotiJson(VotiJson votiJson) {
         this.votiJson = votiJson;
+    }
+
+    public String getTipoSezione() {
+        return tipoSezione;
+    }
+
+    public void setTipoSezione(String tipoSezione) {
+        this.tipoSezione = tipoSezione;
+    }
+
+    public String getDescrizioneElezione() {
+        return descrizioneElezione;
+    }
+
+    public void setDescrizioneElezione(String descrizioneElezione) {
+        this.descrizioneElezione = descrizioneElezione;
+    }
+
+    public UserJson getUserJson() {
+        return userJson;
+    }
+
+    public void setUserJson(UserJson userJson) {
+        this.userJson = userJson;
     }
 }
