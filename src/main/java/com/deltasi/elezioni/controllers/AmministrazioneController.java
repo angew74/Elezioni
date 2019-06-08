@@ -5,11 +5,13 @@ import com.deltasi.elezioni.contracts.*;
 import com.deltasi.elezioni.helpers.AffluenzaLoader;
 import com.deltasi.elezioni.helpers.VotiLoader;
 import com.deltasi.elezioni.model.authentication.User;
+import com.deltasi.elezioni.model.authentication.UserExtended;
 import com.deltasi.elezioni.model.authentication.UserJsonResponse;
 import com.deltasi.elezioni.model.configuration.*;
 import com.deltasi.elezioni.model.json.*;
 import com.deltasi.elezioni.model.risultati.Affluenza;
 import com.deltasi.elezioni.model.risultati.Voti;
+import com.deltasi.elezioni.service.PlessoService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.lang.management.PlatformLoggingMXBean;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,15 +34,21 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping(value = "/abilitazioni")
-public class AbilitazioniController {
-    private static final Logger logger = LogManager.getLogger(AbilitazioniController.class);
+@RequestMapping(value = "/amministrazione")
+public class AmministrazioneController {
+    private static final Logger logger = LogManager.getLogger(AmministrazioneController.class);
 
     @Autowired
     IAbilitazioniService abilitazioniService;
 
     @Autowired
+    IPlessoService plessoService;
+
+    @Autowired
     IUserSezioneService userSezioneService;
+
+    @Autowired
+    IUserExtendedService userExtendedService;
 
     @Autowired
     IIscrittiService iscrittiService;
@@ -72,7 +81,7 @@ public class AbilitazioniController {
     @GetMapping(value = "/map")
     @Secured("ROLE_ADMIN")
     public ModelAndView map(Model model, Principal principal) {
-        ModelAndView modelAndView = new ModelAndView("abilitazioni/map");
+        ModelAndView modelAndView = new ModelAndView("amministrazione/map");
         modelAndView.addObject("titlepage", "Gestione Abilitazioni fasi");
         List<FaseElezione> list = new ArrayList<FaseElezione>();
         try {
@@ -92,7 +101,7 @@ public class AbilitazioniController {
     @GetMapping(value = "/list")
     @Secured("ROLE_ADMIN")
     public ModelAndView list(Model model, Principal principal) {
-        ModelAndView modelAndView = new ModelAndView("abilitazioni/list");
+        ModelAndView modelAndView = new ModelAndView("amministrazione/list");
         modelAndView.addObject("titlepage", "Gestione Generale");
         List<FaseElezione> list = new ArrayList<FaseElezione>();
         try {
@@ -113,16 +122,59 @@ public class AbilitazioniController {
     @GetMapping(value = "/plessi")
     @Secured("ROLE_ADMIN")
     public ModelAndView plessi(Model model, Principal principal) {
-        ModelAndView modelAndView = new ModelAndView("abilitazioni/plessi");
+        ModelAndView modelAndView = new ModelAndView("amministrazione/plessi");
         modelAndView.addObject("titlepage", "Gestione Plessi utenti");
         modelAndView.addObject("tipo", "I");
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/addetti")
+    @Secured("ROLE_ADMIN")
+    public ModelAndView addetti(Model model, Principal principal) {
+       List<AddettoJson> jj = new ArrayList<AddettoJson>();
+        Map<String, String> errors = null;
+        ModelAndView modelAndView = new ModelAndView("amministrazione/addetti");
+        modelAndView.addObject("titlepage", "Gestione Addetti sezione");
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        List<PlessoJson> listp =  new ArrayList<PlessoJson>();
+        try
+        {
+           List<UserExtended> listu = userExtendedService.findAll();
+           AddettoJson a = new AddettoJson();
+            for (UserExtended u : listu) {
+                List<UserSezione> us = userSezioneService.findByTipoelezioneIdAndUserId(tipoelezioneid,  u.getUser().getId());
+                UserJson j = new UserJson(u.getUser().getId(),u.getUser().getUsername(),u.getNome(),u.getCognome());
+                for(UserSezione z : us) {
+                   PlessoJson pj = new PlessoJson();
+                   pj.setCabina(z.getSezione().getCabina());
+                   pj.setSezione(z.getSezione().getId());
+                   pj.setDescrizione(z.getSezione().getPlesso().getDescrizione());
+                   pj.setMunicipio(z.getSezione().getMunicipio());
+                   pj.setNumero(z.getSezione().getPlesso().getId());
+                   pj.setUbicazione(z.getSezione().getPlesso().getUbicazione());
+                   pj.setTipo(z.getSezione().getTiposezione().getDescrizione());
+                   listp.add(pj);
+                }
+                a.setUser(j);
+                a.setPlessi(listp);
+                jj.add(a);
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.error(ex);
+            modelAndView = new ModelAndView("error");
+            modelAndView.addObject("errMsg", ex.getMessage());
+            return modelAndView;
+        }
+        modelAndView.addObject("Addetti", jj);
         return modelAndView;
     }
 
     @GetMapping(value = "/sezioni")
     @Secured("ROLE_ADMIN")
     public ModelAndView sezioni(Model model, Principal principal) {
-        ModelAndView modelAndView = new ModelAndView("abilitazioni/sezioni");
+        ModelAndView modelAndView = new ModelAndView("amministrazione/sezioni");
         modelAndView.addObject("titlepage", "Gestione Sezione");
         modelAndView.addObject("tipo", "S");
         modelAndView.addObject("buttonSezione", "submitSearchInt");
@@ -132,7 +184,7 @@ public class AbilitazioniController {
     @GetMapping(value = "/mplessi")
     @Secured("ROLE_ADMIN")
     public ModelAndView mplessi(Model model, Principal principal) {
-        ModelAndView modelAndView = new ModelAndView("abilitazioni/plessi");
+        ModelAndView modelAndView = new ModelAndView("amministrazione/plessi");
         modelAndView.addObject("tipo", "M");
         modelAndView.addObject("titlepage", "Modifica Plessi utenti");
         return modelAndView;

@@ -14,19 +14,19 @@ import java.util.List;
  */
 public interface IUserService {
 
-    public void addUtente(User utente);
+    void addUtente(User utente);
  
-    public List<User> getAllUtenti();
+    List<User> getAllUtenti();
  
-    public void deleteUtente(Integer id);
+    void deleteUtente(Integer id);
  
-    public User getUtente(int id);
+    User getUtente(int id);
  
-    public User updateUtente(User utente);    
+    User updateUtente(User utente);
     
-    public User getByUsername(String username);
+    User getByUsername(String username);
 
-    public List<User> getByUserNameLike(String username);
+    List<User> getByUserNameLike(String username);
     
     
 }

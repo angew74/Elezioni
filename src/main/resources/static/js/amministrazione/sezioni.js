@@ -24,7 +24,7 @@ jQuery(document).ready(function ($) {
             var successcontainer = '#successModal';
             var mdisplay = "#messagesuccess";
             $.post({
-                url: '/abilitazioni/intsez',
+                url: '/amministrazioneamministrazione/intsez',
                 data: $('form[name=rsezioneForm]').serialize(),
                 success: function (res) {
                     try {

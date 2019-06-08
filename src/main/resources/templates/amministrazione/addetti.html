@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
+<head>
+    <div th:replace="fragments/head :: header-css-js"/>
+    <link th:href="@{~/css/amministrazione/addetti.css}" type="text/css" rel="stylesheet"/>
+    <script th:src="@{~/js/amministrazione/addetti.js}" type="text/javascript">
+    </script>
+</head>
+</head>
+<body>
+<div th:replace="fragments/menu :: menu"/>
+<div th:replace="fragments/modalerror :: error"/>
+<div th:replace="fragments/modalsuccess :: success"/>
+<!--- accordion --->
+
+
+<div th:if="${not #lists.isEmpty(Addetti)}" class="accordion">
+    <h2 class="accordion__title">Addetti </h2>
+    <ul class="accordion__list">
+        <li class="accordion__item" th:each="addetto,iterStat:${Addetti}">
+            <div class="accordion__itemTitleWrap">
+                <h3 class="accordion__itemTitle" th:text="${addetto.user.username}"></h3>
+                <div class="accordion__itemIconWrap">
+                    <svg viewBox="0 0 24 24">
+                        <polyline fill="none" points="21,8.5 12,17.5 3,8.5 " stroke="#FFF" stroke-miterlimit="10"
+                                  stroke-width="2"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="accordion__itemContent">
+                <h5>Username <span th:text="${addetto.user.username}" style="margin-right:10px"
+                                   class="badge badge-secondary badge-pill"></span></h5>
+                <h5>nome cognome <span th:text="${addetto.user.nomecognome}" style="margin-right:10px"
+                                       class="badge badge-secondary badge-pill"></span></h5>
+                <div th:if="${not #lists.isEmpty(addetto.plessi)}" class="accordion">
+                    <ul class="accordion__list">
+                        <li class="accordion__item" th:each="plesso,iterStat:${addetto.plessi}">
+                            <div class="accordion__itemTitleWrap">
+                                <h3 class="accordion__itemTitle" th:text="${plesso.sezione}"></h3>
+                                <div class="accordion__itemIconWrap">
+                                    <svg viewBox="0 0 24 24">
+                                        <polyline fill="none" points="21,8.5 12,17.5 3,8.5 " stroke="#FFF"
+                                                  stroke-miterlimit="10"
+                                                  stroke-width="2"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="accordion__itemContent">
+                                <h5>Tipo <span th:text="${plesso.tipo}" style="margin-right:10px"
+                                                    class="badge badge-secondary badge-pill"></span></h5>
+                                <h5>Municipio <span th:text="${plesso.municipio}" style="margin-right:10px"
+                                                 class="badge badge-secondary badge-pill"></span></h5>
+                                <h5>Cabina <span th:text="${plesso.cabina}" style="margin-right:10px"
+                                                        class="badge badge-secondary badge-pill"></span></h5>
+                                <h5>Denominazione <span th:text="${plesso.descrizione}" style="margin-right:10px"
+                                                   class="badge badge-secondary badge-pill"></span></h5>
+                                <h5>Ubicazione <span th:text="${plesso.ubicazione}" style="margin-right:10px"
+                                                       class="badge badge-secondary badge-pill"></span></h5>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<!-- fine accordion -->
+
+
+<div th:replace="fragments/footer :: footer"/>
+</body>
+</html>

@@ -9,6 +9,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class UserExtendedService implements IUserExtendedService {
@@ -33,5 +35,20 @@ public class UserExtendedService implements IUserExtendedService {
     @Override
     public UserExtended findByUserUsername(String userName) {
        return userExtendedDAO.findByUserUsername(userName);
+    }
+
+    @Override
+    public List<UserExtended> findAll() {
+        return userExtendedDAO.findAllBy();
+    }
+
+    @Override
+    public void addUtente(UserExtended utente) {
+        userExtendedDAO.save(utente);
+    }
+
+    @Override
+    public UserExtended updateUtente(UserExtended utente) {
+        return userExtendedDAO.saveAndFlush(utente);
     }
 }

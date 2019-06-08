@@ -14,10 +14,13 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import com.deltasi.elezioni.contracts.IAuthorityService;
+import com.deltasi.elezioni.contracts.IUserExtendedService;
 import com.deltasi.elezioni.contracts.IUserService;
 import com.deltasi.elezioni.model.authentication.Authorities;
 import com.deltasi.elezioni.model.authentication.User;
+import com.deltasi.elezioni.model.authentication.UserExtended;
 import com.deltasi.elezioni.model.authentication.UserJsonResponse;
+import com.deltasi.elezioni.model.json.UserJson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
@@ -27,13 +30,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -42,6 +39,9 @@ public class UsersController {
 
     @Autowired
     IUserService userservice;
+
+    @Autowired
+    IUserExtendedService userExtendedService;
 
     @Autowired
     IAuthorityService authorityservice;
@@ -104,13 +104,15 @@ public class UsersController {
     }
 
     @Secured("ROLE_ADMIN")
-    @PostMapping(value = "/add", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     // @ResponseBody
     public @ResponseBody
-    UserJsonResponse AddUser(@ModelAttribute("user") @Valid User user,
+    UserJsonResponse AddUser(@ModelAttribute UserJson user,
                              BindingResult result, ModelMap mode) {
 
         UserJsonResponse response = new UserJsonResponse();
+        User userModel  = new User();
+        UserExtended userExtended = new UserExtended();
         Map<String, String> errors = null;
         try {
             if (result.hasErrors()) {
@@ -130,16 +132,23 @@ public class UsersController {
                 response.setErrorMessages(errors);
             } else {
                 String passwordhash = user.getPassword();
-                user.setPassword(passwordEncoder.encode(passwordhash));
-                user.setUsername(user.getUsername().toLowerCase());
-                user.setEnabled(true);
-                userservice.addUtente(user);
+                userModel.setPassword(passwordEncoder.encode(passwordhash));
+                userModel.setUsername(user.getUsername().toLowerCase());
+                userModel.setEnabled(true);
+                userModel.setMailaziendale(user.getMailaziendale());
+                userservice.addUtente(userModel);
                 Authorities authority = new Authorities();
                 authority.setAuthority("USER");
-                authority.setUser(user);
+                authority.setUser(userModel);
                 authorityservice.addUtenteToAuthority(authority);
                 response.setValidated(true);
-                response.setUser(user);
+                response.setUser(userModel);
+                userExtended.setUser(userModel);
+                userExtended.setCognome(user.getCognome());
+                userExtended.setNome(user.getNome());
+                userExtended.setSesso(user.getSesso());
+                userExtended.setCodicefiscale(user.getCodiceficale());
+                userExtendedService.addUtente(userExtended);
             }
         } catch (Exception ex) {
             errors = new HashMap<String, String>();

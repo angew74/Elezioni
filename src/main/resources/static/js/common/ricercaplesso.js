@@ -127,7 +127,7 @@ jQuery(document).ready(function ($) {
         var tipo = $("#tipoRicerca").val();
         $.get({
             contentType: "application/json",
-            url: '/abilitazioni/associa?userid='+user+"&plessoid="+plesso+"&tipo="+tipo,
+            url: '/amministrazione/associa?userid='+user+"&plessoid="+plesso+"&tipo="+tipo,
             success: (function (data) {
                 try {
                     if (data.validated) {

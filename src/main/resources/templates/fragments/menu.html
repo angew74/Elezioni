@@ -67,20 +67,8 @@
                 </li>
         </ul>
         <ul class="navbar-nav">
-               <li class="nav-item active" sec:authorize="hasRole('ADMIN')">
-                    <a class="nav-link" th:href="@{/users/manage}">
-                    <i class="fa fa-users"></i>
-                    Utenti
-                    </a>
-                </li>
                 <li class="nav-item active" sec:authorize="hasRole('ADMIN')">
-                    <a class="nav-link" th:href="@{/users/register}">
-                    <i class="fa fa-user-plus"></i>
-                    Registrazione
-                    </a>
-                </li>
-                <li class="nav-item active" sec:authorize="hasRole('ADMIN')">
-                    <a class="nav-link" th:href="@{/abilitazioni/list}">
+                    <a class="nav-link" th:href="@{/amministrazione/list}">
                     <i class="fa fa-clone"></i>
                  Amministrazione
                     </a>

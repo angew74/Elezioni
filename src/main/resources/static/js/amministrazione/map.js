@@ -21,7 +21,7 @@ function update(id) {
     //Remove all errors
    //  $('input').next().remove();
     $.post({
-        url: '/abilitazioni/update',
+        url: '/amministrazioneamministrazione/update',
         data: {id: id, abilitazione: valueabil},
         success: function (res) {
             try {
