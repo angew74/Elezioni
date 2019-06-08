@@ -22,20 +22,29 @@
         <div class="input-group-prepend">
         <span class="input-group-text br-15"><i class="fa fa-user-circle"></i></span>
     </div>
-    <input type="text" placeholder="UserName" name="username" class="form-control"/>
+    <input type="text" placeholder="UserName"
+           data-parsley-required
+           required
+           name="username" class="form-control"/>
         </div>
         <div class="input-group mt-3">
         <div class="input-group-prepend">
         <span class="input-group-text br-15"><i class="fa fa-key"></i></span>
     </div>
-    <input type="text" placeholder="Password" name="password" class="form-control"/>
+    <input type="text" placeholder="Password" name="password"
+           data-parsley-required
+           required
+           class="form-control"/>
         </div>
 
             <div class="input-group mt-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text br-15"><i class="fa fa-user-tag"></i></span>
                 </div>
-                <input type="text" placeholder="Nome" name="nome" class="form-control"/>
+                <input type="text" placeholder="Nome" name="nome"
+                       data-parsley-required
+                       required
+                       class="form-control"/>
             </div>
 
 
@@ -43,29 +52,39 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text br-15"><i class="fa fa-user-tag"></i></span>
                 </div>
-                <input type="text" placeholder="Cognome" name="cognome" class="form-control"/>
+                <input type="text" placeholder="Cognome"
+                       data-parsley-required
+                       required
+                       name="cognome" class="form-control"/>
             </div>
 
             <div class="input-group mt-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text br-15"><i class="fa fa-restroom"></i></span>
                 </div>
-                <input type="text" placeholder="Sesso" name="sesso" class="form-control"/>
+                <input type="text" placeholder="Sesso" name="sesso"
+                       data-parsley-required
+                       maxlength="1"
+                       required
+                       class="form-control"/>
             </div>
-
-
             <div class="input-group mt-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text br-15"><i class="fa fa-address-card"></i></span>
                 </div>
-                <input type="text" placeholder="Codice Fiscale" name="codicefiscale" class="form-control"/>
+                <input type="text" placeholder="Codice Fiscale"
+                       maxlength="16"
+                       name="codicefiscale" class="form-control"/>
             </div>
 
         <div class="input-group mt-3">
         <div class="input-group-prepend">
         <span class="input-group-text br-15"><i class="fa fa-at"></i></span>
     </div>
-    <input type="email" placeholder="Email" name="mailaziendale" class="form-control"/>
+    <input type="email" placeholder="Email"
+           data-parsley-required
+           required
+           name="mailaziendale" class="form-control"/>
         </div>
         </div>
         </div>

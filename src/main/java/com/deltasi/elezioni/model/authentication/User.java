@@ -80,12 +80,12 @@ public class User {
     public boolean isEnabled() {
         return enabled;
     }
-
-    /**
-     * @param enaabled the enaabled to set
-     */
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public boolean getEnabled() {
+        return  enabled;
     }
     
      public Set<Authorities> getAuthorities() {

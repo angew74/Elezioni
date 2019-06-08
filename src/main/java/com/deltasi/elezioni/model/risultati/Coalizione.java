@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -25,6 +26,13 @@ public class Coalizione {
 
     @Column(name = "denominazione_breve")
     private String denominazionebreve;
+
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "sindacoid", referencedColumnName = "id")
+    @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+    private Sindaco sindaco;
+
 
 
     public Integer getId() {
@@ -57,5 +65,13 @@ public class Coalizione {
 
     public void setDenominazionebreve(String denominazionebreve) {
         this.denominazionebreve = denominazionebreve;
+    }
+
+    public Sindaco getSindaco() {
+        return sindaco;
+    }
+
+    public void setSindaco(Sindaco sindaco) {
+        this.sindaco = sindaco;
     }
 }

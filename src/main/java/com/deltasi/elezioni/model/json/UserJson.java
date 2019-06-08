@@ -2,6 +2,8 @@ package com.deltasi.elezioni.model.json;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
 public class UserJson
 {
 
@@ -21,7 +23,9 @@ public class UserJson
     private  String cognome;
     private String nomecognome;
     private String mailaziendale;
-    private String codiceficale;
+    private String codicefiscale;
+    private boolean enabled;
+    private List<String> roles;
 
     public UserJson(Integer idnew, String usernamenew) {
         setId(idnew);
@@ -88,12 +92,12 @@ public class UserJson
         this.password = password;
     }
 
-    public String getCodiceficale() {
-        return codiceficale;
+    public String getCodicefiscale() {
+        return codicefiscale;
     }
 
-    public void setCodiceficale(String codiceficale) {
-        this.codiceficale = codiceficale;
+    public void setCodicefiscale(String codicefiscale) {
+        this.codicefiscale = codicefiscale;
     }
 
     public String getMailaziendale() {
@@ -102,5 +106,21 @@ public class UserJson
 
     public void setMailaziendale(String mailaziendale) {
         this.mailaziendale = mailaziendale;
+    }
+
+    public boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 }

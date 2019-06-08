@@ -37,8 +37,8 @@ function viewService(id) {
                         $(spandisabled).addClass(iconenabled);
 
                     }
-                    $.each(res.user.authorities, function (index, obj) {
-                        $(rolediv).append(obj.authority + "<br />");
+                    $.each(res.user.roles, function (index, obj) {
+                        $(rolediv).append(obj + "<br />");
                     });
 
                 } else {
@@ -72,6 +72,10 @@ function editService(id) {
     var errorcontainer = '#errorModal';
     var errorDisplay = '#errorDisplay';
     var iduseredit = '#iduseredit';
+    var nomeedit = '#nomeedit';
+    var cognomeedit = '#cognomeedit';
+    var sessoedit = '#sessoedit';
+    var codicefiscaleedit = '#codicefiscale';
     var able = '#able';
     var disable = '#disable';
     var passworddiv = '#passwordedit';
@@ -85,18 +89,20 @@ function editService(id) {
                     $(usercontainer).modal('show');
                     $(usernamediv).val(res.user.username);
                     $(iduseredit).val(res.user.id);
+                    $(nomeedit).val(res.user.nome);
+                    $(cognomeedit).val(res.user.cognome);
+                    $(sessoedit).val(res.user.sesso);
+                    $(codicefiscaleedit).val(res.user.codicefiscale);
                     $(maildiv).val(res.user.mailaziendale);
                     $(passworddiv).val(res.user.password);
                     if (res.user.enabled)
                     {
                         $(able).prop('checked', true);
                         $(disable).prop('checked', false);
-                        //  $(enabledDisplay).text('Abilitato');
-                        // $(spandisabled).removeClass(icondisabled);
-                        //  $(spandisabled).addClass(iconenabled);
 
                     }
                     var v = '';
+                    /*
                     $.each(res.user.authorities, function (index, obj) {
                         if (!(obj === null && obj === undefine))
                         {
@@ -106,7 +112,19 @@ function editService(id) {
                             }
                             v += obj.authority;
                         }
+                    });*/
+
+                    $.each(res.user.roles, function (index, obj) {
+                        if (!(obj === null && obj === undefine))
+                        {
+                            if(index > '0')
+                            {
+                                v +=',';
+                            }
+                            v += obj;
+                        }
                     });
+
                     $(rolediv).val(v);
                 } else {
                     //Set error messages
@@ -133,11 +151,21 @@ function editService(id) {
 jQuery(document).ready(function ($) {
 
     var useredit = '#submitEditUser';
-    // SUBMIT FORM
     $(useredit).click(function (event) {
-        // Prevent the form from submitting via the browser.
         event.preventDefault();
-        ajaxPost();
+        var isValid = true;
+        var isValidSelect = true;
+        $('select').each(function () {
+            if ($(this).parsley().validate() !== true)
+                isValidSelect = false;
+        });
+        $('input').each(function () {
+            if ($(this).parsley().validate() !== true)
+                isValidSelect = false;
+        });
+        if (isValid && isValidSelect) {
+            ajaxPost();
+        }
     });
 
 
@@ -149,61 +177,44 @@ jQuery(document).ready(function ($) {
         var usercontainer = '#userEditModal';
         var usernamediv = '#usernameedit';
         var usercontainer = '#userEditModal';
-        var maildiv = '#mailedit';
-        var rolediv = '#rolesedit';
-        var passworddiv = '#passwordedit';
-        var iduseredit = '#iduseredit';
-        var formData = {}
-        formData["id"] = $(iduseredit).val();
-        formData["password"] = $(passworddiv).val();
-        formData["username"] = $(usernamediv).val();
-        formData["mailaziendale"] = $(maildiv).val();
-        formData["roles"] =  $(rolediv).val();
-        var able = '#able';
         var mdisplay = "#messagesuccess";
-        if($(able).is(':checked'))
-        {
+        var formData = $('form[name=userForm]').serialize()
+        var able = '#able';
+        if ($(able).is(':checked')) {
             formData["enabled"] = true;
-        }else {
+        } else {
             formData["enabled"] = false;
         }
         // DO POST
-        $.ajax({
-            type: "POST",
-            contentType: "application/json",
+        $.post({
             url: '/users/modify',
-            data: JSON.stringify(formData),
-            dataType: 'json'})
-            .done(function (data) {
+            data: formData,
+            success: function (res) {
                 try {
-                    if (data.validated) {
+                    if (res.validated) {
                         //Set response
-                        $(usercontainer).modal('hide');
                         $(mdisplay).text("Utente modificato correttamente");
                         $(successcontainer).modal('show');
                     } else {
                         //Set error messages
-                        $.each(data.errorMessages, function (key, value) {
+                        $.each(res.errorMessages, function (key, value) {
                             $(errorDisplay).text(value);
+                            $(errorcontainer).modal('show');
                         });
-                        $(usercontainer).modal('hide');
-                        $(errorcontainer).modal('show');
                     }
-                } catch (err)
-                {
-                    $(errorDisplay).text(err);
-                    $(errorcontainer).modal('show');
                     $(usercontainer).modal('hide');
+                } catch (err) {
+                    $(errorDisplay).value(err);
+                    $(errorcontainer).modal('show');
                 }
-
-            })
-            .fail(function (e) {
-                $(errorDisplay).text("errore di connessione dettagli " + e);
+            },
+            error: function () {
+                $(errorDisplay).text("errore di connessione");
                 $(errorcontainer).modal('show');
-                $(usercontainer).modal('hide');
-            });
-
+            }
+        })
     }
+
 })
 
 

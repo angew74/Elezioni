@@ -6,6 +6,9 @@
 package com.deltasi.elezioni.contracts;
 
 import com.deltasi.elezioni.model.authentication.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+
 import java.util.List;
 
 /**
@@ -17,6 +20,8 @@ public interface IUserService {
     void addUtente(User utente);
  
     List<User> getAllUtenti();
+
+    Page<User> findAll(PageRequest pageable);
  
     void deleteUtente(Integer id);
  

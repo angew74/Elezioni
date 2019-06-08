@@ -14,6 +14,8 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -42,6 +44,11 @@ public class UserService implements UserDetailsService, IUserService {
     public List<User> getAllUtenti() {
         List<User> l = userDAO.findAll();
         return l;
+    }
+
+    @Override
+    public Page<User> findAll(PageRequest pageable) {
+        return userDAO.findAll(pageable);
     }
 
     @Override

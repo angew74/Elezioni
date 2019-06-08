@@ -14,6 +14,10 @@ import javax.validation.constraints.Size;
 @Table(name = "Users_Extended")
 public class UserExtended {
 
+    public UserExtended()
+    {
+
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

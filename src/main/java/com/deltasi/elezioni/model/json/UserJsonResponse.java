@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.deltasi.elezioni.model.authentication;
+package com.deltasi.elezioni.model.json;
 
 import com.deltasi.elezioni.model.authentication.User;
 
@@ -16,7 +16,7 @@ import java.util.Map;
 public class UserJsonResponse {
  
   
-   private User user;
+   private UserJson user;
    private boolean validated;
    private Map<String, String> errorMessages;
 
@@ -25,14 +25,14 @@ public class UserJsonResponse {
     /**
      * @return the user
      */
-    public User getUser() {
+    public UserJson getUser() {
         return user;
     }
 
     /**
      * @param user the user to set
      */
-    public void setUser(User user) {
+    public void setUser(UserJson user) {
         this.user = user;
     }
 

@@ -4,7 +4,6 @@ jQuery(document).ready(function ($) {
         event.preventDefault();
         var isValid = true;
         var isValidSelect = true;
-        debugger;
         $('select').each(function () {
             if ($(this).parsley().validate() !== true)
                 isValidSelect = false;
@@ -38,7 +37,6 @@ jQuery(document).ready(function ($) {
                 sum += parseFloat(field.value);
             }
         });
-        debugger;
         if (sum !== votanti) {
             $("#errorcontrol").append("Somma scrutinio diversa da votanti " + sum + " <> " + $("#Votanti").val());
             isValid = false;

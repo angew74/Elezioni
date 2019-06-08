@@ -10,11 +10,11 @@
     <body>
     <div th:replace="fragments/menu :: menu"/>
         <div class="container">
-            <div th:if="${not #lists.isEmpty(Users)}">
+            <div th:if="${not #lists.isEmpty(usersList)}">
             <table>
                 <thead>
                 <tr>
-                    <th colspan="5" th:text="'Utenti registrati totale:' + ${userscount}"></th>
+                    <th colspan="5" th:text="'Utenti per pagina totale:' + ${utentipagina}"></th>
                 </tr>
                 <tr>
                     <th>#</th>
@@ -23,7 +23,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="user,iterStat:${Users}">
+                <tr th:each="user,iterStat:${usersList}">
                     <td th:text="${user.id}"></td>
                     <td th:text="${user.username}"></td>
                     <td th:text="${user.mailaziendale}"></td>
@@ -47,8 +47,21 @@
                 </tr>
                 </tbody>
             </table>
+                <div class="row" th:fragment="pagination">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <nav aria-label="Pagination">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item" th:each="pageNumber : ${pageNumbers}" >
+                                    <a class="page-link" th:href="@{|/manage/page/${pageNumber}|}" th:text=${pageNumber}>1</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
             </div>
-            <div th:if="${#lists.isEmpty(Users)}">
+            <div th:if="${#lists.isEmpty(usersList)}">
                 <h3>Lista Utenti</h3>
                Nessun utente registrato
             </div>

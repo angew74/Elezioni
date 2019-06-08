@@ -2,81 +2,148 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
 <div th:fragment="edit">
-    <link th:href="@{~/css/users/useredit.css}" type="text/css" rel="stylesheet" />
-<div id="userEditModal" class="modal fade">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="avatar">
-                    <i class="fas fa-users-cog" style="margin-right: 5px;height: 20px"></i>Modifica utente</div>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="well well-sm">
-                                <form class="form-horizontal" name="userEditForm" action="/users/modify" method="post">
-                                    <fieldset>
-                                        <div class="form-group row">
-                                            <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-id-badge bigicon"></i></span>
-                                            <div class="col-md-8">
-                                                <input type="text" name="id" class="form-control" id="iduseredit"  readonly  autocomplete="off" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-user bigicon"></i></span>
-                                            <div class="col-md-8">
-                                                <input type="text" name="username"class="form-control" id="usernameedit" autocomplete="off" />
-                                            </div>
-                                        </div>
-                                        <input type="hidden" name="password" id="passwordedit" />
-                                        <div class="form-group row">
-                                            <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-at bigicon"></i></span>
-                                            <div class="col-md-8">
-                                                <input type="text" name="mailaziendale" class="form-control" id="mailedit" autocomplete="off" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-object-group bigicon"></i></span>
-                                            <div class="col-md-8">
-                                                <input type="text" name="authorities" class="form-control" id="rolesedit" autocomplete="off" />
-                                            </div>
-                                        </div>
-                                        <br />
-                                        <div class="form-group">
-                                            <div class="form-check">
-                                                <div class="col-md-8">
-                                                    <input class="form-check-input" type="radio" name="enabled"  id="able" value="true" checked>
-                                                    <label class="form-check-label" for="abilitato"><span class="fa fa-toggle-on" id="icondisablededit"></span>
-                                                        Abilitato
-                                                    </label>
+    <link th:href="@{~/css/users/useredit.css}" type="text/css" rel="stylesheet"/>
+    <form name="userForm" action="/users/modify" method="post">
+        <div id="userEditModal" class="modal fade">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="avatar">
+                            <i class="fas fa-users-cog" style="margin-right: 5px;height: 20px"></i>Modifica utente
+                        </div>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="well well-sm">
+                                        <form class="form-horizontal" name="userEditForm" action="/users/modify"
+                                              method="post">
+                                            <fieldset>
+                                                <div class="form-group row">
+                                                    <span class="col-md-1 col-md-offset-2 text-center"><i
+                                                            class="fa fa-id-badge bigicon"></i></span>
+                                                    <div class="col-md-8">
+                                                        <input type="text" name="id" class="form-control"
+                                                               id="iduseredit" readonly autocomplete="off"/>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-check">
-                                                <div class="col-md-8">
-                                                    <input class="form-check-input" type="radio" name="enabled" id="disable" value="false">
-                                                    <label class="form-check-label" for="disabilitato"><span class="fa fa-toggle-off" id="icondisablededit"></span>
-                                                        Disabilitato
-                                                    </label>
+                                                <div class="form-group row">
+                                                    <span class="col-md-1 col-md-offset-2 text-center"><i
+                                                            class="fa fa-user bigicon"></i></span>
+                                                    <div class="col-md-8">
+                                                        <input type="text" name="username"
+                                                               data-parsley-required
+                                                               required
+                                                               class="form-control" id="usernameedit"
+                                                               readonly
+                                                               autocomplete="off"/>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-md-12 text-center">
-                                                <button type="submit" id="submitEditUser" class="btn btn-success btn-sm float-right submit_btn">
-                                                    Modifica</button>
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                                </form>
+                                                <div class="form-group row">
+                                                    <span class="col-md-1 col-md-offset-2 text-center"><i
+                                                            class="fa fa-user-tag bigicon"></i></span>
+                                                    <div class="col-md-8">
+                                                        <input type="text" name="nome"
+                                                               data-parsley-required
+                                                               required
+                                                               class="form-control" id="nomeedit" autocomplete="off"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <span class="col-md-1 col-md-offset-2 text-center"><i
+                                                            class="fa fa-user-tag bigicon"></i></span>
+                                                    <div class="col-md-8">
+                                                        <input type="text" name="cognome" class="form-control"
+                                                               data-parsley-required
+                                                               required
+                                                               id="cognomeedit" autocomplete="off"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <span class="col-md-1 col-md-offset-2 text-center"><i
+                                                            class="fa fa-restroom bigicon"></i></span>
+                                                    <div class="col-md-8">
+                                                        <input type="text" name="sesso"
+                                                               maxlength="1"
+                                                               data-parsley-required
+                                                               required
+                                                               class="form-control" id="sessoedit" autocomplete="off"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <span class="col-md-1 col-md-offset-2 text-center"><i
+                                                            class="fa fa-address-card bigicon"></i></span>
+                                                    <div class="col-md-8">
+                                                        <input type="text" name="codicefiscale"
+                                                               maxlength="16"
+                                                               class="form-control" id="codicefiscaleedit"
+                                                               autocomplete="off"/>
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" name="password" id="passwordedit"/>
+                                                <div class="form-group row">
+                                                    <span class="col-md-1 col-md-offset-2 text-center"><i
+                                                            class="fa fa-at bigicon"></i></span>
+                                                    <div class="col-md-8">
+                                                        <input type="text" name="mailaziendale"
+                                                               data-parsley-required
+                                                               required
+                                                               class="form-control" id="mailedit" autocomplete="off"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <span class="col-md-1 col-md-offset-2 text-center"><i
+                                                            class="fa fa-object-group bigicon"></i></span>
+                                                    <div class="col-md-8">
+                                                        <input type="text" name="roles" class="form-control" readonly
+                                                               id="rolesedit" autocomplete="off"/>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <div class="form-group">
+                                                    <div class="form-check">
+                                                        <div class="col-md-8">
+                                                            <input class="form-check-input" type="radio" name="enabled"
+                                                                   id="able" value="true" checked>
+                                                            <label class="form-check-label" for="able"><span
+                                                                    class="fa fa-toggle-on"
+                                                                    id="icondisablededit"></span>
+                                                                Abilitato
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <div class="col-md-8">
+                                                            <input class="form-check-input" type="radio" name="enabled"
+                                                                   id="disable" value="false">
+                                                            <label class="form-check-label" for="disable"><span
+                                                                    class="fa fa-toggle-off"
+                                                                    id="iconenablededit"></span>
+                                                                Disabilitato
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-12 text-center">
+                                                        <button type="submit" id="submitEditUser"
+                                                                class="btn btn-success btn-sm float-right submit_btn">
+                                                            Modifica
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </form>
 </div>
 </html>

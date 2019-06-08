@@ -6,16 +6,18 @@ import com.deltasi.elezioni.helpers.AffluenzaLoader;
 import com.deltasi.elezioni.helpers.VotiLoader;
 import com.deltasi.elezioni.model.authentication.User;
 import com.deltasi.elezioni.model.authentication.UserExtended;
-import com.deltasi.elezioni.model.authentication.UserJsonResponse;
+import com.deltasi.elezioni.model.json.UserJsonResponse;
 import com.deltasi.elezioni.model.configuration.*;
 import com.deltasi.elezioni.model.json.*;
 import com.deltasi.elezioni.model.risultati.Affluenza;
 import com.deltasi.elezioni.model.risultati.Voti;
-import com.deltasi.elezioni.service.PlessoService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -25,13 +27,13 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.lang.management.PlatformLoggingMXBean;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping(value = "/amministrazione")
@@ -128,36 +130,51 @@ public class AmministrazioneController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/addetti")
+    @GetMapping(value = "/addetti/page/{page}")
     @Secured("ROLE_ADMIN")
-    public ModelAndView addetti(Model model, Principal principal) {
-       List<AddettoJson> jj = new ArrayList<AddettoJson>();
+    public ModelAndView addetti(@PathVariable("page") int page) {
+        Integer utentipagina = Integer.parseInt(env.getProperty("utentipagina"));
+        Pageable pageable = PageRequest.of(page - 1, utentipagina);
+        List<AddettoJson> jj = new ArrayList<AddettoJson>();
         Map<String, String> errors = null;
         ModelAndView modelAndView = new ModelAndView("amministrazione/addetti");
         modelAndView.addObject("titlepage", "Gestione Addetti sezione");
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
-        List<PlessoJson> listp =  new ArrayList<PlessoJson>();
         try
         {
-           List<UserExtended> listu = userExtendedService.findAll();
-           AddettoJson a = new AddettoJson();
+           Page<UserExtended> listu = userExtendedService.findAll(pageable);
+            int totalPages = listu.getTotalPages();
+            if(totalPages > 0) {
+                List<Integer> pageNumbers = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
+                modelAndView.addObject("pageNumbers", pageNumbers);
+            }
             for (UserExtended u : listu) {
                 List<UserSezione> us = userSezioneService.findByTipoelezioneIdAndUserId(tipoelezioneid,  u.getUser().getId());
-                UserJson j = new UserJson(u.getUser().getId(),u.getUser().getUsername(),u.getNome(),u.getCognome());
-                for(UserSezione z : us) {
-                   PlessoJson pj = new PlessoJson();
-                   pj.setCabina(z.getSezione().getCabina());
-                   pj.setSezione(z.getSezione().getId());
-                   pj.setDescrizione(z.getSezione().getPlesso().getDescrizione());
-                   pj.setMunicipio(z.getSezione().getMunicipio());
-                   pj.setNumero(z.getSezione().getPlesso().getId());
-                   pj.setUbicazione(z.getSezione().getPlesso().getUbicazione());
-                   pj.setTipo(z.getSezione().getTiposezione().getDescrizione());
-                   listp.add(pj);
+                if(us != null && us.size() > 0 ) {
+                    List<PlessoJson> listp =  new ArrayList<PlessoJson>();
+                    AddettoJson a = new AddettoJson();
+                    UserJson j = new UserJson(u.getUser().getId(), u.getUser().getUsername(), u.getNome(), u.getCognome());
+                    for (UserSezione z : us) {
+                        PlessoJson pj = new PlessoJson();
+                        pj.setCabina(z.getSezione().getCabina());
+                        pj.setSezione(z.getSezione().getId());
+                        pj.setDescrizione(z.getSezione().getPlesso().getDescrizione());
+                        pj.setMunicipio(z.getSezione().getMunicipio());
+                        pj.setNumero(z.getSezione().getPlesso().getId());
+                        pj.setUbicazione(z.getSezione().getPlesso().getUbicazione());
+                        pj.setTipo(z.getSezione().getTiposezione().getDescrizione());
+                        listp.add(pj);
+                    }
+                    a.setUser(j);
+                    a.setPlessi(listp);
+                    jj.add(a);
                 }
-                a.setUser(j);
-                a.setPlessi(listp);
-                jj.add(a);
+                else {
+                    UserJson j = new UserJson(u.getUser().getId(), u.getUser().getUsername(), u.getNome(), u.getCognome());
+                    AddettoJson a = new AddettoJson();
+                    a.setUser(j);
+                    jj.add(a);
+                }
             }
         }
         catch (Exception ex)
