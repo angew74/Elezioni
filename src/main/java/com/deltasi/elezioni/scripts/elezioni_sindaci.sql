@@ -16,40 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `voti_peferenze_storico`
+-- Table structure for table `sindaci`
 --
 
-DROP TABLE IF EXISTS `voti_peferenze_storico`;
+DROP TABLE IF EXISTS `sindaci`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `voti_peferenze_storico` (
-  `id` int(10) unsigned NOT NULL,
+CREATE TABLE `sindaci` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nome` varchar(200) NOT NULL,
+  `cognome` varchar(200) NOT NULL,
+  `sesso` varchar(1) NOT NULL,
+  `progressivo` int(10) unsigned NOT NULL,
   `tipoelezioneid` int(10) unsigned NOT NULL,
-  `sezioneid` int(10) unsigned NOT NULL,
-  `candidatoid` int(10) unsigned NOT NULL,
-  `listaid` int(10) unsigned NOT NULL,
-  `numerovoti` int(10) unsigned NOT NULL,
-  `utenteoperazione` varchar(45) NOT NULL,
-  `dataoperazione` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_voti_preferenze_storico_tipoelezione_id_idx` (`tipoelezioneid`),
-  KEY `fk_voti_preferenze_storico_sezioni_idx` (`sezioneid`),
-  KEY `fk_voti_preferenze_storico_liste_idx` (`listaid`),
-  KEY `fk_voti_preferenze_storico_candidati_idx` (`candidatoid`),
-  CONSTRAINT `fk_voti_preferenze_storico_candidati` FOREIGN KEY (`candidatoid`) REFERENCES `candidati` (`id`),
-  CONSTRAINT `fk_voti_preferenze_storico_liste` FOREIGN KEY (`listaid`) REFERENCES `liste` (`id`),
-  CONSTRAINT `fk_voti_preferenze_storico_sezioni` FOREIGN KEY (`sezioneid`) REFERENCES `sezioni` (`id`),
-  CONSTRAINT `fk_voti_preferenze_storico_tipoelezione_id` FOREIGN KEY (`tipoelezioneid`) REFERENCES `tipoelezione` (`id`)
+  KEY `fk_tipo_elezione_sindaci_idx` (`tipoelezioneid`),
+  CONSTRAINT `fk_tipo_elezione_sindaci` FOREIGN KEY (`tipoelezioneid`) REFERENCES `tipoelezione` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `voti_peferenze_storico`
+-- Dumping data for table `sindaci`
 --
 
-LOCK TABLES `voti_peferenze_storico` WRITE;
-/*!40000 ALTER TABLE `voti_peferenze_storico` DISABLE KEYS */;
-/*!40000 ALTER TABLE `voti_peferenze_storico` ENABLE KEYS */;
+LOCK TABLES `sindaci` WRITE;
+/*!40000 ALTER TABLE `sindaci` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sindaci` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -61,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-09 19:01:04
+-- Dump completed on 2019-06-09 19:00:56

@@ -24,15 +24,15 @@ DROP TABLE IF EXISTS `voti_lista_storico`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `voti_lista_storico` (
   `id` int(10) unsigned NOT NULL,
-  `idtipoelezione` int(10) unsigned NOT NULL,
   `idlista` int(10) unsigned NOT NULL,
   `idsezione` int(10) unsigned NOT NULL,
+  `idtipoelezione` int(10) unsigned NOT NULL,
   `voti` int(10) unsigned NOT NULL DEFAULT '0',
   `dataoperazioneold` datetime NOT NULL,
   `utenteoperazioneold` varchar(45) NOT NULL,
   `dataoperazione` datetime NOT NULL,
   `utenteoperazione` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`,`idlista`,`idsezione`,`voti`,`dataoperazioneold`,`utenteoperazioneold`,`idtipoelezione`),
+  PRIMARY KEY (`id`,`idlista`,`idsezione`,`idtipoelezione`,`voti`,`dataoperazioneold`,`utenteoperazioneold`),
   KEY `fk_sezioni_voti_lista_storico_idx` (`idsezione`),
   KEY `fk_liste_voti_lista_storico_idx` (`idlista`),
   CONSTRAINT `fk_liste_voti_lista_storico` FOREIGN KEY (`idlista`) REFERENCES `liste` (`id`),
@@ -48,41 +48,6 @@ LOCK TABLES `voti_lista_storico` WRITE;
 /*!40000 ALTER TABLE `voti_lista_storico` DISABLE KEYS */;
 /*!40000 ALTER TABLE `voti_lista_storico` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `voti_lista_storico_BEFORE_UPDATE` BEFORE UPDATE ON `voti_lista_storico` FOR EACH ROW BEGIN
-INSERT INTO voti_lista_storico (
-  `id`,
-`idlista`,
-`idtipoelezione`,
-`idsezione`,
-`voti`,
-`dataoperazioneold`,
-`utenteoperazioneold`,
-`dataoperazione`,
-`utenteoperazione`)
- VALUES (OLD.id,
-OLD.idlista,
-OLD.idtipoelezione,
-OLD.idsezione,
-OLD.voti,
-OLD.dataoperazione,
-OLD.utenteoperazione,
-new.dataoperazione, 
-new.utenteoperazione);
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -93,4 +58,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-05 21:01:25
+-- Dump completed on 2019-06-09 19:01:01

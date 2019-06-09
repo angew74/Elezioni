@@ -29,7 +29,7 @@ CREATE TABLE `users` (
   `enabled` tinyint(1) NOT NULL,
   `mailaziendale` varchar(90) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (112,'NICO','$2a$10$hbxecwitQQ.dDT4JOFzQAulNySFwEpaFLw38jda6Td.Y/cOiRzDFu',1,'agnew74@gmail.com'),(113,'ROBERTA','$2a$10$hbxecwitQQ.dDT4JOFzQAulNySFwEpaFLw38jda6Td.Y/cOiRzDFu',1,'agnew74@gmail.com'),(114,'GIOVANNI','$2a$10$hbxecwitQQ.dDT4JOFzQAulNySFwEpaFLw38jda6Td.Y/cOiRzDFu',1,'agnew74@gmail.com'),(115,'GIOVANNA','$2a$10$hbxecwitQQ.dDT4JOFzQAulNySFwEpaFLw38jda6Td.Y/cOiRzDFu',1,'agnew74@gmail.com'),(116,'ADMIN','$2a$10$hbxecwitQQ.dDT4JOFzQAulNySFwEpaFLw38jda6Td.Y/cOiRzDFu',1,'agnew74@gmail.com');
+INSERT INTO `users` VALUES (112,'NICO','$2a$10$F8sYn5ElHjKhl9LhcTUUNelcnz72pMYkhnjqZriHgclKCDkd0oRt.',1,'agnew74@gmail.com'),(113,'ROBERTA','$2a$10$hbxecwitQQ.dDT4JOFzQAulNySFwEpaFLw38jda6Td.Y/cOiRzDFu',1,'agnew74@gmail.com'),(114,'GIOVANNI','$2a$10$hbxecwitQQ.dDT4JOFzQAulNySFwEpaFLw38jda6Td.Y/cOiRzDFu',1,'agnew74@gmail.com'),(115,'GIOVANNA','$2a$10$hbxecwitQQ.dDT4JOFzQAulNySFwEpaFLw38jda6Td.Y/cOiRzDFu',1,'agnew74@gmail.com'),(116,'ADMIN','$2a$10$hbxecwitQQ.dDT4JOFzQAulNySFwEpaFLw38jda6Td.Y/cOiRzDFu',1,'agnew74@gmail.com'),(117,'PORTATILE','$2a$10$e3mDoQkTxur8XQ4fndmbGOXWMNpn4JME4AiHWU7hraHiKmwdl.g26',1,'agnew74@gmail.com');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-05 21:01:23
+-- Dump completed on 2019-06-09 19:00:59

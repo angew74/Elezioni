@@ -30,9 +30,10 @@ CREATE TABLE `users_extended` (
   `codicefiscale` varchar(16) DEFAULT NULL,
   `userid` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `userid_UNIQUE` (`userid`),
   KEY `fk_users_usersextended_idx` (`userid`),
   CONSTRAINT `fk_users_usersextended` FOREIGN KEY (`userid`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,6 +42,7 @@ CREATE TABLE `users_extended` (
 
 LOCK TABLES `users_extended` WRITE;
 /*!40000 ALTER TABLE `users_extended` DISABLE KEYS */;
+INSERT INTO `users_extended` VALUES (13,'M','NICO','RUBERTO','RBRNCL74P16H501C',112),(14,'F','ROBERTA','RECCHIA',NULL,113),(15,'M','GIOVANNI','CAPASSO',NULL,114),(16,'F','GIOVANNA','PALOMBELLI',NULL,115),(17,'M','ADMIN','ADMIN',NULL,116),(18,'M','PORTATILE','PORTATILE',NULL,117);
 /*!40000 ALTER TABLE `users_extended` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-05 21:01:30
+-- Dump completed on 2019-06-09 19:01:08

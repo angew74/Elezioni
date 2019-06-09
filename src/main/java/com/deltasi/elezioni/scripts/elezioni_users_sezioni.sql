@@ -34,7 +34,7 @@ CREATE TABLE `users_sezioni` (
   CONSTRAINT `fk_users_sezione_tipoelezione` FOREIGN KEY (`idtipoelezione`) REFERENCES `tipoelezione` (`id`),
   CONSTRAINT `fk_users_sezioni_sezioni` FOREIGN KEY (`sezioneid`) REFERENCES `sezioni` (`id`),
   CONSTRAINT `fk_users_sezioni_users` FOREIGN KEY (`userid`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,6 +43,7 @@ CREATE TABLE `users_sezioni` (
 
 LOCK TABLES `users_sezioni` WRITE;
 /*!40000 ALTER TABLE `users_sezioni` DISABLE KEYS */;
+INSERT INTO `users_sezioni` VALUES (26,114,784,1),(27,114,785,1),(28,114,2685,1),(29,114,2686,1),(30,114,2687,1),(31,114,2689,1),(32,114,2690,1);
 /*!40000 ALTER TABLE `users_sezioni` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-05 21:01:27
+-- Dump completed on 2019-06-09 19:01:04

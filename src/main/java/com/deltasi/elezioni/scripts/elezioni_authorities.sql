@@ -29,7 +29,7 @@ CREATE TABLE `authorities` (
   PRIMARY KEY (`idauthorities`),
   KEY `fk_users_authorities_idx` (`user_id`),
   CONSTRAINT `fk_users_authorities` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `authorities` (
 
 LOCK TABLES `authorities` WRITE;
 /*!40000 ALTER TABLE `authorities` DISABLE KEYS */;
-INSERT INTO `authorities` VALUES (10,'ADMIN',112),(11,'ADMIN',116),(12,'USER',113),(13,'ADMIN',114),(14,'USER',115);
+INSERT INTO `authorities` VALUES (10,'ADMIN',112),(11,'ADMIN',116),(12,'USER',113),(13,'ADMIN',114),(14,'USER',115),(15,'USER',117);
 /*!40000 ALTER TABLE `authorities` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-05 21:01:28
+-- Dump completed on 2019-06-09 19:01:06

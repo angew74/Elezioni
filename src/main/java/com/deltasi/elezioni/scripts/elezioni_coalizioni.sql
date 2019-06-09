@@ -27,9 +27,12 @@ CREATE TABLE `coalizioni` (
   `idtipoelezione` int(10) unsigned NOT NULL,
   `denominazione` varchar(200) NOT NULL,
   `denominazione_breve` varchar(20) NOT NULL,
+  `sindacoid` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `fk_tipoelezioni_coalizioni_idx` (`idtipoelezione`),
+  KEY `fk_sindaci_coalizioni_idx` (`sindacoid`),
+  CONSTRAINT `fk_sindaci_coalizioni` FOREIGN KEY (`sindacoid`) REFERENCES `sindaci` (`id`),
   CONSTRAINT `fk_tipoelezioni_coalizioni` FOREIGN KEY (`idtipoelezione`) REFERENCES `tipoelezione` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -52,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-05 21:01:31
+-- Dump completed on 2019-06-09 19:01:10

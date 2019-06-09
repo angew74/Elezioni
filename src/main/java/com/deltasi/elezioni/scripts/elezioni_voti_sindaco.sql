@@ -16,43 +16,38 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `voti_preferenze`
+-- Table structure for table `voti_sindaco`
 --
 
-DROP TABLE IF EXISTS `voti_preferenze`;
+DROP TABLE IF EXISTS `voti_sindaco`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `voti_preferenze` (
+CREATE TABLE `voti_sindaco` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `tipoelezioneid` int(10) unsigned NOT NULL,
+  `sindacoid` int(10) unsigned NOT NULL,
   `sezioneid` int(10) unsigned NOT NULL,
-  `candidatoid` int(10) unsigned NOT NULL,
-  `listaid` int(10) unsigned NOT NULL,
   `municipio` int(10) unsigned NOT NULL,
-  `numerovoti` int(10) unsigned NOT NULL,
-  `utenteoperazione` varchar(45) NOT NULL,
-  `dataoperazione` datetime NOT NULL,
+  `numero_voti` int(10) NOT NULL DEFAULT '0',
+  `utente_operazione` varchar(45) NOT NULL,
+  `data_operazione` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_voti_preferenze_lista_candidato_sezione` (`candidatoid`,`sezioneid`,`listaid`,`tipoelezioneid`),
-  KEY `fk_voti_preferenze_tipoelezione_id_idx` (`tipoelezioneid`),
-  KEY `fk_voti_preferenze_sezioni_idx` (`sezioneid`),
-  KEY `fk_voti_preferenze_liste_idx` (`listaid`),
-  KEY `fk_voti_preferenze_candidati_idx` (`candidatoid`),
-  CONSTRAINT `fk_voti_preferenze_candidati` FOREIGN KEY (`candidatoid`) REFERENCES `candidati` (`id`),
-  CONSTRAINT `fk_voti_preferenze_liste` FOREIGN KEY (`listaid`) REFERENCES `liste` (`id`),
-  CONSTRAINT `fk_voti_preferenze_sezioni` FOREIGN KEY (`sezioneid`) REFERENCES `sezioni` (`id`),
-  CONSTRAINT `fk_voti_preferenze_tipoelezione_id` FOREIGN KEY (`tipoelezioneid`) REFERENCES `tipoelezione` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `fk_voti_sindaco_tipo_elezioni_idx` (`tipoelezioneid`),
+  KEY `fk_voti_sindaco_sindaco_idx` (`sindacoid`),
+  KEY `fk_voti_sindaco_sezioni_idx` (`sezioneid`),
+  CONSTRAINT `fk_voti_sindaco_sezioni` FOREIGN KEY (`sezioneid`) REFERENCES `sezioni` (`id`),
+  CONSTRAINT `fk_voti_sindaco_sindaco` FOREIGN KEY (`sindacoid`) REFERENCES `sindaci` (`id`),
+  CONSTRAINT `fk_voti_sindaco_tipo_elezioni` FOREIGN KEY (`tipoelezioneid`) REFERENCES `tipoelezione` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `voti_preferenze`
+-- Dumping data for table `voti_sindaco`
 --
 
-LOCK TABLES `voti_preferenze` WRITE;
-/*!40000 ALTER TABLE `voti_preferenze` DISABLE KEYS */;
-INSERT INTO `voti_preferenze` VALUES (1,1,535,1,13,1,10,'admin','2019-04-27 21:11:11'),(2,1,535,2,13,1,10,'admin','2019-04-27 21:11:11'),(3,1,535,5,13,1,0,'admin','2019-04-27 21:11:11'),(4,1,535,7,13,1,0,'admin','2019-04-27 21:11:11'),(5,1,535,9,13,1,0,'admin','2019-04-27 21:11:11'),(6,1,535,10,13,1,0,'admin','2019-04-27 21:11:11'),(7,1,535,16,13,1,0,'admin','2019-04-27 21:11:11'),(8,1,535,18,13,1,0,'admin','2019-04-27 21:11:11'),(9,1,535,21,13,1,0,'admin','2019-04-27 21:11:11'),(10,1,535,23,13,1,0,'admin','2019-04-27 21:11:11');
-/*!40000 ALTER TABLE `voti_preferenze` ENABLE KEYS */;
+LOCK TABLES `voti_sindaco` WRITE;
+/*!40000 ALTER TABLE `voti_sindaco` DISABLE KEYS */;
+/*!40000 ALTER TABLE `voti_sindaco` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -63,27 +58,27 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `voti_peferenze_BEFORE_UPDATE` BEFORE UPDATE ON `voti_preferenze` FOR EACH ROW BEGIN
-INSERT INTO voti_preferenze_storico (
-  `id`,
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `voti_sindaco_BEFORE_UPDATE` BEFORE UPDATE ON `voti_sindaco` FOR EACH ROW BEGIN
+INSERT INTO 
+VOTI_SINDACO_STORICO (`id`,
 `tipoelezioneid`,
+`sindacoid`,
 `sezioneid`,
-`candidatoid`,
-`listaid`,
-`numerovoti`,
-`dataoperazioneold`,
-`utenteoperazioneold`,
-`dataoperazione`,
-`utenteoperazione`)
- VALUES (OLD.id,
+`municipio`,
+`numero_voti`,
+`utente_operazione_old`,
+`data_operazione_old`,
+`utente_operazione`,
+`data_operazione`)
+VALUES (OLD.id,
 OLD.tipoelezioneid,
-OLD.sezioneid,
-OLD.listaid,
-OLD.numerovoti,
-OLD.dataoperazione,
-OLD.utenteoperazione,
-new.dataoperazione, 
-new.utenteoperazione);
+OLD.sindacoid,
+OLD.municipio,
+OLD.numero_voti,
+OLD.data_operazione,
+OLD.utente_operazione,
+new.data_operazione, 
+new.utente_operazione);
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -100,4 +95,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-09 19:00:57
+-- Dump completed on 2019-06-09 19:00:55

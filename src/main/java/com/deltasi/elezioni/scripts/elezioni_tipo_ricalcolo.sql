@@ -31,7 +31,7 @@ CREATE TABLE `tipo_ricalcolo` (
   PRIMARY KEY (`id`),
   KEY `fk_tipo_ricalcolo_tipo_elezione_idx` (`idtipoelezione`),
   CONSTRAINT `fk_tipo_ricalcolo_tipo_elezione` FOREIGN KEY (`idtipoelezione`) REFERENCES `tipoelezione` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `tipo_ricalcolo` (
 
 LOCK TABLES `tipo_ricalcolo` WRITE;
 /*!40000 ALTER TABLE `tipo_ricalcolo` DISABLE KEYS */;
-INSERT INTO `tipo_ricalcolo` VALUES (1,'Ricalcolo 1 Affluenza','RIC','AF1',1),(2,'Ricalcolo 2 Affluenza','RIC','AF2',1),(3,'Ricalcolo Chiusura','RIC','CHI',1),(4,'Ricalcolo 1 Apertura ','RIA','AP1',1),(5,'Ricalcolo 2 Apertura','RIA','AP2',3),(6,'Ricalcolo 1 Costituzione','RIA','CO1',1),(7,'Ricalcolo 2 Costituzione','RIA','CO2',3),(11,'Ricalcolo Voti Lista','RIL','VL',1),(12,'Ricalcolo Preferenze','RIP','VP',1),(13,'Ricalcolo Coalizioni','RIO','VC',3),(14,'Ricalcolo Preferenze','RIP','VP',3),(15,'Ricalcolo Voti Lista','RIL','VL',3),(16,'Ricalcolo Voti Lista','RIL','VL',4);
+INSERT INTO `tipo_ricalcolo` VALUES (1,'Ricalcolo 1 Affluenza','RIC','AF1',1),(2,'Ricalcolo 2 Affluenza','RIC','AF2',1),(3,'Ricalcolo Chiusura','RIC','CHI',1),(4,'Ricalcolo 1 Apertura ','RIA','AP1',1),(5,'Ricalcolo 2 Apertura','RIA','AP2',3),(6,'Ricalcolo 1 Costituzione','RIA','CO1',1),(7,'Ricalcolo 2 Costituzione','RIA','CO2',3),(11,'Ricalcolo Voti Lista','RIL','VL',1),(12,'Ricalcolo Preferenze','RIP','VP',1),(13,'Ricalcolo Coalizioni','RIO','VC',3),(14,'Ricalcolo Preferenze','RIP','VP',3),(15,'Ricalcolo Voti Lista','RIL','VL',3),(16,'Ricalcolo Voti Lista','RIL','VL',4),(17,'Ricalcolo Sindaco','RIS','VS',3),(18,'Ricalcolo 1 Affluenza','RIC','AF1',3),(19,'Ricalcolo 2 Affluenza','RIC','AF2',3),(20,'Ricalcolo Chiusura','RIC','CHI',3),(21,'Ricalcolo 1 Costituzione','RIA','CO1',3),(22,'Ricalcolo 1 Apertura','RIA','AP1',3);
 /*!40000 ALTER TABLE `tipo_ricalcolo` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-05 21:01:26
+-- Dump completed on 2019-06-09 19:01:02
