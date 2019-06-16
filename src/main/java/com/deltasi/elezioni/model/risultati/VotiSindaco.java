@@ -46,4 +46,68 @@ public class VotiSindaco {
 
     @Column(name = "numero_voti")
     private Integer numerovoti;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Sezione getSezione() {
+        return sezione;
+    }
+
+    public void setSezione(Sezione sezione) {
+        this.sezione = sezione;
+    }
+
+    public TipoElezione getTipoelezione() {
+        return tipoelezione;
+    }
+
+    public void setTipoelezione(TipoElezione tipoelezione) {
+        this.tipoelezione = tipoelezione;
+    }
+
+    public Sindaco getSindaco() {
+        return sindaco;
+    }
+
+    public void setSindaco(Sindaco sindaco) {
+        this.sindaco = sindaco;
+    }
+
+    public int getMunicipio() {
+        return municipio;
+    }
+
+    public void setMunicipio(int municipio) {
+        this.municipio = municipio;
+    }
+
+    public LocalDateTime getDataoperazione() {
+        return dataoperazione;
+    }
+
+    public void setDataoperazione(LocalDateTime dataoperazione) {
+        this.dataoperazione = dataoperazione;
+    }
+
+    public String getUtenteoperazione() {
+        return utenteoperazione;
+    }
+
+    public void setUtenteoperazione(String utenteoperazione) {
+        this.utenteoperazione = utenteoperazione;
+    }
+
+    public Integer getNumerovoti() {
+        return numerovoti;
+    }
+
+    public void setNumerovoti(Integer numerovoti) {
+        this.numerovoti = numerovoti;
+    }
 }

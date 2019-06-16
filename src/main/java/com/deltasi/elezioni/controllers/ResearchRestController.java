@@ -284,7 +284,7 @@ public class ResearchRestController {
 
     @PostMapping(value = "search/voti", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public VotiJson researchVoti(@RequestBody @ModelAttribute("SezioneJsno") SezioneJson sezione, BindingResult result) {
+    public VotiJson researchVoti(@RequestBody @ModelAttribute("SezioneJson") SezioneJson sezione, BindingResult result) {
         VotiJson json = new VotiJson();
         Map<String, String> errors = null;
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));

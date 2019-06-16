@@ -1,4 +1,16 @@
-Query(document).ready(function ($) {
+jQuery(document).ready(function ($) {
+
+    function openListeModal(id) {
+        var sezione =   $("#sezione").text;
+        $.ajax({
+            url:'/coalizioni/listecoalizione/' + id + "/" + sezione,
+            success:function (data) {
+                $("#listeModalHolder").html(data);
+                $("#listeModal").show();
+            }
+        })
+    }
+
     var buttonScrutinio = '#btnSalvaScrutinio';
     $(buttonScrutinio).click(function (event) {
         event.preventDefault();
@@ -27,7 +39,6 @@ Query(document).ready(function ($) {
         var votanti = parseInt($('#Votanti').text());
         var iscritti = parseInt($('#Iscritti').text());
         var sum = 0;
-        debugger;
         var group = $('input[name="liste.voti"]');
         var count = $('#count').text();
         var fields = $( ":input" ).serializeArray();
@@ -59,6 +70,9 @@ Query(document).ready(function ($) {
         }
     })
 
+
+
+
     function jQFormSerializeArrToJson(formSerializeArr){
         var jsonObj = {};
         jQuery.map( formSerializeArr, function( n, i ) {
@@ -67,6 +81,7 @@ Query(document).ready(function ($) {
 
         return jsonObj;
     }
+
 
     function postScrutinio() {
         var errorcontainer = '#errorModal';
@@ -77,17 +92,17 @@ Query(document).ready(function ($) {
         // var formData = $("#insertScrutinio").serialize();
         var formData= $('form[name=insertScrutinio]').serialize();
         $.post({
-            url: '/voti/lreg',
+            url: '/coalizioni/coalreg',
             data: formData,
             success: function (res) {
                 try {
                     if (res.validated) {
                         //Set response
-                        if (res.tipo === "VL") {
+                        if (res.tipo === "VS") {
                             $("#scrutiniodiv").hide();
                             $(mdisplay).text("Scrutinio inserito correttamente");
                         }
-                        if (res.tipo === "RVL") {
+                        if (res.tipo === "RVS") {
                             $("#scrutiniodiv").hide();
                             $(mdisplay).text("Rettifica Scrutinio inserita correttamente");
                         }

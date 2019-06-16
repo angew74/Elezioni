@@ -4,10 +4,7 @@ import com.deltasi.elezioni.contracts.*;
 import com.deltasi.elezioni.model.configuration.Iscritti;
 import com.deltasi.elezioni.model.configuration.Sezione;
 import com.deltasi.elezioni.model.configuration.TipoElezione;
-import com.deltasi.elezioni.model.json.CandidatoJson;
-import com.deltasi.elezioni.model.json.ListaJson;
-import com.deltasi.elezioni.model.json.ListaSemplice;
-import com.deltasi.elezioni.model.json.VotiJson;
+import com.deltasi.elezioni.model.json.*;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloPreferenze;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloVoti;
 import com.deltasi.elezioni.model.risultati.*;
@@ -200,6 +197,25 @@ public class VotiLoader {
             listaJsons.add(j);
         }
         json.setListe(listaJsons);
+        return  json;
+    }
+
+    public VotiSindacoJson ConvertToJsonSindaci(List<VotiSindaco> l, Integer sezione, String tipo) {
+        List<SindacoJson> sindaciJsons = new ArrayList<SindacoJson>();
+        VotiSindacoJson json = new VotiSindacoJson();
+        for (VotiSindaco v : l) {
+            SindacoJson j = new SindacoJson();
+            j.setId(v.getSindaco().getId());
+            j.setCognome(v.getSindaco().getCognome());
+            j.setNome(v.getSindaco().getNome());
+            j.setProgressivo(v.getSindaco().getProgressivo());
+            j.setVoti(v.getNumerovoti());
+            j.setNumerosezione(sezione);
+            j.setTipo(tipo);
+            j.setId(v.getSindaco().getId());
+            sindaciJsons.add(j);
+        }
+        json.setSindaci(sindaciJsons);
         return  json;
     }
 }

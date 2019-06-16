@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: localhost    Database: elezioni
+-- Host: 127.0.0.1    Database: elezioni
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -32,7 +32,7 @@ CREATE TABLE `sindaci` (
   PRIMARY KEY (`id`),
   KEY `fk_tipo_elezione_sindaci_idx` (`tipoelezioneid`),
   CONSTRAINT `fk_tipo_elezione_sindaci` FOREIGN KEY (`tipoelezioneid`) REFERENCES `tipoelezione` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,6 +41,7 @@ CREATE TABLE `sindaci` (
 
 LOCK TABLES `sindaci` WRITE;
 /*!40000 ALTER TABLE `sindaci` DISABLE KEYS */;
+INSERT INTO `sindaci` VALUES (1,'IGNAZIO ROBERTO','MARINO','M',1,4),(2,'VIRGINIA','RAGGI','F',2,4),(3,'ALESSANDRO','MUSTILLO','M',3,4),(4,'GIORGIA','MELONI','F',4,4),(5,'ALFREDO','IORIO','M',5,4),(6,'STEFANO','FASSINA','M',6,4),(7,'ALFIO','MARCHINI','M',7,4),(8,'MARIO','ADINOLFI','M',8,4),(9,'DARIO','DI FRANCESCO','M',9,4),(10,'SIMONE','DI STEFANO','M',10,4),(11,'CARLO','RIENZI','M',11,4),(12,'FABRIZIO','VERDUCHI','M',12,4),(13,'MICHEL','EMI MARITATO','M',13,4);
 /*!40000 ALTER TABLE `sindaci` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-16 12:15:11
+-- Dump completed on 2019-06-16 20:03:33

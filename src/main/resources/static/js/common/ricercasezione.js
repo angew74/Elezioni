@@ -1,4 +1,5 @@
 jQuery(document).ready(function ($) {
+
     var button = '#submitSearch';
     $(button).on('click', (function (event) {
         event.preventDefault();
@@ -139,7 +140,10 @@ jQuery(document).ready(function ($) {
                         var votanti = res.votanti;
                         $("#Votanti").text(votanti);
                         $("#Iscritti").text(res.iscritti);
-                        var url = "/voti/scrutinio/" + res.tipo+ "/" + res.numerosezione;
+                        if(res.tipo === "VL" || res.tipo === "RVL")
+                        { var url = "/voti/scrutinio/" + res.tipo+ "/" + res.numerosezione;}
+                       if(res.tipo === "VS" || restipo === "RVS")
+                       {var url = "/coalizioni/scrutinio/" + res.tipo+ "/" + res.numerosezione;}
                         $("#scrutiniodiv").load(url);
                         $("#scrutinio").show();
                         $("#scrutiniodiv").show();
@@ -218,18 +222,33 @@ jQuery(document).ready(function ($) {
                         $("#tipoelezione").text(res.iscritti.tipoelezione.descrizione);
                         $("#tiposezione").text(" Tipo sezione: " + res.iscritti.sezione.tiposezione.descrizione);
                         $("#sezionediv").show();
-                        if (res.tipo === "RVL" || res.tipo === "VL") {
-                            $("#footer").removeClass("absolute");
-                            $("#footer").addClass("relative");
-                            ajaxPrepopulateVoti();
-                        }
-                        if (res.tipo === "PE" || res.tipo === "RPE") {
-                            $("#footer").removeClass("absolute");
-                            $("#footer").addClass("relative");
-                            ajaxPrepopulatePreferenze();
-                        }
-                        else {
-                            ajaxPrepopulate();
+                        switch ((res.tipo)) {
+                            case "RVL":
+                            case "VL":
+                            case "VS":
+                                $("#footer").removeClass("absolute");
+                                $("#footer").addClass("relative");
+                                ajaxPrepopulateVoti();
+                                break;
+                            case "PE":
+                            case "RPE":
+                                $("#footer").removeClass("absolute");
+                                $("#footer").addClass("relative");
+                                ajaxPrepopulatePreferenze();
+                                break;
+                            case "R1A":
+                            case "1A":
+                            case "3C":
+                            case "R3C":
+                            case "2A":
+                            case "R2A":
+                                break;
+                                ajaxPrepopulate();
+                                break;
+                            default:
+                                $(errorDisplay).text("Attenzione scelta errata");
+                                $(errorcontainer).modal('show');
+                                break;
                         }
                     } else {
                         //Set error messages

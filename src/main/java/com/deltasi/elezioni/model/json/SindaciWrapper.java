@@ -22,7 +22,7 @@ public class SindaciWrapper {
     public List<SindacoSimple> getSindaci() {
         return sindaci;
     }
-    public void setSindaci(List<SindacoSimple> liste) {
+    public void setSindaci(List<SindacoSimple> sindaci) {
         this.sindaci = sindaci;
     }
 }

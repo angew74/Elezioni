@@ -36,29 +36,30 @@
                                                        required
                                                        th:field="*{sindaci[__${iterStat.index}__].id}"
                                                 />
-                                                <input name="idlista" type="number"
+                                                <input name="idsindaco" type="number"
                                                        style="display:none;"
                                                        data-parsley-required
                                                        required
-                                                       th:value="${sindaco.idlsindaco}"
+                                                       th:value="${sindaco.idsindaco}"
                                                        th:field="*{sindaci[__${iterStat.index}__].idsindaco}"
                                                 />
                                                 <label class="col-sm-3  col-form-label"
-                                                       th:text="${sindaco.nome}||${sindaco.cognome}"></label>
+                                                       th:text="${sindaco.nome} + ' ' + ${sindaco.cognome}"></label>
                                                 <input type="text"  class="form-control voti"
-                                                       th:field="*{sindaco[__${iterStat.index}__].voti}"
+                                                       th:field="*{sindaci[__${iterStat.index}__].voti}"
+                                                       th:onchange="|openListeModal(${sindaco.id})|"
                                                        th:value="${sindaco.voti}">
                                             </div>
                                         </div>
                                     </div>
                                 </form>
                             </div>
-                            <div th:if="${#lists.isEmpty(Sindaci.sindaci)}">
+                            <div th:if="${#lists.isEmpty(Sindaci.getSindaci())}">
                                 <div id="count" th:text="${Count}"  style="display: none"></div>
                                 <form class="form-horizontal"  name="insertScrutinio"
                                       th:action="@{/coalizioni/lreg}" action="#"
                                       th:object="${ListWrapper}"   id="insertScrutinio" data-parsley-validate  method="post">
-                                    <div th:each="sindaco,itemStat:${ListWrapper.sindaci}" class="form-group row">
+                                    <div th:each="sindaco,itemStat:${ListWrapper.getSindaci()}" class="form-group row">
                                         <div class="col-sm-10">
                                             <div class="input-group">
                                                 <input type="number"
@@ -83,9 +84,10 @@
                                                         th:value="${sindaco.getIdsindaco()}"
                                                 />
                                                 <label class="col-sm-3  col-form-label"
-                                                       th:text="${sindaco.nome}||${sindaco.cognome}"></label>
+                                                       th:text="${sindaco.nome} + ' ' + ${sindaco.cognome}"></label>
                                                 <input
                                                         class="form-control voti"
+                                                        th:onchange="'javascript:openListeModal(\'' + ${sindaco.id} + '\');'"
                                                         th:field="*{sindaci[__${itemStat.index}__].voti}"
                                                         placeholder="Voti Sindaco"
                                                         type="number"

@@ -7,6 +7,7 @@ import com.deltasi.elezioni.model.configuration.TipoElezione;
 import com.deltasi.elezioni.model.risultati.Affluenza;
 import com.deltasi.elezioni.model.risultati.Preferenze;
 import com.deltasi.elezioni.model.risultati.Voti;
+import com.deltasi.elezioni.model.risultati.VotiSindaco;
 import com.sun.org.apache.bcel.internal.generic.BREAKPOINT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -28,6 +29,9 @@ public class BusinessRules {
 
     @Autowired
     IVotiService votiService;
+
+    @Autowired
+    IVotiSindacoService votiSindacoService;
 
     @Autowired
     IPreferenzeService preferenzeService;
@@ -200,6 +204,30 @@ public class BusinessRules {
                     return "Scrutinio non registrato usare inserimento";
                 }
                 break;
+            case "VS":
+                List<VotiSindaco> lsindaco = votiSindacoService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, idtipoelezione);
+                if (affluenza == null) {
+                    return "Sezione non costitutita";
+                }
+                if (affluenza.getAffluenza3() == null || affluenza.getAffluenza3().equals(0)) {
+                    return "Chiusura non registrata";
+                }
+                if (lsindaco != null && lsindaco.size() > 0) {
+                    return "Scrutinio già registrato usare rettifica";
+                }
+                break;
+            case "RVS":
+                List<VotiSindaco> lvotisindacor = votiSindacoService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, idtipoelezione);
+                if (affluenza == null) {
+                    return "Sezione non costitutita";
+                }
+                if (affluenza.getAffluenza3() == null || affluenza.getAffluenza3().equals(0)) {
+                    return "Chiusura non registrata";
+                }
+                if ((lvotisindacor == null) || (lvotisindacor.size() == 0)) {
+                    return "Scrutinio non registrato usare inserimento";
+                }
+                break;
             case "PE":
                 List<Voti> lvotip = votiService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, idtipoelezione);
                 List<Preferenze> lpreferenze = preferenzeService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, idtipoelezione);
@@ -229,6 +257,9 @@ public class BusinessRules {
                 }
                 // todo aggiungere controllo preferenze
                 break;
+
+                default:
+                    return "Attenzione configurazione di sistema errata";
         }
         return message;
     }

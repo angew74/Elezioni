@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: localhost    Database: elezioni
+-- Host: 127.0.0.1    Database: elezioni
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -26,7 +26,7 @@ CREATE TABLE `coalizioni` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `idtipoelezione` int(10) unsigned NOT NULL,
   `denominazione` varchar(200) NOT NULL,
-  `denominazione_breve` varchar(20) NOT NULL,
+  `denominazione_breve` varchar(20) NOT NULL DEFAULT 'NESSUNA',
   `sindacoid` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
@@ -34,7 +34,7 @@ CREATE TABLE `coalizioni` (
   KEY `fk_sindaci_coalizioni_idx` (`sindacoid`),
   CONSTRAINT `fk_sindaci_coalizioni` FOREIGN KEY (`sindacoid`) REFERENCES `sindaci` (`id`),
   CONSTRAINT `fk_tipoelezioni_coalizioni` FOREIGN KEY (`idtipoelezione`) REFERENCES `tipoelezione` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,6 +43,7 @@ CREATE TABLE `coalizioni` (
 
 LOCK TABLES `coalizioni` WRITE;
 /*!40000 ALTER TABLE `coalizioni` DISABLE KEYS */;
+INSERT INTO `coalizioni` VALUES (1,4,'MARINO','NESSUNA',1),(2,4,'RAGGI','NESSUNA',2),(3,4,'MUSTILLO','NESSUNA',3),(4,4,'MELONI','NESSUNA',4),(5,4,'IORIO','NESSUNA',5),(6,4,'FASSINA','NESSUNA',6),(7,4,'MARCHINI','NESSUNA',7),(8,4,'ADINOLFI','NESSUNA',8),(9,4,'DI FRANCESCO','NESSUNA',9),(10,4,'DI STEFANO','NESSUNA',10),(11,4,'RIENZI','NESSUNA',11),(12,4,'VERDUCHI','NESSUNA',12),(13,4,'EMI MARITATO','NESSUNA',13);
 /*!40000 ALTER TABLE `coalizioni` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-16 12:15:21
+-- Dump completed on 2019-06-16 20:03:46
