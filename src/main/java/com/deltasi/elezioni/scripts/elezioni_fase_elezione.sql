@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: elezioni
+-- Host: localhost    Database: elezioni
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -40,7 +40,7 @@ CREATE TABLE `fase_elezione` (
 
 LOCK TABLES `fase_elezione` WRITE;
 /*!40000 ALTER TABLE `fase_elezione` DISABLE KEYS */;
-INSERT INTO `fase_elezione` VALUES (27,'CO','Costituzione',1,1),(30,'1A','1 Affluenza',1,1),(31,'2A','2 Affluenza',1,1),(32,'3C','Chiusura',1,1),(33,'3A','3 Affluenza',0,1),(34,'4C','Chiusura 4 Affluenza',0,1),(35,'VL','Voti Lista',1,1),(36,'VP','Voti Presidente',0,3),(37,'VS','Voti Sindaco',0,4),(38,'VU','Voti Uninominalie',0,2),(39,'PC','Preferenze Comunali',0,4),(40,'PR','Preferenze Regionali',0,3),(41,'AP','Apertura',1,1),(42,'RCO','Rettifica Costituzione',1,1),(43,'RAP','Rettiifica Apertura',1,1),(44,'R1A','Rettifica 1 Affluenza',1,1),(45,'R2A','Rettifica 2 Affluenza',0,1),(46,'R3C','Rettifica Chiusura',0,1),(47,'RVL','Rettifica Voti Lista',1,1),(48,'RPE','Rettifica Preferenze Europee',0,1),(49,'PE','Preferenze Europee',1,1),(50,'RIC','Ricalcoli Affluenze',1,1),(51,'RIL','Ricalcoli Voti Lista',1,1),(52,'RIP','Ricalcoli Preferenze',1,1),(53,'RIA','Ricalcoli Costituzione Apertura',1,1),(54,'RIS','Ricalcolo Sindaco',1,4),(56,'RPI','Ricalcolo Presidente',0,3),(57,'RCS','Ricalcolo Coalizioni Sindaco',0,4),(58,'RCP','Ricalcolo Coalizioni Presidente',0,3),(72,'CO','Costituzione Seggio',0,3),(73,'1A','1 Affluenza',0,3),(74,'2A','2 Affluenza',0,3),(75,'3C','Chiusura Affluenza',0,3),(76,'AP','Apertura Seggio',0,3),(77,'RAP','Rettifica Apertura',0,3),(78,'R1A','Rettifica 1 Affluenza',0,3),(79,'R2A','Rettifica 2 Affluenza',0,3),(80,'R3C','Rettifica Chiusura Affluenza',0,3),(81,'VL','Voti Lista',0,3),(82,'RVL','Rettifica Voti Lista',0,3),(83,'RIL','Ricalcolo Voti Lista',0,3),(84,'RIP','Ricalcolo Preferenze',0,3),(85,'RVS','Rettifica Voti Sindaco',0,3);
+INSERT INTO `fase_elezione` VALUES (27,'CO','Costituzione',1,1),(30,'1A','1 Affluenza',1,1),(31,'2A','2 Affluenza',1,1),(32,'3C','Chiusura',1,1),(33,'3A','3 Affluenza',0,1),(34,'4C','Chiusura 4 Affluenza',0,1),(35,'VL','Voti Lista',1,1),(36,'VP','Voti Presidente',0,3),(37,'VS','Voti Sindaco',1,4),(38,'VU','Voti Uninominalie',0,2),(39,'PC','Preferenze Comunali',0,4),(40,'PR','Preferenze Regionali',0,3),(41,'AP','Apertura',1,1),(42,'RCO','Rettifica Costituzione',1,1),(43,'RAP','Rettiifica Apertura',1,1),(44,'R1A','Rettifica 1 Affluenza',1,1),(45,'R2A','Rettifica 2 Affluenza',0,1),(46,'R3C','Rettifica Chiusura',0,1),(47,'RVL','Rettifica Voti Lista',1,1),(48,'RPE','Rettifica Preferenze Europee',0,1),(49,'PE','Preferenze Europee',1,1),(50,'RIC','Ricalcoli Affluenze',1,1),(51,'RIL','Ricalcoli Voti Lista',1,1),(52,'RIP','Ricalcoli Preferenze',1,1),(53,'RIA','Ricalcoli Costituzione Apertura',1,1),(54,'RIS','Ricalcolo Sindaco',0,4),(56,'RPI','Ricalcolo Presidente',0,3),(57,'RCS','Ricalcolo Coalizioni Sindaco',0,4),(58,'RCP','Ricalcolo Coalizioni Presidente',0,3),(72,'CO','Costituzione Seggio',1,4),(73,'1A','1 Affluenza',1,4),(74,'2A','2 Affluenza',1,4),(75,'3C','Chiusura Affluenza',1,4),(76,'AP','Apertura Seggio',1,4),(77,'RAP','Rettifica Apertura',0,4),(78,'R1A','Rettifica 1 Affluenza',0,4),(79,'R2A','Rettifica 2 Affluenza',0,4),(80,'R3C','Rettifica Chiusura Affluenza',0,4),(81,'VL','Voti Lista',0,4),(82,'RVL','Rettifica Voti Lista',0,4),(83,'RIL','Ricalcolo Voti Lista',0,4),(84,'RIP','Ricalcolo Preferenze',0,4),(85,'RVS','Rettifica Voti Sindaco',0,4);
 /*!40000 ALTER TABLE `fase_elezione` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-09 19:00:55
+-- Dump completed on 2019-06-16 12:15:10

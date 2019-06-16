@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: elezioni
+-- Host: localhost    Database: elezioni
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -43,7 +43,7 @@ CREATE TABLE `spring_session` (
 
 LOCK TABLES `spring_session` WRITE;
 /*!40000 ALTER TABLE `spring_session` DISABLE KEYS */;
-INSERT INTO `spring_session` VALUES ('9259f46f-5444-47cf-b886-58fec4814afa','9000b020-f5a6-47a9-9ae1-f2e62fd42cbf',1560023551155,1560024863934,1800,1560026663934,'admin'),('b135aec8-5739-4d6d-9ca9-042e0a6bd9af','673d1665-e542-4ea9-adb0-96da9acc5eaf',1560023494372,1560023508101,1800,1560025308101,'admin');
+INSERT INTO `spring_session` VALUES ('01155706-ea02-48d0-8812-98efc94458f3','bdf7411e-2f56-48e5-b2c6-65c335995a67',1560522262733,1560522755637,1800,1560524555637,'admin'),('318be767-e0be-43aa-8ef5-995634b6ca47','8d09f6cf-75ee-4cdc-89fb-dabfdaf66ca7',1560520302140,1560521996312,1800,1560523796312,'admin');
 /*!40000 ALTER TABLE `spring_session` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-09 19:01:07
+-- Dump completed on 2019-06-16 12:15:18

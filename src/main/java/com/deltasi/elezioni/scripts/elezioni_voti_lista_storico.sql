@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: elezioni
+-- Host: localhost    Database: elezioni
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -27,6 +27,7 @@ CREATE TABLE `voti_lista_storico` (
   `idlista` int(10) unsigned NOT NULL,
   `idsezione` int(10) unsigned NOT NULL,
   `idtipoelezione` int(10) unsigned NOT NULL,
+  `municipio` int(10) unsigned DEFAULT NULL,
   `voti` int(10) unsigned NOT NULL DEFAULT '0',
   `dataoperazioneold` datetime NOT NULL,
   `utenteoperazioneold` varchar(45) NOT NULL,
@@ -58,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-09 19:01:01
+-- Dump completed on 2019-06-16 12:15:14

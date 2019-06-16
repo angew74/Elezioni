@@ -37,10 +37,15 @@ public class Lista {
     @Column(name = "progressivo_coalizione")
     private Integer progressivocoalizione;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idcoalizione", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "coalizioneid", referencedColumnName = "id")
     @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
     private Coalizione coalizione;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "sindacoid", referencedColumnName = "id")
+    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+    private Sindaco sindaco;
 
     public Integer getId() {
         return id;
@@ -104,5 +109,13 @@ public class Lista {
 
     public void setProgressivocoalizione(Integer progressivocoalizione) {
         this.progressivocoalizione = progressivocoalizione;
+    }
+
+    public Sindaco getSindaco() {
+        return sindaco;
+    }
+
+    public void setSindaco(Sindaco sindaco) {
+        this.sindaco = sindaco;
     }
 }

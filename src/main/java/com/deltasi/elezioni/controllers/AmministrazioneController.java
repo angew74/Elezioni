@@ -80,16 +80,23 @@ public class AmministrazioneController {
     VotiLoader votiLoader;
 
 
-    @GetMapping(value = "/map")
+    @GetMapping(value = "/map/page/{page}")
     @Secured("ROLE_ADMIN")
-    public ModelAndView map(Model model, Principal principal) {
+    public ModelAndView map(@PathVariable("page") int page) {
         ModelAndView modelAndView = new ModelAndView("amministrazione/map");
         modelAndView.addObject("titlepage", "Gestione Abilitazioni fasi");
-        List<FaseElezione> list = new ArrayList<FaseElezione>();
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        Integer utentipagina = Integer.parseInt(env.getProperty("abilitazionipagina"));
+        Pageable pageable = PageRequest.of(page - 1, utentipagina);
         try {
-            list = abilitazioniService.getAll();
-            modelAndView.addObject("Fasi", list);
-            modelAndView.addObject("fasicount", list.size());
+
+            Page<FaseElezione> list = abilitazioniService.findAllByTipoelezioneId(pageable,tipoelezioneid);
+            int totalPages = list.getTotalPages();
+            if(totalPages > 0) {
+                List<Integer> pageNumbers = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
+                modelAndView.addObject("pageNumbers", pageNumbers);
+            }
+            modelAndView.addObject("Fasi", list.getContent());
         } catch (Exception ex) {
             String error = ex.getMessage();
             ModelAndView errormodelAndView = new ModelAndView("common/error");

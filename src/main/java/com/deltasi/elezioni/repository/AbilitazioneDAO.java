@@ -12,9 +12,12 @@ import java.util.Optional;
 
 public interface AbilitazioneDAO  extends JpaRepository<FaseElezione, Long> {
 
-    public FaseElezione findById(Integer id);
-    public FaseElezione findByCodice(String codice);
-    public FaseElezione findByCodiceAndTipoelezioneId(String codice, Integer tipoElezioneId);
-    public List<FaseElezione> findAllBy();
-    public List<FaseElezione> findByAbilitata(Integer abil);
+     FaseElezione findById(Integer id);
+     FaseElezione findByCodice(String codice);
+     FaseElezione findByCodiceAndTipoelezioneId(String codice, Integer tipoElezioneId);
+     List<FaseElezione> findAllBy();
+     Page<FaseElezione> findAllByTipoelezioneId(Pageable pageable,int tipoelezioneid);
+     Page<FaseElezione> findByAbilitataAndTipoelezioneId(Pageable pageable,Integer abil,int tipoelezioneid);
+     List<FaseElezione> findByAbilitataAndTipoelezioneId(int abilitata,int tipoelezioneid);
+
 }

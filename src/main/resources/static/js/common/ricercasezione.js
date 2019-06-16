@@ -67,6 +67,8 @@ jQuery(document).ready(function ($) {
                                 $("#footer").removeClass("absolute");
                                 $("#footer").addClass("relative");
                             }
+                            $("#footer").removeClass("absolute");
+                            $("#footer").addClass("relative");
                         }
                         if ((res.tipo === "2A" || res.tipo === "3C" || res.tipo === "R2A" || res.tipo === "R3C") && tipoPagina != "A") {
                             $("#votantiMaschiaffp").val(res.votantimaschiaffp);

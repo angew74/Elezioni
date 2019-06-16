@@ -55,7 +55,8 @@ public class RicalcoliController {
     public ModelAndView list(Model model, Principal principal) {
         ModelAndView modelAndView = new ModelAndView("ricalcoli/list");
         modelAndView.addObject("titlepage", "Gestione Ricalcoli");
-        List<FaseElezione> fasi = abilitazioniService.findFaseElezioneByAbiltazione(1);
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        List<FaseElezione> fasi = abilitazioniService.findByAbilitataAndTipoelezioneId(1,tipoelezioneid);
         List<String> f = fasi.stream().map(x -> x.getCodice()).collect(Collectors.toList());
         modelAndView.addObject("fasi", f);
         return modelAndView;

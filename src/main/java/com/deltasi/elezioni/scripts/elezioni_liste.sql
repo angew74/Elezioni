@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: elezioni
+-- Host: localhost    Database: elezioni
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -27,14 +27,18 @@ CREATE TABLE `liste` (
   `idtipoelezione` int(10) unsigned NOT NULL,
   `denominazione` varchar(200) NOT NULL,
   `denominazione_breve` varchar(20) NOT NULL,
-  `idcoalizione` int(10) unsigned DEFAULT NULL,
   `progressivo_manifesto` int(10) unsigned DEFAULT NULL,
   `progressivo` int(10) unsigned DEFAULT NULL,
+  `coalizioneid` int(10) unsigned DEFAULT NULL,
   `progressivo_coalizione` int(10) unsigned DEFAULT NULL,
+  `sindacoid` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fl_liste_tipo_elezione_idx` (`idtipoelezione`),
-  KEY `fk_coalizioni_liste_idx` (`idcoalizione`),
-  CONSTRAINT `fk_coalizioni_liste` FOREIGN KEY (`idcoalizione`) REFERENCES `liste` (`id`),
+  KEY `fk_liste_coalizioni_idx` (`progressivo_coalizione`),
+  KEY `fk_liste_coalizioni_idx1` (`coalizioneid`),
+  KEY `fk_liste_sindaci_idx` (`sindacoid`),
+  CONSTRAINT `fk_liste_coalizioni` FOREIGN KEY (`coalizioneid`) REFERENCES `coalizioni` (`id`),
+  CONSTRAINT `fk_liste_sindaci` FOREIGN KEY (`sindacoid`) REFERENCES `sindaci` (`id`),
   CONSTRAINT `fl_liste_tipo_elezione` FOREIGN KEY (`idtipoelezione`) REFERENCES `tipoelezione` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -45,7 +49,7 @@ CREATE TABLE `liste` (
 
 LOCK TABLES `liste` WRITE;
 /*!40000 ALTER TABLE `liste` DISABLE KEYS */;
-INSERT INTO `liste` VALUES (13,1,'Partito Democratico','P.D.',NULL,NULL,NULL,NULL),(14,1,'Lega Nord','LEGA',NULL,NULL,NULL,NULL),(15,1,'Fratelli d\'Italia ','F.D.I',NULL,NULL,NULL,NULL),(16,1,'Movimento 5 Stelle','5 Stelle',NULL,NULL,NULL,NULL),(17,1,'+ Europa','+ Europa',NULL,NULL,NULL,NULL),(18,1,'Forza Italia','Forza Italia',NULL,NULL,NULL,NULL),(19,1,'Movimento Democratico Popolare','M.D.P.',NULL,NULL,NULL,NULL),(20,1,'Sininistra Italiana','S.I.',NULL,NULL,NULL,NULL),(21,1,'Potere al Popolo','P. P.',NULL,NULL,NULL,NULL),(22,1,'Partito Comunista Italiano','P.C.I.',NULL,NULL,NULL,NULL),(23,1,'Forza Nuova','F.N.',NULL,NULL,NULL,NULL),(24,1,'Movimento Sociali Italiano','M.S.I.',NULL,NULL,NULL,NULL),(25,1,'Partito Liberale Italiano ','P.L.I.',NULL,NULL,NULL,NULL);
+INSERT INTO `liste` VALUES (13,1,'Partito Democratico','P.D.',NULL,NULL,NULL,NULL,NULL),(14,1,'Lega Nord','LEGA',NULL,NULL,NULL,NULL,NULL),(15,1,'Fratelli d\'Italia ','F.D.I',NULL,NULL,NULL,NULL,NULL),(16,1,'Movimento 5 Stelle','5 Stelle',NULL,NULL,NULL,NULL,NULL),(17,1,'+ Europa','+ Europa',NULL,NULL,NULL,NULL,NULL),(18,1,'Forza Italia','Forza Italia',NULL,NULL,NULL,NULL,NULL),(19,1,'Movimento Democratico Popolare','M.D.P.',NULL,NULL,NULL,NULL,NULL),(20,1,'Sininistra Italiana','S.I.',NULL,NULL,NULL,NULL,NULL),(21,1,'Potere al Popolo','P. P.',NULL,NULL,NULL,NULL,NULL),(22,1,'Partito Comunista Italiano','P.C.I.',NULL,NULL,NULL,NULL,NULL),(23,1,'Forza Nuova','F.N.',NULL,NULL,NULL,NULL,NULL),(24,1,'Movimento Sociali Italiano','M.S.I.',NULL,NULL,NULL,NULL,NULL),(25,1,'Partito Liberale Italiano ','P.L.I.',NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `liste` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -58,4 +62,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-09 19:01:01
+-- Dump completed on 2019-06-16 12:15:13

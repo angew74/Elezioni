@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.deltasi.elezioni.PDeltaUrlAuthenticationSuccessHandler;
+import com.deltasi.elezioni.state.ConfigBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,6 +28,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/")
 public class LoginController {
 
+
+    @Autowired
+    ConfigBean configBean;
 
     @Resource(name = "authenticationManager")
     private AuthenticationManager authManager;
@@ -43,6 +48,7 @@ public class LoginController {
         model.addAttribute("titlepage", "Homepage");
         String loggedInUserName = auth.getName();
         model.addAttribute("user", loggedInUserName);
+        session.setAttribute("applicationName", configBean.getApplicationName());
         return "/home";
 
     }

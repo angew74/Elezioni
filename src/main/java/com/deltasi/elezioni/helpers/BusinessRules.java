@@ -237,6 +237,8 @@ public class BusinessRules {
         // Integer idtipoelezione = Integer.parseInt(env.getProperty("tipoelezioneid"));
         boolean vero = true;
         FaseElezione fase = abilitazioniService.findByCodiceAndTipoelezioneId(codiceFase, idtipoelezione);
+        if(fase == null)
+        {return  false;}
         if (fase.getAbilitata().equals(0)) {
             return false;
         } else {

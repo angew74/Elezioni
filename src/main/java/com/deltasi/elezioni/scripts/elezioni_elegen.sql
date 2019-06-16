@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: elezioni
+-- Host: localhost    Database: elezioni
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -35,7 +35,7 @@ CREATE TABLE `elegen` (
   UNIQUE KEY `idelegencam_UNIQUE` (`idelegen`),
   KEY `fk_elegen_tipo_elezione_idx` (`idtipoelezione`),
   CONSTRAINT `fk_elegen_tipo_elezione` FOREIGN KEY (`idtipoelezione`) REFERENCES `tipoelezione` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `elegen` (
 
 LOCK TABLES `elegen` WRITE;
 /*!40000 ALTER TABLE `elegen` DISABLE KEYS */;
-INSERT INTO `elegen` VALUES (1,1,2600,18,2019,'25','26',NULL);
+INSERT INTO `elegen` VALUES (1,1,2600,18,2019,'25','26',NULL),(2,4,2600,20,2019,'9','10',NULL);
 /*!40000 ALTER TABLE `elegen` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-09 19:01:05
+-- Dump completed on 2019-06-16 12:15:16

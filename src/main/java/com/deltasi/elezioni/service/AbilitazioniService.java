@@ -6,6 +6,8 @@ import com.deltasi.elezioni.repository.AbilitazioneDAO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -30,10 +32,8 @@ public class AbilitazioniService implements IAbilitazioniService {
       return  faseElezioneDAO.findByCodice(codice);
     }
 
-    @Override
-    public List<FaseElezione> findFaseElezioneByAbiltazione(Integer abil) {
-       return  faseElezioneDAO.findByAbilitata(abil);
-    }
+
+
 
     @Override
     public List<FaseElezione> getAll() {
@@ -51,5 +51,20 @@ public class AbilitazioniService implements IAbilitazioniService {
     public FaseElezione findByCodiceAndTipoelezioneId(String codice, Integer tipoElezioneId)
     {
         return  faseElezioneDAO.findByCodiceAndTipoelezioneId(codice,tipoElezioneId);
+    }
+
+    @Override
+    public Page<FaseElezione> findAllByTipoelezioneId(Pageable pageable, int tipoelezioneid) {
+        return faseElezioneDAO.findAllByTipoelezioneId(pageable,tipoelezioneid);
+    }
+
+    @Override
+    public Page<FaseElezione> findByAbilitataAndTipoelezioneId(Pageable pageable,Integer abil, int tipoelezioneid) {
+        return faseElezioneDAO.findByAbilitataAndTipoelezioneId(pageable,abil,tipoelezioneid);
+    }
+
+    @Override
+    public List<FaseElezione> findByAbilitataAndTipoelezioneId(int abilitata, int tipoelezioneid) {
+        return faseElezioneDAO.findByAbilitataAndTipoelezioneId(abilitata,tipoelezioneid);
     }
 }

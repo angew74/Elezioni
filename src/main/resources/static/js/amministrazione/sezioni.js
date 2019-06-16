@@ -24,7 +24,7 @@ jQuery(document).ready(function ($) {
             var successcontainer = '#successModal';
             var mdisplay = "#messagesuccess";
             $.post({
-                url: '/amministrazioneamministrazione/intsez',
+                url: '/amministrazione/intsez',
                 data: $('form[name=rsezioneForm]').serialize(),
                 success: function (res) {
                     try {

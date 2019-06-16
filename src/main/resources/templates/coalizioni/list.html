@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
+<head>
+    <div th:replace="fragments/head :: header-css-js"/>
+    <link th:href="@{~/css/coalizioni/list.css}" type="text/css" rel="stylesheet" />
+    <script th:src="@{~/js/coalizioni/list.js}" type="text/javascript">
+    </script>
+</head>
+<body>
+<div th:replace="fragments/menu :: menu"/>
+<div id="accordian">
+    <ul>
+        <li>
+            <h3><a href="#"><i class="far fa-thumbs-up"></i>Voti</a></h3>
+            <ul>
+                <li class="active"><a href="#">Coalizioni</a>
+                    <ul>
+                        <li><a th:if="${#lists.contains(fasi, 'VS')}"  href="/coalizioni/inserimento/VS">
+                            <i class="fas fa-plus-circle"></i>Inserimento</a></li>
+                        <li><a th:if="${#lists.contains(fasi, 'RVS')}"  href="/coalizioni/modifica/RVS">
+                            <i class="fas fa-edit"></i>Rettifica</a></li>
+                    </ul>
+                </li>
+                <li class="active"><a href="#">Preferenze</a>
+                    <ul>
+                        <li><a th:if="${#lists.contains(fasi, 'PC')}" href="/preferenze/inserimento/PE">
+                            <i class="fas fa-plus-circle"></i>Inserimento</a>
+                        </li>
+                        <li><a th:if="${#lists.contains(fasi, 'RPC')}" href="/preferenze/modifica/RPE">
+                            <i class="fas fa-edit"></i>Rettifica</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<div th:replace="fragments/footer :: footer"/>
+</body>
+</html>

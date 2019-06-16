@@ -36,6 +36,9 @@ public class Voti {
     private Lista lista;
 
 
+    @Column(name = "municipio")
+    private int municipio;
+
     @Column(name = "dataoperazione")
     private LocalDateTime dataoperazione;
 
@@ -99,5 +102,13 @@ public class Voti {
 
     public void setTipoelezione(TipoElezione tipoelezione) {
         this.tipoelezione = tipoelezione;
+    }
+
+    public int getMunicipio() {
+        return municipio;
+    }
+
+    public void setMunicipio(int municipio) {
+        this.municipio = municipio;
     }
 }

@@ -73,7 +73,8 @@ public class VotiController {
     public ModelAndView list(Model model, Principal principal) {
         ModelAndView modelAndView = new ModelAndView("voti/list");
         modelAndView.addObject("titlepage", "Gestione Scrutinio");
-        List<FaseElezione> fasi = abilitazioniService.findFaseElezioneByAbiltazione(1);
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        List<FaseElezione> fasi = abilitazioniService.findByAbilitataAndTipoelezioneId(1,tipoelezioneid);
         List<String> f = fasi.stream().map(x -> x.getCodice()).collect(Collectors.toList());
         modelAndView.addObject("fasi", f);
         return modelAndView;
@@ -125,7 +126,6 @@ public class VotiController {
             modelAndView.addObject("titlepage", titolo);
             modelAndView.addObject("tipo", tipo);
             ListaJson json = new ListaJson();
-            //  List<ListaJson> listevuote = new ArrayList<ListaJson>();
             ListeWrapper listeWrapper = new ListeWrapper();
             List<ListaSemplice> liste = new ArrayList<ListaSemplice>();
             listeWrapper.setListe(liste);

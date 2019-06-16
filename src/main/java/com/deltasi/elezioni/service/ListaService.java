@@ -45,4 +45,29 @@ public class ListaService implements IListaService {
     {
         return listaDAO.findAllByTipoelezioneId(tipoElezione);
     }
+
+    @Override
+    public List<Lista> findByCoalizioneIdAndTipoelezioneId(int idcoalizione, int tipoelezioneid) {
+        return listaDAO.findByCoalizioneIdAndTipoelezioneId(idcoalizione,tipoelezioneid);
+    }
+
+    @Override
+    public List<Lista> findByCoalizioneDenominazioneAndTipoelezioneId(String denominazione, int tipoelezioneid) {
+        return listaDAO.findByCoalizioneDenominazioneAndTipoelezioneId(denominazione,tipoelezioneid);
+    }
+
+    @Override
+    public List<Lista> findByCoalizioneSindacoIdAndTipoelezioneId(int sindacoid, int tipoelezioneid) {
+        return listaDAO.findByCoalizioneSindacoIdAndTipoelezioneId(sindacoid,tipoelezioneid);
+    }
+
+    @Override
+    public List<Lista> findBySindacoIdAndTipoelezioneId(int sindacoid, int tipoelezioneid) {
+        return listaDAO.findBySindacoIdAndTipoelezioneId(sindacoid,tipoelezioneid);
+    }
+
+    @Override
+    public List<Lista> findBySindacoNomeAndSindacoCognomeAndTipoelezioneId(String nome, String cognome, int tipoelezioneid) {
+        return listaDAO.findBySindacoNomeAndSindacoCognomeAndTipoelezioneId(nome,cognome,tipoelezioneid);
+    }
 }

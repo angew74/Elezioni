@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
 <head>
     <div th:replace="fragments/head :: header-css-js"/>
-    <link th:href="@{css/common/error.css}" type="text/css" rel="stylesheet" />
+    <link th:href="@{~/css/common/error.css}" type="text/css" rel="stylesheet"/>
 </head>
 <body>
 <div th:replace="fragments/menu :: menu"/>
@@ -21,7 +21,8 @@
                 <h1 class="display-3">Attenzione</h1>
                 <p class="lower-case">Non sei autorizzato ad accedere alla pagina richiesta</p>
                 <h3 class="text-info">Errore di autorizzazione</h3>
-                <p class="lower-case">Contattare l'amministratore di sistema qualora si pensi di poter accedere alla risorsa specificata dettagli: ${errMsg}</p>
+                <p class="lower-case">Contattare l'amministratore di sistema qualora si pensi di poter accedere alla risorsa specificata dettagli:</p>
+                <p th:text="${errCode}"></p>
             </div>
             <!-------mother container middle class------------------->
         </div>

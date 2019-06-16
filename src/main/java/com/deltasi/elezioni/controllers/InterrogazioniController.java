@@ -57,8 +57,9 @@ public class InterrogazioniController {
     @GetMapping(value = "/list")
     public ModelAndView list(Model model, Principal principal) {
         ModelAndView modelAndView = new ModelAndView("interrogazioni/list");
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         modelAndView.addObject("titlepage", "Gestione Interrogazioni");
-        List<FaseElezione> fasi = abilitazioniService.findFaseElezioneByAbiltazione(1);
+        List<FaseElezione> fasi = abilitazioniService.findByAbilitataAndTipoelezioneId(1,tipoelezioneid);
         List<String> f = fasi.stream().map(x -> x.getCodice()).collect(Collectors.toList());
         modelAndView.addObject("fasi", f);
         return modelAndView;
