@@ -21,6 +21,7 @@ public interface ListaDAO extends JpaRepository<Lista, Long> {
     List<Lista> findByCoalizioneSindacoIdAndTipoelezioneId(int sindacoid, int tipoelezioneid);
     List<Lista> findBySindacoIdAndTipoelezioneId(int sindacoid, int tipoelezioneid);
     List<Lista> findBySindacoNomeAndSindacoCognomeAndTipoelezioneId(String nome, String cognome, int tipoelezioneid);
+    List<Lista> findBySindacoId(int sindacoid);
 
 
 

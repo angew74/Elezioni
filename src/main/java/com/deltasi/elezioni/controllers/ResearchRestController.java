@@ -10,7 +10,7 @@ import com.deltasi.elezioni.model.configuration.UserSezione;
 import com.deltasi.elezioni.model.json.*;
 import com.deltasi.elezioni.model.risultati.Affluenza;
 import com.deltasi.elezioni.model.risultati.Lista;
-import com.deltasi.elezioni.model.risultati.Voti;
+import com.deltasi.elezioni.model.risultati.VotiLista;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

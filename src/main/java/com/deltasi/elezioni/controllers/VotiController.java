@@ -7,7 +7,7 @@ import com.deltasi.elezioni.helpers.VotiLoader;
 import com.deltasi.elezioni.model.configuration.FaseElezione;
 import com.deltasi.elezioni.model.json.*;
 import com.deltasi.elezioni.model.risultati.Lista;
-import com.deltasi.elezioni.model.risultati.Voti;
+import com.deltasi.elezioni.model.risultati.VotiLista;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +15,9 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,7 +56,7 @@ public class VotiController {
     BusinessRules businessRules;
 
     @Autowired
-    IVotiService votiService;
+    IVotiListaService votiService;
 
     @Autowired
     IListaService listaService;
@@ -90,7 +86,7 @@ public class VotiController {
         String titolo = businessRules.getTitoloByFase(tipo, "I");
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         if (tipo.equals("RVL")) {
-            List<Voti> l = votiService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, tipoelezioneid);
+            List<VotiLista> l = votiService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, tipoelezioneid);
             List<ListaJson> listaJsons = new ArrayList<ListaJson>();
             json = votiLoader.ConvertToJson(l,sezione,tipo);
         } else {
@@ -191,13 +187,13 @@ public class VotiController {
         try {
             switch (form.getListe().get(0).getTipo()) {
                 case "VL":
-                    List<Voti> v = votiLoader.prepareVoti(form.getListe());
+                    List<VotiLista> v = votiLoader.prepareVoti(form.getListe());
                     votiService.SaveAll(v);
                     response.setValidated(true);
                     response.setTipo("VL");
                     break;
                 case "RVL":
-                    List<Voti> vr = votiLoader.prepareVotiR(form.getListe());
+                    List<VotiLista> vr = votiLoader.prepareVotiR(form.getListe());
                     votiService.SaveAll(vr);
                     response.setValidated(true);
                     response.setTipo("RVL");

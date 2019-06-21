@@ -6,6 +6,7 @@ public class SindacoSimple {
 
 
     private Integer voti;
+    private Integer solosindaco;
     private Integer numerosezione;
     private Integer idsindaco;
     private String tipo;
@@ -13,6 +14,7 @@ public class SindacoSimple {
     private  String cognome;
     private Integer id;
     private List<ListaSemplice> liste;
+    private String iscoalizione;
 
     public Integer getVoti() {
         return voti;
@@ -76,5 +78,22 @@ public class SindacoSimple {
 
     public void setListe(List<ListaSemplice> liste) {
         this.liste = liste;
+    }
+
+    public String getIscoalizione() {
+        return iscoalizione;
+    }
+
+    public void setIscoalizione(String iscoalizione) {
+        this.iscoalizione = iscoalizione;
+    }
+
+
+    public Integer getSolosindaco() {
+        return solosindaco;
+    }
+
+    public void setSolosindaco(Integer solosindaco) {
+        this.solosindaco = solosindaco;
     }
 }

@@ -1,134 +1,151 @@
-jQuery(document).ready(function ($) {
+// jQuery(document).ready(function ($) {
 
-    function openListeModal(id) {
-        var sezione =   $("#sezione").text;
-        $.ajax({
-            url:'/coalizioni/listecoalizione/' + id + "/" + sezione,
-            success:function (data) {
-                $("#listeModalHolder").html(data);
-                $("#listeModal").show();
-            }
-        })
-    }
 
+function SaveAll() {
     var buttonScrutinio = '#btnSalvaScrutinio';
-    $(buttonScrutinio).click(function (event) {
-        event.preventDefault();
-        var isValid = true;
-        var isValidSelect = true;
-        $('select').each(function () {
-            if ($(this).parsley().validate() !== true)
-                isValidSelect = false;
-        });
-        $('input').each(function () {
-            if ($(this).parsley().validate() !== true)
-                isValidSelect = false;
-        });
-        if ($("#tipo").parsley().validate() !== true) {
-            isValid = false;
-        }
-        if ($("#numerosezione").parsley().validate() !== true) {
-            isValid = false;
-        }
-        if ($("#Votanti").parsley().validate() !== true) {
-            isValid = false;
-        }
-        if ($("#Iscritti").parsley().validate() !== true) {
-            isValid = false;
-        }
-        var votanti = parseInt($('#Votanti').text());
-        var iscritti = parseInt($('#Iscritti').text());
-        var sum = 0;
-        var group = $('input[name="liste.voti"]');
-        var count = $('#count').text();
-        var fields = $( ":input" ).serializeArray();
-        jQuery.each( fields, function( i, field ) {
-            if(field.name.indexOf('voti') !== -1)
-            {
-                sum += parseFloat(field.value);
-            }
-        });
-        if (sum !== votanti) {
-            $("#errorcontrol").append("Somma scrutinio diversa da votanti " + sum + " <> " + $("#Votanti").val());
-            isValid = false;
-            $("#errorcontrol").show();
-        } else {
-            $("#errorcontrol").text("");
-            $("#errorcontrol").hide();
-        }
-        if (sum > iscritti) {
-            $("#errorcontrol").append("Voti scrutinio maggiore iscritti " + sum + " > " + $("#Iscritti").val());
-            isValid = false;
-            $("#errorcontrol").show();
-        } else {
-            $("#errorcontrol").text("");
-            $("#errorcontrol").hide();
-        }
-
-        if (isValid && isValidSelect) {
-            postScrutinio();
-        }
-    })
-
-
-
-
-    function jQFormSerializeArrToJson(formSerializeArr){
-        var jsonObj = {};
-        jQuery.map( formSerializeArr, function( n, i ) {
-            jsonObj[n.name] = n.value;
-        });
-
-        return jsonObj;
+    // $(buttonScrutinio).click(function (event) {
+    event.preventDefault();
+    var isValid = true;
+    var errorMessage;
+    var isValidSelect = true;
+    var isValidCount = true;
+    $('select').each(function () {
+        if ($(this).parsley().validate() !== true)
+            isValidSelect = false;
+    });
+    $('input').each(function () {
+        if ($(this).parsley().validate() !== true)
+            isValidSelect = false;
+    });
+    if ($("#tipo").parsley().validate() !== true) {
+        isValid = false;
     }
+    if ($("#numerosezione").parsley().validate() !== true) {
+        isValid = false;
+    }
+    if ($("#Votanti").parsley().validate() !== true) {
+        isValid = false;
+    }
+    if ($("#Iscritti").parsley().validate() !== true) {
+        isValid = false;
+    }
+    var votanti = parseInt($('#Votanti').text());
+    var iscritti = parseInt($('#Iscritti').text());
+    var validiListe = parseInt($('#validiListe').val());
+    var solosindaco = parseInt($('#solosindaco').val());
+    var totalevalide = parseInt($('#totalevalide').val());
+    var bianche = parseInt($('#bianche').val());
+    var nulle = parseInt($('#nulle').val());
+    var contestate = parseInt($('#contestate').val());
+    var totale = parseInt($('#totale').val());
+    var sum = 0;
+    var sumsolosindaco =0;
+    var group = $('input[name="liste.voti"]');
+    var groupsolosindaco = $('input[name="liste.solosindaco"]');
+    var count = $('#count').text();
+    var fields = $(":input").serializeArray();
+    jQuery.each(fields, function (i, field) {
+        if (field.name.indexOf('voti') !== -1) {
+            sum += parseFloat(field.value);
+        }
+    });
+    jQuery.each(fields, function (i, field) {
+        if (field.name.indexOf('solosindaco') !== -1) {
+            sumsolosindaco += parseFloat(field.value);
+        }
+    });
+    var sommaab = validiListe + solosindaco;
+    var sommacdef = validiListe + bianche + nulle + contestate;
+    if (solosindaco !== sumsolosindaco) {
+        errorMessage = "Totale voti solo sindaco (B) diverso da somma voti singoli candidati " + solosindaco + " <> " + sumsolosindaco;
+    }
+    if (totalevalide !== sommaab) {
+        errorMessage = "Totale voti validi (C) diverso da somma  voti validi liste (a) + solo sindac (b) " + totalevalide + " <> " + sommaab;
+    }
+    if (totale !== votanti) {
+        errorMessage = "Totale (G) diverso da votanti " + totale + " <> " + votanti;
+    }
+    if (sum !== totalevalide) {
+        errorMessage = "Totale candidati diverso da voti validi (C) " + sum + " <> " + totalevalide;
+    }
+    if (sum !== votanti) {
+        errorMessage = "Somma scrutinio singoli candidati diversa da votanti " + sum + " <> " + votanti;
+    }
+    if (sum > iscritti) {
+        errorMessage = "Voti scrutinio maggiore iscritti " + sum + " > " + iscritti;
+    }
+    if (sommacdef !== totale) {
+        errorMessage = "Totale voti scrutinio diverso da somma parziali " + totale + " <> " + sommacdef;
+    }
+    if (isValidCount) {
+        $("#errorcontrol").append(errorMessage);
+
+    } else {
+        $("#errorcontrol").text("");
+        $("#errorcontrol").hide();
+    }
+    if (isValid && isValidSelect && isValidCount) {
+        postScrutinio();
+    }
+    // })
+}
 
 
-    function postScrutinio() {
-        var errorcontainer = '#errorModal';
-        var errorDisplay = '#errorDisplay';
-        var successcontainer = '#successModal';
-        var mdisplay = "#messagesuccess";
-        debugger;
-        // var formData = $("#insertScrutinio").serialize();
-        var formData= $('form[name=insertScrutinio]').serialize();
-        $.post({
-            url: '/coalizioni/coalreg',
-            data: formData,
-            success: function (res) {
-                try {
-                    if (res.validated) {
-                        //Set response
-                        if (res.tipo === "VS") {
-                            $("#scrutiniodiv").hide();
-                            $(mdisplay).text("Scrutinio inserito correttamente");
-                        }
-                        if (res.tipo === "RVS") {
-                            $("#scrutiniodiv").hide();
-                            $(mdisplay).text("Rettifica Scrutinio inserita correttamente");
-                        }
-                        $(successcontainer).modal('show');
-                    } else {
-                        //Set error messages
-                        $.each(res.errorMessages, function (key, value) {
-                            if(value === null)
-                            {
-                                $(errorDisplay).text("errore applicativo grave");
-                            }
-                            else {
-                                $(errorDisplay).text(value);
-                            }
-                            $(errorcontainer).modal('show');
-                        });
+function jQFormSerializeArrToJson(formSerializeArr) {
+    var jsonObj = {};
+    jQuery.map(formSerializeArr, function (n, i) {
+        jsonObj[n.name] = n.value;
+    });
+
+    return jsonObj;
+}
+
+
+function postScrutinio() {
+    var errorcontainer = '#errorModal';
+    var errorDisplay = '#errorDisplay';
+    var successcontainer = '#successModal';
+    var mdisplay = "#messagesuccess";
+    debugger;
+    // var formData = $("#insertScrutinio").serialize();
+    var formData = $('form[name=insertScrutinio]').serialize();
+    $.post({
+        url: '/coalizioni/coalreg',
+        data: formData,
+        success: function (res) {
+            try {
+                if (res.validated) {
+                    //Set response
+                    if (res.tipo === "VS") {
+                        $("#scrutiniodiv").hide();
+                        $(mdisplay).text("Scrutinio inserito correttamente");
                     }
-                } catch (err) {
-                    $(errorDisplay).text(err);
-                    $(errorcontainer).modal('show');
+                    if (res.tipo === "RVS") {
+                        $("#scrutiniodiv").hide();
+                        $(mdisplay).text("Rettifica Scrutinio inserita correttamente");
+                    }
+                    $(successcontainer).modal('show');
+                } else {
+                    //Set error messages
+                    $.each(res.errorMessages, function (key, value) {
+                        if (value === null) {
+                            $(errorDisplay).text("errore applicativo grave");
+                        } else {
+                            $(errorDisplay).text(value);
+                        }
+                        $(errorcontainer).modal('show');
+                    });
                 }
-            },
-            error: function () {
-                $(errorDisplay).text("errore di connessione");
+            } catch (err) {
+                $(errorDisplay).text(err);
                 $(errorcontainer).modal('show');
             }
-        });
-    }
-})
+        },
+        error: function () {
+            $(errorDisplay).text("errore di connessione");
+            $(errorcontainer).modal('show');
+        }
+    });
+}
+
+// })

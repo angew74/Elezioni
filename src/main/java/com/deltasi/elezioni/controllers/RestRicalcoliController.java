@@ -64,8 +64,7 @@ public class RestRicalcoliController {
     @Autowired
     SessionStateHelper stateHelper;
 
-    @Autowired
-    private HttpSession httpSession;
+
 
 
     @GetMapping(value = "/ricalcola/{aggregazione}/{tipoRicalcolo}", consumes = MediaType.APPLICATION_JSON_VALUE)

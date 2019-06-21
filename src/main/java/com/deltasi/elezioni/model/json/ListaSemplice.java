@@ -7,6 +7,7 @@ public class ListaSemplice {
     private String tipo;
     private String denominazione;
     private Integer id;
+    private Integer idsindaco;
 
     public Integer getVoti() {
         return voti;
@@ -54,5 +55,13 @@ public class ListaSemplice {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getIdsindaco() {
+        return idsindaco;
+    }
+
+    public void setIdsindaco(Integer idsindaco) {
+        this.idsindaco = idsindaco;
     }
 }

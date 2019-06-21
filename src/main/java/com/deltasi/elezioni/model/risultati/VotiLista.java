@@ -1,5 +1,6 @@
 package com.deltasi.elezioni.model.risultati;
 
+
 import com.deltasi.elezioni.model.configuration.Sezione;
 import com.deltasi.elezioni.model.configuration.TipoElezione;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -8,10 +9,10 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-
 @Entity
-@Table(name = "voti_sindaco")
-public class VotiSindaco {
+@Table(name = "voti_lista")
+public class VotiLista {
+
 
 
     @Id
@@ -30,9 +31,9 @@ public class VotiSindaco {
     private TipoElezione tipoelezione;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "sindacoid", referencedColumnName = "id")
+    @JoinColumn(name = "listaid", referencedColumnName = "id")
     @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
-    private Sindaco sindaco;
+    private Lista lista;
 
 
     @OneToOne(fetch = FetchType.EAGER)
@@ -40,9 +41,9 @@ public class VotiSindaco {
     @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
     private Voti voti;
 
+
     @Column(name = "municipio")
     private int municipio;
-
 
     @Column(name = "data_operazione")
     private LocalDateTime dataoperazione;
@@ -50,11 +51,8 @@ public class VotiSindaco {
     @Column(name = "utente_operazione")
     private String  utenteoperazione;
 
-    @Column(name = "numero_voti")
+    @Column(name = "voti")
     private Integer numerovoti;
-
-    @Column(name ="numero_voti_solo_sindaco")
-    private Integer numerovotisolosindaco;
 
     public Integer getId() {
         return id;
@@ -72,28 +70,12 @@ public class VotiSindaco {
         this.sezione = sezione;
     }
 
-    public TipoElezione getTipoelezione() {
-        return tipoelezione;
+    public Lista getLista() {
+        return lista;
     }
 
-    public void setTipoelezione(TipoElezione tipoelezione) {
-        this.tipoelezione = tipoelezione;
-    }
-
-    public Sindaco getSindaco() {
-        return sindaco;
-    }
-
-    public void setSindaco(Sindaco sindaco) {
-        this.sindaco = sindaco;
-    }
-
-    public int getMunicipio() {
-        return municipio;
-    }
-
-    public void setMunicipio(int municipio) {
-        this.municipio = municipio;
+    public void setLista(Lista lista) {
+        this.lista = lista;
     }
 
     public LocalDateTime getDataoperazione() {
@@ -120,11 +102,19 @@ public class VotiSindaco {
         this.numerovoti = numerovoti;
     }
 
-    public Integer getNumerovotisolosindaco() {
-        return numerovotisolosindaco;
+    public TipoElezione getTipoelezione() {
+        return tipoelezione;
     }
 
-    public void setNumerovotisolosindaco(Integer numerovotisolosindaco) {
-        this.numerovotisolosindaco = numerovotisolosindaco;
+    public void setTipoelezione(TipoElezione tipoelezione) {
+        this.tipoelezione = tipoelezione;
+    }
+
+    public int getMunicipio() {
+        return municipio;
+    }
+
+    public void setMunicipio(int municipio) {
+        this.municipio = municipio;
     }
 }

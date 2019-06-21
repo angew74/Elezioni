@@ -70,4 +70,9 @@ public class ListaService implements IListaService {
     public List<Lista> findBySindacoNomeAndSindacoCognomeAndTipoelezioneId(String nome, String cognome, int tipoelezioneid) {
         return listaDAO.findBySindacoNomeAndSindacoCognomeAndTipoelezioneId(nome,cognome,tipoelezioneid);
     }
+
+    @Override
+    public List<Lista> findBySindacoId(int sindacoid) {
+        return listaDAO.findBySindacoId(sindacoid);
+    }
 }

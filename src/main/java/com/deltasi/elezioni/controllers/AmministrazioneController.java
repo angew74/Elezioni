@@ -10,7 +10,7 @@ import com.deltasi.elezioni.model.json.UserJsonResponse;
 import com.deltasi.elezioni.model.configuration.*;
 import com.deltasi.elezioni.model.json.*;
 import com.deltasi.elezioni.model.risultati.Affluenza;
-import com.deltasi.elezioni.model.risultati.Voti;
+import com.deltasi.elezioni.model.risultati.VotiLista;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +71,7 @@ public class AmministrazioneController {
     IAffluenzaService affluenzeService;
 
     @Autowired
-    IVotiService vctiService;
+    IVotiListaService vctiService;
 
     @Autowired
     AffluenzaLoader affluenzaLoader;
@@ -334,7 +334,7 @@ public class AmministrazioneController {
             }
             i.setTipoSezione(iscritti.getSezione().getTiposezione().getDescrizione());
             i.setDescrizioneElezione(iscritti.getTipoelezione().getDescrizione());
-            List<Voti> v = vctiService.findBySezioneNumerosezioneAndTipoelezioneId(sezione.getSezione(), tipoelezioneid);
+            List<VotiLista> v = vctiService.findBySezioneNumerosezioneAndTipoelezioneId(sezione.getSezione(), tipoelezioneid);
             if(v != null && v.size() > 0)
             {
                 VotiJson votiJson = votiLoader.ConvertToJson(v,sezione.getSezione(),"");

@@ -13,7 +13,7 @@
                                     <form class="form-horizontal" th:object="${Liste}" name="insertScrutinio"
                                           data-parsley-validate action="/voti/lreg" method="post">
                                     <div th:each="lista,iterStat:${Liste.liste}" class="form-group row">
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-12">
                                             <div class="input-group">
                                         <input type="number"
                                                style="display:none;"
@@ -59,7 +59,7 @@
                                           th:action="@{/voti/lreg}" action="#"
                                           th:object="${ListWrapper}"   id="insertScrutinio" data-parsley-validate  method="post">
                                     <div th:each="lista,itemStat:${ListWrapper.liste}" class="form-group row">
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-12">
                                             <div class="input-group">
                                                 <input type="number"
                                                        th:value="${lista.getNumerosezione()}"

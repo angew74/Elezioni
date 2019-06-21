@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: elezioni
+-- Host: localhost    Database: elezioni
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -29,15 +29,19 @@ CREATE TABLE `voti_sindaco` (
   `sezioneid` int(10) unsigned NOT NULL,
   `municipio` int(10) unsigned NOT NULL,
   `numero_voti` int(10) NOT NULL DEFAULT '0',
+  `numero_voti_solo_sindaco` int(10) unsigned NOT NULL DEFAULT '0',
+  `votiid` int(10) unsigned NOT NULL,
   `utente_operazione` varchar(45) NOT NULL,
   `data_operazione` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_voti_sindaco_tipo_elezioni_idx` (`tipoelezioneid`),
   KEY `fk_voti_sindaco_sindaco_idx` (`sindacoid`),
   KEY `fk_voti_sindaco_sezioni_idx` (`sezioneid`),
+  KEY `fk_voti_sindaco_voti_idx` (`votiid`),
   CONSTRAINT `fk_voti_sindaco_sezioni` FOREIGN KEY (`sezioneid`) REFERENCES `sezioni` (`id`),
   CONSTRAINT `fk_voti_sindaco_sindaco` FOREIGN KEY (`sindacoid`) REFERENCES `sindaci` (`id`),
-  CONSTRAINT `fk_voti_sindaco_tipo_elezioni` FOREIGN KEY (`tipoelezioneid`) REFERENCES `tipoelezione` (`id`)
+  CONSTRAINT `fk_voti_sindaco_tipo_elezioni` FOREIGN KEY (`tipoelezioneid`) REFERENCES `tipoelezione` (`id`),
+  CONSTRAINT `fk_voti_sindaco_voti` FOREIGN KEY (`votiid`) REFERENCES `voti` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -66,6 +70,8 @@ VOTI_SINDACO_STORICO (`id`,
 `sezioneid`,
 `municipio`,
 `numero_voti`,
+`numero_voti_solo_sindaco`,
+`votiid`,
 `utente_operazione_old`,
 `data_operazione_old`,
 `utente_operazione`,
@@ -75,6 +81,8 @@ OLD.tipoelezioneid,
 OLD.sindacoid,
 OLD.municipio,
 OLD.numero_voti,
+OLD.numero_voti_solo_sindaco,
+OLD.votiid,
 OLD.data_operazione,
 OLD.utente_operazione,
 new.data_operazione, 
@@ -95,4 +103,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-16 20:03:32
+-- Dump completed on 2019-06-21 19:05:25

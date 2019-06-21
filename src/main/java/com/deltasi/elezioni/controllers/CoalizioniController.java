@@ -6,20 +6,22 @@ import com.deltasi.elezioni.helpers.VotiLoader;
 import com.deltasi.elezioni.model.configuration.FaseElezione;
 import com.deltasi.elezioni.model.json.*;
 import com.deltasi.elezioni.model.risultati.*;
+import com.deltasi.elezioni.state.SessionStateHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.Model;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
@@ -56,6 +58,12 @@ public class CoalizioniController {
     ISindacoService sindacoService;
 
     @Autowired
+    IVotiService votiService;
+
+    @Autowired
+    IVotiListaService votiListaService;
+
+    @Autowired
     IListaService listaService;
 
     @Autowired
@@ -66,6 +74,9 @@ public class CoalizioniController {
 
     @Autowired
     VotiLoader votiLoader;
+
+    @Autowired
+    SessionStateHelper stateHelper;
 
 
 
@@ -160,25 +171,81 @@ public class CoalizioniController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/listecoalizione/{idcoalizione}/{sezione}")
-    public  String listecoalizione(@PathVariable int idcoalizione,@PathVariable int sezione, ModelMap modelMap)
+    @GetMapping(value = "/listecoalizione/{idsindaco}/{sezione}")
+    public  String listecoalizione(@PathVariable int idsindaco,@PathVariable int sezione, ModelMap modelMap)
     {
         ListeWrapper listeWrapper = new ListeWrapper();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
-        List<Lista> l = listaService.findAllBy();
-        List<ListaSemplice> s = new ArrayList<ListaSemplice>();
-        Coalizione c = coalizioneService.findById(idcoalizione);
-        for (Lista f : l) {
-            ListaSemplice h = new ListaSemplice();
-            h.setDenominazione(f.getDenominazione());
-            h.setNumerosezione(sezione);
-            h.setIdlista(f.getId());
-            s.add(h);
+        String ricalcoloLista = "ricalcolo" + idsindaco;
+        List<Lista> l = listaService.findBySindacoId(idsindaco);
+        if(stateHelper.get(ricalcoloLista) != null)
+        {
+            listeWrapper =(ListeWrapper) stateHelper.get(ricalcoloLista);
         }
-        listeWrapper.setListe(s);
+        else {
+            List<ListaSemplice> s = new ArrayList<ListaSemplice>();
+            for (Lista f : l) {
+                ListaSemplice h = new ListaSemplice();
+                h.setDenominazione(f.getDenominazione());
+                h.setNumerosezione(sezione);
+                h.setIdlista(f.getId());
+                h.setIdsindaco(idsindaco);
+                s.add(h);
+            }
+            listeWrapper.setListe(s);
+        }
+        Coalizione c = coalizioneService.findBySindacoIdAndTipoelezioneId(idsindaco, tipoelezioneid);
         modelMap.addAttribute("ListWrapper",listeWrapper);
         modelMap.addAttribute("coalizione",c.getDenominazione());
-        return  "model/liste :: modalContents";
+        return  "modal/liste :: modalContents";
+    }
+
+    @RequestMapping(value = "/liste", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public @ResponseBody
+    ListaJson registraliste(@ModelAttribute ListeWrapper form, Model model) {
+        String ricalcoloLista = "ricalcolo" + form.getListe().get(0).getIdsindaco();
+        stateHelper.add(ricalcoloLista , form);
+        ListaJson response = new ListaJson();
+        response.setValidated(true);
+        return  response;
+    }
+
+    @RequestMapping(value = "/coalreg", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public @ResponseBody
+    ListaJson registraScrutinioCoalizione(@ModelAttribute ListeWrapper form, Model model) {
+        ListaJson response = new ListaJson();
+        Map<String, String> errors = null;
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        try {
+            switch (form.getListe().get(0).getTipo()) {
+                case "VS":
+                    List<VotiLista> v = votiLoader.prepareVoti(form.getListe());
+                    votiListaService.SaveAll(v);
+                    response.setValidated(true);
+                    response.setTipo("VL");
+                    break;
+                case "RVS":
+                    List<VotiLista> vr = votiLoader.prepareVotiR(form.getListe());
+                    votiListaService.SaveAll(vr);
+                    response.setValidated(true);
+                    response.setTipo("RVL");
+                    break;
+                default:
+                    errors = new HashMap<String, String>();
+                    errors.put("Errore grave", "Parametri non validi");
+                    response.setValidated(false);
+                    response.setErrorMessages(errors);
+                    break;
+            }
+
+        } catch (Exception ex) {
+            errors = new HashMap<String, String>();
+            errors.put("Errore grave", ex.getMessage());
+            logger.error(ex.getMessage());
+            response.setValidated(false);
+            response.setErrorMessages(errors);
+        }
+        return response;
     }
 
 }

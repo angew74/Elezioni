@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: elezioni
+-- Host: localhost    Database: elezioni
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -29,6 +29,8 @@ CREATE TABLE `voti_sindaco_storico` (
   `sezioneid` int(10) unsigned NOT NULL,
   `municipio` int(10) unsigned NOT NULL,
   `numero_voti` int(10) NOT NULL DEFAULT '0',
+  `numero_voti_solo_sindaco` int(10) unsigned NOT NULL DEFAULT '0',
+  `votiid` int(10) unsigned NOT NULL,
   `utente_operazione_old` varchar(45) NOT NULL,
   `data_operazione_old` datetime NOT NULL,
   `utente_operazione` varchar(45) NOT NULL,
@@ -61,4 +63,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-16 20:03:40
+-- Dump completed on 2019-06-21 19:05:40

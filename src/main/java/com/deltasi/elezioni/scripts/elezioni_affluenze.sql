@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: elezioni
+-- Host: localhost    Database: elezioni
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -24,10 +24,10 @@ DROP TABLE IF EXISTS `affluenze`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `affluenze` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `idtipoelezione` int(10) unsigned NOT NULL,
-  `idsezione` int(10) unsigned NOT NULL,
-  `idplesso` int(10) unsigned DEFAULT NULL,
-  `idiscritti` int(10) unsigned NOT NULL,
+  `tipoelezioneid` int(10) unsigned NOT NULL,
+  `sezioneid` int(10) unsigned NOT NULL,
+  `plessoid` int(10) unsigned DEFAULT NULL,
+  `iscrittiid` int(10) unsigned NOT NULL,
   `costituzione1` int(1) unsigned DEFAULT '0',
   `costituzione2` int(1) unsigned DEFAULT '0',
   `apertura1` int(1) unsigned DEFAULT '0',
@@ -53,17 +53,17 @@ CREATE TABLE `affluenze` (
   `votantitotali3` int(10) unsigned DEFAULT NULL,
   `votantitotali4` int(10) unsigned DEFAULT NULL,
   `votantitotali5` int(10) unsigned DEFAULT NULL,
-  `dataoperazione` datetime DEFAULT NULL,
-  `utenteoperazione` varchar(45) DEFAULT NULL,
+  `data_operazione` datetime DEFAULT NULL,
+  `utente_operazione` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
-  KEY `fk_affluenze_iscritti_idx` (`idiscritti`),
-  KEY `fk_affluenze_tipo_elezione_idx` (`idtipoelezione`),
-  KEY `fk_affluenze_plessi_idx` (`idplesso`),
-  KEY `fk_affluenza_sezioni_idx` (`idsezione`),
-  CONSTRAINT `fk_affluenza_sezioni` FOREIGN KEY (`idsezione`) REFERENCES `sezioni` (`id`),
-  CONSTRAINT `fk_affluenze_iscritti` FOREIGN KEY (`idiscritti`) REFERENCES `iscritti` (`id`),
-  CONSTRAINT `fk_affluenze_plessi` FOREIGN KEY (`idplesso`) REFERENCES `plessi` (`id`)
+  KEY `fk_affluenze_iscritti_idx` (`iscrittiid`),
+  KEY `fk_affluenze_tipo_elezione_idx` (`tipoelezioneid`),
+  KEY `fk_affluenze_plessi_idx` (`plessoid`),
+  KEY `fk_affluenza_sezioni_idx` (`sezioneid`),
+  CONSTRAINT `fk_affluenza_sezioni` FOREIGN KEY (`sezioneid`) REFERENCES `sezioni` (`id`),
+  CONSTRAINT `fk_affluenze_iscritti` FOREIGN KEY (`iscrittiid`) REFERENCES `iscritti` (`id`),
+  CONSTRAINT `fk_affluenze_plessi` FOREIGN KEY (`plessoid`) REFERENCES `plessi` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -88,10 +88,10 @@ DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `affluenze_BEFORE_UPDATE` BEFORE UPDATE ON `affluenze` FOR EACH ROW BEGIN
   INSERT INTO affluenze_storico (
   `id`,
-`idtipoelezione`,
-`idsezione`,
-`idplesso`,
-`idiscritti`,
+`tipoelezioneid`,
+`sezioneid`,
+`plessoid`,
+`iscrittiid`,
 `costituzione1`,
 `costituzione2`,
 `apertura1`,
@@ -117,15 +117,15 @@ DELIMITER ;;
 `votantitotali3`,
 `votantitotali4`,
 `votantitotali5`,
-`dataoperazioneold`,
-`utenteoperazioneold`,
-`dataoperazione`,
-`utenteoperazione`)
+`data_operazioneold`,
+`utente_operazioneold`,
+`data_operazione`,
+`utente_operazione`)
 	  VALUES(OLD.id,
-      OLD.idtipoelezione,
-OLD.idsezione,
-OLD.idplesso,
-OLD.idiscritti,
+      OLD.tipoelezioneid,
+OLD.sezioneid,
+OLD.plessoid,
+OLD.iscrittiid,
 OLD.costituzione1,
 OLD.costituzione2,
 OLD.apertura1,
@@ -151,10 +151,10 @@ OLD.votantitotali2,
 OLD.votantitotali3,
 OLD.votantitotali4,
 OLD.votantitotali5,
-OLD.dataoperazione,
-OLD.utenteoperazione,
-new.dataoperazione,
-new.utenteoperazione);
+OLD.data_operazione,
+OLD.utente_operazione,
+new.data_operazione,
+new.utente_operazione);
 
 END */;;
 DELIMITER ;
@@ -172,4 +172,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-16 20:03:33
+-- Dump completed on 2019-06-21 19:05:29

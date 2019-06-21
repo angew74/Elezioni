@@ -8,7 +8,6 @@ import com.deltasi.elezioni.model.json.*;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloPreferenze;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloVoti;
 import com.deltasi.elezioni.model.risultati.*;
-import com.deltasi.elezioni.service.VotiService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +42,11 @@ public class VotiLoader {
     IListaService listaService;
 
     @Autowired
+    IVotiListaService votiListaService;
+
+    @Autowired
     IVotiService votiService;
+
 
     @Autowired
     IAffluenzaService affluenzaService;
@@ -52,15 +55,15 @@ public class VotiLoader {
     IPreferenzeService preferenzeService;
 
 
-    public  List<Voti> prepareVoti(List<ListaSemplice> list) {
-        List<Voti> votiList = new ArrayList<Voti>();
+    public  List<VotiLista> prepareVoti(List<ListaSemplice> list) {
+        List<VotiLista> votiList = new ArrayList<VotiLista>();
         LocalDateTime oggi = LocalDateTime.now();
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         TipoElezione tipoElezione = tipoElezioneService.findTipoElezioneById(tipoelezioneid);
         Sezione sezione = sezioneService.findByNumerosezioneAndTipoelezioneId(list.get(0).getNumerosezione(), tipoelezioneid);
         for (ListaSemplice l:  list) {
-            Voti v = new Voti();
+            VotiLista v = new VotiLista();
             v.setDataoperazione(oggi);
             v.setNumerovoti(l.getVoti());
             v.setUtenteoperazione(user);
@@ -73,12 +76,12 @@ public class VotiLoader {
         return  votiList;
     }
 
-    public  List<Voti> prepareVotiR(List<ListaSemplice> list) {
-        List<Voti> votiList = new ArrayList<Voti>();
+    public  List<VotiLista> prepareVotiR(List<ListaSemplice> list) {
+        List<VotiLista> votiList = new ArrayList<VotiLista>();
         LocalDateTime oggi = LocalDateTime.now();
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         for (ListaSemplice l:  list) {
-            Voti v = votiService.findById(l.getId());
+            VotiLista v = votiListaService.findById(l.getId());
             v.setDataoperazione(oggi);
             v.setNumerovoti(l.getVoti());
             v.setUtenteoperazione(user);
@@ -126,7 +129,7 @@ public class VotiLoader {
         return  preferenzeList;
     }
 
-    public RicalcoloVoti votiSplit(Voti v, String tipoInterrogazione) {
+    public RicalcoloVoti votiSplit(VotiLista v, String tipoInterrogazione) {
         RicalcoloVoti r = new RicalcoloVoti();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         Iscritti i = iIscrittiService.findByTipoelezioneIdAndSezioneNumerosezione(tipoelezioneid,v.getSezione().getNumerosezione());
@@ -166,7 +169,7 @@ public class VotiLoader {
             r.setMunicipio(v.getSezione().getMunicipio());
             r.setSezione(v.getSezione().getNumerosezione());
             r.setNumerovoti(v.getNumerovoti());
-            Voti c = votiService.findByListaIdAndSezioneNumerosezioneAndTipoelezioneId(v.getLista().getId(),v.getSezione().getNumerosezione(), tipoelezioneid);
+            VotiLista c = votiListaService.findByListaIdAndSezioneNumerosezioneAndTipoelezioneId(v.getLista().getId(),v.getSezione().getNumerosezione(), tipoelezioneid);
             r.setVotantipervenute(c.getNumerovoti());
             r.setPercentualevoti(calculatePercentage(r.getNumerovoti(),r.getVotantipervenute()));
             r.setIscrittipervenute(i.getIscrittitotaligen());
@@ -182,10 +185,10 @@ public class VotiLoader {
         return r;
     }
 
-    public  VotiJson ConvertToJson(List<Voti> l, int sezione,String tipo)    {
+    public  VotiJson ConvertToJson(List<VotiLista> l, int sezione,String tipo)    {
         List<ListaJson> listaJsons = new ArrayList<ListaJson>();
         VotiJson json = new VotiJson();
-        for (Voti v : l) {
+        for (VotiLista v : l) {
             ListaJson j = new ListaJson();
             j.setId(v.getId());
             j.setDenominazione(v.getLista().getDenominazione());
@@ -203,16 +206,24 @@ public class VotiLoader {
     public VotiSindacoJson ConvertToJsonSindaci(List<VotiSindaco> l, Integer sezione, String tipo) {
         List<SindacoJson> sindaciJsons = new ArrayList<SindacoJson>();
         VotiSindacoJson json = new VotiSindacoJson();
-        for (VotiSindaco v : l) {
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        Voti v = votiService.findBySezioneNumerosezioneAndTipoelezioneId(sezione,tipoelezioneid);
+        json.setBianche(v.getBianche());
+        json.setContestate(v.getContestate());
+        json.setNulle(v.getNulle());
+        json.setSolosindaco(v.getSolosindaco());
+        json.setTotale(v.getTotale());
+        json.setTotalevalide(v.getTotalevalida());
+        for (VotiSindaco vs : l) {
             SindacoJson j = new SindacoJson();
-            j.setId(v.getSindaco().getId());
-            j.setCognome(v.getSindaco().getCognome());
-            j.setNome(v.getSindaco().getNome());
-            j.setProgressivo(v.getSindaco().getProgressivo());
-            j.setVoti(v.getNumerovoti());
+            j.setId(vs.getSindaco().getId());
+            j.setCognome(vs.getSindaco().getCognome());
+            j.setNome(vs.getSindaco().getNome());
+            j.setProgressivo(vs.getSindaco().getProgressivo());
+            j.setVoti(vs.getNumerovoti());
             j.setNumerosezione(sezione);
             j.setTipo(tipo);
-            j.setId(v.getSindaco().getId());
+            j.setId(vs.getSindaco().getId());
             sindaciJsons.add(j);
         }
         json.setSindaci(sindaciJsons);

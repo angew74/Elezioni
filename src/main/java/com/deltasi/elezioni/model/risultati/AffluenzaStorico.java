@@ -20,23 +20,23 @@ public class AffluenzaStorico {
     private Integer id;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idtipoelezione", referencedColumnName = "id")
+    @JoinColumn(name = "tipoelezioneid", referencedColumnName = "id")
     @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
     private TipoElezione tipoelezione;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idsezione", referencedColumnName = "id")
+    @JoinColumn(name = "sezioneid", referencedColumnName = "id")
     @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
     private Sezione sezione;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idplesso", referencedColumnName = "id")
+    @JoinColumn(name = "plessoid", referencedColumnName = "id")
     @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
     private Plesso plesso;
 
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idiscritti", referencedColumnName = "id")
+    @JoinColumn(name = "iscrittiid", referencedColumnName = "id")
     @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
     private Iscritti iscritti;
 
@@ -116,16 +116,16 @@ public class AffluenzaStorico {
     @Column(name = "votantitotali5")
     private Integer votantitotali5;
 
-    @Column(name = "dataoperazioneold")
+    @Column(name = "data_operazioneold")
     private LocalDateTime dataoperazioneold;
 
-    @Column(name = "utenteoperazioneold")
+    @Column(name = "utente_operazioneold")
     private String  utenteoperazioneold;
 
-    @Column(name = "dataoperazione")
+    @Column(name = "data_operazione")
     private LocalDateTime dataoperazione;
 
-    @Column(name = "utenteoperazione")
+    @Column(name = "utente_operazione")
     private String  utenteoperazione;
 
     public Integer getId() {

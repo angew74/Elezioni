@@ -27,9 +27,6 @@ jQuery(document).ready(function ($) {
         var votanti = parseInt($('#Votanti').text());
         var iscritti = parseInt($('#Iscritti').text());
         var sum = 0;
-        debugger;
-        var group = $('input[name="liste.voti"]');
-        var count = $('#count').text();
         var fields = $( ":input" ).serializeArray();
         jQuery.each( fields, function( i, field ) {
             if(field.name.indexOf('voti') !== -1)
@@ -73,7 +70,6 @@ jQuery(document).ready(function ($) {
         var errorDisplay = '#errorDisplay';
         var successcontainer = '#successModal';
         var mdisplay = "#messagesuccess";
-        debugger;
        // var formData = $("#insertScrutinio").serialize();
        var formData= $('form[name=insertScrutinio]').serialize();
         $.post({

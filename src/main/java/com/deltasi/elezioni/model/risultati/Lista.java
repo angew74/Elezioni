@@ -17,7 +17,7 @@ public class Lista {
 
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idtipoelezione", referencedColumnName = "id")
+    @JoinColumn(name = "tipoelezioneid", referencedColumnName = "id")
     @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
     private TipoElezione tipoelezione;
 

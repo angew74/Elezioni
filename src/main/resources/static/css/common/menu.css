@@ -141,6 +141,8 @@ html, body {
 }
 
 .badge-capitolium {
-    color: #fff;
+    color: darksalmon;
     background-color: #54272F!important;
+    font-size: 1.1rem;
+    font-weight: bolder;
 }

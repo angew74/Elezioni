@@ -4,7 +4,7 @@ package com.deltasi.elezioni.service;
 
 import com.deltasi.elezioni.contracts.IVotiSindacoService;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloSindaco;
-import com.deltasi.elezioni.model.risultati.Voti;
+import com.deltasi.elezioni.model.risultati.VotiLista;
 import com.deltasi.elezioni.model.risultati.VotiSindaco;
 import com.deltasi.elezioni.repository.VotiSindacoDAO;
 import org.springframework.beans.factory.annotation.Autowired;

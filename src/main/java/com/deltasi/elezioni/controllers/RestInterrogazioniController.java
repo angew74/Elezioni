@@ -15,8 +15,7 @@ import com.deltasi.elezioni.model.ricalcoli.RicalcoloPreferenze;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloVoti;
 import com.deltasi.elezioni.model.risultati.Affluenza;
 import com.deltasi.elezioni.model.risultati.Preferenze;
-import com.deltasi.elezioni.model.risultati.Voti;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.deltasi.elezioni.model.risultati.VotiLista;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -53,7 +51,7 @@ public class RestInterrogazioniController {
     private VotiLoader votiLoader;
 
     @Autowired
-    private IVotiService votiService;
+    private IVotiListaService votiService;
 
     @Autowired
     private IPreferenzeService preferenzeService;
@@ -151,7 +149,7 @@ public class RestInterrogazioniController {
     ) {
         Map<String, String> errors = null;
         List<RicalcoloVoti> l = new ArrayList<RicalcoloVoti>();
-        List<Voti> b = new ArrayList<Voti>();
+        List<VotiLista> b = new ArrayList<VotiLista>();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         List<TipoRicalcolo> tipiRicalcolo = tipoRicalcoloService.findAllByTipoelezioneIdAndCodice(tipoelezioneid, tipoInterrogazione);
         try {
@@ -165,7 +163,7 @@ public class RestInterrogazioniController {
                 case "SEZ":
                     int n = Integer.parseInt(sezione.get());
                     b = votiService.findBySezioneNumerosezioneAndTipoelezioneId(n, tipoelezioneid);
-                    for (Voti v : b
+                    for (VotiLista v : b
                     ) {
                         RicalcoloVoti r = votiLoader.votiSplit(v, tipoInterrogazione);
                         l.add(r);
@@ -174,7 +172,7 @@ public class RestInterrogazioniController {
                 case "PLE":
                     int p = Integer.parseInt(plesso.get());
                     b = votiService.findBySezionePlessoIdAndTipoelezioneId(p, tipoelezioneid);
-                    for (Voti v : b
+                    for (VotiLista v : b
                     ) {
                         RicalcoloVoti r = votiLoader.votiSplit(v, tipoInterrogazione);
                         l.add(r);

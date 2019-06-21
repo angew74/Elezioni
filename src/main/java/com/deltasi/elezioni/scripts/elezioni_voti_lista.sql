@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: elezioni
+-- Host: localhost    Database: elezioni
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -24,21 +24,25 @@ DROP TABLE IF EXISTS `voti_lista`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `voti_lista` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `idlista` int(10) unsigned NOT NULL,
-  `idsezione` int(10) unsigned NOT NULL,
-  `idtipoelezione` int(10) unsigned NOT NULL,
+  `listaid` int(10) unsigned NOT NULL,
+  `sezioneid` int(10) unsigned NOT NULL,
+  `tipoelezioneid` int(10) unsigned NOT NULL,
   `municipio` int(10) unsigned DEFAULT NULL,
   `voti` int(10) unsigned NOT NULL DEFAULT '0',
-  `dataoperazione` datetime NOT NULL,
-  `utenteoperazione` varchar(45) NOT NULL,
+  `votiid` int(10) unsigned NOT NULL,
+  `data_operazione` datetime NOT NULL,
+  `utente_operazione` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_voti_lista_sezioni_idx` (`idsezione`),
-  KEY `fk_voti_lista_liste_idx` (`idlista`),
-  KEY `fk_voti_lista_tipo_elezione_idx` (`idtipoelezione`),
-  CONSTRAINT `fk_voti_lista_liste` FOREIGN KEY (`idlista`) REFERENCES `liste` (`id`),
-  CONSTRAINT `fk_voti_lista_sezioni` FOREIGN KEY (`idsezione`) REFERENCES `sezioni` (`id`),
-  CONSTRAINT `fk_voti_lista_tipo_elezione` FOREIGN KEY (`idtipoelezione`) REFERENCES `tipoelezione` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `fk_voti_lista_sezioni_idx` (`sezioneid`),
+  KEY `fk_voti_lista_liste_idx` (`listaid`),
+  KEY `fk_voti_lista_tipo_elezione_idx` (`tipoelezioneid`),
+  KEY `fk_voti_lista_voti_idx` (`votiid`),
+  KEY `fk_voti_lista_voti_idx1` (`voti`),
+  CONSTRAINT `fk_voti_lista_liste` FOREIGN KEY (`listaid`) REFERENCES `liste` (`id`),
+  CONSTRAINT `fk_voti_lista_sezioni` FOREIGN KEY (`sezioneid`) REFERENCES `sezioni` (`id`),
+  CONSTRAINT `fk_voti_lista_tipo_elezione` FOREIGN KEY (`tipoelezioneid`) REFERENCES `tipoelezione` (`id`),
+  CONSTRAINT `fk_voti_lista_voti` FOREIGN KEY (`voti`) REFERENCES `voti` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,7 +51,6 @@ CREATE TABLE `voti_lista` (
 
 LOCK TABLES `voti_lista` WRITE;
 /*!40000 ALTER TABLE `voti_lista` DISABLE KEYS */;
-INSERT INTO `voti_lista` VALUES (1,13,533,1,NULL,100,'2019-04-13 20:19:44','admin'),(2,14,533,1,NULL,10,'2019-04-13 20:19:44','admin'),(3,15,533,1,NULL,10,'2019-04-13 20:19:44','admin'),(4,16,533,1,NULL,10,'2019-04-13 20:19:44','admin'),(5,17,533,1,NULL,200,'2019-04-13 20:19:44','admin'),(6,18,533,1,NULL,10,'2019-04-13 20:19:44','admin'),(7,19,533,1,NULL,10,'2019-04-13 20:19:44','admin'),(8,20,533,1,NULL,10,'2019-04-13 20:19:44','admin'),(9,21,533,1,NULL,10,'2019-04-13 20:19:44','admin'),(10,22,533,1,NULL,10,'2019-04-13 20:19:44','admin'),(11,23,533,1,NULL,10,'2019-04-13 20:19:44','admin'),(12,24,533,1,NULL,10,'2019-04-13 20:19:44','admin'),(13,25,533,1,NULL,0,'2019-04-13 20:19:44','admin'),(14,13,535,1,NULL,20,'2019-04-26 20:20:08','admin'),(15,14,535,1,NULL,20,'2019-04-26 20:20:08','admin'),(16,15,535,1,NULL,20,'2019-04-26 20:20:08','admin'),(17,16,535,1,NULL,20,'2019-04-26 20:20:08','admin'),(18,17,535,1,NULL,510,'2019-04-26 20:20:08','admin'),(19,18,535,1,NULL,20,'2019-04-26 20:20:08','admin'),(20,19,535,1,NULL,20,'2019-04-26 20:20:08','admin'),(21,20,535,1,NULL,40,'2019-04-26 20:20:08','admin'),(22,21,535,1,NULL,20,'2019-04-26 20:20:08','admin'),(23,22,535,1,NULL,0,'2019-04-26 20:20:08','admin'),(24,23,535,1,NULL,0,'2019-04-26 20:20:08','admin'),(25,24,535,1,NULL,10,'2019-04-26 20:20:08','admin'),(26,25,535,1,NULL,10,'2019-04-26 20:20:08','admin');
 /*!40000 ALTER TABLE `voti_lista` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -62,25 +65,27 @@ DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `voti_lista_BEFORE_UPDATE` BEFORE UPDATE ON `voti_lista` FOR EACH ROW BEGIN
 INSERT INTO voti_lista_storico (
   `id`,
-`idlista`,
-`idtipoelezione`,
-`idsezione`,
+`listaid`,
+`tipoelezioneid`,
+`sezioneid`,
 `municipio`,
 `voti`,
+`votiid`,
 `dataoperazioneold`,
 `utenteoperazioneold`,
-`dataoperazione`,
-`utenteoperazione`)
+`data_operazione`,
+`utente_operazione`)
  VALUES (OLD.id,
-OLD.idlista,
-OLD.idtipoelezione,
-OLD.idsezione,
+OLD.listaid,
+OLD.tipoelezioneid,
+OLD.sezioneid,
 OLD.municipio,
 OLD.voti,
-OLD.dataoperazione,
-OLD.utenteoperazione,
-new.dataoperazione, 
-new.utenteoperazione);
+OLD.votiid,
+OLD.data_operazione,
+OLD.utente_operazione,
+new.data_operazione, 
+new.utente_operazione);
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -97,4 +102,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-16 20:03:41
+-- Dump completed on 2019-06-21 19:05:41

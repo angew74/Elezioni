@@ -8,10 +8,6 @@ import com.deltasi.elezioni.model.ricalcoli.RicalcoloAffluenza;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloCostApertura;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloPreferenze;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloVoti;
-import com.deltasi.elezioni.model.risultati.Affluenza;
-import com.deltasi.elezioni.state.SessionStateHelper;
-import com.sun.org.apache.bcel.internal.generic.BREAKPOINT;
-import com.sun.org.apache.bcel.internal.generic.ClassObserver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +15,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -35,7 +30,7 @@ public class RicalcoliDraft {
     IAffluenzaService affluenzaService;
 
     @Autowired
-    IVotiService votiService;
+    IVotiListaService votiService;
 
     @Autowired
     IPreferenzeService preferenzeService;

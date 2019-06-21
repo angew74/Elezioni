@@ -16,33 +16,36 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `sindaci`
+-- Table structure for table `voti`
 --
 
-DROP TABLE IF EXISTS `sindaci`;
+DROP TABLE IF EXISTS `voti`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `sindaci` (
+CREATE TABLE `voti` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `nome` varchar(200) NOT NULL,
-  `cognome` varchar(200) NOT NULL,
-  `sesso` varchar(1) NOT NULL,
-  `progressivo` int(10) unsigned NOT NULL,
+  `sezioneid` int(10) unsigned NOT NULL,
   `tipoelezioneid` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_tipo_elezione_sindaci_idx` (`tipoelezioneid`),
-  CONSTRAINT `fk_tipo_elezione_sindaci` FOREIGN KEY (`tipoelezioneid`) REFERENCES `tipoelezione` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `municipio` int(10) unsigned NOT NULL,
+  `contestate` int(10) unsigned NOT NULL DEFAULT '0',
+  `bianche` int(10) unsigned NOT NULL DEFAULT '0',
+  `nulle` int(10) unsigned NOT NULL DEFAULT '0',
+  `totale_valide` int(10) unsigned NOT NULL,
+  `solo_sindaco` int(10) unsigned NOT NULL,
+  `totale` int(10) unsigned NOT NULL,
+  `data_operazione` datetime NOT NULL,
+  `utente_operazione` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `sindaci`
+-- Dumping data for table `voti`
 --
 
-LOCK TABLES `sindaci` WRITE;
-/*!40000 ALTER TABLE `sindaci` DISABLE KEYS */;
-INSERT INTO `sindaci` VALUES (1,'IGNAZIO ROBERTO','MARINO','M',1,4),(2,'VIRGINIA','RAGGI','F',2,4),(3,'ALESSANDRO','MUSTILLO','M',3,4),(4,'GIORGIA','MELONI','F',4,4),(5,'ALFREDO','IORIO','M',5,4),(6,'STEFANO','FASSINA','M',6,4),(7,'ALFIO','MARCHINI','M',7,4),(8,'MARIO','ADINOLFI','M',8,4),(9,'DARIO','DI FRANCESCO','M',9,4),(10,'SIMONE','DI STEFANO','M',10,4),(11,'CARLO','RIENZI','M',11,4),(12,'FABRIZIO','VERDUCHI','M',12,4),(13,'MICHEL','EMI MARITATO','M',13,4);
-/*!40000 ALTER TABLE `sindaci` ENABLE KEYS */;
+LOCK TABLES `voti` WRITE;
+/*!40000 ALTER TABLE `voti` DISABLE KEYS */;
+/*!40000 ALTER TABLE `voti` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-21 19:05:30
+-- Dump completed on 2019-06-21 19:05:28

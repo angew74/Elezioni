@@ -9,6 +9,12 @@ public class VotiSindacoJson {
     private Integer numerosezione;
     private Integer votanti;
     private Integer iscritti;
+    private Integer contestate;
+    private Integer bianche;
+    private Integer nulle;
+    private Integer solosindaco;
+    private Integer totale;
+    private Integer totalevalide;
     private String  nomeSindacoVoti;
     private String  cognomeSindacoVoti;
     private boolean validated;
@@ -95,4 +101,53 @@ public class VotiSindacoJson {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+
+    public Integer getContestate() {
+        return contestate;
+    }
+
+    public void setContestate(Integer contestate) {
+        this.contestate = contestate;
+    }
+
+    public Integer getBianche() {
+        return bianche;
+    }
+
+    public void setBianche(Integer bianche) {
+        this.bianche = bianche;
+    }
+
+    public Integer getNulle() {
+        return nulle;
+    }
+
+    public void setNulle(Integer nulle) {
+        this.nulle = nulle;
+    }
+
+    public Integer getSolosindaco() {
+        return solosindaco;
+    }
+
+    public void setSolosindaco(Integer solosindaco) {
+        this.solosindaco = solosindaco;
+    }
+
+    public Integer getTotale() {
+        return totale;
+    }
+
+    public void setTotale(Integer totale) {
+        this.totale = totale;
+    }
+
+    public Integer getTotalevalide() {
+        return totalevalide;
+    }
+
+    public void setTotalevalide(Integer totalevalide) {
+        this.totalevalide = totalevalide;
+    }
+
 }

@@ -6,11 +6,11 @@ import com.deltasi.elezioni.model.json.*;
 import com.deltasi.elezioni.model.risultati.Candidato;
 import com.deltasi.elezioni.model.risultati.Lista;
 import com.deltasi.elezioni.model.risultati.Preferenze;
-import com.deltasi.elezioni.model.risultati.Voti;
+import com.deltasi.elezioni.model.risultati.VotiLista;
 import com.deltasi.elezioni.service.CandidatoService;
 import com.deltasi.elezioni.service.ListaService;
 import com.deltasi.elezioni.service.PreferenzeService;
-import com.deltasi.elezioni.service.VotiService;
+import com.deltasi.elezioni.service.VotiListaService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ public class PreferenzeController {
     ListaService listaService;
 
     @Autowired
-    VotiService votiService;
+    VotiListaService votiService;
 
     @Autowired
     CandidatoService candidatoService;
@@ -90,7 +90,7 @@ public class PreferenzeController {
         Integer id = Integer.parseInt(idlista);
         Lista l = listaService.findById(id);
         List<CandidatoJson> candidatijson = new ArrayList<CandidatoJson>();
-        Voti v = votiService.findByListaIdAndSezioneNumerosezioneAndTipoelezioneId(id,sezione,tipoelezioneid);
+        VotiLista v = votiService.findByListaIdAndSezioneNumerosezioneAndTipoelezioneId(id,sezione,tipoelezioneid);
         if (tipo.equals("RVL")) {
             List<Preferenze> p = prefrenzeService.findByListaIdAndSezioneNumerosezioneAndTipoelezioneId(id,sezione,tipoelezioneid);
              for (int i = 0; i < p.size(); i++) {

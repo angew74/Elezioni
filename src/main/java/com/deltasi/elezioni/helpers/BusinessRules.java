@@ -3,18 +3,13 @@ package com.deltasi.elezioni.helpers;
 import com.deltasi.elezioni.contracts.*;
 import com.deltasi.elezioni.model.configuration.FaseElezione;
 import com.deltasi.elezioni.model.configuration.Sezione;
-import com.deltasi.elezioni.model.configuration.TipoElezione;
 import com.deltasi.elezioni.model.risultati.Affluenza;
 import com.deltasi.elezioni.model.risultati.Preferenze;
-import com.deltasi.elezioni.model.risultati.Voti;
+import com.deltasi.elezioni.model.risultati.VotiLista;
 import com.deltasi.elezioni.model.risultati.VotiSindaco;
-import com.sun.org.apache.bcel.internal.generic.BREAKPOINT;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
-import sun.security.util.ManifestEntryVerifier;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @Component
@@ -28,7 +23,7 @@ public class BusinessRules {
     ITipoElezioneService tipoElezioneService;
 
     @Autowired
-    IVotiService votiService;
+    IVotiListaService votiService;
 
     @Autowired
     IVotiSindacoService votiSindacoService;
@@ -181,7 +176,7 @@ public class BusinessRules {
                 }
                 break;
             case "VL":
-                List<Voti> lvoti = votiService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, idtipoelezione);
+                List<VotiLista> lvoti = votiService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, idtipoelezione);
                 if (affluenza == null) {
                     return "Sezione non costitutita";
                 }
@@ -193,7 +188,7 @@ public class BusinessRules {
                 }
                 break;
             case "RVL":
-                List<Voti> lvotir = votiService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, idtipoelezione);
+                List<VotiLista> lvotir = votiService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, idtipoelezione);
                 if (affluenza == null) {
                     return "Sezione non costitutita";
                 }
@@ -229,7 +224,7 @@ public class BusinessRules {
                 }
                 break;
             case "PE":
-                List<Voti> lvotip = votiService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, idtipoelezione);
+                List<VotiLista> lvotip = votiService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, idtipoelezione);
                 List<Preferenze> lpreferenze = preferenzeService.findBySezioneNumerosezioneAndTipoelezioneId(sezione, idtipoelezione);
                 if (affluenza == null) {
                     return "Sezione non costitutita";

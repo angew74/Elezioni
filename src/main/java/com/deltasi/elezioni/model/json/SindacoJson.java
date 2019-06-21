@@ -9,11 +9,13 @@ public class SindacoJson {
     private String nome;
     private String cognome;
     private Integer voti;
+    private Integer solosindaco;
     private Integer progressivo;
     private Integer numerosezione;
     private Integer idsindaco;
     private boolean validated;
     private String tipo;
+    private String iscoalizione;
     private Map<String, String> errorMessages;
 
     public Integer getId() {
@@ -94,5 +96,21 @@ public class SindacoJson {
 
     public void setErrorMessages(Map<String, String> errorMessages) {
         this.errorMessages = errorMessages;
+    }
+
+    public String getIscoalizione() {
+        return iscoalizione;
+    }
+
+    public void setIscoalizione(String iscoalizione) {
+        this.iscoalizione = iscoalizione;
+    }
+
+    public Integer getSolosindaco() {
+        return solosindaco;
+    }
+
+    public void setSolosindaco(Integer solosindaco) {
+        this.solosindaco = solosindaco;
     }
 }
