@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="scrutinio">
+    <input id="contatoreListe" value="0" type="hidden" />
     <div class="card" style="border:none">
         <div class="card-body">
             <div class="row">
@@ -146,7 +147,7 @@
                                                        style="display:none;"
                                                        data-parsley-required
                                                        required
-                                                       th:field="*{sindaci[__${iterStat.index}__].id}"
+                                                       th:field="*{sindaci[__${iterStat.index}__].iscoalizione}"
                                                 />
                                                 <input name="idsindaco" type="number"
                                                        style="display:none;"
@@ -164,7 +165,7 @@
                                                        data-parsley-required
                                                        data-parsley-type="number"
                                                        data-validation="required"
-                                                       th:value="${sindaco.voti}" />
+                                                       th:value="${sindaco.voti}"/>
                                                 <input class="form-control solosindaco"
                                                        placeholder="Solo Sindaco"
                                                        min="0"
@@ -173,17 +174,18 @@
                                                        data-parsley-type="number"
                                                        data-validation="required"
                                                        th:field="*{sindaci[__${iterStat.index}__].solosindaco}"
-                                                       th:value="${sindaco.solosindaco}" />
+                                                       th:value="${sindaco.solosindaco}"/>
                                             </div>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                             <div th:if="${#lists.isEmpty(Sindaci.getSindaci())}">
-                                <div id="count" th:text="${Count}"  style="display: none"></div>
-                                <form class="form-horizontal"  name="insertScrutinio"
+                                <div id="count" th:text="${Count}" style="display: none"></div>
+                                <form class="form-horizontal" name="insertScrutinio"
                                       th:action="@{/coalizioni/lreg}" action="#"
-                                      th:object="${ListWrapper}"   id="insertScrutinio" data-parsley-validate  method="post">
+                                      th:object="${ListWrapper}" id="insertScrutinio" data-parsley-validate
+                                      method="post">
                                     <div class="row" style="margin-bottom: 15px">
                                         <div class="col col-xs-3">
                                             <div class="input-group">
@@ -196,7 +198,7 @@
                                                        id="validiListe"
                                                        data-parsley-type="number"
                                                        data-validation="required"
-                                                       placeholder="Validi Liste">
+                                                       placeholder="Voti Validi Liste">
                                             </div>
                                         </div>
                                         <div class="col col-xs-3">
@@ -204,28 +206,28 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">B</span>
                                                 </div>
-                                            <input type="number" class="form-control"
-                                                   th:field="${ListWrapper.solosindaco}"
-                                                   data-parsley-required
-                                                   min="0"
-                                                   data-parsley-type="number"
-                                                   data-validation="required"
-                                                   placeholder="Solo Sindaco">
-                                        </div>
+                                                <input type="number" class="form-control"
+                                                       th:field="${ListWrapper.solosindaco}"
+                                                       data-parsley-required
+                                                       min="0"
+                                                       data-parsley-type="number"
+                                                       data-validation="required"
+                                                       placeholder="Solo Sindaco">
+                                            </div>
                                         </div>
                                         <div class="col col-xs-3">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">C</span>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">C</span>
+                                                </div>
+                                                <input type="number" class="form-control"
+                                                       th:field="${ListWrapper.totalevalide}"
+                                                       data-parsley-required
+                                                       min="0"
+                                                       data-parsley-type="number"
+                                                       data-validation="required"
+                                                       placeholder="Valide Sindaco (B+C)">
                                             </div>
-                                            <input type="number" class="form-control"
-                                                   th:field="${ListWrapper.totalevalide}"
-                                                   data-parsley-required
-                                                   min="0"
-                                                   data-parsley-type="number"
-                                                   data-validation="required"
-                                                   placeholder="Valide (B+C)">
-                                        </div>
                                         </div>
                                         <div class="col col-xs-3">
                                             <div class="input-group">
@@ -286,14 +288,17 @@
                                                        placeholder="Totale voti (C+D+E+F)">
                                             </div>
                                         </div>
+                                        <div class="col col-xs-3">
+                                            <div class="alert alert-dark" id="labelVotanti" role="alert"></div>
+                                        </div>
                                     </div>
                                     <div th:each="sindaco,itemStat:${ListWrapper.getSindaci()}" class="form-group row">
                                         <div class="col-sm-12">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text br-15"><i
-                                                           th:onclick="|openListeModal(*{sindaci[__${itemStat.index}__].idsindaco})|"
-                                                           th:id="'iconcheck' + ${sindaco.getIdsindaco()}"
+                                                            th:onclick="|openListeModal(*{sindaci[__${itemStat.index}__].idsindaco})|"
+                                                            th:id="'iconcheck' + ${sindaco.getIdsindaco()}"
                                                             class="far fa-circle"></i></span>
                                                 </div>
                                                 <input type="number"
@@ -310,19 +315,16 @@
                                                        th:value="${sindaco.getTipo()}"
                                                        th:field="*{sindaci[__${itemStat.index}__].tipo}"
                                                 />
-                                                <input type="text"
-                                                       data-parsley-required
-                                                       required
-                                                       style="display:none;"
+                                                <input type="hidden"
                                                        th:value="${sindaco.getIscoalizione()}"
                                                        th:field="*{sindaci[__${itemStat.index}__].iscoalizione}"
                                                 />
-                                                <input  type="number"
-                                                        required
-                                                        data-parsley-required
-                                                        style="display:none;"
-                                                        th:field="*{sindaci[__${itemStat.index}__].idsindaco}"
-                                                        th:value="${sindaco.getIdsindaco()}"
+                                                <input type="number"
+                                                       required
+                                                       data-parsley-required
+                                                       style="display:none;"
+                                                       th:field="*{sindaci[__${itemStat.index}__].idsindaco}"
+                                                       th:value="${sindaco.getIdsindaco()}"
                                                 />
                                                 <label class="col-sm-3  col-form-label"
                                                        th:text="${sindaco.nome} + ' ' + ${sindaco.cognome}"></label>
@@ -337,7 +339,7 @@
                                                         data-parsley-type="number"
                                                         data-validation="required"
                                                 />
-                                                <input type="number"  class="form-control votisolosindaco"
+                                                <input type="number" class="form-control votisolosindaco"
                                                        placeholder="Solo Sindaco"
                                                        min="0"
                                                        value="0"
@@ -345,7 +347,7 @@
                                                        data-parsley-type="number"
                                                        data-validation="required"
                                                        th:field="*{sindaci[__${itemStat.index}__].solosindaco}"
-                                                       />
+                                                />
                                             </div>
                                         </div>
                                     </div>

@@ -1,5 +1,3 @@
-// jQuery(document).ready(function ($) {
-
 
 function SaveAll() {
     var buttonScrutinio = '#btnSalvaScrutinio';
@@ -8,14 +6,15 @@ function SaveAll() {
     var isValid = true;
     var errorMessage;
     var isValidSelect = true;
-    var isValidCount = true;
+    var isValidCount = false;
+    var isValidCoalizione = false;
     $('select').each(function () {
         if ($(this).parsley().validate() !== true)
             isValidSelect = false;
     });
     $('input').each(function () {
         if ($(this).parsley().validate() !== true)
-            isValidSelect = false;
+            isValid = false;
     });
     if ($("#tipo").parsley().validate() !== true) {
         isValid = false;
@@ -29,6 +28,64 @@ function SaveAll() {
     if ($("#Iscritti").parsley().validate() !== true) {
         isValid = false;
     }
+    if(isValid && isValidSelect) {
+        isValidCoalizione = ValidateCoalizione();
+    }
+     if(isValid && isValidSelect && isValidCoalizione) {
+         isValidCount = ValidateCount();
+     }
+
+    if (isValid && isValidSelect && isValidCount) {
+        postScrutinio();
+    }
+    // })
+}
+
+
+function jQFormSerializeArrToJson(formSerializeArr) {
+    var jsonObj = {};
+    jQuery.map(formSerializeArr, function (n, i) {
+        jsonObj[n.name] = n.value;
+    });
+
+    return jsonObj;
+}
+
+function ValidateCoalizione() {
+    var isV = false;
+    var errorMessage;
+    var fields = $(":input").serializeArray();
+    jQuery.each(fields, function (i, field) {
+        if (field.name.indexOf('iscoalizione') !== -1) {
+           if(field.value === "N" || field.value === "")
+           {
+               errorMessage = "Selezionare i voti di lista di tutte le coalizioni";
+           }
+        }
+    });
+    if (errorMessage !== "" && errorMessage !== null) {
+        $("#errorcontrol").append(errorMessage);
+        $(errorDisplay).text(errorMessage);
+        $(errorcontainer).modal('show');
+
+    } else {
+        $("#errorcontrol").text("");
+        $("#errorcontrol").hide();
+        $(errorDisplay).text('');
+        $(errorcontainer).modal('hide');
+        isV = true;
+    }
+    return isV;
+
+
+}
+
+function ValidateCount()
+{
+    var errorcontainer = '#errorModal';
+    var errorDisplay = '#errorDisplay';
+    var isV = false;
+    var errorMessage;
     var votanti = parseInt($('#Votanti').text());
     var iscritti = parseInt($('#Iscritti').text());
     var validiListe = parseInt($('#validiListe').val());
@@ -39,7 +96,7 @@ function SaveAll() {
     var contestate = parseInt($('#contestate').val());
     var totale = parseInt($('#totale').val());
     var sum = 0;
-    var sumsolosindaco =0;
+    var sumsolosindaco = 0;
     var group = $('input[name="liste.voti"]');
     var groupsolosindaco = $('input[name="liste.solosindaco"]');
     var count = $('#count').text();
@@ -54,10 +111,14 @@ function SaveAll() {
             sumsolosindaco += parseFloat(field.value);
         }
     });
+    var sommaListe = $("#contatoreListe").val();
     var sommaab = validiListe + solosindaco;
     var sommacdef = validiListe + bianche + nulle + contestate;
     if (solosindaco !== sumsolosindaco) {
         errorMessage = "Totale voti solo sindaco (B) diverso da somma voti singoli candidati " + solosindaco + " <> " + sumsolosindaco;
+    }
+    if (validiListe !== sommaListe) {
+        errorMessage = "Totale voti validi liste (A) diverso da somma voti singole liste " + validiListe + " <> " + sommaListe;
     }
     if (totalevalide !== sommaab) {
         errorMessage = "Totale voti validi (C) diverso da somma  voti validi liste (a) + solo sindac (b) " + totalevalide + " <> " + sommaab;
@@ -75,31 +136,22 @@ function SaveAll() {
         errorMessage = "Voti scrutinio maggiore iscritti " + sum + " > " + iscritti;
     }
     if (sommacdef !== totale) {
-        errorMessage = "Totale voti scrutinio diverso da somma parziali " + totale + " <> " + sommacdef;
+        errorMessage = "Totale voti scrutinio (G) diverso da somma parziali (C+D+E+F) " + totale + " <> " + sommacdef;
     }
-    if (isValidCount) {
+    if (errorMessage !== "" && errorMessage != null) {
+        $(errorDisplay).text(errorMessage);
+        $(errorcontainer).modal('show');
         $("#errorcontrol").append(errorMessage);
 
     } else {
+        $(errorDisplay).text('');
+        $(errorcontainer).modal('hide');
         $("#errorcontrol").text("");
         $("#errorcontrol").hide();
+         isV = true;
     }
-    if (isValid && isValidSelect && isValidCount) {
-        postScrutinio();
-    }
-    // })
+    return isV;
 }
-
-
-function jQFormSerializeArrToJson(formSerializeArr) {
-    var jsonObj = {};
-    jQuery.map(formSerializeArr, function (n, i) {
-        jsonObj[n.name] = n.value;
-    });
-
-    return jsonObj;
-}
-
 
 function postScrutinio() {
     var errorcontainer = '#errorModal';

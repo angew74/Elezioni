@@ -3,6 +3,8 @@
 function openListeModal(id) {
     var sezione = $("#numerosezione").val();
     var maxvotisindaco = $("#Votanti").text();
+    $('#labelVotanti').text("Votanti " + maxvotisindaco);
+    var v =  $('#labelVotanti').text();
 
     $.ajax({
         url: '/coalizioni/listecoalizione/' + id + '/' + sezione,
@@ -66,13 +68,17 @@ function ajaxSalvaListeCoalizione() {
                         $(mdisplay).text("Liste registrate correttamente");
                         var sindacoid = $("#sincolid").val();
                         var col = sindacoid -1;
-                        var sindaco = "#sindaci" + col + ".iscoalizione";
+                        var sindaco = '#sindaci' + col + '.iscoalizione';
                         var iconsindaco = "#iconcheck"+sindacoid;
                         $(iconsindaco).removeClass("far fa-circle");
                         $(iconsindaco).addClass("fas fa-check-circle");
                         $(sindaco).val("S");
                         $("#listeModal").modal('hide');
                         $(successcontainer).modal('show');
+                        var sommaParziale = $("#contatoreListe").val();
+                        var tot = sommaParziale + sum;
+                        $("#contatoreListe").val(tot);
+
                     } else {
                         //Set error messages
                         $.each(res.errorMessages, function (key, value) {
