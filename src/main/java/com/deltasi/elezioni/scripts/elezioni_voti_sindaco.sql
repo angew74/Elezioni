@@ -27,10 +27,10 @@ CREATE TABLE `voti_sindaco` (
   `tipoelezioneid` int(10) unsigned NOT NULL,
   `sindacoid` int(10) unsigned NOT NULL,
   `sezioneid` int(10) unsigned NOT NULL,
+  `votiid` int(10) unsigned NOT NULL,
   `municipio` int(10) unsigned NOT NULL,
   `numero_voti` int(10) NOT NULL DEFAULT '0',
   `numero_voti_solo_sindaco` int(10) unsigned NOT NULL DEFAULT '0',
-  `votiid` int(10) unsigned NOT NULL,
   `utente_operazione` varchar(45) NOT NULL,
   `data_operazione` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -41,7 +41,7 @@ CREATE TABLE `voti_sindaco` (
   CONSTRAINT `fk_voti_sindaco_sezioni` FOREIGN KEY (`sezioneid`) REFERENCES `sezioni` (`id`),
   CONSTRAINT `fk_voti_sindaco_sindaco` FOREIGN KEY (`sindacoid`) REFERENCES `sindaci` (`id`),
   CONSTRAINT `fk_voti_sindaco_tipo_elezioni` FOREIGN KEY (`tipoelezioneid`) REFERENCES `tipoelezione` (`id`),
-  CONSTRAINT `fk_voti_sindaco_voti` FOREIGN KEY (`votiid`) REFERENCES `voti` (`id`)
+  CONSTRAINT `fk_voti_sindaco_voti` FOREIGN KEY (`votiid`) REFERENCES `profilo_voti` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -103,4 +103,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-21 19:05:25
+-- Dump completed on 2019-07-02 19:02:13

@@ -18,10 +18,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.Model;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -56,6 +53,9 @@ public class CoalizioniController {
 
     @Autowired
     ISindacoService sindacoService;
+
+    @Autowired
+    IVotiGeneraliService votiGeneraliService;
 
     @Autowired
     IVotiService votiService;
@@ -97,6 +97,7 @@ public class CoalizioniController {
     public ModelAndView inserimento(@PathVariable String tipo, Principal principal) {
         ModelAndView modelAndView = new ModelAndView("coalizioni/inserimento");
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        stateHelper.removeAll();
         if (businessRules.IsEnabled(tipo, tipoelezioneid)) {
             String titolo = businessRules.getTitoloByFase(tipo, "I");
             SindacoJson json = new SindacoJson();
@@ -212,21 +213,35 @@ public class CoalizioniController {
 
     @RequestMapping(value = "/coalreg", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public @ResponseBody
-    ListaJson registraScrutinioCoalizione(@ModelAttribute ListeWrapper form, Model model) {
-        ListaJson response = new ListaJson();
+    SindacoJson registraScrutinioCoalizione(@ModelAttribute SindaciWrapper form, Model model) {
+        SindacoJson response = new SindacoJson();
         Map<String, String> errors = null;
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        Voti i = new Voti();
+        Set<VotiSindaco> vs = new HashSet<VotiSindaco>();
+        Set<VotiLista> vl = new HashSet<VotiLista>();
+        VotiGenerali v = new VotiGenerali();
         try {
-            switch (form.getListe().get(0).getTipo()) {
+            switch (form.getSindaci().get(0).getTipo()) {
                 case "VS":
-                    List<VotiLista> v = votiLoader.prepareVoti(form.getListe());
-                    votiListaService.SaveAll(v);
+                    vs = votiLoader.prepareVotiSindaco(form.getSindaci());
+                    vl = votiLoader.prepareVotiLista(form.getSindaci());
+                    v = votiLoader.prepareVotiG(form);
+                    i.setVotigenerali(v);
+                    i.setVotiListas(vl);
+                    i.setVotiSindacos(vs);
+                    i.setTipoelezione(v.getTipoelezione());
+                    i.setSezione(v.getSezione());
+                    votiService.Save(i);
                     response.setValidated(true);
                     response.setTipo("VL");
                     break;
                 case "RVS":
-                    List<VotiLista> vr = votiLoader.prepareVotiR(form.getListe());
-                    votiListaService.SaveAll(vr);
+                     vs = votiLoader.prepareVotiSindacoR(form.getSindaci());
+                     vl = votiLoader.prepareVotiListaR(form.getSindaci());
+                     v = votiLoader.prepareVotiGR(form);
+                     i = votiService.findBySezioneNumerosezioneAndTipoelezioneId(v.getSezione().getNumerosezione(),v.getTipoelezione().getId());
+                    votiService.Save(i);
                     response.setValidated(true);
                     response.setTipo("RVL");
                     break;

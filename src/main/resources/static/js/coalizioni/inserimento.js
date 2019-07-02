@@ -15,6 +15,18 @@ function openListeModal(id) {
             $("input[name='sincolid']").val(id);
             $("#maxvotisindaco").val(maxvotisindaco);
             $("input[name='maxvotisindaco']").val(maxvotisindaco);
+            // parte per detrarre i vecchi voti ed evitare raddoppio dei dati
+            var sum = 0;
+            var fields = $(".votliliste").serializeArray();
+            jQuery.each(fields, function (i, field) {
+                if (field.name.indexOf('voti') !== -1) {
+                    if(field.value !== NaN && field.value !== "")
+                    {  sum += parseFloat(field.value);}
+                }
+            });
+            var sommaParziale = $("#contatoreListe").val();
+            var tot =  parseInt(sommaParziale) - parseInt(sum);
+            $("#contatoreListe").val(tot);
         }
     })
 }
@@ -69,14 +81,15 @@ function ajaxSalvaListeCoalizione() {
                         var sindacoid = $("#sincolid").val();
                         var col = sindacoid -1;
                         var sindaco = '#sindaci' + col + '.iscoalizione';
+                        var sindaco2 = 'sindaci' + col + '.iscoalizione';
                         var iconsindaco = "#iconcheck"+sindacoid;
                         $(iconsindaco).removeClass("far fa-circle");
                         $(iconsindaco).addClass("fas fa-check-circle");
-                        $(sindaco).val("S");
                         $("#listeModal").modal('hide');
                         $(successcontainer).modal('show');
+                        document.getElementById(sindaco2).value = "S";
                         var sommaParziale = $("#contatoreListe").val();
-                        var tot = sommaParziale + sum;
+                        var tot =  parseInt(sommaParziale) + parseInt(sum);
                         $("#contatoreListe").val(tot);
 
                     } else {

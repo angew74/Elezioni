@@ -16,36 +16,40 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `voti`
+-- Table structure for table `profilo_voti`
 --
 
-DROP TABLE IF EXISTS `voti`;
+DROP TABLE IF EXISTS `profilo_voti`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `voti` (
+CREATE TABLE `profilo_voti` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `votigeneraliid` int(10) unsigned DEFAULT NULL,
+  `votisindacoid` int(10) unsigned DEFAULT NULL,
+  `votilistaid` int(10) unsigned DEFAULT NULL,
   `sezioneid` int(10) unsigned NOT NULL,
   `tipoelezioneid` int(10) unsigned NOT NULL,
-  `municipio` int(10) unsigned NOT NULL,
-  `contestate` int(10) unsigned NOT NULL DEFAULT '0',
-  `bianche` int(10) unsigned NOT NULL DEFAULT '0',
-  `nulle` int(10) unsigned NOT NULL DEFAULT '0',
-  `totale_valide` int(10) unsigned NOT NULL,
-  `solo_sindaco` int(10) unsigned NOT NULL,
-  `totale` int(10) unsigned NOT NULL,
-  `data_operazione` datetime NOT NULL,
-  `utente_operazione` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `fk_voti_votisindaco_idx` (`votisindacoid`),
+  KEY `fk_voti_votilista_idx` (`votilistaid`),
+  KEY `fk_voti_votigenerali_idx` (`votigeneraliid`),
+  KEY `fk_voti_tipoelezione_idx` (`tipoelezioneid`,`sezioneid`),
+  KEY `fk_voti_sezioni_idx` (`sezioneid`),
+  CONSTRAINT `fk_voti_sezioni` FOREIGN KEY (`sezioneid`) REFERENCES `sezioni` (`id`),
+  CONSTRAINT `fk_voti_tipoelezione` FOREIGN KEY (`tipoelezioneid`) REFERENCES `tipoelezione` (`id`),
+  CONSTRAINT `fk_voti_votigenerali` FOREIGN KEY (`votigeneraliid`) REFERENCES `voti_generali` (`id`),
+  CONSTRAINT `fk_voti_votilista` FOREIGN KEY (`votilistaid`) REFERENCES `voti_lista` (`id`),
+  CONSTRAINT `fk_voti_votisindaco` FOREIGN KEY (`votisindacoid`) REFERENCES `voti_sindaco` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `voti`
+-- Dumping data for table `profilo_voti`
 --
 
-LOCK TABLES `voti` WRITE;
-/*!40000 ALTER TABLE `voti` DISABLE KEYS */;
-/*!40000 ALTER TABLE `voti` ENABLE KEYS */;
+LOCK TABLES `profilo_voti` WRITE;
+/*!40000 ALTER TABLE `profilo_voti` DISABLE KEYS */;
+/*!40000 ALTER TABLE `profilo_voti` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -57,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-21 19:05:28
+-- Dump completed on 2019-07-02 19:02:21

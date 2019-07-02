@@ -339,13 +339,25 @@ public class BusinessRules {
                     case "I":
                         titolo = "Inserimento Chiusura Seggio";
                         break;
+                    case "M":
+                        titolo = "Modifica Chiusura Seggio";
+                        break;
                 }
+                break;
             case "VL":
                 switch (tipo) {
                     case "I":
                         titolo = "Inserimento Voti Lista";
                         break;
                 }
+                break;
+            case "VS":
+                switch (tipo) {
+                    case "I":
+                        titolo = "Inserimento Voti Coalizione";
+                        break;
+                }
+                break;
             case "R3C":
                 switch (tipo) {
                     case "M":
@@ -359,10 +371,10 @@ public class BusinessRules {
             case "RVL":
                 titolo = "Rettifica Voti Lista";
                 break;
-
-            case "AVL":
-                titolo = "Annullamento Voti Lista";
+            case "RVS":
+                titolo = "Rettifica Voti Coalizione";
                 break;
+
             case "RIC":
                 titolo = "Ricalcolo Affluenze";
                 break;

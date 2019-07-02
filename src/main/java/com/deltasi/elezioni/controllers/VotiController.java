@@ -19,10 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -117,6 +114,7 @@ public class VotiController {
         ModelAndView modelAndView = new ModelAndView("voti/inserimento");
         VotiJson votijson = new VotiJson();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+
         if (businessRules.IsEnabled(tipo, tipoelezioneid)) {
             String titolo = businessRules.getTitoloByFase(tipo, "I");
             modelAndView.addObject("titlepage", titolo);
@@ -187,13 +185,13 @@ public class VotiController {
         try {
             switch (form.getListe().get(0).getTipo()) {
                 case "VL":
-                    List<VotiLista> v = votiLoader.prepareVoti(form.getListe());
+                    HashSet<VotiLista> v = votiLoader.prepareVoti(form.getListe());
                     votiService.SaveAll(v);
                     response.setValidated(true);
                     response.setTipo("VL");
                     break;
                 case "RVL":
-                    List<VotiLista> vr = votiLoader.prepareVotiR(form.getListe());
+                    HashSet<VotiLista> vr = votiLoader.prepareVotiR(form.getListe());
                     votiService.SaveAll(vr);
                     response.setValidated(true);
                     response.setTipo("RVL");

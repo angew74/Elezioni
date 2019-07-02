@@ -16,24 +16,40 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `hibernate_sequence`
+-- Table structure for table `voti_generali`
 --
 
-DROP TABLE IF EXISTS `hibernate_sequence`;
+DROP TABLE IF EXISTS `voti_generali`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `hibernate_sequence` (
-  `next_val` bigint(20) DEFAULT NULL
+CREATE TABLE `voti_generali` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `sezioneid` int(10) unsigned NOT NULL,
+  `tipoelezioneid` int(10) unsigned NOT NULL,
+  `municipio` int(10) unsigned NOT NULL,
+  `contestate` int(10) unsigned NOT NULL DEFAULT '0',
+  `bianche` int(10) unsigned NOT NULL DEFAULT '0',
+  `nulle` int(10) unsigned NOT NULL DEFAULT '0',
+  `totale_valide` int(10) unsigned NOT NULL,
+  `solo_sindaco` int(10) unsigned NOT NULL,
+  `totale` int(10) unsigned NOT NULL,
+  `data_operazione` datetime NOT NULL,
+  `utente_operazione` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_voti_tipoelezione_idx` (`tipoelezioneid`),
+  KEY `fk_voti_sezione_idx` (`sezioneid`),
+  CONSTRAINT `fk_votigenerali_sezione` FOREIGN KEY (`sezioneid`) REFERENCES `sezioni` (`id`),
+  CONSTRAINT `fk_votigenerali_tipoelezione` FOREIGN KEY (`tipoelezioneid`) REFERENCES `tipoelezione` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `hibernate_sequence`
+-- Dumping data for table `voti_generali`
 --
 
-LOCK TABLES `hibernate_sequence` WRITE;
-/*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
-/*!40000 ALTER TABLE `hibernate_sequence` ENABLE KEYS */;
+LOCK TABLES `voti_generali` WRITE;
+/*!40000 ALTER TABLE `voti_generali` DISABLE KEYS */;
+/*!40000 ALTER TABLE `voti_generali` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -45,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-02 19:02:12
+-- Dump completed on 2019-07-02 19:02:35

@@ -8,13 +8,11 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-
 @Entity
-@Table(name = "voti_sindaco")
-public class VotiSindaco {
+@Table(name = "voti_generali")
+public class VotiGenerali {
 
-
-    private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
 
     @Override
@@ -27,10 +25,10 @@ public class VotiSindaco {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof VotiSindaco)) {
+        if (!(object instanceof VotiGenerali)) {
             return false;
         }
-        VotiSindaco other = (VotiSindaco) object;
+        VotiGenerali other = (VotiGenerali) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -39,9 +37,8 @@ public class VotiSindaco {
 
     @Override
     public String toString() {
-        return "com.deltasi.elezioni.model.risultati.VotiSindaco[ id=" + id + " ]";
+        return "com.deltasi.elezioni.model.risultati.VotiGenerali[ id=" + id + " ]";
     }
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,21 +55,12 @@ public class VotiSindaco {
     @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
     private TipoElezione tipoelezione;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "sindacoid", referencedColumnName = "id")
-    @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
-    private Sindaco sindaco;
 
-
-   // @ManyToOne(fetch = FetchType.EAGER)
-    @ManyToOne(cascade = {CascadeType.PERSIST})
+//     @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "votiid", referencedColumnName = "id")
-   //  @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+    @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
     private Voti voti;
-
-    @Column(name = "municipio")
-    private int municipio;
-
 
     @Column(name = "data_operazione")
     private LocalDateTime dataoperazione;
@@ -80,11 +68,27 @@ public class VotiSindaco {
     @Column(name = "utente_operazione")
     private String  utenteoperazione;
 
-    @Column(name = "numero_voti")
-    private Integer numerovoti;
+    @Column(name = "totale")
+    private Integer totale;
 
-    @Column(name ="numero_voti_solo_sindaco")
-    private Integer numerovotisolosindaco;
+    @Column(name = "solo_sindaco")
+    private Integer solosindaco;;
+
+    @Column(name = "totale_valide")
+    private Integer totalevalide;
+
+    @Column(name = "nulle")
+    private Integer nulle;
+
+    @Column(name = "bianche")
+    private Integer bianche;
+
+    @Column(name = "contestate")
+    private Integer contestate;
+
+
+    @Column(name = "municipio")
+    private Integer municipio;
 
     public Integer getId() {
         return id;
@@ -110,22 +114,6 @@ public class VotiSindaco {
         this.tipoelezione = tipoelezione;
     }
 
-    public Sindaco getSindaco() {
-        return sindaco;
-    }
-
-    public void setSindaco(Sindaco sindaco) {
-        this.sindaco = sindaco;
-    }
-
-    public int getMunicipio() {
-        return municipio;
-    }
-
-    public void setMunicipio(int municipio) {
-        this.municipio = municipio;
-    }
-
     public LocalDateTime getDataoperazione() {
         return dataoperazione;
     }
@@ -142,19 +130,67 @@ public class VotiSindaco {
         this.utenteoperazione = utenteoperazione;
     }
 
-    public Integer getNumerovoti() {
-        return numerovoti;
+    public Integer getTotale() {
+        return totale;
     }
 
-    public void setNumerovoti(Integer numerovoti) {
-        this.numerovoti = numerovoti;
+    public void setTotale(Integer totale) {
+        this.totale = totale;
     }
 
-    public Integer getNumerovotisolosindaco() {
-        return numerovotisolosindaco;
+    public Integer getSolosindaco() {
+        return solosindaco;
     }
 
-    public void setNumerovotisolosindaco(Integer numerovotisolosindaco) {
-        this.numerovotisolosindaco = numerovotisolosindaco;
+    public void setSolosindaco(Integer solosindaco) {
+        this.solosindaco = solosindaco;
+    }
+
+    public Integer getTotalevalide() {
+        return totalevalide;
+    }
+
+    public void setTotalevalide(Integer totalevalide) {
+        this.totalevalide = totalevalide;
+    }
+
+    public Integer getNulle() {
+        return nulle;
+    }
+
+    public void setNulle(Integer nulle) {
+        this.nulle = nulle;
+    }
+
+    public Integer getBianche() {
+        return bianche;
+    }
+
+    public void setBianche(Integer bianche) {
+        this.bianche = bianche;
+    }
+
+    public Integer getContestate() {
+        return contestate;
+    }
+
+    public void setContestate(Integer contestate) {
+        this.contestate = contestate;
+    }
+
+    public Integer getMunicipio() {
+        return municipio;
+    }
+
+    public void setMunicipio(Integer municipio) {
+        this.municipio = municipio;
+    }
+
+    public Voti getVoti() {
+        return voti;
+    }
+
+    public void setVoti(Voti voti) {
+        this.voti = voti;
     }
 }

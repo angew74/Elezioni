@@ -3,11 +3,12 @@ package com.deltasi.elezioni.contracts;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloVoti;
 import com.deltasi.elezioni.model.risultati.VotiLista;
 
+import java.util.HashSet;
 import java.util.List;
 
 public interface IVotiListaService {
 
-    void SaveAll(List<VotiLista> list);
+    void SaveAll(HashSet<VotiLista> list);
     VotiLista findById(Integer id);
     List<VotiLista> findAllBy();
     List<VotiLista> findBySezioneNumerosezioneAndTipoelezioneId(Integer numerosezione, Integer tipoelezioneid);

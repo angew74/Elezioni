@@ -8,6 +8,7 @@ import com.deltasi.elezioni.model.json.*;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloPreferenze;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloVoti;
 import com.deltasi.elezioni.model.risultati.*;
+import com.deltasi.elezioni.state.SessionStateHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,9 @@ import org.springframework.stereotype.Component;
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class VotiLoader {
@@ -42,10 +45,18 @@ public class VotiLoader {
     IListaService listaService;
 
     @Autowired
+    ISindacoService sindacoService;
+
+
+    @Autowired
     IVotiListaService votiListaService;
 
     @Autowired
-    IVotiService votiService;
+    IVotiSindacoService votiSindacoService;
+
+
+    @Autowired
+    IVotiGeneraliService votiGeneraliService;
 
 
     @Autowired
@@ -54,9 +65,12 @@ public class VotiLoader {
     @Autowired
     IPreferenzeService preferenzeService;
 
+    @Autowired
+    SessionStateHelper stateHelper;
 
-    public  List<VotiLista> prepareVoti(List<ListaSemplice> list) {
-        List<VotiLista> votiList = new ArrayList<VotiLista>();
+
+    public  HashSet<VotiLista> prepareVoti(List<ListaSemplice> list) {
+        HashSet<VotiLista> votiList = new HashSet<>();
         LocalDateTime oggi = LocalDateTime.now();
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
@@ -76,8 +90,46 @@ public class VotiLoader {
         return  votiList;
     }
 
-    public  List<VotiLista> prepareVotiR(List<ListaSemplice> list) {
-        List<VotiLista> votiList = new ArrayList<VotiLista>();
+    public HashSet<VotiSindaco> prepareVotiSindaco(List<SindacoSimple> list) {
+        HashSet<VotiSindaco> votiList = new HashSet<VotiSindaco>();
+        LocalDateTime oggi = LocalDateTime.now();
+        String user = SecurityContextHolder.getContext().getAuthentication().getName();
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        TipoElezione tipoElezione = tipoElezioneService.findTipoElezioneById(tipoelezioneid);
+        Sezione sezione = sezioneService.findByNumerosezioneAndTipoelezioneId(list.get(0).getNumerosezione(), tipoelezioneid);
+        for (SindacoSimple l:  list) {
+            VotiSindaco v = new VotiSindaco();
+            v.setDataoperazione(oggi);
+            v.setNumerovoti(l.getVoti());
+            v.setNumerovotisolosindaco(l.getSolosindaco());
+            v.setUtenteoperazione(user);
+            v.setSezione(sezione);
+            v.setTipoelezione(tipoElezione);
+            Sindaco sindaco = sindacoService.findById(l.getIdsindaco());
+            v.setSindaco(sindaco);
+            votiList.add(v);
+        }
+        return  votiList;
+    }
+
+    public HashSet<VotiSindaco> prepareVotiSindacoR(List<SindacoSimple> list)
+    {
+        HashSet<VotiSindaco> votiList = new HashSet<>();
+        LocalDateTime oggi = LocalDateTime.now();
+        String user = SecurityContextHolder.getContext().getAuthentication().getName();
+        for (SindacoSimple l:  list) {
+            VotiSindaco v = votiSindacoService.findById(l.getId());
+            v.setDataoperazione(oggi);
+            v.setNumerovoti(l.getVoti());
+            v.setNumerovotisolosindaco(l.getSolosindaco());
+            v.setUtenteoperazione(user);
+            votiList.add(v);
+        }
+        return  votiList;   
+    }
+    
+    public  HashSet<VotiLista> prepareVotiR(List<ListaSemplice> list) {
+        HashSet<VotiLista> votiList = new HashSet<>();
         LocalDateTime oggi = LocalDateTime.now();
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         for (ListaSemplice l:  list) {
@@ -207,13 +259,13 @@ public class VotiLoader {
         List<SindacoJson> sindaciJsons = new ArrayList<SindacoJson>();
         VotiSindacoJson json = new VotiSindacoJson();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
-        Voti v = votiService.findBySezioneNumerosezioneAndTipoelezioneId(sezione,tipoelezioneid);
+        VotiGenerali v = votiGeneraliService.findBySezioneNumerosezioneAndTipoelezioneId(sezione,tipoelezioneid);
         json.setBianche(v.getBianche());
         json.setContestate(v.getContestate());
         json.setNulle(v.getNulle());
         json.setSolosindaco(v.getSolosindaco());
         json.setTotale(v.getTotale());
-        json.setTotalevalide(v.getTotalevalida());
+        json.setTotalevalide(v.getTotalevalide());
         for (VotiSindaco vs : l) {
             SindacoJson j = new SindacoJson();
             j.setId(vs.getSindaco().getId());
@@ -228,5 +280,80 @@ public class VotiLoader {
         }
         json.setSindaci(sindaciJsons);
         return  json;
+    }
+
+    public HashSet<VotiLista> prepareVotiLista(List<SindacoSimple> sindaci) {
+        HashSet<VotiLista> l = new HashSet<VotiLista>();
+        LocalDateTime oggi = LocalDateTime.now();
+        String user = SecurityContextHolder.getContext().getAuthentication().getName();
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        TipoElezione tipoElezione = tipoElezioneService.findTipoElezioneById(tipoelezioneid);
+        Sezione sezione = sezioneService.findByNumerosezioneAndTipoelezioneId(sindaci.get(0).getNumerosezione(), tipoelezioneid);
+        for (SindacoSimple s : sindaci) {
+            String ricalcoloLista = "ricalcolo" + s.getIdsindaco();
+            ListeWrapper r =(ListeWrapper) stateHelper.get(ricalcoloLista);
+            VotiLista v = new VotiLista();
+            v.setDataoperazione(oggi);
+            v.setNumerovoti(r.getListe().get(0).getVoti());
+            v.setUtenteoperazione(user);
+            v.setSezione(sezione);
+            v.setTipoelezione(tipoElezione);
+            Lista lista = listaService.findById(r.getListe().get(0).getIdlista());
+            v.setLista(lista);
+            l.add(v);
+        }
+        return  l;
+    }
+
+    public HashSet<VotiLista> prepareVotiListaR(List<SindacoSimple> sindaci) {
+        HashSet<VotiLista> l = new HashSet<VotiLista>();
+        LocalDateTime oggi = LocalDateTime.now();
+        String user = SecurityContextHolder.getContext().getAuthentication().getName();
+        for (SindacoSimple s : sindaci) {
+            String ricalcoloLista = "ricalcolo" + s.getIdsindaco();
+            ListeWrapper r =(ListeWrapper) stateHelper.get(ricalcoloLista);
+            VotiLista v = votiListaService.findById(r.getListe().get(0).getId());
+            v.setDataoperazione(oggi);
+            v.setNumerovoti(r.getListe().get(0).getVoti());
+            v.setUtenteoperazione(user);
+            l.add(v);
+        }
+        return  l;
+    }
+
+    public VotiGenerali prepareVotiG(SindaciWrapper form) {
+        LocalDateTime oggi = LocalDateTime.now();
+        String user = SecurityContextHolder.getContext().getAuthentication().getName();
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        TipoElezione tipoElezione = tipoElezioneService.findTipoElezioneById(tipoelezioneid);
+        Sezione sezione = sezioneService.findByNumerosezioneAndTipoelezioneId(form.getSindaci().get(0).getNumerosezione(), tipoelezioneid);
+        VotiGenerali v = new VotiGenerali();
+        v.setBianche(form.getBianche());
+        v.setContestate(form.getContestate());
+        v.setDataoperazione(oggi);
+        v.setUtenteoperazione(user);
+        v.setNulle(form.getNulle());
+        v.setSezione(sezione);
+        v.setSolosindaco(form.getSolosindaco());
+        v.setTotale(form.getTotale());
+        v.setTotalevalide(form.getTotalevalide());
+        v.setTipoelezione(tipoElezione);
+        v.setMunicipio(sezione.getMunicipio());
+        return  v;
+    }
+
+    public VotiGenerali prepareVotiGR(SindaciWrapper form) {
+
+        LocalDateTime oggi = LocalDateTime.now();
+        String user = SecurityContextHolder.getContext().getAuthentication().getName();
+        Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        VotiGenerali v =votiGeneraliService.findBySezioneNumerosezioneAndTipoelezioneId(form.getSindaci().get(0).getNumerosezione(), tipoelezioneid);
+        v.setBianche(form.getBianche());
+        v.setContestate(form.getContestate());
+        v.setDataoperazione(oggi);
+        v.setUtenteoperazione(user);
+        v.setNulle(form.getNulle());
+        v.setSolosindaco(form.getSolosindaco());
+        return  v;
     }
 }

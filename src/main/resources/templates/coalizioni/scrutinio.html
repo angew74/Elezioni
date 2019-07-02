@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="scrutinio">
-    <input id="contatoreListe" value="0" type="hidden" />
+    <input id="contatoreListe" value="0" type="number" style="display: none" />
     <div class="card" style="border:none">
         <div class="card-body">
             <div class="row">
@@ -145,8 +145,6 @@
                                                 <input name="id" type="number"
                                                        th:value="${sindaco.iscoalizione}"
                                                        style="display:none;"
-                                                       data-parsley-required
-                                                       required
                                                        th:field="*{sindaci[__${iterStat.index}__].iscoalizione}"
                                                 />
                                                 <input name="idsindaco" type="number"
@@ -279,7 +277,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">G</span>
                                                 </div>
-                                                <input type="number" class="form-control voti"
+                                                <input type="number" class="form-control votitotali"
                                                        th:field="${ListWrapper.totale}"
                                                        data-parsley-required
                                                        min="0"

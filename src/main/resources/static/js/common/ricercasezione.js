@@ -238,11 +238,14 @@ jQuery(document).ready(function ($) {
                                 break;
                             case "R1A":
                             case "1A":
+                            case "CO":
+                            case "RCO":
                             case "3C":
                             case "R3C":
                             case "2A":
                             case "R2A":
-                                break;
+                            case "AP":
+                            case "RAP":
                                 ajaxPrepopulate();
                                 break;
                             default:

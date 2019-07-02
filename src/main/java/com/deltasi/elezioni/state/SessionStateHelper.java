@@ -1,7 +1,5 @@
 package com.deltasi.elezioni.state;
-
 import org.springframework.stereotype.Service;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,5 +24,9 @@ public class SessionStateHelper
         {
             sums.remove(key);
         }
+    }
+
+    public synchronized void removeAll() {
+        sums.values();
     }
 }

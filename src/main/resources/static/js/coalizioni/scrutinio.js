@@ -53,7 +53,9 @@ function jQFormSerializeArrToJson(formSerializeArr) {
 
 function ValidateCoalizione() {
     var isV = false;
-    var errorMessage;
+    var errorcontainer = '#errorModal';
+    var errorMessage = "";
+    var errorDisplay = '#errorDisplay';
     var fields = $(":input").serializeArray();
     jQuery.each(fields, function (i, field) {
         if (field.name.indexOf('iscoalizione') !== -1) {
@@ -85,7 +87,7 @@ function ValidateCount()
     var errorcontainer = '#errorModal';
     var errorDisplay = '#errorDisplay';
     var isV = false;
-    var errorMessage;
+    var errorMessage ="";
     var votanti = parseInt($('#Votanti').text());
     var iscritti = parseInt($('#Iscritti').text());
     var validiListe = parseInt($('#validiListe').val());
@@ -100,20 +102,22 @@ function ValidateCount()
     var group = $('input[name="liste.voti"]');
     var groupsolosindaco = $('input[name="liste.solosindaco"]');
     var count = $('#count').text();
-    var fields = $(":input").serializeArray();
-    jQuery.each(fields, function (i, field) {
-        if (field.name.indexOf('voti') !== -1) {
-            sum += parseFloat(field.value);
-        }
+ //    var fields = $(":input").serializeArray();
+    $('.voti').each(function () {
+            sum += parseFloat(this.value);
+        });
+    $('.votisolosindaco').each(function () {
+        sumsolosindaco += parseFloat(this.value);
     });
+    /*
     jQuery.each(fields, function (i, field) {
         if (field.name.indexOf('solosindaco') !== -1) {
             sumsolosindaco += parseFloat(field.value);
         }
-    });
-    var sommaListe = $("#contatoreListe").val();
+    });*/
+    var sommaListe = parseInt($("#contatoreListe").val());
     var sommaab = validiListe + solosindaco;
-    var sommacdef = validiListe + bianche + nulle + contestate;
+    var sommacdef = sommaab + bianche + nulle + contestate;
     if (solosindaco !== sumsolosindaco) {
         errorMessage = "Totale voti solo sindaco (B) diverso da somma voti singoli candidati " + solosindaco + " <> " + sumsolosindaco;
     }
@@ -129,10 +133,10 @@ function ValidateCount()
     if (sum !== totalevalide) {
         errorMessage = "Totale candidati diverso da voti validi (C) " + sum + " <> " + totalevalide;
     }
-    if (sum !== votanti) {
+    if (sommacdef !== votanti) {
         errorMessage = "Somma scrutinio singoli candidati diversa da votanti " + sum + " <> " + votanti;
     }
-    if (sum > iscritti) {
+    if (sommacdef > iscritti) {
         errorMessage = "Voti scrutinio maggiore iscritti " + sum + " > " + iscritti;
     }
     if (sommacdef !== totale) {

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -29,7 +30,7 @@ public class VotiListaService implements IVotiListaService {
     }
 
     @Override
-    public void SaveAll(List<VotiLista> list)
+    public void SaveAll(HashSet<VotiLista> list)
     {
         votiListaDAO.saveAll(list);
     }

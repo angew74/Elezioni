@@ -6,15 +6,30 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "voti")
+@Table(name = "profilo_voti")
 public class Voti {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+
+
+    @Column(name = "votilistaid")
+    private Integer votilistaid;
+
+    @Column(name = "votisindacoid")
+    private Integer votisindacoid;
+
+
+
+
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sezioneid", referencedColumnName = "id")
@@ -27,33 +42,22 @@ public class Voti {
     @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
     private TipoElezione tipoelezione;
 
-    @Column(name = "data_operazione")
-    private LocalDateTime dataoperazione;
 
-    @Column(name = "utente_operazione")
-    private String  utenteoperazione;
-
-    @Column(name = "totale")
-    private Integer totale;
-
-    @Column(name = "solo_sindaco")
-    private Integer solosindaco;;
-
-    @Column(name = "totale_valide")
-    private Integer totalevalida;
-
-    @Column(name = "nulle")
-    private Integer nulle;
-
-    @Column(name = "bianche")
-    private Integer bianche;
-
-    @Column(name = "contestate")
-    private Integer contestate;
+    @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = " votigeneraliid", referencedColumnName = "id")
+   //  @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+    private VotiGenerali votigenerali;
 
 
-    @Column(name = "municipio")
-    private Integer municipio;
+
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "id", referencedColumnName = "votilistaid")
+    private Set<VotiLista> votiListas = new HashSet<VotiLista>();
+
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "id", referencedColumnName = "votisindacoid")
+   //  @JoinColumn(name = "votisindacoid")
+    private Set<VotiSindaco> votiSindacos = new HashSet<VotiSindaco>();
 
     public Integer getId() {
         return id;
@@ -79,75 +83,45 @@ public class Voti {
         this.tipoelezione = tipoelezione;
     }
 
-    public LocalDateTime getDataoperazione() {
-        return dataoperazione;
+    public VotiGenerali getVotigenerali() {
+        return votigenerali;
     }
 
-    public void setDataoperazione(LocalDateTime dataoperazione) {
-        this.dataoperazione = dataoperazione;
+    public void setVotigenerali(VotiGenerali votigenerali) {
+        this.votigenerali = votigenerali;
     }
 
-    public String getUtenteoperazione() {
-        return utenteoperazione;
+    public Set<VotiLista> getVotiListas() {
+        return votiListas;
     }
 
-    public void setUtenteoperazione(String utenteoperazione) {
-        this.utenteoperazione = utenteoperazione;
+    public void setVotiListas(Set<VotiLista> votiListas) {
+        this.votiListas = votiListas;
     }
 
-    public Integer getTotale() {
-        return totale;
+    public Set<VotiSindaco> getVotiSindacos() {
+        return votiSindacos;
     }
 
-    public void setTotale(Integer totale) {
-        this.totale = totale;
+    public void setVotiSindacos(Set<VotiSindaco> votiSindacos) {
+        this.votiSindacos = votiSindacos;
     }
 
-    public Integer getSolosindaco() {
-        return solosindaco;
+    public Integer getVotilistaid() {
+        return votilistaid;
     }
 
-    public void setSolosindaco(Integer solosindaco) {
-        this.solosindaco = solosindaco;
+    public void setVotilistaid(Integer votilistaid) {
+        this.votilistaid = votilistaid;
     }
 
-    public Integer getTotalevalida() {
-        return totalevalida;
+    public Integer getVotisindacoid() {
+        return votisindacoid;
     }
 
-    public void setTotalevalida(Integer totalevalida) {
-        this.totalevalida = totalevalida;
+    public void setVotisindacoid(Integer votisindacoid) {
+        this.votisindacoid = votisindacoid;
     }
 
-    public Integer getNulle() {
-        return nulle;
-    }
 
-    public void setNulle(Integer nulle) {
-        this.nulle = nulle;
-    }
-
-    public Integer getBianche() {
-        return bianche;
-    }
-
-    public void setBianche(Integer bianche) {
-        this.bianche = bianche;
-    }
-
-    public Integer getContestate() {
-        return contestate;
-    }
-
-    public void setContestate(Integer contestate) {
-        this.contestate = contestate;
-    }
-
-    public Integer getMunicipio() {
-        return municipio;
-    }
-
-    public void setMunicipio(Integer municipio) {
-        this.municipio = municipio;
-    }
 }
