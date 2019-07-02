@@ -27,6 +27,6 @@ public class SessionStateHelper
     }
 
     public synchronized void removeAll() {
-        sums.values();
+        sums.clear();
     }
 }

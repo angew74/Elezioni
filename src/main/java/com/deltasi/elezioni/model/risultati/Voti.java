@@ -6,14 +6,14 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Entity
-@Table(name = "profilo_voti")
-public class Voti {
+
+public class Voti implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

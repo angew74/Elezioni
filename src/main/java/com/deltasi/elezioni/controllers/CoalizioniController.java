@@ -58,9 +58,6 @@ public class CoalizioniController {
     IVotiGeneraliService votiGeneraliService;
 
     @Autowired
-    IVotiService votiService;
-
-    @Autowired
     IVotiListaService votiListaService;
 
     @Autowired
@@ -122,6 +119,7 @@ public class CoalizioniController {
     public ModelAndView modifica(@PathVariable String tipo, Principal principal) {
         ModelAndView modelAndView = new ModelAndView("coalizioni/modifica");
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
+        stateHelper.removeAll();
         if (businessRules.IsEnabled(tipo, tipoelezioneid)) {
             String titolo = businessRules.getTitoloByFase(tipo, "M");
             modelAndView.addObject("titlepage", titolo);
@@ -217,33 +215,30 @@ public class CoalizioniController {
         SindacoJson response = new SindacoJson();
         Map<String, String> errors = null;
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
-        Voti i = new Voti();
+     //   Voti i = new Voti();
         Set<VotiSindaco> vs = new HashSet<VotiSindaco>();
         Set<VotiLista> vl = new HashSet<VotiLista>();
         VotiGenerali v = new VotiGenerali();
         try {
             switch (form.getSindaci().get(0).getTipo()) {
                 case "VS":
-                    vs = votiLoader.prepareVotiSindaco(form.getSindaci());
-                    vl = votiLoader.prepareVotiLista(form.getSindaci());
                     v = votiLoader.prepareVotiG(form);
-                    i.setVotigenerali(v);
-                    i.setVotiListas(vl);
-                    i.setVotiSindacos(vs);
-                    i.setTipoelezione(v.getTipoelezione());
-                    i.setSezione(v.getSezione());
-                    votiService.Save(i);
+                    vs = votiLoader.prepareVotiSindaco(form.getSindaci(),v);
+                    vl = votiLoader.prepareVotiLista(form.getSindaci(),v);
+                    v.setVotiListas(vl);
+                    v.setVotiSindacos(vs);
+                    votiGeneraliService.Save(v);
                     response.setValidated(true);
-                    response.setTipo("VL");
+                    response.setTipo("VS");
                     break;
                 case "RVS":
+                     v = votiLoader.prepareVotiGR(form);
                      vs = votiLoader.prepareVotiSindacoR(form.getSindaci());
                      vl = votiLoader.prepareVotiListaR(form.getSindaci());
-                     v = votiLoader.prepareVotiGR(form);
-                     i = votiService.findBySezioneNumerosezioneAndTipoelezioneId(v.getSezione().getNumerosezione(),v.getTipoelezione().getId());
-                    votiService.Save(i);
+                   //  i = votiService.findBySezioneNumerosezioneAndTipoelezioneId(v.getSezione().getNumerosezione(),v.getTipoelezione().getId());
+                    votiGeneraliService.Save(v);
                     response.setValidated(true);
-                    response.setTipo("RVL");
+                    response.setTipo("RVS");
                     break;
                 default:
                     errors = new HashMap<String, String>();

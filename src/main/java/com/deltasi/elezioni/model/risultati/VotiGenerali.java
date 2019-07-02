@@ -3,14 +3,18 @@ package com.deltasi.elezioni.model.risultati;
 import com.deltasi.elezioni.model.configuration.Sezione;
 import com.deltasi.elezioni.model.configuration.TipoElezione;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.hibernate.engine.internal.Cascade;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "voti_generali")
-public class VotiGenerali {
+public class VotiGenerali implements Serializable {
 
    private static final long serialVersionUID = 1L;
 
@@ -55,12 +59,14 @@ public class VotiGenerali {
     @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
     private TipoElezione tipoelezione;
 
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="votiGenerali")
+    private Set<VotiLista> votiListas;
+
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="votiGenerali")
+    private Set<VotiSindaco> votiSindacos;
 
 //     @ManyToOne(fetch = FetchType.EAGER)
-    @OneToOne(cascade = {CascadeType.PERSIST})
-    @JoinColumn(name = "votiid", referencedColumnName = "id")
-    @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
-    private Voti voti;
+
 
     @Column(name = "data_operazione")
     private LocalDateTime dataoperazione;
@@ -186,11 +192,19 @@ public class VotiGenerali {
         this.municipio = municipio;
     }
 
-    public Voti getVoti() {
-        return voti;
+    public Set<VotiLista> getVotiListas() {
+        return votiListas;
     }
 
-    public void setVoti(Voti voti) {
-        this.voti = voti;
+    public void setVotiListas(Set<VotiLista> votiListas) {
+        this.votiListas = votiListas;
+    }
+
+    public Set<VotiSindaco> getVotiSindacos() {
+        return votiSindacos;
+    }
+
+    public void setVotiSindacos(Set<VotiSindaco> votiSindacos) {
+        this.votiSindacos = votiSindacos;
     }
 }

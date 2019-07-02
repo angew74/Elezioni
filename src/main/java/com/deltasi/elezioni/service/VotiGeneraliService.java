@@ -22,7 +22,10 @@ public class VotiGeneraliService implements IVotiGeneraliService {
 
     @Autowired
     private VotiGeneraliDAO votiGeneraliDAO;
-
+    @Override
+    public void Save(VotiGenerali voti) {
+        votiGeneraliDAO.save(voti);
+    }
 
     @Override
     public void SaveAll(List<VotiGenerali> list) {

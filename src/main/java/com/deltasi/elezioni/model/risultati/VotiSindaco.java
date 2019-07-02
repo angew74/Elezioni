@@ -3,15 +3,19 @@ package com.deltasi.elezioni.model.risultati;
 import com.deltasi.elezioni.model.configuration.Sezione;
 import com.deltasi.elezioni.model.configuration.TipoElezione;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 
 @Entity
 @Table(name = "voti_sindaco")
-public class VotiSindaco {
+public class VotiSindaco implements Serializable  {
 
 
     private static final long serialVersionUID = 1L;
@@ -63,12 +67,13 @@ public class VotiSindaco {
     @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
     private Sindaco sindaco;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "votigeneraliid", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private VotiGenerali votiGenerali;
 
-   // @ManyToOne(fetch = FetchType.EAGER)
-    @ManyToOne(cascade = {CascadeType.PERSIST})
-    @JoinColumn(name = "votiid", referencedColumnName = "id")
-   //  @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
-    private Voti voti;
+
 
     @Column(name = "municipio")
     private int municipio;
@@ -156,5 +161,13 @@ public class VotiSindaco {
 
     public void setNumerovotisolosindaco(Integer numerovotisolosindaco) {
         this.numerovotisolosindaco = numerovotisolosindaco;
+    }
+
+    public VotiGenerali getVotiGenerali() {
+        return votiGenerali;
+    }
+
+    public void setVotiGenerali(VotiGenerali votiGenerali) {
+        this.votiGenerali = votiGenerali;
     }
 }

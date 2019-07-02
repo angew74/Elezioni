@@ -149,7 +149,7 @@ public interface IscrittiDAO extends JpaRepository<Iscritti, Integer> {
     @Query("select new Iscritti " +
             "(sum(i.iscrittimaschigen) as iscrittimaschigen, sum(i.iscrittifemminegen) as iscrittifemminegen, sum(i.iscrittitotaligen) as iscrittitotaligen) " +
             " from Iscritti i inner join Sezione s on s.id= i.sezione.id " +
-            " inner join Voti v on s.id=v.sezione.id" +
+            " inner join VotiGenerali v on s.id=v.sezione.id" +
             " where v.tipoelezione.id=?1 ")
     List<Iscritti> countIscrittiPervenute(int tipoelezioneid);
 
@@ -157,7 +157,7 @@ public interface IscrittiDAO extends JpaRepository<Iscritti, Integer> {
     @Query("select new Iscritti " +
             " (sum(i.iscrittimaschigen) as iscrittimaschigen, sum(i.iscrittifemminegen) as iscrittifemminegen, sum(i.iscrittitotaligen) as iscrittitotaligen, i.municipio as municipio) " +
             " from Iscritti i inner join Sezione s on i.sezione.id=s.id " +
-            " inner join Voti v on s.id=v.sezione.id " +
+            " inner join VotiGenerali v on s.id=v.sezione.id " +
             " where v.tipoelezione.id=?1 " +
             " group by i.municipio")
     List<Iscritti> countIscrittiPervenuteByMun(int tipoelezioneid);

@@ -90,7 +90,7 @@ public class VotiLoader {
         return  votiList;
     }
 
-    public HashSet<VotiSindaco> prepareVotiSindaco(List<SindacoSimple> list) {
+    public HashSet<VotiSindaco> prepareVotiSindaco(List<SindacoSimple> list, VotiGenerali vg) {
         HashSet<VotiSindaco> votiList = new HashSet<VotiSindaco>();
         LocalDateTime oggi = LocalDateTime.now();
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -107,6 +107,7 @@ public class VotiLoader {
             v.setTipoelezione(tipoElezione);
             Sindaco sindaco = sindacoService.findById(l.getIdsindaco());
             v.setSindaco(sindaco);
+            v.setVotiGenerali(vg);
             votiList.add(v);
         }
         return  votiList;
@@ -282,7 +283,7 @@ public class VotiLoader {
         return  json;
     }
 
-    public HashSet<VotiLista> prepareVotiLista(List<SindacoSimple> sindaci) {
+    public HashSet<VotiLista> prepareVotiLista(List<SindacoSimple> sindaci, VotiGenerali vg) {
         HashSet<VotiLista> l = new HashSet<VotiLista>();
         LocalDateTime oggi = LocalDateTime.now();
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -300,6 +301,7 @@ public class VotiLoader {
             v.setTipoelezione(tipoElezione);
             Lista lista = listaService.findById(r.getListe().get(0).getIdlista());
             v.setLista(lista);
+            v.setVotiGenerali(vg);
             l.add(v);
         }
         return  l;
