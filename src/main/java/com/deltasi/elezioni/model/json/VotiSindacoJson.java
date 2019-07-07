@@ -15,6 +15,7 @@ public class VotiSindacoJson {
     private Integer solosindaco;
     private Integer totale;
     private Integer totalevalide;
+    private Integer valideliste;
     private String  nomeSindacoVoti;
     private String  cognomeSindacoVoti;
     private boolean validated;
@@ -150,4 +151,11 @@ public class VotiSindacoJson {
         this.totalevalide = totalevalide;
     }
 
+    public Integer getValideliste() {
+        return valideliste;
+    }
+
+    public void setValideliste(Integer valideliste) {
+        this.valideliste = valideliste;
+    }
 }

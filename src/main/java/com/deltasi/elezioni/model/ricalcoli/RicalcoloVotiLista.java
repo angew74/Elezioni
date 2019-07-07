@@ -12,16 +12,16 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "ricalcolo_voti")
-public class RicalcoloVoti {
+@Table(name = "ricalcolo_voti_lista")
+public class RicalcoloVotiLista {
 
 
-    public RicalcoloVoti()
+    public RicalcoloVotiLista()
     {
 
     }
 
-    public RicalcoloVoti(Long numeroVoti, Integer idLista, String listaNew, int Municipio)
+    public RicalcoloVotiLista(Long numeroVoti, Integer idLista, String listaNew, int Municipio)
     {
         super();
         this.numerovoti=Integer.parseInt(numeroVoti.toString());
@@ -30,7 +30,7 @@ public class RicalcoloVoti {
         this.lista.setId(idLista);
         this.municipio = Municipio;
     }
-    public RicalcoloVoti(Long numeroVoti, Integer Idlista, String ListaNew)
+    public RicalcoloVotiLista(Long numeroVoti, Integer Idlista, String ListaNew)
     {
         super();
         this.numerovoti=Integer.parseInt(numeroVoti.toString());
@@ -39,14 +39,14 @@ public class RicalcoloVoti {
         this.lista.setId(Idlista);
     }
 
-    public RicalcoloVoti(long numeroPervenute, int Municipio)
+    public RicalcoloVotiLista(long numeroPervenute, int Municipio)
     {
         super();
         this.numerosezioni=(int)(numeroPervenute);
         this.municipio= Municipio;
     }
 
-    public RicalcoloVoti(long Votanti,long Iscritti, int Municipio)
+    public RicalcoloVotiLista(long Votanti,long Iscritti, int Municipio)
     {
         super();
         this.iscrittipervenute=(int)(Iscritti);
@@ -54,7 +54,7 @@ public class RicalcoloVoti {
         this.municipio = Municipio;
     }
 
-    public RicalcoloVoti(long Votanti,long Iscritti)
+    public RicalcoloVotiLista(long Votanti,long Iscritti)
     {
         super();
         this.iscrittipervenute=(int)(Iscritti);
@@ -63,7 +63,7 @@ public class RicalcoloVoti {
 
 
 
-    public RicalcoloVoti(Long numeroPervenute)
+    public RicalcoloVotiLista(Long numeroPervenute)
     {
         this.numerosezioni=Integer.parseInt(numeroPervenute.toString());
     }

@@ -6,7 +6,7 @@ import com.deltasi.elezioni.model.configuration.Sezione;
 import com.deltasi.elezioni.model.configuration.TipoElezione;
 import com.deltasi.elezioni.model.json.*;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloPreferenze;
-import com.deltasi.elezioni.model.ricalcoli.RicalcoloVoti;
+import com.deltasi.elezioni.model.ricalcoli.RicalcoloVotiLista;
 import com.deltasi.elezioni.model.risultati.*;
 import com.deltasi.elezioni.state.SessionStateHelper;
 import org.apache.logging.log4j.LogManager;
@@ -182,8 +182,8 @@ public class VotiLoader {
         return  preferenzeList;
     }
 
-    public RicalcoloVoti votiSplit(VotiLista v, String tipoInterrogazione) {
-        RicalcoloVoti r = new RicalcoloVoti();
+    public RicalcoloVotiLista votiSplit(VotiLista v, String tipoInterrogazione) {
+        RicalcoloVotiLista r = new RicalcoloVotiLista();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         Iscritti i = iIscrittiService.findByTipoelezioneIdAndSezioneNumerosezione(tipoelezioneid,v.getSezione().getNumerosezione());
         Affluenza a = affluenzaService.findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza3(v.getSezione().getNumerosezione(),tipoelezioneid,1);
@@ -261,12 +261,17 @@ public class VotiLoader {
         VotiSindacoJson json = new VotiSindacoJson();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         VotiGenerali v = votiGeneraliService.findBySezioneNumerosezioneAndTipoelezioneId(sezione,tipoelezioneid);
+        int votanti = affluenzaService.findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza3(sezione,tipoelezioneid,1).getVotantitotali3();
         json.setBianche(v.getBianche());
         json.setContestate(v.getContestate());
         json.setNulle(v.getNulle());
         json.setSolosindaco(v.getSolosindaco());
         json.setTotale(v.getTotale());
         json.setTotalevalide(v.getTotalevalide());
+        json.setVotanti(votanti);
+        json.setId(v.getId());
+        Integer totaleListe = v.getTotalevalide() - v.getSolosindaco();
+        json.setValideliste(totaleListe);
         for (VotiSindaco vs : l) {
             SindacoJson j = new SindacoJson();
             j.setId(vs.getSindaco().getId());
@@ -274,8 +279,11 @@ public class VotiLoader {
             j.setNome(vs.getSindaco().getNome());
             j.setProgressivo(vs.getSindaco().getProgressivo());
             j.setVoti(vs.getNumerovoti());
+            j.setIscoalizione("S");
+            j.setSolosindaco(vs.getNumerovotisolosindaco());
             j.setNumerosezione(sezione);
             j.setTipo(tipo);
+            j.setIdsindaco(vs.getSindaco().getId());
             j.setId(vs.getSindaco().getId());
             sindaciJsons.add(j);
         }

@@ -11,8 +11,9 @@
                             <div th:if="${not #lists.isEmpty(Sindaci.sindaci)}">
                                 <form class="form-horizontal" th:object="${Sindaci}" name="insertScrutinio"
                                       data-parsley-validate action="/voti/lreg" method="post">
+                                    <input type="hidden" th:field="${Sindaci.id}" />
                                     <div class="row" style="margin-bottom: 15px">
-                                        <div class="col">
+                                        <div class="col col-xs-3">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">A</span>
@@ -20,13 +21,13 @@
                                                 <input type="number" class="form-control"
                                                        data-parsley-required
                                                        min="0"
-                                                       id="totaleListe"
+                                                       th:field="${Sindaci.valideliste}"
                                                        data-parsley-type="number"
                                                        data-validation="required"
-                                                       placeholder="Validi Liste">
+                                                       placeholder="Voti Validi Liste">
                                             </div>
                                         </div>
-                                        <div class="col">
+                                        <div class="col col-xs-3">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">B</span>
@@ -40,21 +41,21 @@
                                                        placeholder="Solo Sindaco">
                                             </div>
                                         </div>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">C</span>
-                                            </div>
-                                            <div class="col">
+                                        <div class="col col-xs-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">C</span>
+                                                </div>
                                                 <input type="number" class="form-control"
                                                        th:field="${Sindaci.totalevalide}"
                                                        data-parsley-required
                                                        min="0"
                                                        data-parsley-type="number"
                                                        data-validation="required"
-                                                       placeholder="Totale valide (B+C)">
+                                                       placeholder="Valide Sindaco (B+C)">
                                             </div>
                                         </div>
-                                        <div class="col">
+                                        <div class="col col-xs-3">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">D</span>
@@ -68,7 +69,9 @@
                                                        placeholder="Bianche">
                                             </div>
                                         </div>
-                                        <div class="col">
+                                    </div>
+                                    <div class="row" style="margin-bottom: 15px">
+                                        <div class="col col-xs-3">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">E</span>
@@ -82,7 +85,7 @@
                                                        placeholder="Nulle">
                                             </div>
                                         </div>
-                                        <div class="col">
+                                        <div class="col col-xs-3">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">F</span>
@@ -97,12 +100,12 @@
                                                        placeholder="Contestate">
                                             </div>
                                         </div>
-                                        <div class="col">
+                                        <div class="col col-xs-3">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">G</span>
                                                 </div>
-                                                <input type="number" class="form-control voti"
+                                                <input type="number" class="form-control votitotali"
                                                        th:field="${Sindaci.totale}"
                                                        data-parsley-required
                                                        min="0"
@@ -110,6 +113,18 @@
                                                        data-validation="required"
                                                        placeholder="Totale voti (C+D+E+F)">
                                             </div>
+                                        </div>
+                                        <div class="col col-xs-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Votanti</span>
+                                                </div>
+                                            <input type="number"
+                                                   th:field="${Sindaci.votanti}"
+                                                   readonly
+                                                   class="form-control" />
+
+                                        </div>
                                         </div>
                                     </div>
                                     <div th:each="sindaco,iterStat:${Sindaci.sindaci}" class="form-group row">
@@ -119,7 +134,7 @@
                                                     <span class="input-group-text br-15"><i
                                                             th:onclick="|openListeModal(${sindaco.id})|"
                                                             th:id="'iconcheck' + ${sindaco.getIdsindaco()}"
-                                                            class="far fa-circle"></i></span>
+                                                            class="fas fa-check-circle"></i></span>
                                                 </div>
                                                 <input type="number"
                                                        style="display:none;"
@@ -287,7 +302,16 @@
                                             </div>
                                         </div>
                                         <div class="col col-xs-3">
-                                            <div class="alert alert-dark" id="labelVotanti" role="alert"></div>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Votanti</span>
+                                                </div>
+                                                <input type="number"
+                                                       th:field="${ListWrapper.votanti}"
+                                                       readonly
+                                                       class="form-control" />
+
+                                            </div>
                                         </div>
                                     </div>
                                     <div th:each="sindaco,itemStat:${ListWrapper.getSindaci()}" class="form-group row">

@@ -149,6 +149,7 @@ public class CoalizioniController {
         } else {
             List<Sindaco> l = sindacoService.findAllBy();
             List<SindacoSimple> s = new ArrayList<SindacoSimple>();
+            int votanti = affluenzaService.findBySezioneNumerosezioneAndSezioneTipoelezioneIdAndAffluenza3(sezione,tipoelezioneid,1).getVotantitotali3();
             for (Sindaco f : l) {
                 SindacoSimple h = new SindacoSimple();
                 h.setCognome(f.getCognome());
@@ -160,6 +161,7 @@ public class CoalizioniController {
             }
             count = s.size();
             sindaciWrapper.setSindaci(s);
+            sindaciWrapper.setVotanti(votanti);
         }
 
         //  modelAndView.addObject("ListeInserimento", new VotiJson());
@@ -170,28 +172,43 @@ public class CoalizioniController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/listecoalizione/{idsindaco}/{sezione}")
-    public  String listecoalizione(@PathVariable int idsindaco,@PathVariable int sezione, ModelMap modelMap)
+    @GetMapping(value = "/listecoalizione/{idsindaco}/{sezione}/{tipo}")
+    public  String listecoalizione(@PathVariable int idsindaco,@PathVariable int sezione,@PathVariable String tipo, ModelMap modelMap)
     {
         ListeWrapper listeWrapper = new ListeWrapper();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         String ricalcoloLista = "ricalcolo" + idsindaco;
-        List<Lista> l = listaService.findBySindacoId(idsindaco);
+        List<ListaSemplice> s = new ArrayList<ListaSemplice>();
         if(stateHelper.get(ricalcoloLista) != null)
         {
             listeWrapper =(ListeWrapper) stateHelper.get(ricalcoloLista);
         }
         else {
-            List<ListaSemplice> s = new ArrayList<ListaSemplice>();
-            for (Lista f : l) {
-                ListaSemplice h = new ListaSemplice();
-                h.setDenominazione(f.getDenominazione());
-                h.setNumerosezione(sezione);
-                h.setIdlista(f.getId());
-                h.setIdsindaco(idsindaco);
-                s.add(h);
+            if(tipo.equals("VS")) {
+                List<Lista> l = listaService.findBySindacoId(idsindaco);
+                for (Lista f : l) {
+                    ListaSemplice h = new ListaSemplice();
+                    h.setDenominazione(f.getDenominazione());
+                    h.setNumerosezione(sezione);
+                    h.setIdlista(f.getId());
+                    h.setIdsindaco(idsindaco);
+                    s.add(h);
+                }
+                listeWrapper.setListe(s);
             }
-            listeWrapper.setListe(s);
+            else {
+             List<VotiLista> l=  votiListaService.findBySezioneNumerosezioneAndTipoelezioneIdAndListaCoalizioneId(sezione,tipoelezioneid,idsindaco);
+                for (VotiLista f : l) {
+                    ListaSemplice h = new ListaSemplice();
+                    h.setDenominazione(f.getLista().getDenominazione());
+                    h.setNumerosezione(sezione);
+                    h.setIdlista(f.getId());
+                    h.setVoti(f.getNumerovoti());
+                    h.setIdsindaco(idsindaco);
+                    s.add(h);
+                }
+                listeWrapper.setListe(s);
+            }
         }
         Coalizione c = coalizioneService.findBySindacoIdAndTipoelezioneId(idsindaco, tipoelezioneid);
         modelMap.addAttribute("ListWrapper",listeWrapper);

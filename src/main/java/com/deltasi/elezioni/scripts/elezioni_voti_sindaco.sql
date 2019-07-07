@@ -27,22 +27,22 @@ CREATE TABLE `voti_sindaco` (
   `tipoelezioneid` int(10) unsigned NOT NULL,
   `sindacoid` int(10) unsigned NOT NULL,
   `sezioneid` int(10) unsigned NOT NULL,
-  `votiid` int(10) unsigned NOT NULL,
   `municipio` int(10) unsigned NOT NULL,
   `numero_voti` int(10) NOT NULL DEFAULT '0',
   `numero_voti_solo_sindaco` int(10) unsigned NOT NULL DEFAULT '0',
+  `votigeneraliid` int(10) unsigned NOT NULL,
   `utente_operazione` varchar(45) NOT NULL,
   `data_operazione` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_voti_sindaco_tipo_elezioni_idx` (`tipoelezioneid`),
   KEY `fk_voti_sindaco_sindaco_idx` (`sindacoid`),
   KEY `fk_voti_sindaco_sezioni_idx` (`sezioneid`),
-  KEY `fk_voti_sindaco_voti_idx` (`votiid`),
+  KEY `fk_voti_sindaco_voti_generali_idx` (`votigeneraliid`),
   CONSTRAINT `fk_voti_sindaco_sezioni` FOREIGN KEY (`sezioneid`) REFERENCES `sezioni` (`id`),
   CONSTRAINT `fk_voti_sindaco_sindaco` FOREIGN KEY (`sindacoid`) REFERENCES `sindaci` (`id`),
   CONSTRAINT `fk_voti_sindaco_tipo_elezioni` FOREIGN KEY (`tipoelezioneid`) REFERENCES `tipoelezione` (`id`),
-  CONSTRAINT `fk_voti_sindaco_voti` FOREIGN KEY (`votiid`) REFERENCES `profilo_voti` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `fk_voti_sindaco_voti_generali` FOREIGN KEY (`votigeneraliid`) REFERENCES `voti_generali` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -51,6 +51,7 @@ CREATE TABLE `voti_sindaco` (
 
 LOCK TABLES `voti_sindaco` WRITE;
 /*!40000 ALTER TABLE `voti_sindaco` DISABLE KEYS */;
+INSERT INTO `voti_sindaco` VALUES (3,4,2,3128,0,0,0,3,'admin','2019-07-03 15:00:50'),(4,4,4,3128,0,0,0,3,'admin','2019-07-03 15:00:50'),(5,4,12,3128,0,0,0,3,'admin','2019-07-03 15:00:50'),(6,4,7,3128,0,5,0,3,'admin','2019-07-03 15:00:50'),(7,4,8,3128,0,0,0,3,'admin','2019-07-03 15:00:50'),(8,4,1,3128,0,117,1,3,'admin','2019-07-03 15:00:50'),(9,4,10,3128,0,0,0,3,'admin','2019-07-03 15:00:50'),(10,4,5,3128,0,0,0,3,'admin','2019-07-03 15:00:50'),(11,4,6,3128,0,4,0,3,'admin','2019-07-03 15:00:50'),(12,4,9,3128,0,62,3,3,'admin','2019-07-03 15:00:50'),(13,4,3,3128,0,81,4,3,'admin','2019-07-03 15:00:50'),(14,4,11,3128,0,0,0,3,'admin','2019-07-03 15:00:50'),(15,4,13,3128,0,0,0,3,'admin','2019-07-03 15:00:50');
 /*!40000 ALTER TABLE `voti_sindaco` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -71,7 +72,7 @@ VOTI_SINDACO_STORICO (`id`,
 `municipio`,
 `numero_voti`,
 `numero_voti_solo_sindaco`,
-`votiid`,
+`votigeneraliid`,
 `utente_operazione_old`,
 `data_operazione_old`,
 `utente_operazione`,
@@ -82,7 +83,7 @@ OLD.sindacoid,
 OLD.municipio,
 OLD.numero_voti,
 OLD.numero_voti_solo_sindaco,
-OLD.votiid,
+OLD.votigeneraliid,
 OLD.data_operazione,
 OLD.utente_operazione,
 new.data_operazione, 
@@ -103,4 +104,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-02 19:02:13
+-- Dump completed on 2019-07-07 11:51:18

@@ -1,7 +1,7 @@
 package com.deltasi.elezioni.service;
 
 import com.deltasi.elezioni.contracts.IVotiListaService;
-import com.deltasi.elezioni.model.ricalcoli.RicalcoloVoti;
+import com.deltasi.elezioni.model.ricalcoli.RicalcoloVotiLista;
 import com.deltasi.elezioni.model.risultati.VotiLista;
 import com.deltasi.elezioni.repository.VotiListaDAO;
 import org.apache.logging.log4j.LogManager;
@@ -69,53 +69,57 @@ public class VotiListaService implements IVotiListaService {
         return votiListaDAO.findByListaDenominazioneAndSezioneNumerosezioneAndTipoelezioneId(denominazione,numerosezione,tipoElezioneId);
     }
 
-
     @Override
-    public List<RicalcoloVoti> countListaByMunicipio(int tipoelezioneid, int municipio) {
-        List<RicalcoloVoti> l= votiListaDAO.sumListaByMunicipio(tipoelezioneid, municipio);
+    public List<VotiLista> findBySezioneNumerosezioneAndTipoelezioneIdAndListaCoalizioneId(int numerosezione, int tipoelezioneid, int coalizioneid)
+    {
+        return votiListaDAO.findBySezioneNumerosezioneAndTipoelezioneIdAndListaCoalizioneId(numerosezione,tipoelezioneid,coalizioneid);
+    }
+    @Override
+    public List<RicalcoloVotiLista> countListaByMunicipio(int tipoelezioneid, int municipio) {
+        List<RicalcoloVotiLista> l= votiListaDAO.sumListaByMunicipio(tipoelezioneid, municipio);
         return  l;
       //  return  null;
     }
 
     @Override
-    public List<RicalcoloVoti> countPervenuteByMunicipio(int tipoelezioneid,int municipio) {
-        List<RicalcoloVoti> l = votiListaDAO.countPervenuteByMunicipio(tipoelezioneid, municipio);
+    public List<RicalcoloVotiLista> countPervenuteByMunicipio(int tipoelezioneid,int municipio) {
+        List<RicalcoloVotiLista> l = votiListaDAO.countPervenuteByMunicipio(tipoelezioneid, municipio);
         return l;
     }
 
     @Override
-    public List<RicalcoloVoti> countPervenute(int tipoelezioneid) {
+    public List<RicalcoloVotiLista> countPervenute(int tipoelezioneid) {
         return votiListaDAO.countPervenute(tipoelezioneid);
        // return  null;
     }
 
     @Override
-    public List<RicalcoloVoti> countLista(int tipoelezioneid) {
+    public List<RicalcoloVotiLista> countLista(int tipoelezioneid) {
         return votiListaDAO.sumLista(tipoelezioneid);
        // return null;
     }
 
     @Override
-    public List<RicalcoloVoti> countListaSingle(int tipoelezioneid, int idlista) {
+    public List<RicalcoloVotiLista> countListaSingle(int tipoelezioneid, int idlista) {
        return votiListaDAO.sumListaByLista(tipoelezioneid,idlista);
         //return  null;
     }
 
     @Override
-    public List<RicalcoloVoti> countListaSingleMunicipio(int tipoelezioneid, int idlista) {
+    public List<RicalcoloVotiLista> countListaSingleMunicipio(int tipoelezioneid, int idlista) {
        return votiListaDAO.sumListaMunicipioByLista(tipoelezioneid,idlista);
 
     }
 
     @Override
-    public  List<RicalcoloVoti> countVotantiPervenute(int tipoelezioneid)
+    public  List<RicalcoloVotiLista> countVotantiPervenute(int tipoelezioneid)
     {
         return  votiListaDAO.countVotantiPervenute(tipoelezioneid);
     }
     @Override
-    public  List<RicalcoloVoti> countVotantiPervenuteByMunicipio(int tipoelezioneid, int municipio)
+    public  List<RicalcoloVotiLista> countVotantiPervenuteByMunicipio(int tipoelezioneid, int municipio)
     {
-        List<RicalcoloVoti> l=  votiListaDAO.countVotantiPervenuteByMunicipio(tipoelezioneid,municipio);
+        List<RicalcoloVotiLista> l=  votiListaDAO.countVotantiPervenuteByMunicipio(tipoelezioneid,municipio);
         return  l;
     }
 

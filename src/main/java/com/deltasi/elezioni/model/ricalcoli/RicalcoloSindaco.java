@@ -12,7 +12,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "ricalcolo_sindaci")
+@Table(name = "ricalcolo_voti_sindaco")
 public class RicalcoloSindaco {
 
 

@@ -7,7 +7,7 @@ import com.deltasi.elezioni.model.configuration.TipoRicalcolo;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloAffluenza;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloCostApertura;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloPreferenze;
-import com.deltasi.elezioni.model.ricalcoli.RicalcoloVoti;
+import com.deltasi.elezioni.model.ricalcoli.RicalcoloVotiLista;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -311,11 +311,11 @@ public class RicalcoliDraft {
         }
     }
 
-    public List<RicalcoloVoti> voti(String aggregazione, String tipoRicalcolo) {
+    public List<RicalcoloVotiLista> voti(String aggregazione, String tipoRicalcolo) {
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
-        List<RicalcoloVoti> complete = new ArrayList<RicalcoloVoti>();
-        List<RicalcoloVoti> pervenute = new ArrayList<>();
-        List<RicalcoloVoti> liscrittic = new ArrayList<>();
+        List<RicalcoloVotiLista> complete = new ArrayList<RicalcoloVotiLista>();
+        List<RicalcoloVotiLista> pervenute = new ArrayList<>();
+        List<RicalcoloVotiLista> liscrittic = new ArrayList<>();
         try {
             switch (aggregazione) {
                 case "99":
@@ -339,7 +339,7 @@ public class RicalcoliDraft {
         return complete;
     }
 
-    private void combineAggregazioniComune(List<RicalcoloVoti> pervenute, List<RicalcoloVoti> liscrittic, List<RicalcoloVoti> complete, String codice) {
+    private void combineAggregazioniComune(List<RicalcoloVotiLista> pervenute, List<RicalcoloVotiLista> liscrittic, List<RicalcoloVotiLista> complete, String codice) {
         LocalDateTime oggi = LocalDateTime.now();
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
@@ -381,7 +381,7 @@ public class RicalcoliDraft {
 
     }
 
-    private void combineAggregazioni(List<RicalcoloVoti> pervenute, List<RicalcoloVoti> liscrittic, List<RicalcoloVoti> complete, String codice) {
+    private void combineAggregazioni(List<RicalcoloVotiLista> pervenute, List<RicalcoloVotiLista> liscrittic, List<RicalcoloVotiLista> complete, String codice) {
         LocalDateTime oggi = LocalDateTime.now();
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));

@@ -4,7 +4,7 @@ package com.deltasi.elezioni.controllers;
 import com.deltasi.elezioni.contracts.IRicalcoloAffluenzaService;
 import com.deltasi.elezioni.contracts.IRicalcoloCostAperturaService;
 import com.deltasi.elezioni.contracts.IRicalcoloPreferenzeService;
-import com.deltasi.elezioni.contracts.IRicalcoloVotiService;
+import com.deltasi.elezioni.contracts.IRicalcoloVotiListaService;
 import com.deltasi.elezioni.helpers.RicalcoliDraft;
 import com.deltasi.elezioni.model.json.ListaJson;
 import com.deltasi.elezioni.model.json.ListaSemplice;
@@ -13,7 +13,7 @@ import com.deltasi.elezioni.model.json.VotiJson;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloAffluenza;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloCostApertura;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloPreferenze;
-import com.deltasi.elezioni.model.ricalcoli.RicalcoloVoti;
+import com.deltasi.elezioni.model.ricalcoli.RicalcoloVotiLista;
 import com.deltasi.elezioni.state.SessionStateHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -56,7 +56,7 @@ public class RestRicalcoliController {
     private IRicalcoloCostAperturaService ricalcoloCostAperturaService;
 
     @Autowired
-    private IRicalcoloVotiService ricalcoloVotiService;
+    private IRicalcoloVotiListaService ricalcoloVotiListaService;
 
     @Autowired
     private IRicalcoloPreferenzeService ricalcoloPreferenzeService;
@@ -113,10 +113,10 @@ public class RestRicalcoliController {
 
     @GetMapping(value = "/ricalcolavoti/{aggregazione}/{tipoRicalcolo}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Secured("ROLE_ADMIN")
-    public List<RicalcoloVoti> SommaVoti(@PathVariable("aggregazione") String aggregazione, @PathVariable("tipoRicalcolo") String tipoRicalcolo
+    public List<RicalcoloVotiLista> SommaVoti(@PathVariable("aggregazione") String aggregazione, @PathVariable("tipoRicalcolo") String tipoRicalcolo
     ) {
         Map<String, String> errors = null;
-        List<RicalcoloVoti> l = new ArrayList<RicalcoloVoti>();
+        List<RicalcoloVotiLista> l = new ArrayList<RicalcoloVotiLista>();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         try {
 
@@ -209,15 +209,15 @@ public class RestRicalcoliController {
 
     @GetMapping(value = "/salvaricalcolovoti/{aggregazione}/{tipoRicalcolo}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Secured("ROLE_ADMIN")
-    public List<RicalcoloVoti> salvaRicalcoloVoti(@PathVariable("aggregazione") String aggregazione, @PathVariable("tipoRicalcolo") String tipoRicalcolo
+    public List<RicalcoloVotiLista> salvaRicalcoloVoti(@PathVariable("aggregazione") String aggregazione, @PathVariable("tipoRicalcolo") String tipoRicalcolo
     ) {
 
-        List<RicalcoloVoti> l = new ArrayList<>();
+        List<RicalcoloVotiLista> l = new ArrayList<>();
         try {
-            l = (List<RicalcoloVoti>) stateHelper.get("Ricalcolo");
+            l = (List<RicalcoloVotiLista>) stateHelper.get("Ricalcolo");
             //l =(List<RicalcoloAffluenza>) httpSession.getAttribute("Ricalcolo");
             if (l.get(0).getTiporicalcolo().getCodice().equals(tipoRicalcolo)) {
-                ricalcoloVotiService.SaveAll(l);
+                ricalcoloVotiListaService.SaveAll(l);
             } else {
                 throw new ResponseStatusException(
                         HttpStatus.BAD_REQUEST, "Ricalcolo non congruente");

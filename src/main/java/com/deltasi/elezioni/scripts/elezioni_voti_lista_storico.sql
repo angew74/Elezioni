@@ -29,6 +29,7 @@ CREATE TABLE `voti_lista_storico` (
   `tipoelezioneid` int(10) unsigned NOT NULL,
   `municipio` int(10) unsigned DEFAULT NULL,
   `voti` int(10) unsigned NOT NULL DEFAULT '0',
+  `votigeneraliid` int(10) unsigned NOT NULL,
   `dataoperazioneold` datetime NOT NULL,
   `utenteoperazioneold` varchar(45) NOT NULL,
   `dataoperazione` datetime NOT NULL,
@@ -59,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-02 19:02:24
+-- Dump completed on 2019-07-07 11:51:22

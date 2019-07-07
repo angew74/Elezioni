@@ -12,7 +12,7 @@ import com.deltasi.elezioni.model.json.PlessoJson;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloAffluenza;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloCostApertura;
 import com.deltasi.elezioni.model.ricalcoli.RicalcoloPreferenze;
-import com.deltasi.elezioni.model.ricalcoli.RicalcoloVoti;
+import com.deltasi.elezioni.model.ricalcoli.RicalcoloVotiLista;
 import com.deltasi.elezioni.model.risultati.Affluenza;
 import com.deltasi.elezioni.model.risultati.Preferenze;
 import com.deltasi.elezioni.model.risultati.VotiLista;
@@ -72,7 +72,7 @@ public class RestInterrogazioniController {
     private ITipoRicalcoloService tipoRicalcoloService;
 
     @Autowired
-    private IRicalcoloVotiService ricalcoloVotiService;
+    private IRicalcoloVotiListaService ricalcoloVotiListaService;
 
     @Autowired
     private IRicalcoloPreferenzeService ricalcoloPreferenzeService;
@@ -143,29 +143,29 @@ public class RestInterrogazioniController {
     }
 
     @GetMapping(value = "/voti/{aggregazione}/{tipoInterrogazione}/{sezione}/{plesso}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public List<RicalcoloVoti> voti(@PathVariable("aggregazione") String aggregazione, @PathVariable("tipoInterrogazione")
+    public List<RicalcoloVotiLista> voti(@PathVariable("aggregazione") String aggregazione, @PathVariable("tipoInterrogazione")
             String tipoInterrogazione, @PathVariable("sezione") Optional<String> sezione,
                                     @PathVariable("plesso") Optional<String> plesso
     ) {
         Map<String, String> errors = null;
-        List<RicalcoloVoti> l = new ArrayList<RicalcoloVoti>();
+        List<RicalcoloVotiLista> l = new ArrayList<RicalcoloVotiLista>();
         List<VotiLista> b = new ArrayList<VotiLista>();
         Integer tipoelezioneid = Integer.parseInt(env.getProperty("tipoelezioneid"));
         List<TipoRicalcolo> tipiRicalcolo = tipoRicalcoloService.findAllByTipoelezioneIdAndCodice(tipoelezioneid, tipoInterrogazione);
         try {
             switch (aggregazione) {
                 case "MUN":
-                    l = ricalcoloVotiService.findByTipoelezioneIdAndTiporicalcoloIdAndMunicipioNotInAndDataoperazioneMax(tipoelezioneid, tipiRicalcolo.get(0).getId(), 99);
+                    l = ricalcoloVotiListaService.findByTipoelezioneIdAndTiporicalcoloIdAndMunicipioNotInAndDataoperazioneMax(tipoelezioneid, tipiRicalcolo.get(0).getId(), 99);
                     break;
                 case "COM":
-                    l = ricalcoloVotiService.findByTipoelezioneIdAndTiporicalcoloIdAndMunicipioInOrderByDataoperazioneDesc(tipoelezioneid, tipiRicalcolo.get(0).getId(), 99);
+                    l = ricalcoloVotiListaService.findByTipoelezioneIdAndTiporicalcoloIdAndMunicipioInOrderByDataoperazioneDesc(tipoelezioneid, tipiRicalcolo.get(0).getId(), 99);
                     break;
                 case "SEZ":
                     int n = Integer.parseInt(sezione.get());
                     b = votiService.findBySezioneNumerosezioneAndTipoelezioneId(n, tipoelezioneid);
                     for (VotiLista v : b
                     ) {
-                        RicalcoloVoti r = votiLoader.votiSplit(v, tipoInterrogazione);
+                        RicalcoloVotiLista r = votiLoader.votiSplit(v, tipoInterrogazione);
                         l.add(r);
                     }
                     break;
@@ -174,7 +174,7 @@ public class RestInterrogazioniController {
                     b = votiService.findBySezionePlessoIdAndTipoelezioneId(p, tipoelezioneid);
                     for (VotiLista v : b
                     ) {
-                        RicalcoloVoti r = votiLoader.votiSplit(v, tipoInterrogazione);
+                        RicalcoloVotiLista r = votiLoader.votiSplit(v, tipoInterrogazione);
                         l.add(r);
                     }
                     break;

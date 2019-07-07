@@ -2,7 +2,7 @@
 
 function openListeModal(id) {
     var sezione = $("#numerosezione").val();
-    var tipo = $("#tipo").val();
+    var tipo = $("#tipo").text();
     var maxvotisindaco = $("#Votanti").text();
     $.ajax({
         url: '/coalizioni/listecoalizione/' + id + '/' + sezione+ "/" + tipo,
@@ -52,14 +52,14 @@ function ajaxSalvaListeCoalizione() {
 
     if (sum > maxvotisindaco) {
         var message = "Somma voti lista superiore ai votanti " + sum + " > " + maxvotisindaco;
-            boot4.alert(
-                {
-                    msg: message,
-                    title: "Attenzione!",
-                    callback: function() {
-                        console.log("callback");
-                    }
-                },"OK");
+        boot4.alert(
+            {
+                msg: message,
+                title: "Attenzione!",
+                callback: function() {
+                    console.log("callback");
+                }
+            },"OK");
         isValid = false;
     }
     var errorcontainer = '#errorModal';

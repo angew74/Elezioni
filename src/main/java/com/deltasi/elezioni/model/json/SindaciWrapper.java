@@ -31,6 +31,7 @@ public class SindaciWrapper {
     private Integer totalevalide;
     private Integer solosindaco;
     private Integer totale;
+    private Integer votanti;
 
     public Integer getContestate() {
         return contestate;
@@ -78,5 +79,13 @@ public class SindaciWrapper {
 
     public void setTotale(Integer totale) {
         this.totale = totale;
+    }
+
+    public Integer getVotanti() {
+        return votanti;
+    }
+
+    public void setVotanti(Integer votanti) {
+        this.votanti = votanti;
     }
 }

@@ -16,13 +16,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `ricalcolo_coalizioni`
+-- Table structure for table `ricalcolo_voti_coalizioni`
 --
 
-DROP TABLE IF EXISTS `ricalcolo_coalizioni`;
+DROP TABLE IF EXISTS `ricalcolo_voti_coalizioni`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `ricalcolo_coalizioni` (
+CREATE TABLE `ricalcolo_voti_coalizioni` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `tipoelezioneid` int(10) unsigned NOT NULL,
   `tiporicalcoloid` int(10) unsigned NOT NULL,
@@ -52,12 +52,12 @@ CREATE TABLE `ricalcolo_coalizioni` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `ricalcolo_coalizioni`
+-- Dumping data for table `ricalcolo_voti_coalizioni`
 --
 
-LOCK TABLES `ricalcolo_coalizioni` WRITE;
-/*!40000 ALTER TABLE `ricalcolo_coalizioni` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ricalcolo_coalizioni` ENABLE KEYS */;
+LOCK TABLES `ricalcolo_voti_coalizioni` WRITE;
+/*!40000 ALTER TABLE `ricalcolo_voti_coalizioni` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ricalcolo_voti_coalizioni` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -69,4 +69,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-02 19:02:41
+-- Dump completed on 2019-07-07 11:51:20

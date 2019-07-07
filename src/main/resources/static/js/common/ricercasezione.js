@@ -142,8 +142,9 @@ jQuery(document).ready(function ($) {
                         $("#Iscritti").text(res.iscritti);
                         if(res.tipo === "VL" || res.tipo === "RVL")
                         { var url = "/voti/scrutinio/" + res.tipo+ "/" + res.numerosezione;}
-                       if(res.tipo === "VS" || restipo === "RVS")
+                       if(res.tipo === "VS" || res.tipo === "RVS")
                        {var url = "/coalizioni/scrutinio/" + res.tipo+ "/" + res.numerosezione;}
+                        $("#tipo").text(res.tipo);
                         $("#scrutiniodiv").load(url);
                         $("#scrutinio").show();
                         $("#scrutiniodiv").show();
@@ -177,6 +178,7 @@ jQuery(document).ready(function ($) {
                         var votanti = res.votanti;
                         $("#Votanti").text(votanti);
                         $("#Iscritti").text(res.iscritti);
+                        $("#tipo").text(res.tipo);
                         $("#footer").removeClass("absolute");
                         $("#footer").addClass("relative");
                         var url = "/preferenze/spoglio/" + lista + "/" + res.tipo+ "/" + res.numerosezione;
@@ -226,6 +228,7 @@ jQuery(document).ready(function ($) {
                             case "RVL":
                             case "VL":
                             case "VS":
+                            case "RVS":
                                 $("#footer").removeClass("absolute");
                                 $("#footer").addClass("relative");
                                 ajaxPrepopulateVoti();
