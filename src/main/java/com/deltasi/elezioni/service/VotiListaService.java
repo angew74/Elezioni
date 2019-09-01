@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -30,7 +31,7 @@ public class VotiListaService implements IVotiListaService {
     }
 
     @Override
-    public void SaveAll(HashSet<VotiLista> list)
+    public void SaveAll(Set<VotiLista> list)
     {
         votiListaDAO.saveAll(list);
     }

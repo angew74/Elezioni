@@ -5,10 +5,11 @@ import com.deltasi.elezioni.model.risultati.VotiLista;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public interface IVotiListaService {
 
-    void SaveAll(HashSet<VotiLista> list);
+    void SaveAll(Set<VotiLista> list);
     VotiLista findById(Integer id);
     List<VotiLista> findAllBy();
     List<VotiLista> findBySezioneNumerosezioneAndTipoelezioneId(Integer numerosezione, Integer tipoelezioneid);

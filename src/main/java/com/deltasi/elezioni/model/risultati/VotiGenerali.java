@@ -5,6 +5,7 @@ import com.deltasi.elezioni.model.configuration.TipoElezione;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.engine.internal.Cascade;
 
 import javax.persistence.*;
@@ -21,9 +22,17 @@ public class VotiGenerali implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(nulle)
+                .append(bianche)
+                .append(totale)
+                .append(sezione.getId())
+                .append(tipoelezione.getId())
+                .append(totalevalide)
+                .append(solosindaco)
+                .append(dataoperazione)
+                .toHashCode();
     }
 
     @Override

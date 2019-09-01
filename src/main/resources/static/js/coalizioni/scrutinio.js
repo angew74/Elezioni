@@ -66,6 +66,7 @@ function ValidateCoalizione() {
         }
     });
     if (errorMessage !== "" && errorMessage !== null) {
+        $("#errorcontrol").text("");
         $("#errorcontrol").append(errorMessage);
         $(errorDisplay).text(errorMessage);
         $(errorcontainer).modal('show');
@@ -90,7 +91,7 @@ function ValidateCount()
     var errorMessage ="";
     var votanti = parseInt($('#Votanti').text());
     var iscritti = parseInt($('#Iscritti').text());
-    var validiListe = parseInt($('#validiListe').val());
+    var validiListe = parseInt($('#valideliste').val());
     var solosindaco = parseInt($('#solosindaco').val());
     var totalevalide = parseInt($('#totalevalide').val());
     var bianche = parseInt($('#bianche').val());
@@ -101,7 +102,6 @@ function ValidateCount()
     var sumsolosindaco = 0;
     var group = $('input[name="liste.voti"]');
     var groupsolosindaco = $('input[name="liste.solosindaco"]');
-    var count = $('#count').text();
  //    var fields = $(":input").serializeArray();
     $('.voti').each(function () {
             sum += parseFloat(this.value);
@@ -120,29 +120,70 @@ function ValidateCount()
     var sommacdef = sommaab + bianche + nulle + contestate;
     if (solosindaco !== sumsolosindaco) {
         errorMessage = "Totale voti solo sindaco (B) diverso da somma voti singoli candidati " + solosindaco + " <> " + sumsolosindaco;
+        $("#errorcontrol").text("");
+        $(errorDisplay).text(errorMessage);
+        $(errorcontainer).modal('show');
+        $("#errorcontrol").append(errorMessage);
+        return;
     }
     if (validiListe !== sommaListe) {
         errorMessage = "Totale voti validi liste (A) diverso da somma voti singole liste " + validiListe + " <> " + sommaListe;
+        $("#errorcontrol").text("");
+        $(errorDisplay).text(errorMessage);
+        $(errorcontainer).modal('show');
+        $("#errorcontrol").append(errorMessage);
+        return;
     }
     if (totalevalide !== sommaab) {
         errorMessage = "Totale voti validi (C) diverso da somma  voti validi liste (a) + solo sindac (b) " + totalevalide + " <> " + sommaab;
+        $("#errorcontrol").text("");
+        $(errorDisplay).text(errorMessage);
+        $(errorcontainer).modal('show');
+        $("#errorcontrol").append(errorMessage);
+        return;
     }
     if (totale !== votanti) {
         errorMessage = "Totale (G) diverso da votanti " + totale + " <> " + votanti;
+        $("#errorcontrol").text("");
+        $(errorDisplay).text(errorMessage);
+        $(errorcontainer).modal('show');
+        $("#errorcontrol").append(errorMessage);
+        return;
     }
     if (sum !== totalevalide) {
         errorMessage = "Totale candidati diverso da voti validi (C) " + sum + " <> " + totalevalide;
+        $("#errorcontrol").text("");
+        $(errorDisplay).text(errorMessage);
+        $(errorcontainer).modal('show');
+        $("#errorcontrol").append(errorMessage);
+        return;
     }
     if (sommacdef !== votanti) {
         errorMessage = "Somma scrutinio singoli candidati diversa da votanti " + sum + " <> " + votanti;
+        $("#errorcontrol").text("");
+        $(errorDisplay).text(errorMessage);
+        $(errorcontainer).modal('show');
+        $("#errorcontrol").append(errorMessage);
+        return;
     }
     if (sommacdef > iscritti) {
         errorMessage = "Voti scrutinio maggiore iscritti " + sum + " > " + iscritti;
+        $("#errorcontrol").text("");
+        $(errorDisplay).text(errorMessage);
+        $(errorcontainer).modal('show');
+        $("#errorcontrol").append(errorMessage);
+        return;
     }
     if (sommacdef !== totale) {
         errorMessage = "Totale voti scrutinio (G) diverso da somma parziali (C+D+E+F) " + totale + " <> " + sommacdef;
+        $("#errorcontrol").text("");
+        $(errorDisplay).text(errorMessage);
+        $(errorcontainer).modal('show');
+        $("#errorcontrol").append(errorMessage);
+        return;
     }
     if (errorMessage !== "" && errorMessage != null) {
+        $("#errorcontrol").text("");
         $(errorDisplay).text(errorMessage);
         $(errorcontainer).modal('show');
         $("#errorcontrol").append(errorMessage);

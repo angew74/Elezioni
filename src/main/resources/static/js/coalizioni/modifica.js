@@ -1,6 +1,10 @@
 // $(document).ready(function() {
 
 function openListeModal(id) {
+    if($("#contatoreListe").val() === "0")
+    {
+        $("#contatoreListe").val(parseInt($('#valideliste').val()));
+    }
     var sezione = $("#numerosezione").val();
     var tipo = $("#tipo").text();
     var maxvotisindaco = $("#Votanti").text();
@@ -24,6 +28,7 @@ function openListeModal(id) {
             });
             var sommaParziale = $("#contatoreListe").val();
             var tot =  parseInt(sommaParziale) - parseInt(sum);
+            $("#sum").val(sum);
             $("#contatoreListe").val(tot);
         }
     })
@@ -32,6 +37,22 @@ function openListeModal(id) {
 $("#buttonSalva").click(function () {
     ajaxSalvaListeCoalizione();
 })
+
+$('#btnCancel').click(function () {
+        populateSumContatore();
+
+});
+
+function populateSumContatore() {
+    var sum = $("#sum").val();
+    if(sum !== '') {
+        var sommaParziale = $("#contatoreListe").val();
+        var tot = parseInt(sommaParziale) + parseInt(sum);
+        $("#contatoreListe").val(tot);
+    }
+    $("#listeModal").hide();
+    $('#listeModal').modal('hide');
+}
 
 function ajaxSalvaListeCoalizione() {
     event.preventDefault();
@@ -49,7 +70,6 @@ function ajaxSalvaListeCoalizione() {
             sum += parseFloat(field.value);
         }
     });
-
     if (sum > maxvotisindaco) {
         var message = "Somma voti lista superiore ai votanti " + sum + " > " + maxvotisindaco;
         boot4.alert(
@@ -86,6 +106,7 @@ function ajaxSalvaListeCoalizione() {
                         $("#listeModal").modal('hide');
                         $(successcontainer).modal('show');
                         document.getElementById(sindaco2).value = "S";
+                        $("#sum").val(sum);
                         var sommaParziale = $("#contatoreListe").val();
                         var tot =  parseInt(sommaParziale) + parseInt(sum);
                         $("#contatoreListe").val(tot);

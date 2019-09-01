@@ -249,11 +249,13 @@ public class CoalizioniController {
                     response.setTipo("VS");
                     break;
                 case "RVS":
-                     v = votiLoader.prepareVotiGR(form);
-                     vs = votiLoader.prepareVotiSindacoR(form.getSindaci());
-                     vl = votiLoader.prepareVotiListaR(form.getSindaci());
+                     VotiGenerali vr = votiLoader.prepareVotiGR(form);
+                     vs = votiLoader.prepareVotiSindacoR(form.getSindaci(),vr);
+                     vl = votiLoader.prepareVotiListaR(form.getSindaci(),vr);
                    //  i = votiService.findBySezioneNumerosezioneAndTipoelezioneId(v.getSezione().getNumerosezione(),v.getTipoelezione().getId());
-                    votiGeneraliService.Save(v);
+                    vr.setVotiListas(vl);
+                    vr.setVotiSindacos(vs);
+                    votiGeneraliService.Save(vr);
                     response.setValidated(true);
                     response.setTipo("RVS");
                     break;

@@ -3,11 +3,11 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
 
 <div id="listeModal" class="modal fade" th:fragment="modalContents">
-    <div class="modal-dialog modal-lg">
+    <input type="number" id="sum" style="display: none" />
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="badge-custom badge-secondary badge-pill text-center" th:text="${coalizione}"></h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal"  name="insertListe"
@@ -47,7 +47,7 @@
                                 <input type="text" style="display:none;"
                                        th:field="*{liste[__${itemStat.index}__].denominazione}"
                                        th:value="${lista.getDenominazione()}" />
-                                <label class="col-sm-3  col-form-label"
+                                <label class="col-sm-5  col-form-label"
                                        th:text="${lista.denominazione}"></label>
                                 <input
                                         class="form-control votliliste"
@@ -66,7 +66,12 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button id="buttonSalva" type="button"  onclick="ajaxSalvaListeCoalizione()" class="btn btn-default">Salva</button>
+                <button id="buttonSalva" type="button"  onclick="ajaxSalvaListeCoalizione()"
+                        class="btn btn-dark btn-sm float-right submit_btn">
+                    <i class="fas fa-arrow-alt-circle-right" style="margin-right:5px"></i>Salva</button>
+                <button onclick="populateSumContatore()" id="btnCancel"
+                        class="btn btn-dark btn-sm float-right submit_btn">
+                    <i class="fas fa-arrow-alt-circle-right" style="margin-right:5px"></i>Chiudi</button>
             </div>
         </div>
     </div>

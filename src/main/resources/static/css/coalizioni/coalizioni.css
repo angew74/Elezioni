@@ -10,3 +10,7 @@ div#labelVotanti {
     font-weight: bolder;
     padding: .50rem 1.20rem;
 }
+
+.modal-lg {
+    max-width: 1000px;
+}

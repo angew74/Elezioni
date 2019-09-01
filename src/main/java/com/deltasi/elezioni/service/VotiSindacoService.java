@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -22,7 +24,7 @@ public class VotiSindacoService implements IVotiSindacoService {
     private VotiSindacoDAO votiSindacoDAO;
 
     @Override
-    public void SaveAll(List<VotiSindaco> list) {
+    public void SaveAll(Set<VotiSindaco> list) {
         votiSindacoDAO.saveAll(list);
     }
 

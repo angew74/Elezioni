@@ -157,7 +157,7 @@
                                                        required
                                                        th:field="*{sindaci[__${iterStat.index}__].id}"
                                                 />
-                                                <input name="id" type="number"
+                                                <input name="id" type="text"
                                                        th:value="${sindaco.iscoalizione}"
                                                        style="display:none;"
                                                        th:field="*{sindaci[__${iterStat.index}__].iscoalizione}"
@@ -179,7 +179,7 @@
                                                        data-parsley-type="number"
                                                        data-validation="required"
                                                        th:value="${sindaco.voti}"/>
-                                                <input class="form-control solosindaco"
+                                                <input class="form-control votisolosindaco"
                                                        placeholder="Solo Sindaco"
                                                        min="0"
                                                        value="0"
@@ -208,7 +208,7 @@
                                                 <input type="number" class="form-control"
                                                        data-parsley-required
                                                        min="0"
-                                                       id="validiListe"
+                                                       th:field="${ListWrapper.valideliste}"
                                                        data-parsley-type="number"
                                                        data-validation="required"
                                                        placeholder="Voti Validi Liste">
